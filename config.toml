@@ -1,4 +1,16 @@
-baseURL = "http://example.org/"
+baseURL = "http://nathancarter.github.io/how2data"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "How To Data"
 theme = "learn"
+
+# For search functionality
+[outputs]
+home = [ "HTML", "RSS", "JSON" ]
+
+# parameter specific to the Learn theme
+[params]
+  author = "Nathan Carter, ncarter@bentley.edu"
+  description = "Reference site for common computing tasks in statistics and data science"
+  disableLandingPageButton = false
+  disableMermaid = true
+  themeVariant = "blue"
