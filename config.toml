@@ -1,7 +1,7 @@
 baseURL = "http://nathancarter.github.io/how2data/public/"
 languageCode = "en-us"
 title = "How To Data"
-theme = "learn"
+theme = "hugo-theme-learn-2.5.0"
 
 # For search functionality
 [outputs]
