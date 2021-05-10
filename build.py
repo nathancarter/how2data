@@ -11,4 +11,4 @@ for file in static_pages:
     print( f'Copied: {source} -> {dest}' )
 
 section_heading( 'Jekyll build process' )
-sys.exit( os.system( 'jekyll build' ) )
+sys.exit( os.system( 'bundle exec jekyll build' ) )
