@@ -34,6 +34,16 @@ plugins:
 source: jekyll-input
 destination: site
 
+# Appearance
+compress_html:
+  ignore:
+    envs: all  # necessary workaround to get code line numbers
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+color_scheme: my_colors
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
