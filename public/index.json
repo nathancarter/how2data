@@ -1,14 +1,14 @@
 [
 {
-	"uri": "https://nathancarter.github.io/how2data/public/categories/",
-	"title": "Categories",
+	"uri": "https://nathancarter.github.io/how2data/public/",
+	"title": "Welcome",
 	"tags": [],
 	"description": "",
-	"content": ""
+	"content": "Welcome to How to Data! This is a how-to website for students of data science. It will contain answers to a wide variety of how-to questions about data-related software and programming languages.\nBut right now, it\u0026rsquo;s still under construction. Please check back later to see what this site will become.\n"
 },
 {
-	"uri": "https://nathancarter.github.io/how2data/public/",
-	"title": "How To Data",
+	"uri": "https://nathancarter.github.io/how2data/public/categories/",
+	"title": "Categories",
 	"tags": [],
 	"description": "",
 	"content": ""
