@@ -1,5 +1,4 @@
 # See here for image contents: https://hub.docker.com/r/jupyter/datascience-notebook/
-
 FROM jupyter/datascience-notebook
 
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
