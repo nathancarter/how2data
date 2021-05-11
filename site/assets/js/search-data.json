@@ -16,5 +16,11 @@
     "content": "# Welcome to *How to Data!* This is a how-to website for students of data science. It will contain answers to a wide variety of how-to questions about data-related software and programming languages. **But right now, it's still under construction.** Please check back later to see what this site will become. ",
     "url": "/how2data/site/",
     "relUrl": "/"
+  },"3": {
+    "doc": "Software Packages",
+    "title": "Software Packages",
+    "content": "Here is a list of the software packages that appear in the solutions on this website. This list can include standard applications like Microsoft Excel, web-based applications like Google Sheets, or programming languages like Python and R. | Software Package | Icon | Number of solutions | Website |:-------------------|:------------------------------------------------------------------------------------------------------------------------------------|----------------------:|:---------------------------------------------------------| Python | ![Python icon](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png){: style=\"height: 50px;\" } | nan | [https://www.python.org/](https://www.python.org/) | R | ![R icon](https://www.r-project.org/logo/Rlogo.png){: style=\"height: 50px;\" } | nan | [https://www.r-project.org/](https://www.r-project.org/) | ",
+    "url": "/how2data/site/software/",
+    "relUrl": "/software/"
   }
 }
