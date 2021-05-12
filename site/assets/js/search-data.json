@@ -22,5 +22,11 @@
     "content": "Here is a list of the software packages that appear in the solutions on this website. This list can include standard applications like Microsoft Excel, web-based applications like Google Sheets, or programming languages like Python and R. | Software Package | Icon | Number of solutions | Website |:-------------------|:------------------------------------------------------------------------------------------------------------------------------------|----------------------:|:---------------------------------------------------------| Python | ![Python icon](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png){: style=\"height: 50px;\" } | nan | [https://www.python.org/](https://www.python.org/) | R | ![R icon](https://www.r-project.org/logo/Rlogo.png){: style=\"height: 50px;\" } | nan | [https://www.r-project.org/](https://www.r-project.org/) | ",
     "url": "/how2data/site/software/",
     "relUrl": "/software/"
+  },"4": {
+    "doc": "Tasks",
+    "title": "Tasks",
+    "content": "This database is a list of tasks that students of data science may want to know how to accomplished, all phrased as \"How to\" questions. The table below lists *all* questions in the database. | Task | Solutions in Python | Solutions in R |:--------------------------------------------------|----------------------:|-----------------:| How to compute a confidence interval for the mean | nan | nan | How to do a hypothesis test for the mean | nan | nan | How to fit a linear model to two columns of data | nan | nan | ",
+    "url": "/how2data/site/tasks/",
+    "relUrl": "/tasks/"
   }
 }
