@@ -1,0 +1,7 @@
+software:
+  - name: Python
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png
+    website: https://www.python.org/
+  - name: R
+    icon: https://www.r-project.org/logo/Rlogo.png
+    website: https://www.r-project.org/
