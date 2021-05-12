@@ -9,6 +9,10 @@ for file in static_pages:
         copy_static_file( file, {
             'SET_OF_SOFTWARE_PACKAGES': software_table
         } )
+    elif file == 'tasks.md':
+        copy_static_file( file, {
+            'SET_OF_TASKS' : tasks_table
+        } )
     else:
         copy_static_file( file )
 

@@ -16,10 +16,16 @@ def markdown_files ( filenames ):
         x for x in filenames if x[-3:] == '.md' or x[-9:] == '.markdown'
     ]
 
-# Global variables for important folders in this repo
+# Global variables for important folders in this repo and their contents
 main_folder = os.path.dirname( os.path.realpath( __file__ ) )
 static_folder = os.path.join( main_folder, 'database', 'static' )
 static_pages = markdown_files( os.listdir( static_folder ) )
+tasks_folder = os.path.join( main_folder, 'database', 'tasks' )
+task_files = [
+    file for file in markdown_files( os.listdir( tasks_folder ) ) \
+    if file != 'README.md'
+]
+task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
 jekyll_input_folder = os.path.join( main_folder, 'jekyll-input' )
 
 # Read database/database.yml and store it in a global variable
@@ -66,3 +72,11 @@ software_table = pd.DataFrame( {
     "Website" : map( software_package_website, software_table )
 } )
 software_table = software_table.to_markdown( index=False )
+
+# THe tasks table to be insert on the tasks page
+tasks_table = pd.DataFrame( {
+    "Task" : [ os.path.splitext( filename )[0] for filename in task_files ]
+} )
+for package in configuration['software']:
+    tasks_table[f'Solutions in {package["name"]}'] = np.nan
+tasks_table = tasks_table.to_markdown( index=False )
