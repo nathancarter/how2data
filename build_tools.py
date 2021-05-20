@@ -47,18 +47,17 @@ def copy_static_file ( filename, replacements = dict() ):
     print( '        Dest:        ', dest )
     print( '        Replacements:', len(replacements) )
 
-# Function for converting a software package into the Markdown code for its icon
+# Function for converting a software package into the Markdown code for its name
 def software_package_name ( package ):
     return package['name']
 
-# Function for converting a software package into the Markdown code for its name
+# Function for converting a software package into the Markdown code for its icon
 def software_package_icon ( package ):
     name = package['name']
     icon = package['icon']
     return f'![{name} icon]({icon}){{: style="height: 50px;" }}'
 
-# Function for converting a software package into the Markdown code for its
-# icon and name together
+# Function for converting a software package into the Markdown code for its website
 def software_package_website ( package ):
     url = package['website']
     return f'[{url}]({url})'
@@ -73,7 +72,7 @@ software_table = pd.DataFrame( {
 } )
 software_table = software_table.to_markdown( index=False )
 
-# THe tasks table to be insert on the tasks page
+# The tasks table to be insert on the tasks page
 tasks_table = pd.DataFrame( {
     "Task" : [ os.path.splitext( filename )[0] for filename in task_files ]
 } )
