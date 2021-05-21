@@ -38,6 +38,7 @@ def section_heading ( title ):
 
 # Global variables for important folders in this repo and their contents
 main_folder = os.path.dirname( os.path.realpath( __file__ ) )
+jekyll_input_folder = os.path.join( main_folder, 'jekyll-input' )
 static_folder = os.path.join( main_folder, 'database', 'static' )
 static_pages = just_docs( os.listdir( static_folder ) )
 tasks_folder = os.path.join( main_folder, 'database', 'tasks' )
@@ -46,7 +47,9 @@ task_files = [
     if file != 'README.md'
 ]
 task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
-jekyll_input_folder = os.path.join( main_folder, 'jekyll-input' )
+task_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'task-images' )
+if not os.path.isdir( task_imgs_folder ):
+    os.mkdir( task_imgs_folder )
 solutions_folder = os.path.join( main_folder, 'database', 'solutions' )
 solution_docs = {
     task : {
@@ -66,6 +69,8 @@ if not os.path.isdir( solution_imgs_folder ):
     os.mkdir( solution_imgs_folder )
 with open( os.path.join( static_folder, 'solution-template.md' ), 'r' ) as f:
     solution_template = ''.join( f.readlines() )
+with open( os.path.join( static_folder, 'task-template.md' ), 'r' ) as f:
+    task_template = ''.join( f.readlines() )
 files_generated = [ ]
 
 # Jupyter kernels for running code
@@ -100,6 +105,14 @@ def copy_static_file ( filename, replacements = dict() ):
 def copy_solution_image_file ( task, software, image ):
     source = os.path.join( solutions_folder, task, software, image )
     dest = os.path.join( solution_imgs_folder, f'{task}-{software}-{image}' )
+    shutil.copy2( source, dest )
+    print( 'Copied: Source:', source )
+    print( '        Dest:  ', dest )
+# Function for copying a task file from a solutions subfolder to the Jekyll
+# input folder.
+def copy_task_image_file ( filename ):
+    source = os.path.join( tasks_folder, filename )
+    dest = os.path.join( task_imgs_folder, filename )
     shutil.copy2( source, dest )
     print( 'Copied: Source:', source )
     print( '        Dest:  ', dest )
@@ -140,8 +153,13 @@ tasks_table = tasks_table.to_markdown( index=False )
 
 # How to tell if a given string is one of the official names of a task or a
 # software package in our database?  We make some functions.
+def get_task_filename ( task ):
+    for extension in doc_extensions:
+        if task + extension in task_files:
+            return os.path.join( tasks_folder, task + extension )
+    return None
 def is_a_task ( text ):
-    return any( [ text + ext in task_files for ext in doc_extensions ] )
+    return get_task_filename( text ) != None
 def is_a_software_package ( text ):
     return text in software_names
 
@@ -237,6 +255,22 @@ def must_rebuild_file ( input, output ):
     output_modified = os.path.getmtime( output )
     return input_modified > output_modified
 
+# How to mark the body of a solution
+def marker ( side ):
+    return f'<!-- {side} marker -->'
+def mark_solution_body ( body ):
+    return f'''
+{marker( "begin" )}
+
+{body}
+
+{marker( "end" )}
+'''
+def extract_solution_body ( larger_text ):
+    begin = larger_text.index( marker( 'begin' ) )
+    end = larger_text.index( marker( 'end' ) )
+    return larger_text[begin+len(marker('begin')):end]
+
 # For building solution pages, a few functions.  Parameters explained:
 # task = exact task name, a key to the solution_docs dict.
 # software = exact package name, a key to the solutions_docs[task] dict.
@@ -270,16 +304,76 @@ def build_solution_page ( task, software, solution ):
             .replace( 'PERMALINK', blogify( title ) )
             .replace( 'TASK_PAGE_LINK',
                 '(Later we will put here a link to the task page; not yet implemented.)' )
-            .replace( 'MARKDOWN_CONTENT', run_markdown(
+            .replace( 'MARKDOWN_CONTENT', mark_solution_body( run_markdown(
                 content,
                 os.path.join( solutions_folder, task, software ),
-                software ) )
+                software ) ) )
             .replace( 'CONTRIBUTORS',
                 f'Contributed by {header["author"]}' if "author" in header else '' )
         )
     print( f'Built solution for: {task}' )
     print( f'           Details: {basename}, in {software}' )
     print()
+    files_generated.append( out_filename )
+
+# How to fetch a generated solution's body from within the generated markdown
+def get_generated_solution_body ( task, software, solution ):
+    basename, extension = basename_and_extension( solution )
+    title = f'{task} ({basename}, in {software})'
+    generated_file = blogify( title ) + '.md'
+    with open( os.path.join( jekyll_input_folder, generated_file ), 'r' ) as f:
+        all_content = ''.join( f.readlines() )
+    return extract_solution_body( all_content )
+
+# How to read a task file's markdown content
+def get_task_content ( task ):
+    filename = get_task_filename( task )
+    if filename is None:
+        print( 'Could not find filename for task:', task )
+        sys.exit( 1 )
+    with open( filename, 'r' ) as f:
+        result = ''.join( f.readlines() )
+    return result
+
+# How to build a task page
+def build_task_page ( task ):
+    out_filename = blogify( task ) + '.md'
+    output_file = os.path.join( jekyll_input_folder, out_filename )
+    def adjust_img_path ( code, alt_text, filename ):
+        return (
+            alt_text,
+            os.path.join( '..', 'assets', 'task-images', filename )
+        )
+    content = get_task_content( task )
+    content = map_over_images( adjust_img_path, content )
+    all_solutions = ''
+    if task in solution_docs:
+        for software, solutions in solution_docs[task].items():
+            for solution in solutions:
+                solution_name = os.path.splitext( solution )[0]
+                solution_name = solution_name[0].upper() + solution_name[1:]
+                all_solutions += f'''
+
+## {solution_name}, {software}
+
+{get_generated_solution_body( task, software, solution )}
+
+'''
+        opportunities = [ x for x in software_names if x not in solution_docs[task] ]
+    else:
+        all_solutions = 'No solutions exist yet in the database for this task.'
+        opportunities = software_names
+    with open( output_file, 'w' ) as f:
+        f.write(
+            task_template
+            .replace( 'TITLE', task )
+            .replace( 'PERMALINK', blogify( task ) )
+            .replace( 'DESCRIPTION', 'Description of the task will go here.' )
+            .replace( 'SOLUTIONS', all_solutions )
+            .replace( 'TOPICS', 'Topics are not yet implemented.' )
+            .replace( 'OPPORTUNITIES',
+                '\n'.join( [ f' * {software}' for software in opportunities ] ) )
+        )
     files_generated.append( out_filename )
 
 # How to clean up any markdown files we didn't just generate.

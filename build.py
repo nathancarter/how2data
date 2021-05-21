@@ -43,13 +43,20 @@ for file in static_pages:
         copy_static_file( file )
 for ( task, software, filename ) in solution_imgs:
     copy_solution_image_file( task, software, filename )
+for ( filename ) in task_image_files:
+    copy_solution_image_file( filename )
 
 # Generate files from database
 section_heading( 'Generating files from database content' )
+# Note: solution building must go first so task pages can read the generated results
 for task, subfolders in solution_docs.items():
     for software, solutions in subfolders.items():
         for solution in solutions:
             build_solution_page( task, software, solution )
+# Now task pages get built second, so they can read the generated solution pages
+for task_filename in task_files:
+    task_name = os.path.splitext( task_filename )[0]
+    build_task_page( task_name )
 delete_ungenerated_markdown()
 
 # Run Jekyll on newly copied files
