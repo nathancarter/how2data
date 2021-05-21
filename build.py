@@ -18,6 +18,17 @@ for task, subfolders in solution_docs.items():
             sys.exit( 1 )
 print( 'Check complete - no problems detected.' )
 
+# Delete files generated in last build
+section_heading( 'Deleting old files from Jekyll input folder' )
+docs_glob = ' '.join( [
+    os.path.join( jekyll_input_folder, f'*{ext}' ) for ext in doc_extensions
+] )
+imgs_glob = ' '.join( [
+    os.path.join( solution_imgs_folder, f'*{ext}' ) for ext in img_extensions
+] )
+print( f'Running: rm {docs_glob} {imgs_glob}' )
+os.system( f'rm {docs_glob} {imgs_glob}' )
+
 # Copy files to Jekyll input folder
 section_heading( 'Copying files to Jekyll input folder' )
 for file in static_pages:
