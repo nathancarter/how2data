@@ -38,6 +38,9 @@ configuration = read_yaml_from_file( database_config_file )
 ###  SOFTWARE PACKAGES
 ###
 
+# How to tell if a given string is one of the official names of a software package?
+def is_a_software_package ( text ):
+    return text in software_names
 # Function for converting a software package into the Markdown code for its name
 def software_package_name ( package ):
     return package['name']
@@ -117,9 +120,6 @@ solution_imgs = [
     for software in subfolders( os.path.join( solutions_folder, task ) ) \
     for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
 ]
-# How to tell if a given string is one of the official names of a software package?
-def is_a_software_package ( text ):
-    return text in software_names
 # Functions for solution files.  Parameters explained:
 # task = exact task name, a key to the solution_docs dict.
 # software = exact package name, a key to the solutions_docs[task] dict.
