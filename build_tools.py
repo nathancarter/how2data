@@ -1,4 +1,5 @@
 
+from build_constants import *
 import os
 from ruamel.yaml import YAML
 import pandas as pd
@@ -7,10 +8,7 @@ import re
 import shutil
 import sys
 
-# What extensions count as documents vs. images?
-# How can we easily filter for those extensions in a list of files?
-doc_extensions = [ '.md', '.markdown' ]
-img_extensions = [ '.jpg', '.jpeg', '.png', '.gif' ]
+# How can we easily filter for certain extensions in a list of files?
 def has_any_extension ( filename, extensions ):
     return any( ( filename.endswith( ext ) for ext in extensions ) )
 def is_doc ( filename ):
@@ -37,20 +35,14 @@ def section_heading ( title ):
     print( '-' * len( title ) )
 
 # Global variables for important folders in this repo and their contents
-main_folder = os.path.dirname( os.path.realpath( __file__ ) )
-jekyll_input_folder = os.path.join( main_folder, 'jekyll-input' )
-static_folder = os.path.join( main_folder, 'database', 'static' )
 static_pages = just_docs( os.listdir( static_folder ) )
-tasks_folder = os.path.join( main_folder, 'database', 'tasks' )
 task_files = [
     file for file in just_docs( os.listdir( tasks_folder ) ) \
     if file != 'README.md'
 ]
 task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
-task_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'task-images' )
 if not os.path.isdir( task_imgs_folder ):
     os.mkdir( task_imgs_folder )
-solutions_folder = os.path.join( main_folder, 'database', 'solutions' )
 solution_docs = {
     task : {
         software : docs_inside( os.path.join( solutions_folder, task, software ) ) \
@@ -64,7 +56,6 @@ solution_imgs = [
     for software in subfolders( os.path.join( solutions_folder, task ) ) \
     for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
 ]
-solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
 if not os.path.isdir( solution_imgs_folder ):
     os.mkdir( solution_imgs_folder )
 with open( os.path.join( static_folder, 'solution-template.md' ), 'r' ) as f:
@@ -72,13 +63,6 @@ with open( os.path.join( static_folder, 'solution-template.md' ), 'r' ) as f:
 with open( os.path.join( static_folder, 'task-template.md' ), 'r' ) as f:
     task_template = ''.join( f.readlines() )
 files_generated = [ ]
-
-# Jupyter kernels for running code
-kernel_for_software = {
-    'Python' : 'python3',
-    'Julia' : 'julia-1.6',
-    'R' : 'ir'
-}
 
 # Read database/database.yml and store it in a global variable
 with open( os.path.join( main_folder, 'database', 'database.yml' ), 'r' ) as f:
