@@ -31,6 +31,8 @@ for file in static_pages:
         } )
     else:
         copy_static_file( file )
+for ( task, software, filename ) in solution_imgs:
+    copy_solution_image_file( task, software, filename )
 
 # Generate files from database
 section_heading( 'Generating files from database content' )

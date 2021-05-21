@@ -4,6 +4,7 @@ from ruamel.yaml import YAML
 import pandas as pd
 import numpy as np
 import re
+import shutil
 
 # What extensions count as documents vs. images?
 # How can we easily filter for those extensions in a list of files?
@@ -54,11 +55,14 @@ solution_docs = {
     for task in subfolders( solutions_folder )
 }
 solution_imgs = [
-    os.path.join( solutions_folder, task, software, x ) \
+    ( task, software, x ) \
     for task in subfolders( solutions_folder ) \
     for software in subfolders( os.path.join( solutions_folder, task ) ) \
     for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
 ]
+solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
+if not os.path.isdir( solution_imgs_folder ):
+    os.mkdir( solution_imgs_folder )
 
 # Read database/database.yml and store it in a global variable
 with open( os.path.join( main_folder, 'database', 'database.yml' ), 'r' ) as f:
@@ -78,6 +82,15 @@ def copy_static_file ( filename, replacements = dict() ):
     print( 'Copied: Source:      ', source )
     print( '        Dest:        ', dest )
     print( '        Replacements:', len(replacements) )
+
+# Function for copying an image file from a solutions subfolder to the Jekyll
+# input folder.
+def copy_solution_image_file ( task, software, image ):
+    source = os.path.join( solutions_folder, task, software, image )
+    dest = os.path.join( solution_imgs_folder, f'{task}-{software}-{image}' )
+    shutil.copy2( source, dest )
+    print( 'Copied: Source:', source )
+    print( '        Dest:  ', dest )
 
 # Function for converting a software package into the Markdown code for its name
 def software_package_name ( package ):
@@ -143,6 +156,29 @@ def header_and_content ( filename ):
     # otherwise return an empty yaml header and just the content
     return {}, ''.join( lines )
 
+# When processing a markdown file, we may want to manipulate its image
+# links.  The following function maps any given function over the set
+# of image links in a string containing markdown, producing a new string.
+# The function passed as input should take as input three parameters:
+# img_code = the full image code, such as "![alt-text here](filename.png)"
+# alt_text = just the alt text, what's in between the brackets above
+# filename = just the filename, what's in between parentheses above
+# It should return either a new image tag as a string OR an alt-text/filename
+# pair as a tuple, which will be formed into an image tag.
+def map_over_images ( func, markdown ):
+    result = ''
+    while True:
+        match = re.search( '!\\[([^]]*)\\]\\(([^)]*)\\)', markdown )
+        if match is None:
+            break
+        start, end = match.span()
+        changed = func( match.group( 0 ), match.group( 1 ), match.group( 2 ) )
+        if type( changed ) == tuple:
+            changed = f'![{changed[0]}]({changed[1]})'
+        result += markdown[:start] + changed
+        markdown = markdown[end:]
+    return result + markdown
+
 # For building solution pages, a few functions.  Parameters explained:
 # task = exact task name, a key to the solution_docs dict.
 # software = exact package name, a key to the solutions_docs[task] dict.
@@ -153,6 +189,13 @@ def solution_page_destination ( task, software, solution ):
 def build_solution_page ( task, software, solution ):
     header, content = header_and_content(
         os.path.join( solutions_folder, task, software, solution ) )
+    def adjust_img_path ( code, alt_text, filename ):
+        new_filename = f'{task}-{software}-{filename}'
+        return (
+            alt_text,
+            os.path.join( '..', 'assets', 'solution-images', new_filename )
+        )
+    content = map_over_images( adjust_img_path, content )
     basename, extension = basename_and_extension( solution )
     title = f'{task} ({basename}, in {software})'
     out_filename = blogify( title ) + '.md'
