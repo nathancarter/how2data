@@ -3,7 +3,8 @@
 import os, sys
 from build_tools import *
 
-section_heading( 'Database build process' )
+# Ensure things are named consistently, or throw a build error explaining the problem
+section_heading( 'Checking database consistency' )
 for task, subfolders in solution_docs.items():
     if not is_a_task( task ):
         print( 'Build error: Solution folder not named after any existing task' )
@@ -15,6 +16,10 @@ for task, subfolders in solution_docs.items():
             print( '     Folder:', os.path.join( solutions_folder, task, software ) )
             print( '   Packages:', ', '.join( software_names ) )
             sys.exit( 1 )
+print( 'Check complete - no problems detected.' )
+
+# Copy files to Jekyll input folder
+section_heading( 'Copying files to Jekyll input folder' )
 for file in static_pages:
     if file == 'software.md':
         copy_static_file( file, {
@@ -27,5 +32,11 @@ for file in static_pages:
     else:
         copy_static_file( file )
 
-section_heading( 'Jekyll build process' )
-sys.exit( os.system( 'bundle exec jekyll build' ) )
+# Run Jekyll on newly copied files
+section_heading( 'Running Jekyll build process' )
+code = os.system( 'bundle exec jekyll build' )
+if code != 0:
+    sys.exit( code )
+
+# State completion.
+section_heading( 'Build completed successfully.' )

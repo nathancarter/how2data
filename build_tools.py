@@ -28,7 +28,8 @@ def imgs_inside ( folder ):
 
 # Function for printing section headings in the console output
 def section_heading ( title ):
-    print( '-' * len( title ) )
+    print()
+    print()
     print( title )
     print( '-' * len( title ) )
 
