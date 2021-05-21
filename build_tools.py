@@ -64,6 +64,7 @@ solution_imgs = [
 solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
 if not os.path.isdir( solution_imgs_folder ):
     os.mkdir( solution_imgs_folder )
+files_generated = [ ]
 
 # Jupyter kernels for running code
 kernel_for_software = {
@@ -90,6 +91,7 @@ def copy_static_file ( filename, replacements = dict() ):
     print( 'Copied: Source:      ', source )
     print( '        Dest:        ', dest )
     print( '        Replacements:', len(replacements) )
+    files_generated.append( filename )
 
 # Function for copying an image file from a solutions subfolder to the Jekyll
 # input folder.
@@ -223,6 +225,17 @@ def run_markdown ( markdown, folder, software ):
     os.system( f'rm "{tmp_md_doc}"' )
     return result
 
+# Must we rebuild an output file?  This function says yes if the output file
+# does not exist, or is older than the input file that would be used to build it.
+def must_rebuild_file ( input, output ):
+    if not os.path.exists( output ):
+        print( f'Must rebuild because DNE: {output}' )
+        return True
+    input_modified = os.path.getmtime( input )
+    output_modified = os.path.getmtime( output )
+    print( f'Which is older?\n{input_modified} {input}\n{output_modified} {output}' )
+    return input_modified > output_modified
+
 # For building solution pages, a few functions.  Parameters explained:
 # task = exact task name, a key to the solution_docs dict.
 # software = exact package name, a key to the solutions_docs[task] dict.
@@ -231,8 +244,17 @@ def solution_page_destination ( task, software, solution ):
     return os.path.join( jekyll_input_folder, )
 # Main function to build a solution page.  Parameters as above.
 def build_solution_page ( task, software, solution ):
-    header, content = header_and_content(
-        os.path.join( solutions_folder, task, software, solution ) )
+    basename, extension = basename_and_extension( solution )
+    title = f'{task} ({basename}, in {software})'
+    out_filename = blogify( title ) + '.md'
+    input_file = os.path.join( solutions_folder, task, software, solution )
+    output_file = os.path.join( jekyll_input_folder, out_filename )
+    if not must_rebuild_file( input_file, output_file ):
+        print( f'Not rebuilding this: {output_file}' )
+        print( f'   It is newer than: {input_file}' )
+        files_generated.append( out_filename )
+        return
+    header, content = header_and_content( input_file )
     def adjust_img_path ( code, alt_text, filename ):
         new_filename = f'{task}-{software}-{filename}'
         return (
@@ -240,10 +262,7 @@ def build_solution_page ( task, software, solution ):
             os.path.join( '..', 'assets', 'solution-images', new_filename )
         )
     content = map_over_images( adjust_img_path, content )
-    basename, extension = basename_and_extension( solution )
-    title = f'{task} ({basename}, in {software})'
-    out_filename = blogify( title ) + '.md'
-    with open( os.path.join( jekyll_input_folder, out_filename ), 'w' ) as f:
+    with open( output_file, 'w' ) as f:
         f.write( f'''---
 layout: page
 title: {title}
@@ -262,3 +281,16 @@ nav_exclude: true
     print( f'Built solution for: {task}' )
     print( f'           Details: {basename}, in {software}' )
     print()
+    files_generated.append( out_filename )
+
+# How to clean up any markdown files we didn't just generate.
+# One might think it would be easier to just blow away all markdown files before
+# we generate the site, but that forces us to re-run all solution code every
+# time, which is not efficient.  So we re-generate just the files we need to,
+# and mark all the output files (regenerated or saved) as "generated," then
+# delete every file not so marked.  Thus if any file were renamed before this
+# build process, we will delete any old files generated from its old name.
+def delete_ungenerated_markdown ():
+    for file in os.listdir( jekyll_input_folder ):
+        if is_doc( file ) and file not in files_generated:
+            os.system( f'rm {os.path.join( jekyll_input_folder, file )}' )
