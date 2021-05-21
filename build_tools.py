@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import re
 import shutil
+import sys
 
 # What extensions count as documents vs. images?
 # How can we easily filter for those extensions in a list of files?
@@ -63,6 +64,13 @@ solution_imgs = [
 solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
 if not os.path.isdir( solution_imgs_folder ):
     os.mkdir( solution_imgs_folder )
+
+# Jupyter kernels for running code
+kernel_for_software = {
+    'Python' : 'python3',
+    'Julia' : 'julia-1.6',
+    'R' : 'ir'
+}
 
 # Read database/database.yml and store it in a global variable
 with open( os.path.join( main_folder, 'database', 'database.yml' ), 'r' ) as f:
@@ -179,6 +187,42 @@ def map_over_images ( func, markdown ):
         markdown = markdown[end:]
     return result + markdown
 
+# Function to run a given markdown document as if it were a Jupyter notebook.
+# You specify the markdown content as a string, the folder in which to run it
+# (using a temp file that will be deleted aftewards), and the name of the
+# software package.  If that software package has a kernel, according to the
+# kernel_for_software dictionary defined above, we will run it using that
+# kernel; otherwise this function will function as the identity function.
+# It returns another string of markdown content, this time with execution
+# outputs included (iff there is a relevant kernel).
+def run_markdown ( markdown, folder, software ):
+    if software in kernel_for_software:
+        kernel = kernel_for_software[software]
+    else:
+        return markdown
+    tmp_md_doc = os.path.join( folder, 'temp-jupyter-input.md' )
+    ipynb_out = tmp_md_doc[:-3] + '.ipynb'
+    # write markdown to temp file
+    with open( tmp_md_doc, 'w' ) as f:
+        f.write( markdown )
+    # run it, creating a notebook containing the outputs
+    code = os.system( 'jupytext --to ipynb --execute ' + \
+        f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"' )
+    os.system( f'rm "{tmp_md_doc}"' )
+    if code != 0:
+        sys.exit( code )
+    # convert that to markdown again
+    code = os.system( 'jupyter nbconvert --to=markdown ' + \
+        f'--output="{tmp_md_doc}" "{ipynb_out}"' )
+    os.system( f'rm "{ipynb_out}"' )
+    if code != 0:
+        sys.exit( code )
+    # read it back into a string
+    with open( tmp_md_doc, 'r' ) as f:
+        result = ''.join( f.readlines() )
+    os.system( f'rm "{tmp_md_doc}"' )
+    return result
+
 # For building solution pages, a few functions.  Parameters explained:
 # task = exact task name, a key to the solution_docs dict.
 # software = exact package name, a key to the solutions_docs[task] dict.
@@ -211,9 +255,10 @@ nav_exclude: true
 
 (Later we will put here a link to the task page; not yet implemented.)
 
-{content}
+{run_markdown( content, os.path.join( solutions_folder, task, software ), software )}
 
 {f'Contributed by {header["author"]}' if "author" in header else ''}
 ''' )
     print( f'Built solution for: {task}' )
     print( f'           Details: {basename}, in {software}' )
+    print()
