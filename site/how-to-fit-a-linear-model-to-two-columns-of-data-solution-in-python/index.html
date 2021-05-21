@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title> - How to Data</title>
+    <title>How to fit a linear model to two columns of data (solution, in Python) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to Data | Reference site for common computing tasks in statistics and data science</title>
+<title>How to fit a linear model to two columns of data (solution, in Python) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to Data" />
+<meta property="og:title" content="How to fit a linear model to two columns of data (solution, in Python)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/404.html" />
-<meta property="og:url" content="/how2data/site/404.html" />
+<link rel="canonical" href="/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-python/" />
+<meta property="og:url" content="/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-python/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to Data" />
+<meta property="twitter:title" content="How to fit a linear model to two columns of data (solution, in Python)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/404.html","headline":"How to Data","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-python/","headline":"How to fit a linear model to two columns of data (solution, in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -121,33 +121,56 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-      <h1>
+          <h1 id="how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-python">
         
         
-          404
+          <a href="#how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-python" class="anchor-heading" aria-labelledby="how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to fit a linear model to two columns of data (solution, in Python)
         
         
       </h1>
     
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>(Later we will put here a link to the task page; not yet implemented.)</p>
+
+<p>This solution uses a pandas DataFrame of fake example data.
+When using this code, replace our fake data with your real data.</p>
+
+<p>Although the solution below uses plain Python lists of data, it also works if
+the data are stored in NumPy arrays or pandas Series.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre><span class="c1"># Here is the fake data you should replace with your real data.
+</span><span class="n">xs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">393</span><span class="p">,</span> <span class="mi">453</span><span class="p">,</span> <span class="mi">553</span><span class="p">,</span> <span class="mi">679</span><span class="p">,</span> <span class="mi">729</span><span class="p">,</span> <span class="mi">748</span><span class="p">,</span> <span class="mi">817</span> <span class="p">]</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">24</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span>  <span class="mi">27</span><span class="p">,</span>  <span class="mi">36</span><span class="p">,</span>  <span class="mi">55</span><span class="p">,</span>  <span class="mi">68</span><span class="p">,</span>  <span class="mi">84</span> <span class="p">]</span>
+
+<span class="c1"># We will use SciPy to build the model
+</span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
+
+<span class="c1"># If you need the model coefficients stored in variables for later use, do:
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">linregress</span><span class="p">(</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="p">)</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">intercept</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">slope</span>
+
+<span class="c1"># If you just need to see the coefficients (and some other related data),
+# do this alone:
+</span><span class="n">stats</span><span class="p">.</span><span class="n">linregress</span><span class="p">(</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
 
         
 
