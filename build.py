@@ -37,6 +37,8 @@ for file in static_pages:
         copy_static_file( file, {
             'SET_OF_TASKS' : tasks_table
         } )
+    elif file.endswith( '-template.md' ):
+        pass # we will process these later
     else:
         copy_static_file( file )
 for ( task, software, filename ) in solution_imgs:

@@ -64,6 +64,8 @@ solution_imgs = [
 solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
 if not os.path.isdir( solution_imgs_folder ):
     os.mkdir( solution_imgs_folder )
+with open( os.path.join( static_folder, 'solution-template.md' ), 'r' ) as f:
+    solution_template = ''.join( f.readlines() )
 files_generated = [ ]
 
 # Jupyter kernels for running code
@@ -263,21 +265,19 @@ def build_solution_page ( task, software, solution ):
         )
     content = map_over_images( adjust_img_path, content )
     with open( output_file, 'w' ) as f:
-        f.write( f'''---
-layout: page
-title: {title}
-permalink: /{blogify(title)}/
-nav_exclude: true
----
-
-# {title}
-
-(Later we will put here a link to the task page; not yet implemented.)
-
-{run_markdown( content, os.path.join( solutions_folder, task, software ), software )}
-
-{f'Contributed by {header["author"]}' if "author" in header else ''}
-''' )
+        f.write(
+            solution_template
+            .replace( 'TITLE', title )
+            .replace( 'PERMALINK', blogify( title ) )
+            .replace( 'TASK_PAGE_LINK',
+                '(Later we will put here a link to the task page; not yet implemented.)' )
+            .replace( 'MARKDOWN_CONTENT', run_markdown(
+                content,
+                os.path.join( solutions_folder, task, software ),
+                software ) )
+            .replace( 'CONTRIBUTORS',
+                f'Contributed by {header["author"]}' if "author" in header else '' )
+        )
     print( f'Built solution for: {task}' )
     print( f'           Details: {basename}, in {software}' )
     print()
