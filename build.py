@@ -58,5 +58,5 @@ code = os.system( 'bundle exec jekyll build' )
 if code != 0:
     sys.exit( code )
 
-# State completion.
+# State completion
 section_heading( 'Build completed successfully.' )
