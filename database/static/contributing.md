@@ -2,6 +2,7 @@
 layout: page
 title: Contributing
 permalink: /contributing/
+nav_order: 5
 ---
 
 After the site is more mature and complete, this page will cover:

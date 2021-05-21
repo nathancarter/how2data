@@ -3,6 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 title: Welcome
 layout: home
+nav_order: 1
 ---
 
 # Welcome to *How to Data!*

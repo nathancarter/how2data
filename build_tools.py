@@ -204,6 +204,7 @@ def build_solution_page ( task, software, solution ):
 layout: page
 title: {title}
 permalink: /{blogify(title)}/
+nav_exclude: true
 ---
 
 # {title}

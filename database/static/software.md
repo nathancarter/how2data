@@ -2,6 +2,7 @@
 layout: page
 title: Software Packages
 permalink: /software/
+nav_order: 3
 ---
 
 Here is a list of the software packages that appear in the solutions on this website.

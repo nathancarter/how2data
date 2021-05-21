@@ -2,6 +2,7 @@
 layout: page
 title: Tasks
 permalink: /tasks/
+nav_order: 4
 ---
 
 This database is a list of tasks that students of data science may want to
