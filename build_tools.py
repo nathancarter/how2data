@@ -200,7 +200,7 @@ def run_markdown ( markdown, folder, software ):
         kernel = kernel_for_software[software]
     else:
         return markdown
-    tmp_md_doc = os.path.join( folder, 'temp-jupyter-input.md' )
+    tmp_md_doc = os.path.join( folder, 'jupyter-temp-file.md' )
     ipynb_out = tmp_md_doc[:-3] + '.ipynb'
     # write markdown to temp file
     with open( tmp_md_doc, 'w' ) as f:
