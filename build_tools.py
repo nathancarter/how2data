@@ -3,6 +3,7 @@ import os
 from ruamel.yaml import YAML
 import pandas as pd
 import numpy as np
+import re
 
 # What extensions count as documents vs. images?
 # How can we easily filter for those extensions in a list of files?
@@ -118,3 +119,57 @@ def is_a_task ( text ):
     return any( [ text + ext in task_files for ext in doc_extensions ] )
 def is_a_software_package ( text ):
     return text in software_names
+
+# How to blogify a title into a filename (with lower case and hyphens).
+def blogify ( title ):
+    return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
+def basename_and_extension ( filename ):
+    bits = filename.split( '.' )
+    return '.'.join( bits[:-1] ), bits[-1]
+
+# For reading a text file and splitting it into its YAML header (if any)
+# and text content:
+def header_and_content ( filename ):
+    with open( filename, 'r' ) as f:
+        lines = f.readlines()
+    # if yaml header exists, find its end and return it and the content
+    if lines[0] == '---\n':
+        lines = lines[1:]
+        yaml_end = lines.index( '---\n' )
+        return (
+            YAML().load( ''.join( lines[:yaml_end] ) ),
+            ''.join( lines[yaml_end+1:] )
+        )
+    # otherwise return an empty yaml header and just the content
+    return {}, ''.join( lines )
+
+# For building solution pages, a few functions.  Parameters explained:
+# task = exact task name, a key to the solution_docs dict.
+# software = exact package name, a key to the solutions_docs[task] dict.
+# solution = exact filename in the task/software/ folder, including extension.
+def solution_page_destination ( task, software, solution ):
+    return os.path.join( jekyll_input_folder, )
+# Main function to build a solution page.  Parameters as above.
+def build_solution_page ( task, software, solution ):
+    header, content = header_and_content(
+        os.path.join( solutions_folder, task, software, solution ) )
+    basename, extension = basename_and_extension( solution )
+    title = f'{task} ({basename}, in {software})'
+    out_filename = blogify( title ) + '.md'
+    with open( os.path.join( jekyll_input_folder, out_filename ), 'w' ) as f:
+        f.write( f'''---
+layout: page
+title: {title}
+permalink: /{blogify(title)}/
+---
+
+# {title}
+
+(Later we will put here a link to the task page; not yet implemented.)
+
+{content}
+
+{f'Contributed by {header["author"]}' if "author" in header else ''}
+''' )
+    print( f'Built solution for: {task}' )
+    print( f'           Details: {basename}, in {software}' )

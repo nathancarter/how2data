@@ -32,6 +32,13 @@ for file in static_pages:
     else:
         copy_static_file( file )
 
+# Generate files from database
+section_heading( 'Generating files from database content' )
+for task, subfolders in solution_docs.items():
+    for software, solutions in subfolders.items():
+        for solution in solutions:
+            build_solution_page( task, software, solution )
+
 # Run Jekyll on newly copied files
 section_heading( 'Running Jekyll build process' )
 code = os.system( 'bundle exec jekyll build' )
