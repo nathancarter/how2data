@@ -17,6 +17,10 @@ import re
 import shutil
 import sys
 
+###
+###  FILES, FOLDERS, AND CONFIGURATION
+###
+
 # Ensure certain key folders exist
 ensure_folder_exists( task_imgs_folder )
 ensure_folder_exists( solution_imgs_folder )
@@ -29,6 +33,10 @@ task_template = read_text_file( os.path.join( static_folder, 'task-template.md' 
 
 # Read database/database.yml and store it in a global variable
 configuration = read_yaml_from_file( database_config_file )
+
+###
+###  SOFTWARE PACKAGES
+###
 
 # Function for converting a software package into the Markdown code for its name
 def software_package_name ( package ):
@@ -52,6 +60,10 @@ software_table = pd.DataFrame( {
     "Website" : map( software_package_website, software_table )
 } )
 software_table = software_table.to_markdown( index=False )
+
+###
+###  TASKS
+###
 
 # The tasks table to be inserted on the tasks page
 task_files = [
@@ -81,6 +93,10 @@ def get_task_content ( task ):
     return read_text_file( filename )
 
 
+###
+###  SOLUTIONS
+###
+
 # Data about solutions
 solution_docs = {
     task : {
@@ -108,6 +124,9 @@ def solution_page_destination ( task, software, solution ):
 def solution_page_title ( task, software, solution ):
     return f'{task} ({without_extension( solution )}, in {software})'
 
+###
+###  MOVING/TRACKING FILES
+###
 
 # We will generate a lot of markdown files in the Jekyll input folder.
 # But we don't want any old/stale files to stay there across builds, such as if we
@@ -156,6 +175,9 @@ def copy_task_image_file ( filename ):
     print( 'Copied: Source:', source )
     print( '        Dest:  ', dest )
 
+###
+###  PROCESSING MARKDOWN AND RUNNING CODE THEREIN
+###
 
 # When processing a markdown file, we may want to manipulate its image
 # links.  The following function maps any given function over the set
