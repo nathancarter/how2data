@@ -1,10 +1,6 @@
 
 import os
 
-# What extensions count as documents vs. images?
-doc_extensions = [ '.md', '.markdown' ]
-img_extensions = [ '.jpg', '.jpeg', '.png', '.gif' ]
-
 # Important folders
 main_folder = os.path.dirname( os.path.realpath( __file__ ) )
 database_config_file = os.path.join( main_folder, 'database', 'database.yml' )

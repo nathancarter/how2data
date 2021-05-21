@@ -8,41 +8,45 @@ import re
 import shutil
 import sys
 
-# How can we easily filter for certain extensions in a list of files?
-def has_any_extension ( filename, extensions ):
-    return any( ( filename.endswith( ext ) for ext in extensions ) )
-def is_doc ( filename ):
-    return has_any_extension( filename, doc_extensions )
-def is_img ( filename ):
-    return has_any_extension( filename, img_extensions )
-def just_docs ( filenames ):
-    return [ x for x in filenames if is_doc( x ) ]
-def just_imgs ( filenames ):
-    return [ x for x in filenames if is_img( x ) ]
-def subfolders ( folder ):
-    return [ x for x in os.listdir( folder ) \
-             if os.path.isdir( os.path.join( folder, x ) ) ]
-def docs_inside ( folder ):
-    return [ x for x in os.listdir( folder ) if is_doc( x ) ]
-def imgs_inside ( folder ):
-    return [ x for x in os.listdir( folder ) if is_img( x ) ]
+# Read database/database.yml and store it in a global variable
+configuration = read_yaml_from_file( database_config_file )
 
-# Function for printing section headings in the console output
-def section_heading ( title ):
-    print()
-    print()
-    print( title )
-    print( '-' * len( title ) )
+# Function for converting a software package into the Markdown code for its name
+def software_package_name ( package ):
+    return package['name']
+# Function for converting a software package into the Markdown code for its icon
+def software_package_icon ( package ):
+    name = package['name']
+    icon = package['icon']
+    return f'![{name} icon]({icon}){{: style="height: 50px;" }}'
+# Function for converting a software package into the Markdown code for its website
+def software_package_website ( package ):
+    url = package['website']
+    return f'[{url}]({url})'
+# The software table to be inserted on the software packages page
+software_table = configuration['software']
+software_names = [ software_package_name( x ) for x in software_table ]
+software_table = pd.DataFrame( {
+    "Software Package" : software_names,
+    "Icon" : map( software_package_icon, software_table ),
+    "Number of solutions" : np.nan,
+    "Website" : map( software_package_website, software_table )
+} )
+software_table = software_table.to_markdown( index=False )
 
-# Global variables for important folders in this repo and their contents
-static_pages = just_docs( os.listdir( static_folder ) )
+# The tasks table to be inserted on the tasks page
 task_files = [
     file for file in just_docs( os.listdir( tasks_folder ) ) \
     if file != 'README.md'
 ]
-task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
-if not os.path.isdir( task_imgs_folder ):
-    os.mkdir( task_imgs_folder )
+tasks_table = pd.DataFrame( {
+    "Task" : [ os.path.splitext( filename )[0] for filename in task_files ]
+} )
+for package in configuration['software']:
+    tasks_table[f'Solutions in {package["name"]}'] = np.nan
+tasks_table = tasks_table.to_markdown( index=False )
+
+# Data about solutions
 solution_docs = {
     task : {
         software : docs_inside( os.path.join( solutions_folder, task, software ) ) \
@@ -56,14 +60,32 @@ solution_imgs = [
     for software in subfolders( os.path.join( solutions_folder, task ) ) \
     for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
 ]
-if not os.path.isdir( solution_imgs_folder ):
-    os.mkdir( solution_imgs_folder )
+
+# Ensure certain key folders exist
+ensure_folder_exists( task_imgs_folder )
+ensure_folder_exists( solution_imgs_folder )
+
+# Read important content from files and directories
+static_pages = just_docs( os.listdir( static_folder ) )
+task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
 solution_template = read_text_file( os.path.join( static_folder, 'solution-template.md' ) )
 task_template = read_text_file( os.path.join( static_folder, 'task-template.md' ) )
-files_generated = [ ]
 
-# Read database/database.yml and store it in a global variable
-configuration = read_yaml_from_file( database_config_file )
+# We will generate a lot of markdown files in the Jekyll input folder.
+# But we don't want any old/stale files to stay there across builds, such as if we
+# were to rename a source file, thus generating a file of a different name, and
+# orphaning the original.
+# But if we just wipe the dest folder every time, we lose a big opportunity for
+# efficiency by not re-generating expensive files that aren't stale.
+# So we create the following functions to mark what's been regenerated and what
+# hasn't, and let us delete any no-longer-needed stuff.
+files_generated = [ ]
+def mark_as_regenerated ( file ):
+    files_generated.append( file )
+def delete_ungenerated_markdown ():
+    for file in os.listdir( jekyll_input_folder ):
+        if is_doc( file ) and file not in files_generated:
+            os.system( f'rm {os.path.join( jekyll_input_folder, file )}' )
 
 # Function for copying a static file from the database folder to the
 # Jekyll input folder, optionally doing some text replacements en route
@@ -77,7 +99,7 @@ def copy_static_file ( filename, replacements = dict() ):
     print( 'Copied: Source:      ', source )
     print( '        Dest:        ', dest )
     print( '        Replacements:', len(replacements) )
-    files_generated.append( filename )
+    mark_as_regenerated( filename )
 
 # Function for copying an image file from a solutions subfolder to the Jekyll
 # input folder.
@@ -95,40 +117,6 @@ def copy_task_image_file ( filename ):
     shutil.copy2( source, dest )
     print( 'Copied: Source:', source )
     print( '        Dest:  ', dest )
-
-# Function for converting a software package into the Markdown code for its name
-def software_package_name ( package ):
-    return package['name']
-
-# Function for converting a software package into the Markdown code for its icon
-def software_package_icon ( package ):
-    name = package['name']
-    icon = package['icon']
-    return f'![{name} icon]({icon}){{: style="height: 50px;" }}'
-
-# Function for converting a software package into the Markdown code for its website
-def software_package_website ( package ):
-    url = package['website']
-    return f'[{url}]({url})'
-
-# The software table to be inserted on the software packages page
-software_table = configuration['software']
-software_names = [ software_package_name( x ) for x in software_table ]
-software_table = pd.DataFrame( {
-    "Software Package" : software_names,
-    "Icon" : map( software_package_icon, software_table ),
-    "Number of solutions" : np.nan,
-    "Website" : map( software_package_website, software_table )
-} )
-software_table = software_table.to_markdown( index=False )
-
-# The tasks table to be inserted on the tasks page
-tasks_table = pd.DataFrame( {
-    "Task" : [ os.path.splitext( filename )[0] for filename in task_files ]
-} )
-for package in configuration['software']:
-    tasks_table[f'Solutions in {package["name"]}'] = np.nan
-tasks_table = tasks_table.to_markdown( index=False )
 
 # How to tell if a given string is one of the official names of a task or a
 # software package in our database?  We make some functions.
@@ -248,7 +236,7 @@ def build_solution_page ( task, software, solution ):
     if not must_rebuild_file( input_file, output_file ):
         print( f'Not rebuilding this: {output_file}' )
         print( f'   It is newer than: {input_file}' )
-        files_generated.append( out_filename )
+        mark_as_regenerated( out_filename )
         return
     header, content = file_split_yaml_header( input_file )
     def adjust_img_path ( code, alt_text, filename ):
@@ -274,7 +262,7 @@ def build_solution_page ( task, software, solution ):
     print( f'Built solution for: {task}' )
     print( f'           Details: {basename}, in {software}' )
     print()
-    files_generated.append( out_filename )
+    mark_as_regenerated( out_filename )
 
 # How to fetch a generated solution's body from within the generated markdown
 def get_generated_solution_body ( task, software, solution ):
@@ -330,16 +318,4 @@ def build_task_page ( task ):
         .replace( 'OPPORTUNITIES',
             '\n'.join( [ f' * {software}' for software in opportunities ] ) )
     )
-    files_generated.append( out_filename )
-
-# How to clean up any markdown files we didn't just generate.
-# One might think it would be easier to just blow away all markdown files before
-# we generate the site, but that forces us to re-run all solution code every
-# time, which is not efficient.  So we re-generate just the files we need to,
-# and mark all the output files (regenerated or saved) as "generated," then
-# delete every file not so marked.  Thus if any file were renamed before this
-# build process, we will delete any old files generated from its old name.
-def delete_ungenerated_markdown ():
-    for file in os.listdir( jekyll_input_folder ):
-        if is_doc( file ) and file not in files_generated:
-            os.system( f'rm {os.path.join( jekyll_input_folder, file )}' )
+    mark_as_regenerated( out_filename )
