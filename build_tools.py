@@ -310,7 +310,7 @@ def build_task_page ( task ):
 '''
         opportunities = [ x for x in software_names if x not in solution_docs[task] ]
     else:
-        all_solutions = 'No solutions exist yet in the database for this task.'
+        all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
         opportunities = software_names
     write_text_file( output_file,
         task_template

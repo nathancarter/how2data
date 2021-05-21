@@ -80,7 +80,7 @@ def section_heading ( title ):
 def blogify ( title ):
     return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
 
-# Split a filename into the base and extension (i.e., what's after the final dot)
+# Get pieces of a filename/path
 def file_extension ( filename ):
     return os.path.splitext( filename )[1]
 def without_extension ( filename ):
