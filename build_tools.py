@@ -17,6 +17,16 @@ import re
 import shutil
 import sys
 
+# Ensure certain key folders exist
+ensure_folder_exists( task_imgs_folder )
+ensure_folder_exists( solution_imgs_folder )
+
+# Read important content from files and directories
+static_pages = just_docs( os.listdir( static_folder ) )
+task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
+solution_template = read_text_file( os.path.join( static_folder, 'solution-template.md' ) )
+task_template = read_text_file( os.path.join( static_folder, 'task-template.md' ) )
+
 # Read database/database.yml and store it in a global variable
 configuration = read_yaml_from_file( database_config_file )
 
@@ -49,11 +59,27 @@ task_files = [
     if file != 'README.md'
 ]
 tasks_table = pd.DataFrame( {
-    "Task" : [ os.path.splitext( filename )[0] for filename in task_files ]
+    "Task" : [ without_extension( filename ) for filename in task_files ]
 } )
 for package in configuration['software']:
     tasks_table[f'Solutions in {package["name"]}'] = np.nan
 tasks_table = tasks_table.to_markdown( index=False )
+# How to tell if a given string is one of the official names of a task?
+def get_task_filename ( task ):
+    for extension in doc_extensions:
+        if task + extension in task_files:
+            return os.path.join( tasks_folder, task + extension )
+    return None
+def is_a_task ( text ):
+    return get_task_filename( text ) != None
+# How to read a task file's markdown content
+def get_task_content ( task ):
+    filename = get_task_filename( task )
+    if filename is None:
+        print( 'Could not find filename for task:', task )
+        sys.exit( 1 )
+    return read_text_file( filename )
+
 
 # Data about solutions
 solution_docs = {
@@ -69,16 +95,19 @@ solution_imgs = [
     for software in subfolders( os.path.join( solutions_folder, task ) ) \
     for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
 ]
+# How to tell if a given string is one of the official names of a software package?
+def is_a_software_package ( text ):
+    return text in software_names
+# Functions for solution files.  Parameters explained:
+# task = exact task name, a key to the solution_docs dict.
+# software = exact package name, a key to the solutions_docs[task] dict.
+# solution = exact filename in the task/software/ folder, including extension.
+def solution_page_destination ( task, software, solution ):
+    return os.path.join( jekyll_input_folder, )
+# What should the title be within such a solution page?
+def solution_page_title ( task, software, solution ):
+    return f'{task} ({without_extension( solution )}, in {software})'
 
-# Ensure certain key folders exist
-ensure_folder_exists( task_imgs_folder )
-ensure_folder_exists( solution_imgs_folder )
-
-# Read important content from files and directories
-static_pages = just_docs( os.listdir( static_folder ) )
-task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
-solution_template = read_text_file( os.path.join( static_folder, 'solution-template.md' ) )
-task_template = read_text_file( os.path.join( static_folder, 'task-template.md' ) )
 
 # We will generate a lot of markdown files in the Jekyll input folder.
 # But we don't want any old/stale files to stay there across builds, such as if we
@@ -127,24 +156,6 @@ def copy_task_image_file ( filename ):
     print( 'Copied: Source:', source )
     print( '        Dest:  ', dest )
 
-# How to tell if a given string is one of the official names of a task or a
-# software package in our database?  We make some functions.
-def get_task_filename ( task ):
-    for extension in doc_extensions:
-        if task + extension in task_files:
-            return os.path.join( tasks_folder, task + extension )
-    return None
-def is_a_task ( text ):
-    return get_task_filename( text ) != None
-def is_a_software_package ( text ):
-    return text in software_names
-
-# How to blogify a title into a filename (with lower case and hyphens).
-def blogify ( title ):
-    return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
-def basename_and_extension ( filename ):
-    bits = filename.split( '.' )
-    return '.'.join( bits[:-1] ), bits[-1]
 
 # When processing a markdown file, we may want to manipulate its image
 # links.  The following function maps any given function over the set
@@ -203,42 +214,10 @@ def run_markdown ( markdown, folder, software ):
     os.system( f'rm "{tmp_md_doc}"' )
     return result
 
-# Must we rebuild an output file?  This function says yes if the output file
-# does not exist, or is older than the input file that would be used to build it.
-def must_rebuild_file ( input, output ):
-    if not os.path.exists( output ):
-        print( f'Must rebuild because DNE: {output}' )
-        return True
-    input_modified = os.path.getmtime( input )
-    output_modified = os.path.getmtime( output )
-    return input_modified > output_modified
-
-# How to mark the body of a solution
-def marker ( side ):
-    return f'<!-- {side} marker -->'
-def mark_solution_body ( body ):
-    return f'''
-{marker( "begin" )}
-
-{body}
-
-{marker( "end" )}
-'''
-def extract_solution_body ( larger_text ):
-    begin = larger_text.index( marker( 'begin' ) )
-    end = larger_text.index( marker( 'end' ) )
-    return larger_text[begin+len(marker('begin')):end]
-
-# For building solution pages, a few functions.  Parameters explained:
-# task = exact task name, a key to the solution_docs dict.
-# software = exact package name, a key to the solutions_docs[task] dict.
-# solution = exact filename in the task/software/ folder, including extension.
-def solution_page_destination ( task, software, solution ):
-    return os.path.join( jekyll_input_folder, )
-# Main function to build a solution page.  Parameters as above.
+# Main function to build a solution page.  Parameters are the same as they
+# are for solution_page_destination(), solution_page_title().
 def build_solution_page ( task, software, solution ):
-    basename, extension = basename_and_extension( solution )
-    title = f'{task} ({basename}, in {software})'
+    title = solution_page_title( task, software, solution )
     out_filename = blogify( title ) + '.md'
     input_file = os.path.join( solutions_folder, task, software, solution )
     output_file = os.path.join( jekyll_input_folder, out_filename )
@@ -261,7 +240,7 @@ def build_solution_page ( task, software, solution ):
         .replace( 'PERMALINK', blogify( title ) )
         .replace( 'TASK_PAGE_LINK',
             '(Later we will put here a link to the task page; not yet implemented.)' )
-        .replace( 'MARKDOWN_CONTENT', mark_solution_body( run_markdown(
+        .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
             os.path.join( solutions_folder, task, software ),
             software ) ) )
@@ -269,27 +248,21 @@ def build_solution_page ( task, software, solution ):
             f'Contributed by {header["author"]}' if "author" in header else '' )
     )
     print( f'Built solution for: {task}' )
-    print( f'           Details: {basename}, in {software}' )
+    print( f'           Details: {without_extension( solution )}, in {software}' )
     print()
     mark_as_regenerated( out_filename )
 
 # How to fetch a generated solution's body from within the generated markdown
 def get_generated_solution_body ( task, software, solution ):
-    basename, extension = basename_and_extension( solution )
-    title = f'{task} ({basename}, in {software})'
+    title = solution_page_title( task, software, solution )
     generated_file = blogify( title ) + '.md'
     all_content = read_text_file( os.path.join( jekyll_input_folder, generated_file ) )
-    return extract_solution_body( all_content )
-
-# How to read a task file's markdown content
-def get_task_content ( task ):
-    filename = get_task_filename( task )
-    if filename is None:
-        print( 'Could not find filename for task:', task )
-        sys.exit( 1 )
-    return read_text_file( filename )
+    return unwrap_from_html_comments( all_content )
 
 # How to build a task page
+# IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
+# using the build_solution_page() function on any files that need their solutions
+# rebuilt/updated.  See that function defined above.
 def build_task_page ( task ):
     out_filename = blogify( task ) + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
@@ -304,7 +277,7 @@ def build_task_page ( task ):
     if task in solution_docs:
         for software, solutions in solution_docs[task].items():
             for solution in solutions:
-                solution_name = os.path.splitext( solution )[0]
+                solution_name = without_extension( solution )
                 solution_name = solution_name[0].upper() + solution_name[1:]
                 all_solutions += f'''
 

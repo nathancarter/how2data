@@ -10,6 +10,7 @@
 
 from ruamel.yaml import YAML
 import os
+import re
 
 # Get all contents of a text file
 def read_text_file ( file ):
@@ -74,3 +75,35 @@ def section_heading ( title ):
     print()
     print( title )
     print( '-' * len( title ) )
+
+# How to blogify a title into a filename (with lower case and hyphens).
+def blogify ( title ):
+    return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
+
+# Split a filename into the base and extension (i.e., what's after the final dot)
+def file_extension ( filename ):
+    return os.path.splitext( filename )[1]
+def without_extension ( filename ):
+    return os.path.splitext( filename )[0]
+
+# Must we rebuild an output file?  This function says yes if the output file
+# does not exist, or is older than the input file that would be used to build it.
+def must_rebuild_file ( input, output ):
+    if not os.path.exists( output ):
+        print( f'Must rebuild because DNE: {output}' )
+        return True
+    input_modified = os.path.getmtime( input )
+    output_modified = os.path.getmtime( output )
+    return input_modified > output_modified
+
+# How to place some special content in an HTML or markdown file and
+# indicate that it's special by wrapping it in comment flags, so that you
+# can extract it again later.  This assumes only one such special block per file.
+start_comment = '<!-- beginning of wrapper -->'
+end_comment   = '<!-- ending of wrapper -->'
+def wrap_in_html_comments ( text ):
+    return f'{start_comment}\n\n{text}\n\n{end_comment}\n'
+def unwrap_from_html_comments ( text ):
+    begin = text.index( start_comment )
+    end = text.index( end_comment )
+    return text[begin+len(start_comment):end]
