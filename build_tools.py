@@ -1,7 +1,7 @@
 
 from build_constants import *
+from utils import *
 import os
-from ruamel.yaml import YAML
 import pandas as pd
 import numpy as np
 import re
@@ -58,27 +58,22 @@ solution_imgs = [
 ]
 if not os.path.isdir( solution_imgs_folder ):
     os.mkdir( solution_imgs_folder )
-with open( os.path.join( static_folder, 'solution-template.md' ), 'r' ) as f:
-    solution_template = ''.join( f.readlines() )
-with open( os.path.join( static_folder, 'task-template.md' ), 'r' ) as f:
-    task_template = ''.join( f.readlines() )
+solution_template = read_text_file( os.path.join( static_folder, 'solution-template.md' ) )
+task_template = read_text_file( os.path.join( static_folder, 'task-template.md' ) )
 files_generated = [ ]
 
 # Read database/database.yml and store it in a global variable
-with open( os.path.join( main_folder, 'database', 'database.yml' ), 'r' ) as f:
-    configuration = YAML().load( ''.join( f.readlines() ) )
+configuration = read_yaml_from_file( database_config_file )
 
 # Function for copying a static file from the database folder to the
 # Jekyll input folder, optionally doing some text replacements en route
 def copy_static_file ( filename, replacements = dict() ):
     source = os.path.join( static_folder, filename )
     dest = os.path.join( jekyll_input_folder, filename )
-    with open( source, 'r' ) as f:
-        content = ''.join( f.readlines() )
+    content = read_text_file( source )
     for original, replacement in replacements.items():
         content = content.replace( original, replacement )
-    with open( dest, 'w' ) as f:
-        f.write( content )
+    write_text_file( dest, content )
     print( 'Copied: Source:      ', source )
     print( '        Dest:        ', dest )
     print( '        Replacements:', len(replacements) )
@@ -154,22 +149,6 @@ def basename_and_extension ( filename ):
     bits = filename.split( '.' )
     return '.'.join( bits[:-1] ), bits[-1]
 
-# For reading a text file and splitting it into its YAML header (if any)
-# and text content:
-def header_and_content ( filename ):
-    with open( filename, 'r' ) as f:
-        lines = f.readlines()
-    # if yaml header exists, find its end and return it and the content
-    if lines[0] == '---\n':
-        lines = lines[1:]
-        yaml_end = lines.index( '---\n' )
-        return (
-            YAML().load( ''.join( lines[:yaml_end] ) ),
-            ''.join( lines[yaml_end+1:] )
-        )
-    # otherwise return an empty yaml header and just the content
-    return {}, ''.join( lines )
-
 # When processing a markdown file, we may want to manipulate its image
 # links.  The following function maps any given function over the set
 # of image links in a string containing markdown, producing a new string.
@@ -209,8 +188,7 @@ def run_markdown ( markdown, folder, software ):
     tmp_md_doc = os.path.join( folder, 'jupyter-temp-file.md' )
     ipynb_out = tmp_md_doc[:-3] + '.ipynb'
     # write markdown to temp file
-    with open( tmp_md_doc, 'w' ) as f:
-        f.write( markdown )
+    write_text_file( tmp_md_doc, markdown )
     # run it, creating a notebook containing the outputs
     code = os.system( 'jupytext --to ipynb --execute ' + \
         f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"' )
@@ -224,8 +202,7 @@ def run_markdown ( markdown, folder, software ):
     if code != 0:
         sys.exit( code )
     # read it back into a string
-    with open( tmp_md_doc, 'r' ) as f:
-        result = ''.join( f.readlines() )
+    result = read_text_file( tmp_md_doc )
     os.system( f'rm "{tmp_md_doc}"' )
     return result
 
@@ -273,7 +250,7 @@ def build_solution_page ( task, software, solution ):
         print( f'   It is newer than: {input_file}' )
         files_generated.append( out_filename )
         return
-    header, content = header_and_content( input_file )
+    header, content = file_split_yaml_header( input_file )
     def adjust_img_path ( code, alt_text, filename ):
         new_filename = f'{task}-{software}-{filename}'
         return (
@@ -281,20 +258,19 @@ def build_solution_page ( task, software, solution ):
             os.path.join( '..', 'assets', 'solution-images', new_filename )
         )
     content = map_over_images( adjust_img_path, content )
-    with open( output_file, 'w' ) as f:
-        f.write(
-            solution_template
-            .replace( 'TITLE', title )
-            .replace( 'PERMALINK', blogify( title ) )
-            .replace( 'TASK_PAGE_LINK',
-                '(Later we will put here a link to the task page; not yet implemented.)' )
-            .replace( 'MARKDOWN_CONTENT', mark_solution_body( run_markdown(
-                content,
-                os.path.join( solutions_folder, task, software ),
-                software ) ) )
-            .replace( 'CONTRIBUTORS',
-                f'Contributed by {header["author"]}' if "author" in header else '' )
-        )
+    write_text_file( output_file,
+        solution_template
+        .replace( 'TITLE', title )
+        .replace( 'PERMALINK', blogify( title ) )
+        .replace( 'TASK_PAGE_LINK',
+            '(Later we will put here a link to the task page; not yet implemented.)' )
+        .replace( 'MARKDOWN_CONTENT', mark_solution_body( run_markdown(
+            content,
+            os.path.join( solutions_folder, task, software ),
+            software ) ) )
+        .replace( 'CONTRIBUTORS',
+            f'Contributed by {header["author"]}' if "author" in header else '' )
+    )
     print( f'Built solution for: {task}' )
     print( f'           Details: {basename}, in {software}' )
     print()
@@ -305,8 +281,7 @@ def get_generated_solution_body ( task, software, solution ):
     basename, extension = basename_and_extension( solution )
     title = f'{task} ({basename}, in {software})'
     generated_file = blogify( title ) + '.md'
-    with open( os.path.join( jekyll_input_folder, generated_file ), 'r' ) as f:
-        all_content = ''.join( f.readlines() )
+    all_content = read_text_file( os.path.join( jekyll_input_folder, generated_file ) )
     return extract_solution_body( all_content )
 
 # How to read a task file's markdown content
@@ -315,9 +290,7 @@ def get_task_content ( task ):
     if filename is None:
         print( 'Could not find filename for task:', task )
         sys.exit( 1 )
-    with open( filename, 'r' ) as f:
-        result = ''.join( f.readlines() )
-    return result
+    return read_text_file( filename )
 
 # How to build a task page
 def build_task_page ( task ):
@@ -347,17 +320,16 @@ def build_task_page ( task ):
     else:
         all_solutions = 'No solutions exist yet in the database for this task.'
         opportunities = software_names
-    with open( output_file, 'w' ) as f:
-        f.write(
-            task_template
-            .replace( 'TITLE', task )
-            .replace( 'PERMALINK', blogify( task ) )
-            .replace( 'DESCRIPTION', 'Description of the task will go here.' )
-            .replace( 'SOLUTIONS', all_solutions )
-            .replace( 'TOPICS', 'Topics are not yet implemented.' )
-            .replace( 'OPPORTUNITIES',
-                '\n'.join( [ f' * {software}' for software in opportunities ] ) )
-        )
+    write_text_file( output_file,
+        task_template
+        .replace( 'TITLE', task )
+        .replace( 'PERMALINK', blogify( task ) )
+        .replace( 'DESCRIPTION', 'Description of the task will go here.' )
+        .replace( 'SOLUTIONS', all_solutions )
+        .replace( 'TOPICS', 'Topics are not yet implemented.' )
+        .replace( 'OPPORTUNITIES',
+            '\n'.join( [ f' * {software}' for software in opportunities ] ) )
+    )
     files_generated.append( out_filename )
 
 # How to clean up any markdown files we didn't just generate.

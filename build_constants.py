@@ -7,6 +7,7 @@ img_extensions = [ '.jpg', '.jpeg', '.png', '.gif' ]
 
 # Important folders
 main_folder = os.path.dirname( os.path.realpath( __file__ ) )
+database_config_file = os.path.join( main_folder, 'database', 'database.yml' )
 jekyll_input_folder = os.path.join( main_folder, 'jekyll-input' )
 static_folder = os.path.join( main_folder, 'database', 'static' )
 tasks_folder = os.path.join( main_folder, 'database', 'tasks' )
