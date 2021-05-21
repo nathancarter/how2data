@@ -1,4 +1,13 @@
 
+#######################
+#
+#  High-level build tools factored out of build.py to keep that file cleaner.
+#  Lower-level tools appear in utils.py; most are independent of this project,
+#  such as shortcuts for reading/writing text files.
+#  Declarations of constants specific to this project are in build_constants.py. 
+#
+#######################
+
 from build_constants import *
 from utils import *
 import os

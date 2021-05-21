@@ -1,5 +1,13 @@
 #!/opt/conda/bin/python
 
+#######################
+#
+#  This is the main build script for this repository.
+#  Any other Python files in this folder are imported by this one.
+#  To understand the build process, read the comments on each section below.
+#
+#######################
+
 import os, sys
 from build_tools import *
 

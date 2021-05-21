@@ -1,4 +1,13 @@
 
+#######################
+#
+#  Simple, low-level utilities to make writing code elsewhere easier.
+#  E.g., reading/writing text, reading/writing YAML, filtering folders by file
+#  extension, etc.
+#  None of these is specific to this project; they just make for cleaner code elsewhere.
+#
+#######################
+
 from ruamel.yaml import YAML
 import os
 

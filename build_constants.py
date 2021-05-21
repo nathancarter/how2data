@@ -1,4 +1,12 @@
 
+#######################
+#
+#  Declaration of constants that define the build process.
+#  This includes many folder names and the set of supported Jupyter kernels.
+#
+#######################
+
+
 import os
 
 # Important folders
