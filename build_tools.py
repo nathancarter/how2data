@@ -235,7 +235,6 @@ def must_rebuild_file ( input, output ):
         return True
     input_modified = os.path.getmtime( input )
     output_modified = os.path.getmtime( output )
-    print( f'Which is older?\n{input_modified} {input}\n{output_modified} {output}' )
     return input_modified > output_modified
 
 # For building solution pages, a few functions.  Parameters explained:
