@@ -65,44 +65,6 @@ software_table = pd.DataFrame( {
 software_table = software_table.to_markdown( index=False )
 
 ###
-###  TASKS
-###
-
-# The tasks table to be inserted on the tasks page
-task_files = [
-    file for file in just_docs( os.listdir( tasks_folder ) ) \
-    if file != 'README.md'
-]
-# Function for converting a task filename into a link that can be used from the
-# tasks page to that individual task
-def task_page_link ( task_filename ):
-    name = os.path.basename( without_extension( task_filename ) )
-    return f'[{name}](../{blogify(name)})'
-# The tasks table to be inserted on the tasks page
-tasks_table = pd.DataFrame( {
-    "Task" : list( map( task_page_link, task_files ) )
-} )
-for package in configuration['software']:
-    tasks_table[f'Solutions in {package["name"]}'] = np.nan
-tasks_table = tasks_table.to_markdown( index=False )
-# How to tell if a given string is one of the official names of a task?
-def get_task_filename ( task ):
-    for extension in doc_extensions:
-        if task + extension in task_files:
-            return os.path.join( tasks_folder, task + extension )
-    return None
-def is_a_task ( text ):
-    return get_task_filename( text ) != None
-# How to read a task file's markdown content
-def get_task_content ( task ):
-    filename = get_task_filename( task )
-    if filename is None:
-        print( 'Could not find filename for task:', task )
-        sys.exit( 1 )
-    return read_text_file( filename )
-
-
-###
 ###  SOLUTIONS
 ###
 
@@ -120,15 +82,73 @@ solution_imgs = [
     for software in subfolders( os.path.join( solutions_folder, task ) ) \
     for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
 ]
-# Functions for solution files.  Parameters explained:
+# What should the title be within such a solution page?  Parameters explained:
 # task = exact task name, a key to the solution_docs dict.
 # software = exact package name, a key to the solutions_docs[task] dict.
 # solution = exact filename in the task/software/ folder, including extension.
-def solution_page_destination ( task, software, solution ):
-    return os.path.join( jekyll_input_folder, )
-# What should the title be within such a solution page?
 def solution_page_title ( task, software, solution ):
     return f'{task} ({without_extension( solution )}, in {software})'
+
+###
+###  TASKS
+###
+
+# The tasks table to be inserted on the tasks page
+task_files = [
+    file for file in just_docs( os.listdir( tasks_folder ) ) \
+    if file != 'README.md'
+]
+# Get the name for a task from its filename
+def task_name ( task_filename ):
+    return without_extension( task_filename )
+# Function for converting a task filename into a link that can be used from the
+# tasks page to that individual task
+def task_page_link ( task_filename ):
+    name = task_name( task_filename )
+    return f'[{name}](../{blogify(name)})'
+# Function for converting a task/software/solution triple into a link that can be
+# used from the tasks page to that individual solution
+def software_page_link ( task_name, software_name, solution ):
+    return f'[{name}](../{blogify(name)})'
+# Function for creating links to solutions for a given task and software package
+def task_and_solutions_links ( task_filename, software_package ):
+    task = task_name( task_filename )
+    if task in solution_docs:
+        software = software_package_name( software_package )
+        if software in solution_docs[task]:
+            return ', '.join( [
+                f'[{without_extension(solution)}]' + \
+                f'(../{blogify(solution_page_title(task,software,solution))})' \
+                for solution in solution_docs[task][software]
+            ] )
+        else:
+            return 'None'
+    else:
+        return 'None'
+# The tasks table to be inserted on the tasks page
+tasks_table = pd.DataFrame( {
+    "Task" : list( map( task_page_link, task_files ) )
+} )
+for package in configuration['software']:
+    tasks_table[f'Solutions in {package["name"]}'] = \
+        [ task_and_solutions_links( t, package ) for t in task_files ]
+tasks_table = tasks_table.to_markdown( index=False )
+# How to tell if a given string is one of the official names of a task?
+def get_task_filename ( task ):
+    for extension in doc_extensions:
+        if task + extension in task_files:
+            return os.path.join( tasks_folder, task + extension )
+    return None
+def is_a_task ( text ):
+    return get_task_filename( text ) != None
+# How to read a task file's markdown content
+def get_task_content ( task ):
+    filename = get_task_filename( task )
+    if filename is None:
+        print( 'Could not find filename for task:', task )
+        sys.exit( 1 )
+    return read_text_file( filename )
+
 
 ###
 ###  MOVING/TRACKING FILES
@@ -243,7 +263,7 @@ def run_markdown ( markdown, folder, software ):
     return result
 
 # Main function to build a solution page.  Parameters are the same as they
-# are for solution_page_destination(), solution_page_title().
+# are for solution_page_title().
 def build_solution_page ( task, software, solution ):
     title = solution_page_title( task, software, solution )
     out_filename = blogify( title ) + '.md'
