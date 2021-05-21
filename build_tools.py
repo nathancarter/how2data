@@ -70,8 +70,14 @@ task_files = [
     file for file in just_docs( os.listdir( tasks_folder ) ) \
     if file != 'README.md'
 ]
+# Function for converting a task filename into a link that can be used from the
+# tasks page to that individual task
+def task_page_link ( task_filename ):
+    name = os.path.basename( without_extension( task_filename ) )
+    return f'[{name}](../{blogify(name)})'
+# The tasks table to be inserted on the tasks page
 tasks_table = pd.DataFrame( {
-    "Task" : [ without_extension( filename ) for filename in task_files ]
+    "Task" : list( map( task_page_link, task_files ) )
 } )
 for package in configuration['software']:
     tasks_table[f'Solutions in {package["name"]}'] = np.nan
