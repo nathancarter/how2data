@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute a confidence interval for the mean (using NumPy, in Python) - How to Data</title>
+    <title>How to compute a confidence interval for the mean (using SciPy, in Python) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute a confidence interval for the mean (using NumPy, in Python) | How to Data</title>
+<title>How to compute a confidence interval for the mean (using SciPy, in Python) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute a confidence interval for the mean (using NumPy, in Python)" />
+<meta property="og:title" content="How to compute a confidence interval for the mean (using SciPy, in Python)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-the-mean-using-numpy-in-python/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-the-mean-using-numpy-in-python/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute a confidence interval for the mean (using NumPy, in Python)" />
+<meta property="twitter:title" content="How to compute a confidence interval for the mean (using SciPy, in Python)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-the-mean-using-numpy-in-python/","headline":"How to compute a confidence interval for the mean (using NumPy, in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python/","headline":"How to compute a confidence interval for the mean (using SciPy, in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -121,10 +121,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-a-confidence-interval-for-the-mean-using-numpy-in-python">
+          <h1 id="how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python">
         
         
-          <a href="#how-to-compute-a-confidence-interval-for-the-mean-using-numpy-in-python" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-the-mean-using-numpy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for the mean (using NumPy, in Python)
+          <a href="#how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for the mean (using SciPy, in Python)
         
         
       </h1>
@@ -157,23 +157,29 @@ using this code, replace our fake data with your real data.</p>
 15
 16
 17
+18
 </pre></td><td class="rouge-code"><pre><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.95</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">435</span><span class="p">,</span><span class="mi">542</span><span class="p">,</span><span class="mi">435</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">543</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">432</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">876</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">5</span> <span class="p">]</span> <span class="c1"># fake
 </span>
-<span class="c1"># We will use NumPy to compute some of the statistics below.
+<span class="c1"># We will use NumPy and SciPy to compute some of the statistics below.
 </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
 
 <span class="c1"># Compute the sample mean, as an estimate for the population mean.
 </span><span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
 
 <span class="c1"># Compute the Standard Error for the sample Mean (SEM).
-</span><span class="n">sem</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span> <span class="p">)</span>
+</span><span class="n">sem</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">sem</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
 
 <span class="c1"># The margin of error then has the following formula.
 </span><span class="n">moe</span> <span class="o">=</span> <span class="n">sem</span> <span class="o">*</span> <span class="n">stats</span><span class="p">.</span><span class="n">t</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">alpha</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span>
 
 <span class="c1"># The confidence interval is centered on the mean with moe as its radius:
 </span><span class="p">(</span> <span class="n">sample_mean</span> <span class="o">-</span> <span class="n">moe</span><span class="p">,</span> <span class="n">sample_mean</span> <span class="o">+</span> <span class="n">moe</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(70.29847811072423, 350.0544630657464)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
