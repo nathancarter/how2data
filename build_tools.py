@@ -28,9 +28,13 @@ ensure_folder_exists( solution_imgs_folder )
 
 # The software table to be inserted on the software packages page
 software_table = pd.DataFrame( {
-    "Software Package" : software_names(),
+    "Software Package" : map( software_package_name, database['software'] ),
     "Icon" : map( software_package_icon, database['software'] ),
-    "Number of solutions" : np.nan,
+    "Number of solutions" : map( lambda software: sum( [
+        len( solutions_for_task_in_software( task_name,
+            software_package_name( software ) ) ) \
+        for task_name in task_names()
+    ] ), database['software'] ),
     "Website" : map( software_package_website, database['software'] )
 } )
 software_table = software_table.to_markdown( index=False )
