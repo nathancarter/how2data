@@ -9,6 +9,7 @@
 #######################
 
 from build_constants import *
+from build_database import *
 from utils import *
 import os
 import pandas as pd
@@ -25,130 +26,23 @@ import sys
 ensure_folder_exists( task_imgs_folder )
 ensure_folder_exists( solution_imgs_folder )
 
-# Read important content from files and directories
-static_pages = just_docs( os.listdir( static_folder ) )
-task_image_files = os.listdir( os.path.join( tasks_folder, 'images' ) )
-solution_template = read_text_file( os.path.join( static_folder, 'solution-template.md' ) )
-task_template = read_text_file( os.path.join( static_folder, 'task-template.md' ) )
-
-# Read database/database.yml and store it in a global variable
-configuration = read_yaml_from_file( database_config_file )
-
-###
-###  SOFTWARE PACKAGES
-###
-
-# How to tell if a given string is one of the official names of a software package?
-def is_a_software_package ( text ):
-    return text in software_names
-# Function for converting a software package into the Markdown code for its name
-def software_package_name ( package ):
-    return package['name']
-# Function for converting a software package into the Markdown code for its icon
-def software_package_icon ( package ):
-    name = package['name']
-    icon = package['icon']
-    return f'![{name} icon]({icon}){{: style="height: 50px;" }}'
-# Function for converting a software package into the Markdown code for its website
-def software_package_website ( package ):
-    url = package['website']
-    return f'[{url}]({url})'
 # The software table to be inserted on the software packages page
-software_table = configuration['software']
-software_names = [ software_package_name( x ) for x in software_table ]
 software_table = pd.DataFrame( {
-    "Software Package" : software_names,
-    "Icon" : map( software_package_icon, software_table ),
+    "Software Package" : software_names(),
+    "Icon" : map( software_package_icon, database['software'] ),
     "Number of solutions" : np.nan,
-    "Website" : map( software_package_website, software_table )
+    "Website" : map( software_package_website, database['software'] )
 } )
 software_table = software_table.to_markdown( index=False )
 
-###
-###  SOLUTIONS
-###
-
-# Data about solutions
-solution_docs = {
-    task : {
-        software : docs_inside( os.path.join( solutions_folder, task, software ) ) \
-        for software in subfolders( os.path.join( solutions_folder, task ) )
-    } \
-    for task in subfolders( solutions_folder )
-}
-solution_imgs = [
-    ( task, software, x ) \
-    for task in subfolders( solutions_folder ) \
-    for software in subfolders( os.path.join( solutions_folder, task ) ) \
-    for x in imgs_inside( os.path.join( solutions_folder, task, software ) )
-]
-# What should the title be within such a solution page?  Parameters explained:
-# task = exact task name, a key to the solution_docs dict.
-# software = exact package name, a key to the solutions_docs[task] dict.
-# solution = exact filename in the task/software/ folder, including extension.
-def solution_page_title ( task, software, solution ):
-    return f'{task} ({without_extension( solution )}, in {software})'
-
-###
-###  TASKS
-###
-
-# The tasks table to be inserted on the tasks page
-task_files = [
-    file for file in just_docs( os.listdir( tasks_folder ) ) \
-    if file != 'README.md'
-]
-# Get the name for a task from its filename
-def task_name ( task_filename ):
-    return without_extension( task_filename )
-# Function for converting a task filename into a link that can be used from the
-# tasks page to that individual task
-def task_page_link ( task_filename ):
-    name = task_name( task_filename )
-    return f'[{name}](../{blogify(name)})'
-# Function for converting a task/software/solution triple into a link that can be
-# used from the tasks page to that individual solution
-def software_page_link ( task_name, software_name, solution ):
-    return f'[{name}](../{blogify(name)})'
-# Function for creating links to solutions for a given task and software package
-def task_and_solutions_links ( task_filename, software_package ):
-    task = task_name( task_filename )
-    if task in solution_docs:
-        software = software_package_name( software_package )
-        if software in solution_docs[task]:
-            return ', '.join( [
-                f'[{without_extension(solution)}]' + \
-                f'(../{blogify(solution_page_title(task,software,solution))})' \
-                for solution in solution_docs[task][software]
-            ] )
-        else:
-            return 'None'
-    else:
-        return 'None'
-# The tasks table to be inserted on the tasks page
+# Generate the tasks table for the tasks page and render as markdown
 tasks_table = pd.DataFrame( {
-    "Task" : list( map( task_page_link, task_files ) )
+    "Task" : map( task_page_link, task_names() )
 } )
-for package in configuration['software']:
+for package in database['software']:
     tasks_table[f'Solutions in {package["name"]}'] = \
-        [ task_and_solutions_links( t, package ) for t in task_files ]
+        [ task_and_solutions_links( t, package ) for t in task_names() ]
 tasks_table = tasks_table.to_markdown( index=False )
-# How to tell if a given string is one of the official names of a task?
-def get_task_filename ( task ):
-    for extension in doc_extensions:
-        if task + extension in task_files:
-            return os.path.join( tasks_folder, task + extension )
-    return None
-def is_a_task ( text ):
-    return get_task_filename( text ) != None
-# How to read a task file's markdown content
-def get_task_content ( task ):
-    filename = get_task_filename( task )
-    if filename is None:
-        print( 'Could not find filename for task:', task )
-        sys.exit( 1 )
-    return read_text_file( filename )
-
 
 ###
 ###  MOVING/TRACKING FILES
@@ -322,22 +216,30 @@ def build_task_page ( task ):
     content = get_task_content( task )
     content = map_over_images( adjust_img_path, content )
     all_solutions = ''
-    if task in solution_docs:
-        for software, solutions in solution_docs[task].items():
-            for solution in solutions:
+    software_for_this_task = software_for_task( task )
+    if len( software_for_this_task ) > 0:
+        for software_name in software_for_this_task:
+            for solution in solutions_for_task_in_software( task_name, software_name ):
                 solution_name = without_extension( solution )
                 solution_name = solution_name[0].upper() + solution_name[1:]
                 all_solutions += f'''
 
-## {solution_name}, {software}
+## {solution_name}, {software_name}
 
-{get_generated_solution_body( task, software, solution )}
+{get_generated_solution_body( task_name, software_name, solution )}
 
 '''
-        opportunities = [ x for x in software_names if x not in solution_docs[task] ]
+        opportunities = [ x for x in software_names() \
+                          if x not in software_for_this_task ]
     else:
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
-        opportunities = software_names
+        opportunities = software_names()
+    if len( opportunities ) > 0:
+        opportunities_list = '\n'.join(
+            [ f' * {software}' for software in opportunities ] )
+    else:
+        opportunities_list = '*None* --- this task has solutions for each ' + \
+            'software package in this website\'s database.'
     write_text_file( output_file,
         task_template
         .replace( 'TITLE', task )
@@ -345,7 +247,6 @@ def build_task_page ( task ):
         .replace( 'DESCRIPTION', 'Description of the task will go here.' )
         .replace( 'SOLUTIONS', all_solutions )
         .replace( 'TOPICS', 'Topics are not yet implemented.' )
-        .replace( 'OPPORTUNITIES',
-            '\n'.join( [ f' * {software}' for software in opportunities ] ) )
+        .replace( 'OPPORTUNITIES', opportunities_list )
     )
     mark_as_regenerated( out_filename )
