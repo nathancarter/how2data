@@ -224,7 +224,7 @@ def build_task_page ( task ):
                 solution_name = solution_name[0].upper() + solution_name[1:]
                 all_solutions += f'''
 
-## {solution_name}, {software_name}
+## {solution_name}, in {software_name}
 
 {get_generated_solution_body( task_name, software_name, solution )}
 
