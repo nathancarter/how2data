@@ -44,6 +44,15 @@
 
 
   
+    <script type="text/javascript">
+        MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+                    svg: { fontCache: 'global' } }
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
 
 </head>
 
@@ -138,7 +147,12 @@
       </h2>
     
 
-<p>Description of the task will go here.</p>
+<p>Let’s say we have two columns of data, one for a single independent variable
+$x$ and the other for a single dependent variable $y$.  How can I find the
+best fit linear model that predicts $y$ based on $x$?</p>
+
+<p>In other words, what are the model coefficients $\beta_0$ and $\beta_1$ that
+give me the best linear model $\hat y=\beta_0+\beta_1x$ based on my data?</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -147,6 +161,8 @@
         
       </h2>
     
+
+<p><a href="../how-to-fit-a-linear-model-to-two-columns-of-data-using-scipy-in-python">View this solution alone.</a></p>
 
 <p>This solution uses a pandas DataFrame of fake example data.
 When using this code, replace our fake data with your real data.</p>
@@ -198,6 +214,8 @@ the data are stored in NumPy arrays or pandas Series.</p>
       </h2>
     
 
+<p><a href="../how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r">View this solution alone.</a></p>
+
 <p>This solution uses fake example data.
 When using this code, replace our fake data with your real data.</p>
 
@@ -248,20 +266,6 @@ Coefficients:
     
 
 <p>Topics are not yet implemented.</p>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
-
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.  If you can contribute a solution using any of these pieces of
-software, see our <a href="contributing">Contributing</a> page for how to help extend this resource.</p>
-
-<p><em>None</em> — this task has solutions for each software package in this website’s database.</p>
 
         
 
