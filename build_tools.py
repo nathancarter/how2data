@@ -166,7 +166,6 @@ def build_solution_page ( solution_row ):
         print( f'   It is newer than: {input_file}' )
         mark_as_regenerated( out_filename )
         return
-    metadata = solution_row['metadata']
     def adjust_img_path ( code, alt_text, filename ):
         new_filename = f'{task}-{software}-{filename}'
         return (
@@ -175,17 +174,17 @@ def build_solution_page ( solution_row ):
         )
     content = map_over_images( adjust_img_path, solution_row['content'] )
     write_text_file( output_file,
-        solution_template
-        .replace( 'TITLE', title )
-        .replace( 'PERMALINK', blogify( title ) )
         .replace( 'TASK_PAGE_LINK',
             '(Later we will put here a link to the task page; not yet implemented.)' )
+        files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
+        .replace( 'TITLE', solution_row['solution title'] )
+        .replace( 'PERMALINK', solution_row['permalink'] )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
-            os.path.join( solutions_folder, task, software ),
-            software ) ) )
+            os.path.join( solutions_folder, solution_row['task name'], solution_row['software'] ),
+            solution_row['software'] ) ) )
         .replace( 'CONTRIBUTORS',
-            f'Contributed by {metadata["author"]}' if "author" in metadata else '' )
+            f'Contributed by {solution_row["author"]}' if solution_row["author"] != np.nan else '' )
     )
     print( f'Built solution for: {solution_row["task name"]}' )
     print( f'          Software: {solution_row["software"]}' )
