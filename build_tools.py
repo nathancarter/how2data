@@ -120,6 +120,12 @@ def map_over_images ( func, markdown ):
         result += markdown[:start] + changed
         markdown = markdown[end:]
     return result + markdown
+# More useful special case of previous function
+def adjust_image_filenames ( func, markdown ):
+    return map_over_images(
+        lambda code, alt_text, filename: ( alt_text, func( filename ) ),
+        markdown
+    )
 
 # Function to run a given markdown document as if it were a Jupyter notebook.
 # You specify the markdown content as a string, the folder in which to run it
@@ -155,6 +161,12 @@ def run_markdown ( markdown, folder, software ):
     os.system( f'rm "{tmp_md_doc}"' )
     return result
 
+# Auxiliary functions used by functions below
+def adjust_image_for_solution ( task, software ):
+    def result ( filename ):
+        return os.path.join( '..', 'assets', 'solution-images', f'{task}-{software}-{filename}' )
+def adjust_image_for_task ( filename ):
+    return os.path.join( '..', 'assets', 'task-images', filename )
 # Main function to build a solution page.  Parameter is any row from solutions_df.
 def build_solution_page ( solution_row ):
     out_filename = blogify( solution_row['solution title'] ) + '.md'
@@ -166,19 +178,17 @@ def build_solution_page ( solution_row ):
         print( f'   It is newer than: {input_file}' )
         mark_as_regenerated( out_filename )
         return
-    def adjust_img_path ( code, alt_text, filename ):
-        new_filename = f'{task}-{software}-{filename}'
-        return (
-            alt_text,
-            os.path.join( '..', 'assets', 'solution-images', new_filename )
-        )
-    content = map_over_images( adjust_img_path, solution_row['content'] )
+    content = adjust_image_filenames(
+        adjust_image_for_solution( solution_row['task name'], solution_row['software'] ),
+        solution_row['content'] )
     task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
     write_text_file( output_file,
         files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', solution_row['solution title'] )
         .replace( 'PERMALINK', solution_row['permalink'] )
         .replace( 'TASK_PAGE_LINK', f'[See all solutions.](../{task_row["permalink"]})' )
+        .replace( 'DESCRIPTION',
+            adjust_image_filenames( adjust_image_for_task, task_row['content'] ) )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
             os.path.join( solutions_folder, solution_row['task name'], solution_row['software'] ),
@@ -206,12 +216,6 @@ def get_generated_solution_body ( solution_row ):
 def build_task_page ( row ):
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    def adjust_img_path ( code, alt_text, filename ):
-        return (
-            alt_text,
-            os.path.join( '..', 'assets', 'task-images', filename )
-        )
-    content = map_over_images( adjust_img_path, row['content'] )
     all_solutions = ''
     software_for_this_task = \
         solutions_df[solutions_df['task name'] == row['task name']]
@@ -250,7 +254,8 @@ see [our Contributing page](contributing) for how to help extend this website.
         files_df[files_df['filename'] == 'task-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['task name'] )
         .replace( 'PERMALINK', row['permalink'] )
-        .replace( 'DESCRIPTION', 'Description of the task will go here.' )
+        .replace( 'DESCRIPTION',
+            adjust_image_filenames( adjust_image_for_task, row['content'] ) )
         .replace( 'SOLUTIONS', all_solutions )
         .replace( 'TOPICS', 'Topics are not yet implemented.' )
         .replace( 'OPPORTUNITIES', opportunities )

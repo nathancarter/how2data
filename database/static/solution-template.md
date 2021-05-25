@@ -9,6 +9,12 @@ nav_exclude: true
 
 TASK_PAGE_LINK
 
+## Task
+
+DESCRIPTION
+
+## Solution
+
 MARKDOWN_CONTENT
 
 CONTRIBUTORS
