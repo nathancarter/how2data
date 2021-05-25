@@ -5,6 +5,8 @@ permalink: /contributing/
 nav_order: 5
 ---
 
+# Contributing to *How to Data*
+
 After the site is more mature and complete, this page will cover:
 
  * how individuals can get involved by contributing content

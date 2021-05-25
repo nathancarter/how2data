@@ -5,6 +5,8 @@ permalink: /software/
 nav_order: 3
 ---
 
+# Software Packages
+
 Here is a list of the software packages that appear in the solutions on this website.
 This list can include standard applications like Microsoft Excel,
 web-based applications like Google Sheets,
