@@ -27,8 +27,10 @@ ensure_folder_exists( task_imgs_folder )
 ensure_folder_exists( solution_imgs_folder )
 
 # The software table to be inserted on the software packages page
-software_table = software_df[['name', 'icon markdown', 'num solutions', 'website markdown']]
-software_table.columns = ['Software Package', 'Icon', 'Number of solutions', 'Website']
+software_table = software_df[[
+    'name as link', 'icon markdown', 'num solutions', 'website markdown']]
+software_table.columns = [
+    'Software Package', 'Icon', 'Number of solutions', 'Website']
 
 # Generate the tasks table for the tasks page and render as markdown
 tasks_table = pd.DataFrame( { 'Task' : tasks_df['markdown link'] } )
