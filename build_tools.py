@@ -232,11 +232,20 @@ def build_task_page ( row ):
     opportunities = list( software_df['name'][
         ~software_df['name'].isin(software_for_this_task['software'])] )
     if len( opportunities ) > 0:
-        opportunities = '\n'.join(
-            [ f' * {software}' for software in opportunities ] )
+        opportunities = "\n".join( [ f" * {software}" for software in opportunities ] )
+        opportunities = f'''
+## Opportunities
+
+This website does not yet contain a solution for this task in any of the following
+software packages.
+
+{opportunities}
+
+If you can contribute a solution using any of these pieces of software,
+see [our Contributing page](contributing) for how to help extend this website.
+'''
     else:
-        opportunities = '*None* --- this task has solutions for each ' + \
-            'software package in this website\'s database.'
+        opportunities = ''
     write_text_file( output_file,
         files_df[files_df['filename'] == 'task-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['task name'] )
