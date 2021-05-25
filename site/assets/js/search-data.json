@@ -1,13 +1,13 @@
 {"0": {
     "doc": "About",
     "title": "About",
-    "content": "Here we will later describe all of the following things about this site: * project purpose * project scope * project history ",
+    "content": "# About *How to Data* Here we will later describe all of the following things about this site: * project purpose * project scope * project history * why the funny name ",
     "url": "/how2data/site/about/",
     "relUrl": "/about/"
   },"1": {
     "doc": "Contributing",
     "title": "Contributing",
-    "content": "After the site is more mature and complete, this page will cover: * how individuals can get involved by contributing content * best practices for doing so, including * writing lots of comments * breaking code into short lines rather than nested function calls * helpful variable names ",
+    "content": "# Contributing to *How to Data* After the site is more mature and complete, this page will cover: * how individuals can get involved by contributing content * best practices for doing so, including * writing lots of comments * breaking code into short lines rather than nested function calls * helpful variable names ",
     "url": "/how2data/site/contributing/",
     "relUrl": "/contributing/"
   },"2": {
@@ -55,19 +55,31 @@
   },"9": {
     "doc": "Welcome",
     "title": "Welcome",
-    "content": "# Welcome to *How to Data!* This is a how-to website for students of data science. It will contain answers to a wide variety of how-to questions about data-related software and programming languages. **But right now, it's still under construction.** Please check back later to see what this site will become. ",
+    "content": "# Welcome to *How to Data!* This is a how-to website for students of data science. It will contain answers to a wide variety of how-to questions about data-related software and programming languages. ## Under Construction This site is still under construction. Please check back later to see what this site will become. ## Current Contents | Content | Quantity |:------------------------------|:------------| [Tasks](tasks) | 3 | [Solutions](tasks) | 4 | [Software packages](software) | 2 | Topics | Coming soon | ",
     "url": "/how2data/site/",
     "relUrl": "/"
   },"10": {
+    "doc": "Software package: Python",
+    "title": "Software package: Python",
+    "content": "# Software package: Python ![Python icon](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png){: style=\"height: 150px;\" } ## Solutions in Python (2) | Task | Solutions in Python | Solutions in other software packages |:----------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------|:-----------------------------------------------------------------| [How to compute a confidence interval for the mean](../how-to-compute-a-confidence-interval-for-the-mean) | [using SciPy](../how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python) | 1 ([view](../how-to-compute-a-confidence-interval-for-the-mean)) | [How to fit a linear model to two columns of data](../how-to-fit-a-linear-model-to-two-columns-of-data) | [using SciPy](../how-to-fit-a-linear-model-to-two-columns-of-data-using-scipy-in-python) | 1 ([view](../how-to-fit-a-linear-model-to-two-columns-of-data)) | ## Solutions needed in Python | Task | Solutions in Python | Solutions in other software packages |:----------------------------------------------------------------------------------------|:---------------------------------------------------|:---------------------------------------| [How to do a hypothesis test for the mean](../how-to-do-a-hypothesis-test-for-the-mean) | none yet(Want to [submit one](contributing)?) | None | ",
+    "url": "/how2data/site/software-package-python/",
+    "relUrl": "/software-package-python/"
+  },"11": {
+    "doc": "Software package: R",
+    "title": "Software package: R",
+    "content": "# Software package: R ![R icon](https://www.r-project.org/logo/Rlogo.png){: style=\"height: 150px;\" } ## Solutions in R (2) | Task | Solutions in R | Solutions in other software packages |:----------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------|:-----------------------------------------------------------------| [How to compute a confidence interval for the mean](../how-to-compute-a-confidence-interval-for-the-mean) | [solution](../how-to-compute-a-confidence-interval-for-the-mean-solution-in-r) | 1 ([view](../how-to-compute-a-confidence-interval-for-the-mean)) | [How to fit a linear model to two columns of data](../how-to-fit-a-linear-model-to-two-columns-of-data) | [solution](../how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r) | 1 ([view](../how-to-fit-a-linear-model-to-two-columns-of-data)) | ## Solutions needed in R | Task | Solutions in R | Solutions in other software packages |:----------------------------------------------------------------------------------------|:---------------------------------------------------|:---------------------------------------| [How to do a hypothesis test for the mean](../how-to-do-a-hypothesis-test-for-the-mean) | none yet(Want to [submit one](contributing)?) | None | ",
+    "url": "/how2data/site/software-package-r/",
+    "relUrl": "/software-package-r/"
+  },"12": {
     "doc": "Software Packages",
     "title": "Software Packages",
-    "content": "Here is a list of the software packages that appear in the solutions on this website. This list can include standard applications like Microsoft Excel, web-based applications like Google Sheets, or programming languages like Python and R. | Software Package | Icon | Number of solutions | Website |:-------------------|:------------------------------------------------------------------------------------------------------------------------------------|----------------------:|:---------------------------------------------------------| Python | ![Python icon](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png){: style=\"height: 50px;\" } | 2 | [https://www.python.org/](https://www.python.org/) | R | ![R icon](https://www.r-project.org/logo/Rlogo.png){: style=\"height: 50px;\" } | 2 | [https://www.r-project.org/](https://www.r-project.org/) | ",
+    "content": "# Software Packages Here is a list of the software packages that appear in the solutions on this website. This list can include standard applications like Microsoft Excel, web-based applications like Google Sheets, or programming languages like Python and R. | Software Package | Icon | Number of solutions | Website |:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------:|:---------------------------------------------------------| [Python](../software-package-python) | [![Python icon](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png){: style=\"height: 50px;\" }](../software-package-python) | 2 | [https://www.python.org/](https://www.python.org/) | [R](../software-package-r) | [![R icon](https://www.r-project.org/logo/Rlogo.png){: style=\"height: 50px;\" }](../software-package-r) | 2 | [https://www.r-project.org/](https://www.r-project.org/) | ",
     "url": "/how2data/site/software/",
     "relUrl": "/software/"
-  },"11": {
+  },"13": {
     "doc": "Tasks",
     "title": "Tasks",
-    "content": "This database is a list of tasks that students of data science may want to know how to accomplished, all phrased as \"How to\" questions. The table below lists *all* questions in the database. | Task | Solutions in Python | Solutions in R |:----------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------| [How to compute a confidence interval for the mean](../how-to-compute-a-confidence-interval-for-the-mean) | [using SciPy](../how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python) | [solution](../how-to-compute-a-confidence-interval-for-the-mean-solution-in-r) | [How to do a hypothesis test for the mean](../how-to-do-a-hypothesis-test-for-the-mean) | | [How to fit a linear model to two columns of data](../how-to-fit-a-linear-model-to-two-columns-of-data) | [using SciPy](../how-to-fit-a-linear-model-to-two-columns-of-data-using-scipy-in-python) | [solution](../how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r) | ",
+    "content": "# Tasks This database is a list of tasks that students of data science may want to know how to accomplished, all phrased as \"How to\" questions. The table below lists *all* questions in the database. | Task | Solutions in Python | Solutions in R |:----------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------| [How to compute a confidence interval for the mean](../how-to-compute-a-confidence-interval-for-the-mean) | [using SciPy](../how-to-compute-a-confidence-interval-for-the-mean-using-scipy-in-python) | [solution](../how-to-compute-a-confidence-interval-for-the-mean-solution-in-r) | [How to do a hypothesis test for the mean](../how-to-do-a-hypothesis-test-for-the-mean) | | [How to fit a linear model to two columns of data](../how-to-fit-a-linear-model-to-two-columns-of-data) | [using SciPy](../how-to-fit-a-linear-model-to-two-columns-of-data-using-scipy-in-python) | [solution](../how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r) | ",
     "url": "/how2data/site/tasks/",
     "relUrl": "/tasks/"
   }
