@@ -84,6 +84,7 @@ for task_name in subfolders( solutions_folder ):
             for key, value in metadata.items():
                 next[key] = value
             next['raw content'] = read_text_file( input_file )
+            next['permalink'] = blogify( next['solution title'] )
             json.append( next )
 solutions_df = pd.DataFrame( json )
 # Add links to solution pages to each solution row

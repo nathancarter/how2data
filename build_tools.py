@@ -173,12 +173,12 @@ def build_solution_page ( solution_row ):
             os.path.join( '..', 'assets', 'solution-images', new_filename )
         )
     content = map_over_images( adjust_img_path, solution_row['content'] )
+    task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
     write_text_file( output_file,
-        .replace( 'TASK_PAGE_LINK',
-            '(Later we will put here a link to the task page; not yet implemented.)' )
         files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', solution_row['solution title'] )
         .replace( 'PERMALINK', solution_row['permalink'] )
+        .replace( 'TASK_PAGE_LINK', f'[See all solutions.](../{task_row["permalink"]})' )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
             os.path.join( solutions_folder, solution_row['task name'], solution_row['software'] ),
@@ -221,6 +221,8 @@ def build_task_page ( row ):
         all_solutions += f'''
 
 ## {solution_name}, in {solution_row["software"]}
+
+[View this solution alone.](../{solution_row["permalink"]})
 
 {get_generated_solution_body( solution_row )}
 
