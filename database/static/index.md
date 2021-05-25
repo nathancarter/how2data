@@ -12,5 +12,11 @@ This is a how-to website for students of data science.  It will contain
 answers to a wide variety of how-to questions about data-related software and
 programming languages.
 
-**But right now, it's still under construction.**  Please check back later to
-see what this site will become.
+## Under Construction
+
+This site is still under construction.
+Please check back later to see what this site will become.
+
+## Current Contents
+
+OVERALL_STATS

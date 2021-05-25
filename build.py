@@ -23,7 +23,8 @@ os.system( f'rm {to_delete}' )
 section_heading( 'Copying files to Jekyll input folder' )
 replacements = {
     'SET_OF_SOFTWARE_PACKAGES': software_table.to_markdown( index=False ),
-    'SET_OF_TASKS' : tasks_table.to_markdown( index=False )
+    'SET_OF_TASKS' : tasks_table.to_markdown( index=False ),
+    'OVERALL_STATS' : stats_table.to_markdown( index=False )
 }
 for filename in files_df[files_df['type'] == 'static page']['filename']:
     copy_static_file( filename, replacements )

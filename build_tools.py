@@ -26,6 +26,10 @@ import sys
 ensure_folder_exists( task_imgs_folder )
 ensure_folder_exists( solution_imgs_folder )
 
+###
+###  GENERATING TABLES
+###
+
 # The software table to be inserted on the software packages page
 software_table = software_df[[
     'name as link', 'icon markdown', 'num solutions', 'website markdown']]
@@ -42,6 +46,22 @@ for index, software_row in software_df.iterrows():
     tasks_table[f'Solutions in {software_row["name"]}'] = \
         tasks_df['task name'].apply( lambda task_name:
             links_for_task_solutions_in_software( task_name, software_row['name'] ) )
+
+# The summary stats table to be inserted on the main page
+stats_table = pd.DataFrame( {
+    'Content' : [
+        '[Tasks](tasks)',
+        '[Solutions](tasks)',
+        '[Software packages](software)',
+        'Topics'
+    ],
+    'Quantity' : [
+        len( tasks_df ),
+        len( solutions_df ),
+        len( software_df ),
+        'Coming soon'
+    ]
+} )
 
 ###
 ###  MOVING/TRACKING FILES
