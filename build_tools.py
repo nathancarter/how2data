@@ -29,7 +29,6 @@ ensure_folder_exists( solution_imgs_folder )
 # The software table to be inserted on the software packages page
 software_table = software_df[['name', 'icon markdown', 'num solutions', 'website markdown']]
 software_table.columns = ['Software Package', 'Icon', 'Number of solutions', 'Website']
-software_table = software_table.to_markdown( index=False )
 
 # Generate the tasks table for the tasks page and render as markdown
 tasks_table = pd.DataFrame( { 'Task' : tasks_df['markdown link'] } )
@@ -41,7 +40,6 @@ for index, software_row in software_df.iterrows():
     tasks_table[f'Solutions in {software_row["name"]}'] = \
         tasks_df['task name'].apply( lambda task_name:
             links_for_task_solutions_in_software( task_name, software_row['name'] ) )
-tasks_table = tasks_table.to_markdown( index=False )
 
 ###
 ###  MOVING/TRACKING FILES
@@ -169,7 +167,7 @@ def adjust_image_for_task ( filename ):
     return os.path.join( '..', 'assets', 'task-images', filename )
 # Main function to build a solution page.  Parameter is any row from solutions_df.
 def build_solution_page ( solution_row ):
-    out_filename = blogify( solution_row['solution title'] ) + '.md'
+    out_filename = solution_row['permalink'] + '.md'
     input_file = os.path.join( solutions_folder, solution_row['task name'],
         solution_row['software'], solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
@@ -259,5 +257,39 @@ see [our Contributing page](contributing) for how to help extend this website.
         .replace( 'SOLUTIONS', all_solutions )
         .replace( 'TOPICS', 'Topics are not yet implemented.' )
         .replace( 'OPPORTUNITIES', opportunities )
+    )
+    mark_as_regenerated( out_filename )
+
+# Generate a page for a given software package,
+# from a row in the software_df DataFrame.
+def build_software_page ( row ):
+    out_filename = row['permalink'] + '.md'
+    output_file = os.path.join( jekyll_input_folder, out_filename )
+    sol_uses_this_sw = solutions_df['software'] == row['name']
+    def link_to_other_solutions ( task_row ):
+        sol_is_for_task = solutions_df['task name'] == task_row['task name']
+        num_not_in_this_sw = sum(sol_is_for_task) - \
+            sum(sol_is_for_task & sol_uses_this_sw)
+        if num_not_in_this_sw > 0:
+            return f'{num_not_in_this_sw} ([view](../{task_row["permalink"]}))'
+        else:
+            return 'None'
+    my_tasks_table = tasks_table[['Task',f'Solutions in {row["name"]}']].copy()
+    my_tasks_table['Solutions in other software packages'] = \
+        tasks_df.apply( link_to_other_solutions, axis=1 )
+    solution_needed = my_tasks_table.iloc[:,1].isin([''])
+    table1 = my_tasks_table[~solution_needed]
+    table2 = my_tasks_table[solution_needed].copy()
+    table2[f'Solutions in {row["name"]}'] = \
+        f'none yet<br/>(Want to [submit one](contributing)?)'
+    write_text_file( output_file,
+        files_df[files_df['filename'] == 'software-template.md']['raw content'].iloc[0]
+        .replace( 'TITLE', row['title'] )
+        .replace( 'SOFTWARE_NAME', row['name'] )
+        .replace( 'PERMALINK', row['permalink'] )
+        .replace( 'SOFTWARE_ICON', row['large icon markdown'] )
+        .replace( 'NUMBER_OF_SOLUTIONS', str( row['num solutions'] ) )
+        .replace( 'SOFTWARE_TASK_TABLE', table1.to_markdown( index=False ) )
+        .replace( 'OPPORTUNITIES', table2.to_markdown( index=False ) )
     )
     mark_as_regenerated( out_filename )

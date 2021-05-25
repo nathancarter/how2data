@@ -1,7 +1,7 @@
 ---
 layout: page
-title: TITLE
-permalink: /PERMALINK/
+title: "TITLE"
+permalink: "/PERMALINK/"
 nav_exclude: true
 ---
 

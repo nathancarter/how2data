@@ -21,11 +21,12 @@ os.system( f'rm {to_delete}' )
 
 # Copy files to Jekyll input folder
 section_heading( 'Copying files to Jekyll input folder' )
+replacements = {
+    'SET_OF_SOFTWARE_PACKAGES': software_table.to_markdown( index=False ),
+    'SET_OF_TASKS' : tasks_table.to_markdown( index=False )
+}
 for filename in files_df[files_df['type'] == 'static page']['filename']:
-    copy_static_file( filename, {
-        'SET_OF_SOFTWARE_PACKAGES': software_table,
-        'SET_OF_TASKS' : tasks_table
-    } )
+    copy_static_file( filename, replacements )
 for index, row in solution_images_df.iterrows():
     copy_solution_image_file( row['task name'], row['software'], row['image filename'] )
 for filename in files_df[files_df['type'] == 'task image']['filename']:
@@ -39,6 +40,9 @@ for index, row in solutions_df.iterrows():
 # Now task pages get built second, so they can read the generated solution pages
 for index, row in tasks_df.iterrows():
     build_task_page( row )
+# Create a page for each software package; the sequencing of this step is not important.
+for index, row in software_df.iterrows():
+    build_software_page( row )
 delete_ungenerated_markdown()
 
 # Run Jekyll on newly copied files

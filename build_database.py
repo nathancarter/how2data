@@ -115,12 +115,17 @@ solution_images_df = pd.DataFrame( [
 ###
 
 software_df = pd.DataFrame( read_yaml_from_file( database_config_file )['software'] )
+software_df['title'] = software_df['name'].apply( lambda name: f'Software package: {name}' )
+software_df['permalink'] = software_df['title'].apply( blogify )
 # Add markdown code for each package's icon
-def software_package_icon ( package_row ):
-    name = package_row.loc['name']
-    icon = package_row.loc['icon']
-    return f'![{name} icon]({icon}){{: style="height: 50px;" }}'
-software_df['icon markdown'] = software_df.apply( software_package_icon, axis=1 )
+def software_package_icon ( height ):
+    def result ( package_row ):
+        name = package_row.loc['name']
+        icon = package_row.loc['icon']
+        return f'![{name} icon]({icon}){{: style="height: {height}px;" }}'
+    return result
+software_df['icon markdown'] = software_df.apply( software_package_icon( 50 ), axis=1 )
+software_df['large icon markdown'] = software_df.apply( software_package_icon( 150 ), axis=1 )
 # Add markdown code for each package's website
 def software_package_website ( package_row ):
     url = package_row.loc['website']
@@ -129,6 +134,7 @@ software_df['website markdown'] = software_df.apply( software_package_website, a
 # Add count of number of solutions in database for each piece of software
 software_df['num solutions'] = software_df['name'].apply( lambda name: \
     sum( solutions_df['software'] == name ) )
+print( software_df[['name','title','permalink']] )
 
 ###
 ###  CHECK CONSISTENCY AMONG solutions_df, tasks_df, and software_df
