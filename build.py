@@ -21,36 +21,24 @@ os.system( f'rm {to_delete}' )
 
 # Copy files to Jekyll input folder
 section_heading( 'Copying files to Jekyll input folder' )
-for file in static_pages:
-    if file == 'software.md':
-        copy_static_file( file, {
-            'SET_OF_SOFTWARE_PACKAGES': software_table
-        } )
-    elif file == 'tasks.md':
-        copy_static_file( file, {
-            'SET_OF_TASKS' : tasks_table
-        } )
-    elif file.endswith( '-template.md' ):
-        pass # we will process these later
-    else:
-        copy_static_file( file )
-for task_name in task_names():
-    for software_name in software_for_task( task_name ):
-        for image in images_for_task_in_software( task_name, software_name ):
-            copy_solution_image_file( task_name, software_name, filename )
-for ( filename ) in task_image_files:
+for filename in files_df[files_df['type'] == 'static page']['filename']:
+    copy_static_file( filename, {
+        'SET_OF_SOFTWARE_PACKAGES': software_table,
+        'SET_OF_TASKS' : tasks_table
+    } )
+for index, row in solution_images_df.iterrows():
+    copy_solution_image_file( row['task name'], row['software'], row['image filename'] )
+for filename in files_df[files_df['type'] == 'task image']['filename']:
     copy_task_image_file( filename )
 
 # Generate files from database
 section_heading( 'Generating files from database content' )
 # Note: solution building must go first so task pages can read the generated results
-for task_name in task_names():
-    for software_name in software_for_task( task_name ):
-        for solution in solutions_for_task_in_software( task_name, software_name ):
-            build_solution_page( task_name, software_name, solution )
+for index, row in solutions_df.iterrows():
+    build_solution_page( row )
 # Now task pages get built second, so they can read the generated solution pages
-for task_name in task_names():
-    build_task_page( task_name )
+for index, row in tasks_df.iterrows():
+    build_task_page( row )
 delete_ungenerated_markdown()
 
 # Run Jekyll on newly copied files

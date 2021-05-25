@@ -18,6 +18,14 @@ tasks_folder         = os.path.join( main_folder, 'database', 'tasks' )
 task_imgs_folder     = os.path.join( jekyll_input_folder, 'assets', 'task-images' )
 solutions_folder     = os.path.join( main_folder, 'database', 'solutions' )
 solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
+# How to make an absolute path relative to this project
+def path_in_project ( maybe_abs_path ):
+    prefix = main_folder
+    if prefix[-1] != os.path.sep:
+        prefix += os.path.sep
+    if maybe_abs_path.startswith( prefix ):
+        return maybe_abs_path[len(prefix):]
+    return maybe_abs_path
 
 # Which Jupyter kernels are supported for which languages
 kernel_for_software = {

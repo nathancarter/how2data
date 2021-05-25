@@ -27,25 +27,20 @@ ensure_folder_exists( task_imgs_folder )
 ensure_folder_exists( solution_imgs_folder )
 
 # The software table to be inserted on the software packages page
-software_table = pd.DataFrame( {
-    "Software Package" : map( software_package_name, database['software'] ),
-    "Icon" : map( software_package_icon, database['software'] ),
-    "Number of solutions" : map( lambda software: sum( [
-        len( solutions_for_task_in_software( task_name,
-            software_package_name( software ) ) ) \
-        for task_name in task_names()
-    ] ), database['software'] ),
-    "Website" : map( software_package_website, database['software'] )
-} )
+software_table = software_df[['name', 'icon markdown', 'num solutions', 'website markdown']]
+software_table.columns = ['Software Package', 'Icon', 'Number of solutions', 'Website']
 software_table = software_table.to_markdown( index=False )
 
 # Generate the tasks table for the tasks page and render as markdown
-tasks_table = pd.DataFrame( {
-    "Task" : map( task_page_link, task_names() )
-} )
-for package in database['software']:
-    tasks_table[f'Solutions in {package["name"]}'] = \
-        [ task_and_solutions_links( t, package ) for t in task_names() ]
+tasks_table = pd.DataFrame( { 'Task' : tasks_df['markdown link'] } )
+def links_for_task_solutions_in_software ( task_name, software_name ):
+    return ', '.join( list( solutions_df[ \
+        (solutions_df['task name'] == task_name) & \
+        (solutions_df['software'] == software_name)]['markdown link'] ) )
+for index, software_row in software_df.iterrows():
+    tasks_table[f'Solutions in {software_row["name"]}'] = \
+        tasks_df['task name'].apply( lambda task_name:
+            links_for_task_solutions_in_software( task_name, software_row['name'] ) )
 tasks_table = tasks_table.to_markdown( index=False )
 
 ###
@@ -160,26 +155,25 @@ def run_markdown ( markdown, folder, software ):
     os.system( f'rm "{tmp_md_doc}"' )
     return result
 
-# Main function to build a solution page.  Parameters are the same as they
-# are for solution_page_title().
-def build_solution_page ( task, software, solution ):
-    title = solution_page_title( task, software, solution )
-    out_filename = blogify( title ) + '.md'
-    input_file = os.path.join( solutions_folder, task, software, solution )
+# Main function to build a solution page.  Parameter is any row from solutions_df.
+def build_solution_page ( solution_row ):
+    out_filename = blogify( solution_row['solution title'] ) + '.md'
+    input_file = os.path.join( solutions_folder, solution_row['task name'],
+        solution_row['software'], solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
     if not must_rebuild_file( input_file, output_file ):
         print( f'Not rebuilding this: {output_file}' )
         print( f'   It is newer than: {input_file}' )
         mark_as_regenerated( out_filename )
         return
-    header, content = file_split_yaml_header( input_file )
+    metadata = solution_row['metadata']
     def adjust_img_path ( code, alt_text, filename ):
         new_filename = f'{task}-{software}-{filename}'
         return (
             alt_text,
             os.path.join( '..', 'assets', 'solution-images', new_filename )
         )
-    content = map_over_images( adjust_img_path, content )
+    content = map_over_images( adjust_img_path, solution_row['content'] )
     write_text_file( output_file,
         solution_template
         .replace( 'TITLE', title )
@@ -191,66 +185,64 @@ def build_solution_page ( task, software, solution ):
             os.path.join( solutions_folder, task, software ),
             software ) ) )
         .replace( 'CONTRIBUTORS',
-            f'Contributed by {header["author"]}' if "author" in header else '' )
+            f'Contributed by {metadata["author"]}' if "author" in metadata else '' )
     )
-    print( f'Built solution for: {task}' )
-    print( f'           Details: {without_extension( solution )}, in {software}' )
+    print( f'Built solution for: {solution_row["task name"]}' )
+    print( f'          Software: {solution_row["software"]}' )
+    print( f'     Solution name: {solution_row["solution name"]}' )
     print()
     mark_as_regenerated( out_filename )
 
 # How to fetch a generated solution's body from within the generated markdown
-def get_generated_solution_body ( task, software, solution ):
-    title = solution_page_title( task, software, solution )
+def get_generated_solution_body ( solution_row ):
+    title = solution_row['solution title']
     generated_file = blogify( title ) + '.md'
     all_content = read_text_file( os.path.join( jekyll_input_folder, generated_file ) )
     return unwrap_from_html_comments( all_content )
 
-# How to build a task page
+# How to build a task page; pass any row from tasks_df.
 # IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
 # using the build_solution_page() function on any files that need their solutions
 # rebuilt/updated.  See that function defined above.
-def build_task_page ( task ):
-    out_filename = blogify( task ) + '.md'
+def build_task_page ( row ):
+    out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
     def adjust_img_path ( code, alt_text, filename ):
         return (
             alt_text,
             os.path.join( '..', 'assets', 'task-images', filename )
         )
-    content = get_task_content( task )
-    content = map_over_images( adjust_img_path, content )
+    content = map_over_images( adjust_img_path, row['content'] )
     all_solutions = ''
-    software_for_this_task = software_for_task( task )
-    if len( software_for_this_task ) > 0:
-        for software_name in software_for_this_task:
-            for solution in solutions_for_task_in_software( task_name, software_name ):
-                solution_name = without_extension( solution )
-                solution_name = solution_name[0].upper() + solution_name[1:]
-                all_solutions += f'''
+    software_for_this_task = \
+        solutions_df[solutions_df['task name'] == row['task name']]
+    for index, solution_row in software_for_this_task.iterrows():
+        solution_name = without_extension( solution_row['solution name'] )
+        solution_name = solution_name[0].upper() + solution_name[1:]
+        all_solutions += f'''
 
-## {solution_name}, in {software_name}
+## {solution_name}, in {solution_row["software"]}
 
-{get_generated_solution_body( task_name, software_name, solution )}
+{get_generated_solution_body( solution_row )}
 
 '''
-        opportunities = [ x for x in software_names() \
-                          if x not in software_for_this_task ]
-    else:
+    if all_solutions == '':
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
-        opportunities = software_names()
+    opportunities = list( software_df['name'][
+        ~software_df['name'].isin(software_for_this_task['software'])] )
     if len( opportunities ) > 0:
-        opportunities_list = '\n'.join(
+        opportunities = '\n'.join(
             [ f' * {software}' for software in opportunities ] )
     else:
-        opportunities_list = '*None* --- this task has solutions for each ' + \
+        opportunities = '*None* --- this task has solutions for each ' + \
             'software package in this website\'s database.'
     write_text_file( output_file,
-        task_template
-        .replace( 'TITLE', task )
-        .replace( 'PERMALINK', blogify( task ) )
+        files_df[files_df['filename'] == 'task-template.md']['raw content'].iloc[0]
+        .replace( 'TITLE', row['task name'] )
+        .replace( 'PERMALINK', row['permalink'] )
         .replace( 'DESCRIPTION', 'Description of the task will go here.' )
         .replace( 'SOLUTIONS', all_solutions )
         .replace( 'TOPICS', 'Topics are not yet implemented.' )
-        .replace( 'OPPORTUNITIES', opportunities_list )
+        .replace( 'OPPORTUNITIES', opportunities )
     )
     mark_as_regenerated( out_filename )
