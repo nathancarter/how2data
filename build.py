@@ -23,7 +23,7 @@ os.system( f'rm {to_delete}' )
 section_heading( 'Copying files to Jekyll input folder' )
 replacements = {
     'SET_OF_SOFTWARE_PACKAGES': software_table.to_markdown( index=False ),
-    'SET_OF_TASKS' : tasks_table.to_markdown( index=False ),
+    'SET_OF_TASKS' : tasks_table_with_links.to_markdown( index=False ),
     'LIST_OF_TOPICS' : '\n'.join( [
         f' * {link}' for link in topics_df['markdown link'] ] ),
     'OVERALL_STATS' : stats_table.to_markdown( index=False )

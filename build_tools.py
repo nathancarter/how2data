@@ -46,6 +46,16 @@ for index, software_row in software_df.iterrows():
     tasks_table[f'Solutions in {software_row["name"]}'] = \
         tasks_df['task name'].apply( lambda task_name:
             links_for_task_solutions_in_software( task_name, software_row['name'] ) )
+# Make a separate copy in which the column headers are markdown links
+tasks_table_with_links = tasks_table.copy()
+new_column_names = list( tasks_table_with_links.columns )
+permalink_for_sw = dict( zip( software_df['name'], software_df['permalink'] ) )
+for index, col in enumerate( new_column_names ):
+    if col.startswith( 'Solutions in ' ):
+        software_name = col[13:]
+        new_column_names[index] = \
+            f'[Solutions in {col[13:]}](../{permalink_for_sw[col[13:]]})'
+tasks_table_with_links.columns = new_column_names
 
 # The summary stats table to be inserted on the main page
 stats_table = pd.DataFrame( {
