@@ -35,5 +35,3 @@ tags:
  - random variables
 ---
 ```
-
-(More to come.)
