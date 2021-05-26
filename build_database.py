@@ -38,7 +38,7 @@ json += [
         'content' : np.nan,
         'raw content' : np.nan
     } \
-    for static_page in just_imgs( os.listdir( os.path.join( tasks_folder, 'images' ) ) )
+    for task_image in just_imgs( os.listdir( os.path.join( tasks_folder, 'images' ) ) )
 ]
 files_df = pd.DataFrame( json )
 
