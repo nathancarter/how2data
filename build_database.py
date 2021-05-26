@@ -17,6 +17,7 @@ import sys
 ###  READ STATIC PAGES, TEMPLATES, AND OTHER MISC. FILES FROM DISK
 ###
 
+ensure_folder_exists( os.path.join( tasks_folder, 'images' ) )
 json = [ ]
 for filename in just_docs( os.listdir( static_folder ) ):
     metadata, content = file_split_yaml_header( os.path.join( static_folder, filename ) )
