@@ -16,6 +16,8 @@ jekyll_input_folder  = os.path.join( main_folder, 'jekyll-input' )
 static_folder        = os.path.join( main_folder, 'database', 'static' )
 tasks_folder         = os.path.join( main_folder, 'database', 'tasks' )
 task_imgs_folder     = os.path.join( jekyll_input_folder, 'assets', 'task-images' )
+topics_folder        = os.path.join( main_folder, 'database', 'topics' )
+topic_imgs_folder    = os.path.join( jekyll_input_folder, 'assets', 'topic-images' )
 solutions_folder     = os.path.join( main_folder, 'database', 'solutions' )
 solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
 # How to make an absolute path relative to this project

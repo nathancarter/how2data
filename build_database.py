@@ -18,6 +18,7 @@ import sys
 ###
 
 ensure_folder_exists( os.path.join( tasks_folder, 'images' ) )
+ensure_folder_exists( os.path.join( topics_folder, 'images' ) )
 json = [ ]
 for filename in just_docs( os.listdir( static_folder ) ):
     metadata, content = file_split_yaml_header( os.path.join( static_folder, filename ) )
@@ -39,6 +40,16 @@ json += [
         'raw content' : np.nan
     } \
     for task_image in just_imgs( os.listdir( os.path.join( tasks_folder, 'images' ) ) )
+] + [
+    {
+        'type' : 'topic image',
+        'filename' : topic_image,
+        'full path' : path_in_project( os.path.join( topics_folder, topic_image ) ),
+        'metadata' : np.nan,
+        'content' : np.nan,
+        'raw content' : np.nan
+    } \
+    for topic_image in just_imgs( os.listdir( os.path.join( topics_folder, 'images' ) ) )
 ]
 files_df = pd.DataFrame( json )
 
@@ -58,6 +69,30 @@ tasks_df = pd.DataFrame( [
 ] )
 # Add links to task pages
 tasks_df['markdown link'] = tasks_df['task name'].apply(
+    lambda name: f'[{name}](../{blogify(name)})' )
+
+###
+###  READ TOPIC LIST FROM DISK
+###
+
+json = [ ]
+for topic_file in just_docs( os.listdir( topics_folder ) ):
+    if topic_file == 'README.md':
+        continue
+    metadata, content = file_split_yaml_header( os.path.join( topics_folder, topic_file ) )
+    next = {
+        'topic name' : without_extension( topic_file ),
+        'topic filename' : path_in_project( os.path.join( topics_folder, topic_file ) ),
+        'permalink' : blogify( without_extension( topic_file ) ),
+        'content' : content,
+        'raw content' : read_text_file( os.path.join( topics_folder, topic_file ) )
+    }
+    for key, value in metadata.items():
+        next[key] = value
+    json.append( next )
+topics_df = pd.DataFrame( json )
+# Add links to topic pages
+topics_df['markdown link'] = topics_df['topic name'].apply(
     lambda name: f'[{name}](../{blogify(name)})' )
 
 ###

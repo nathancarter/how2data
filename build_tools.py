@@ -50,16 +50,16 @@ for index, software_row in software_df.iterrows():
 # The summary stats table to be inserted on the main page
 stats_table = pd.DataFrame( {
     'Content' : [
+        '[Topics](topics)',
         '[Tasks](tasks)',
         '[Solutions](tasks)',
-        '[Software packages](software)',
-        'Topics'
+        '[Software packages](software)'
     ],
     'Quantity' : [
+        len( topics_df ),
         len( tasks_df ),
         len( solutions_df ),
-        len( software_df ),
-        'Coming soon'
+        len( software_df )
     ]
 } )
 
@@ -313,5 +313,23 @@ def build_software_page ( row ):
         .replace( 'NUMBER_OF_SOLUTIONS', str( row['num solutions'] ) )
         .replace( 'SOFTWARE_TASK_TABLE', table1.to_markdown( index=False ) )
         .replace( 'OPPORTUNITIES', table2.to_markdown( index=False ) )
+    )
+    mark_as_regenerated( out_filename )
+
+# Generate a page for a given topic, from a row in the topics_df DataFrame.
+def build_topic_page ( row ):
+    out_filename = row['permalink'] + '.md'
+    output_file = os.path.join( jekyll_input_folder, out_filename )
+    content = row['content']
+    for index, task_row in tasks_df.iterrows():
+        content = content.replace( task_row['task name'],
+            f'[{task_row["task name"]}](../{task_row["permalink"]})' )
+    write_text_file( output_file,
+        files_df[files_df['filename'] == 'topic-template.md']['raw content'].iloc[0]
+        .replace( 'TITLE', row['topic name'] )
+        .replace( 'PERMALINK', row['permalink'] )
+        .replace( 'CONTENT', content )
+        .replace( 'CONTRIBUTORS',
+            f'Contributed by {row["author"]}' if row["author"] != np.nan else '' )
     )
     mark_as_regenerated( out_filename )
