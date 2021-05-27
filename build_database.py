@@ -14,11 +14,19 @@ import numpy as np
 import sys
 
 ###
-###  READ STATIC PAGES, TEMPLATES, AND OTHER MISC. FILES FROM DISK
+###  ENSURE KEY FOLDERS EXIST
 ###
 
 ensure_folder_exists( os.path.join( tasks_folder, 'images' ) )
 ensure_folder_exists( os.path.join( topics_folder, 'images' ) )
+ensure_folder_exists( task_imgs_folder )
+ensure_folder_exists( solution_imgs_folder )
+ensure_folder_exists( topic_imgs_folder )
+
+###
+###  READ STATIC PAGES, TEMPLATES, AND OTHER MISC. FILES FROM DISK
+###
+
 json = [ ]
 for filename in just_docs( os.listdir( static_folder ) ):
     metadata, content = file_split_yaml_header( os.path.join( static_folder, filename ) )

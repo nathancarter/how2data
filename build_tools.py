@@ -19,14 +19,6 @@ import shutil
 import sys
 
 ###
-###  FILES, FOLDERS, AND CONFIGURATION
-###
-
-# Ensure certain key folders exist
-ensure_folder_exists( task_imgs_folder )
-ensure_folder_exists( solution_imgs_folder )
-
-###
 ###  GENERATING TABLES
 ###
 
