@@ -29,14 +29,15 @@ ensure_folder_exists( topic_imgs_folder )
 
 json = [ ]
 for filename in just_docs( os.listdir( static_folder ) ):
-    metadata, content = file_split_yaml_header( os.path.join( static_folder, filename ) )
+    full_filename = os.path.join( static_folder, filename )
+    metadata, content = file_split_yaml_header( full_filename )
     json.append( {
         'type' : 'template' if filename.endswith( '-template.md' ) else 'static page',
         'filename' : filename,
-        'full path' : path_in_project( os.path.join( static_folder, filename ) ),
+        'full path' : path_in_project( full_filename ),
         'metadata' : metadata,
         'content' : content,
-        'raw content' : read_text_file( os.path.join( static_folder, filename ) )
+        'raw content' : read_text_file( full_filename )
     } )
 json += [
     {
@@ -87,13 +88,15 @@ json = [ ]
 for topic_file in just_docs( os.listdir( topics_folder ) ):
     if topic_file == 'README.md':
         continue
-    metadata, content = file_split_yaml_header( os.path.join( topics_folder, topic_file ) )
+    full_filename = os.path.join( topics_folder, topic_file )
+    metadata, content = file_split_yaml_header( full_filename )
+    content += modification_text( full_filename )
     next = {
         'topic name' : without_extension( topic_file ),
-        'topic filename' : path_in_project( os.path.join( topics_folder, topic_file ) ),
+        'topic filename' : path_in_project( full_filename ),
         'permalink' : blogify( without_extension( topic_file ) ),
         'content' : content,
-        'raw content' : read_text_file( os.path.join( topics_folder, topic_file ) )
+        'raw content' : read_text_file( full_filename )
     }
     for key, value in metadata.items():
         next[key] = value
@@ -124,7 +127,7 @@ for task_name in subfolders( solutions_folder ):
                     f'{task_name} ({without_extension( solution_file )}, in {software_name})'
             }
             metadata, content = file_split_yaml_header( input_file )
-            next['content'] = content
+            next['content'] = content + modification_text( input_file )
             for key, value in metadata.items():
                 next[key] = value
             next['raw content'] = read_text_file( input_file )

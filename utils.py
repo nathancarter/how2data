@@ -11,6 +11,7 @@
 from ruamel.yaml import YAML
 import os
 import re
+import time
 
 # Get all contents of a text file
 def read_text_file ( file ):
@@ -107,3 +108,9 @@ def unwrap_from_html_comments ( text ):
     begin = text.index( start_comment )
     end = text.index( end_comment )
     return text[begin+len(start_comment):end]
+
+# Create a brief sentence that describes the last modification time of a file
+def modification_text ( filename ):
+    mod_time = time.gmtime( os.path.getmtime( filename ) )
+    return time.strftime(
+        '\n\nContent last modified on %d %B %Y.', mod_time )
