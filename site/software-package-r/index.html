@@ -43,7 +43,14 @@
 <!-- End Jekyll SEO tag -->
 
 
-  <script type="text/javascript">
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
     MathJax = {
         tex: {
             inlineMath: [['$','$'], ['\\(','\\)']]
@@ -53,12 +60,38 @@
         }
     }
 </script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script type="text/javascript"
         id="MathJax-script"
         async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --
+  -->
+
 <script type="text/javascript">
     function makeButton () {
         const button = document.createElement( 'button' )
@@ -174,10 +207,10 @@
     
 
 <p><img src="https://www.r-project.org/logo/Rlogo.png" alt="R icon" style="height: 150px;" /></p>
-      <h2 id="solutions-in-r-2">
+      <h2 id="solutions-in-r-5">
         
         
-          <a href="#solutions-in-r-2" class="anchor-heading" aria-labelledby="solutions-in-r-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solutions in R (2)
+          <a href="#solutions-in-r-5" class="anchor-heading" aria-labelledby="solutions-in-r-5"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solutions in R (5)
         
         
       </h2>
@@ -198,9 +231,24 @@
       <td style="text-align: left">1 (<a href="../how-to-compute-a-confidence-interval-for-the-mean">view</a>)</td>
     </tr>
     <tr>
+      <td style="text-align: left"><a href="../how-to-compute-probabilities-from-a-distribution">How to compute probabilities from a distribution</a></td>
+      <td style="text-align: left"><a href="../how-to-compute-probabilities-from-a-distribution-solution-in-r">solution</a></td>
+      <td style="text-align: left">1 (<a href="../how-to-compute-probabilities-from-a-distribution">view</a>)</td>
+    </tr>
+    <tr>
       <td style="text-align: left"><a href="../how-to-fit-a-linear-model-to-two-columns-of-data">How to fit a linear model to two columns of data</a></td>
       <td style="text-align: left"><a href="../how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r">solution</a></td>
       <td style="text-align: left">1 (<a href="../how-to-fit-a-linear-model-to-two-columns-of-data">view</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-generate-random-values-from-a-distribution">How to generate random values from a distribution</a></td>
+      <td style="text-align: left"><a href="../how-to-generate-random-values-from-a-distribution-solution-in-r">solution</a></td>
+      <td style="text-align: left">1 (<a href="../how-to-generate-random-values-from-a-distribution">view</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-plot-probability-distributions">How to plot probability distributions</a></td>
+      <td style="text-align: left"><a href="../how-to-plot-probability-distributions-solution-in-r">solution</a></td>
+      <td style="text-align: left">1 (<a href="../how-to-plot-probability-distributions">view</a>)</td>
     </tr>
   </tbody>
 </table></div>

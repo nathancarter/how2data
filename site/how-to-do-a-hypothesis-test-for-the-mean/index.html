@@ -43,7 +43,14 @@
 <!-- End Jekyll SEO tag -->
 
 
-  <script type="text/javascript">
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
     MathJax = {
         tex: {
             inlineMath: [['$','$'], ['\\(','\\)']]
@@ -53,12 +60,38 @@
         }
     }
 </script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script type="text/javascript"
         id="MathJax-script"
         async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --
+  -->
+
 <script type="text/javascript">
     function makeButton () {
         const button = document.createElement( 'button' )
