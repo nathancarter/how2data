@@ -191,11 +191,13 @@ def adjust_image_for_task ( filename ):
     return os.path.join( '..', 'assets', 'task-images', filename )
 # Main function to build a solution page.  Parameter is any row from solutions_df.
 def build_solution_page ( solution_row ):
+# Main function to build a solution page.  1st parameter is any row from solutions_df.
+def build_solution_page ( solution_row, force_rerun_solution=False ):
     out_filename = solution_row['permalink'] + '.md'
     input_file = os.path.join( solutions_folder, solution_row['task name'],
         solution_row['software'], solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    if not must_rebuild_file( input_file, output_file ):
+    if not force_rerun_solution and not must_rebuild_file( input_file, output_file ):
         print( f'Not rebuilding this: {output_file}' )
         print( f'   It is newer than: {input_file}' )
         mark_as_regenerated( out_filename )

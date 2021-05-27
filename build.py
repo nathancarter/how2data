@@ -11,6 +11,10 @@
 import os, sys
 from build_tools import *
 
+# Command line parameters
+# -f/--force = rerun all solution code even if modification dates don't require it
+rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
+
 # Delete files generated in last build
 section_heading( 'Deleting old files from Jekyll input folder' )
 to_delete = ' '.join( [
@@ -39,7 +43,7 @@ for filename in files_df[files_df['type'] == 'task image']['filename']:
 section_heading( 'Generating files from database content' )
 # Note: solution building must go first so task pages can read the generated results
 for index, row in solutions_df.iterrows():
-    build_solution_page( row )
+    build_solution_page( row, rerun_solutions )
 # Now task pages get built second, so they can read the generated solution pages
 for index, row in tasks_df.iterrows():
     build_task_page( row )
