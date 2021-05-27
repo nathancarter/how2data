@@ -286,6 +286,11 @@ see [our Contributing page](contributing) for how to help extend this website.
 '''
     else:
         opportunities = ''
+    related_topics = topics_df[topics_df['content'].str.contains( row['task name'] )]
+    if len( related_topics ) > 0:
+        related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
+    else:
+        related_topics = '*None*'
     write_text_file( output_file,
         files_df[files_df['filename'] == 'task-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['task name'] )
@@ -293,7 +298,7 @@ see [our Contributing page](contributing) for how to help extend this website.
         .replace( 'DESCRIPTION',
             adjust_image_filenames( adjust_image_for_task, row['content'] ) )
         .replace( 'SOLUTIONS', all_solutions )
-        .replace( 'TOPICS', 'Topics are not yet implemented.' )
+        .replace( 'TOPICS', related_topics )
         .replace( 'OPPORTUNITIES', opportunities )
     )
     mark_as_regenerated( out_filename )
