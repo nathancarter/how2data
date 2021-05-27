@@ -183,14 +183,24 @@ def run_markdown ( markdown, folder, software ):
     os.system( f'rm "{tmp_md_doc}"' )
     return result
 
-# Auxiliary functions used by functions below
+###
+###  BUILD TOOLS USED BELOW
+###
+
 def adjust_image_for_solution ( task, software ):
     def result ( filename ):
         return os.path.join( '..', 'assets', 'solution-images', f'{task}-{software}-{filename}' )
 def adjust_image_for_task ( filename ):
     return os.path.join( '..', 'assets', 'task-images', filename )
-# Main function to build a solution page.  Parameter is any row from solutions_df.
-def build_solution_page ( solution_row ):
+github_url = 'https://github.com/nathancarter/how2data'
+new_github_issue_url = f'{github_url}/issues/new/choose'
+def edit_on_github_url ( filename ):
+    return f'{github_url}/tree/main/{path_in_project( filename )}'
+
+###
+###  TOOLS THAT BUILD PAGES IN THE SITE
+###
+
 # Main function to build a solution page.  1st parameter is any row from solutions_df.
 def build_solution_page ( solution_row, force_rerun_solution=False ):
     out_filename = solution_row['permalink'] + '.md'
@@ -205,6 +215,8 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
     content = adjust_image_filenames(
         adjust_image_for_solution( solution_row['task name'], solution_row['software'] ),
         solution_row['content'] )
+    content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
+        f'[edit the source]({edit_on_github_url(input_file)}).'
     task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
     write_text_file( output_file,
         files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
