@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to generate random values from a distribution - How to Data</title>
+    <title>How to do a two-sided hypothesis test for two sample means - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to generate random values from a distribution | How to Data</title>
+<title>How to do a two-sided hypothesis test for two sample means | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to generate random values from a distribution" />
+<meta property="og:title" content="How to do a two-sided hypothesis test for two sample means" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-generate-random-values-from-a-distribution/" />
-<meta property="og:url" content="/how2data/site/how-to-generate-random-values-from-a-distribution/" />
+<link rel="canonical" href="/how2data/site/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means/" />
+<meta property="og:url" content="/how2data/site/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to generate random values from a distribution" />
+<meta property="twitter:title" content="How to do a two-sided hypothesis test for two sample means" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-generate-random-values-from-a-distribution/","headline":"How to generate random values from a distribution","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means/","headline":"How to do a two-sided hypothesis test for two sample means","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -197,10 +197,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-generate-random-values-from-a-distribution">
+          <h1 id="how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">
         
         
-          <a href="#how-to-generate-random-values-from-a-distribution" class="anchor-heading" aria-labelledby="how-to-generate-random-values-from-a-distribution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to generate random values from a distribution
+          <a href="#how-to-do-a-two-sided-hypothesis-test-for-two-sample-means" class="anchor-heading" aria-labelledby="how-to-do-a-two-sided-hypothesis-test-for-two-sample-means"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to do a two-sided hypothesis test for two sample means
         
         
       </h1>
@@ -214,9 +214,10 @@
       </h2>
     
 
-<p>There are many famous continuous probability distributions, such as the
-normal and exponential distributions.  How can we get access to them in
-software, to generate random values from a chosen distribution?</p>
+<p>If we have two samples, $x_1,\ldots,x_n$ and $x’_1,\ldots,x’_m$,
+and we compute the mean of each one, we might want to ask whether
+the two means seem approximately equal.  Or more precisely, is their
+difference statistically significant at a given level?</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -226,62 +227,54 @@ software, to generate random values from a chosen distribution?</p>
       </h2>
     
 
-<p><a href="../how-to-generate-random-values-from-a-distribution-using-scipy-in-python">View this solution alone.</a></p>
+<p><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-using-scipy-in-python">View this solution alone.</a></p>
 
-<p>You can import many different random variables from SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> module.
-The full list of them is online <a href="https://docs.scipy.org/doc/scipy/reference/stats.html#discrete-distributions">here</a>.</p>
-
-<p>Regardless of whether the distribution is discrete or continuous,
-the appropriate function to call is <code class="language-plaintext highlighter-rouge">rvs</code>, which stands for “random values.”
-Here are two examples.</p>
-
-<p>Using a <strong>normal distribution:</strong></p>
+<p>If we call the mean of the first sample $\bar x_1$ and the mean of the
+second sample $\bar x_2$, then this is a two-sided test
+with the null hypothesis $H_0:\bar x_1=\bar x_2$.
+We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
+(false positive, finding we should reject $H_0$ when it’s actually true.)</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span>  <span class="c1"># normal random variable with μ=10 and σ=5
-</span><span class="n">X</span><span class="p">.</span><span class="n">rvs</span><span class="p">(</span> <span class="mi">20</span> <span class="p">)</span>              <span class="c1"># 20 random values from X
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
 4
-</pre></td><td class="rouge-code"><pre>array([ 8.72587396,  6.47643793,  3.0613477 ,  9.93706352,  6.66663345,
-        8.13459716, 12.06484831, 14.25027709,  9.96982326,  2.0009228 ,
-        6.71709849, 13.17089527,  3.8856863 ,  9.89436984, 12.99524373,
-       16.51234633, 13.67634261,  7.44609556,  7.79714901,  5.19404389])
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Replace these first three lines with the values from your situation.
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.10</span>
+<span class="n">sample1</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
+
+<span class="c1"># Run a one-sample t-test and print out alpha, the p value,
+# and whether the comparison says to reject the null hypothesis.
+</span><span class="n">t_statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">ttest_ind</span><span class="p">(</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+<span class="n">reject_H0</span> <span class="o">=</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span>
+<span class="n">alpha</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">reject_H0</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Using a <strong>uniform distribution:</strong></p>
-
-<p>(Note that in SciPy, the uniform distribution needs a “location,”
-which is where the sample space begins—in this case 50—and a “scale,”
-which is the width of the sample space—in this case 10.)</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span> <span class="p">)</span>  <span class="c1"># uniform random variable on the interval [50,60]
-</span><span class="n">X</span><span class="p">.</span><span class="n">rvs</span><span class="p">(</span> <span class="mi">20</span> <span class="p">)</span>                  <span class="c1"># 20 random values from X
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>array([58.67559224, 58.49008029, 53.54356085, 52.56680651, 52.26812019,
-       50.71552348, 56.49796412, 58.45436774, 53.96212812, 53.53787697,
-       59.82861799, 56.28331101, 58.22772206, 51.69471948, 57.52181095,
-       54.56761694, 50.11410724, 52.76589472, 53.70816281, 57.21633579])
+</pre></td><td class="rouge-code"><pre>(0.1, 0.050972837418476934, True)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>In this case, the samples give us enough evidence to reject the null hypothesis
+at the $\alpha=0.10$ level.  The data suggest that $\bar x_1\neq\bar x_2$.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">equal_var</code> parameter tells SciPy <em>not</em> to assume that the two samples
+have equal variances.  If in your case they do, you can omit that parameter,
+and it will revert to its default value of <code class="language-plaintext highlighter-rouge">True</code>.</p>
 
 <p>Content last modified on 27 May 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to generate random values from a distribution/Python/using SciPy.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to do a two-sided hypothesis test for two sample means/Python/using SciPy.md">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -291,51 +284,79 @@ which is the width of the sample space—in this case 10.)</p>
       </h2>
     
 
-<p><a href="../how-to-generate-random-values-from-a-distribution-solution-in-r">View this solution alone.</a></p>
+<p><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r">View this solution alone.</a></p>
 
-<p>Because R is designed for use in statistics,
-it comes with many probability distributions built in.
-A list of them is online <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Probability-distributions">here</a>.</p>
-
-<p>Regardless of whether the distribution is discrete or continuous,
-prefix the name of the distribution with <code class="language-plaintext highlighter-rouge">r</code>, which stands for “random values.”
-Here are two examples.</p>
-
-<p>Using a <strong>normal distribution:</strong></p>
+<p>If we call the mean of the first sample $\bar x_1$ and the mean of the
+second sample $\bar x_2$, then this is a two-sided test
+with the null hypothesis $H_0:\bar x_1=\bar x_2$.
+We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
+(false positive, finding we should reject $H_0$ when it’s actually true.)</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="c1"># 20 random values from the normal distribution with μ=10 and σ=5</span><span class="w">
-</span><span class="n">rnorm</span><span class="p">(</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1"># Replace these first three lines with the values from your situation.</span><span class="w">
+</span><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.10</span><span class="w">
+</span><span class="n">sample1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">sample2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Run a one-sample t-test and print out alpha, the p value,</span><span class="w">
+</span><span class="c1"># and whether the comparison says to reject the null hypothesis.</span><span class="w">
+</span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">sample1</span><span class="p">,</span><span class="w"> </span><span class="n">sample2</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre> [1]  7.324014 15.527588  8.144120  5.926561  6.969883 12.431512 11.747432
- [8]  4.750332 17.014430  8.223678 13.910967  8.331293 11.885462 16.009955
-[15]  7.052025  3.856706  6.617425  6.020906  6.969843  9.568263
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre>	Welch Two Sample t-test
+
+data:  sample1 and sample2
+t = -2.4617, df = 5.7201, p-value = 0.05097
+alternative hypothesis: true difference in means is not equal to 0
+90 percent confidence interval:
+ -7.0057683 -0.7942317
+sample estimates:
+mean of x mean of y 
+      8.5      12.4 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Using a <strong>uniform distribution:</strong></p>
+<p>Although we can deduce the answer to our question from the above output,
+by comparing the $p$ value with $\alpha$ manually, we can also ask R
+to do it.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="c1"># 20 random values from the uniform distribution on the interval [50,60]</span><span class="w">
-</span><span class="n">runif</span><span class="p">(</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="p">)</span><span class="w">
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># Is there enough evidence to reject the null hypothesis?</span><span class="w">
+</span><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">sample1</span><span class="p">,</span><span class="w"> </span><span class="n">sample2</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">result</span><span class="o">$</span><span class="n">p.value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alpha</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre> [1] 58.68821 54.84718 53.29064 59.09448 51.95754 51.10802 59.42062 52.59968
- [9] 55.14956 51.21261 57.87718 51.26676 55.94127 54.40994 59.92896 52.48952
-[17] 53.01896 51.06436 50.28057 59.16879
+</pre></td><td class="rouge-code"><pre>[1] TRUE
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>In this case, the samples give us enough evidence to reject the null hypothesis
+at the $\alpha=0.10$ level.  The data suggest that $\bar x_1\neq\bar x_2$.</p>
+
+<p>Here we did not assume that the two samples had equal variance.
+If in your case they do, you can pass the parameter <code class="language-plaintext highlighter-rouge">var.equal=TRUE</code> to <code class="language-plaintext highlighter-rouge">t.test</code>.</p>
 
 <p>Content last modified on 27 May 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to generate random values from a distribution/R/solution.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to do a two-sided hypothesis test for two sample means/R/solution.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
