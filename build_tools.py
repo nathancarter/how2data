@@ -173,8 +173,11 @@ def run_markdown ( markdown, folder, software ):
     if code != 0:
         sys.exit( code )
     # convert that to markdown again
-    code = os.system( 'jupyter nbconvert --to=markdown ' + \
-        f'--output="{tmp_md_doc}" "{ipynb_out}"' )
+    jupyter_config_file = os.path.join( main_folder, 'jupyter_nbconvert_config.py' )
+    command_to_run = 'jupyter nbconvert --to=markdown ' + \
+        f"--JupyterApp.config_file='{jupyter_config_file}' " + \
+        f'--output="{tmp_md_doc}" "{ipynb_out}"'
+    code = os.system( command_to_run )
     os.system( f'rm "{ipynb_out}"' )
     if code != 0:
         sys.exit( code )
