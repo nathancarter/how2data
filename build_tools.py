@@ -83,7 +83,8 @@ def mark_as_regenerated ( file ):
 def delete_ungenerated_markdown ():
     for file in os.listdir( jekyll_input_folder ):
         if is_doc( file ) and file not in files_generated:
-            os.system( f'rm {os.path.join( jekyll_input_folder, file )}' )
+            ensure_shell_command_succeeds(
+                f'rm {os.path.join( jekyll_input_folder, file )}' )
 
 # Function for copying a static file from the database folder to the
 # Jekyll input folder, optionally doing some text replacements en route
@@ -167,23 +168,19 @@ def run_markdown ( markdown, folder, software ):
     # write markdown to temp file
     write_text_file( tmp_md_doc, markdown )
     # run it, creating a notebook containing the outputs
-    code = os.system( 'jupytext --to ipynb --execute ' + \
+    ensure_shell_command_succeeds( 'jupytext --to ipynb ' + \
         f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"' )
-    os.system( f'rm "{tmp_md_doc}"' )
-    if code != 0:
-        sys.exit( code )
+    ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
     # convert that to markdown again
     jupyter_config_file = os.path.join( main_folder, 'jupyter_nbconvert_config.py' )
-    command_to_run = 'jupyter nbconvert --to=markdown ' + \
+    command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \
         f"--JupyterApp.config_file='{jupyter_config_file}' " + \
         f'--output="{tmp_md_doc}" "{ipynb_out}"'
-    code = os.system( command_to_run )
-    os.system( f'rm "{ipynb_out}"' )
-    if code != 0:
-        sys.exit( code )
+    ensure_shell_command_succeeds( command_to_run )
+    ensure_shell_command_succeeds( f'rm "{ipynb_out}"' )
     # read it back into a string
     result = read_text_file( tmp_md_doc )
-    os.system( f'rm "{tmp_md_doc}"' )
+    ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
     return result
 
 ###

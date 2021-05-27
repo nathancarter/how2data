@@ -12,6 +12,7 @@ from ruamel.yaml import YAML
 import os
 import re
 import time
+import sys
 
 # Get all contents of a text file
 def read_text_file ( file ):
@@ -114,3 +115,17 @@ def modification_text ( filename ):
     mod_time = time.gmtime( os.path.getmtime( filename ) )
     return time.strftime(
         '\n\nContent last modified on %d %B %Y.', mod_time )
+
+# Run a shell command and stop the whole app if it gives an error.
+def ensure_shell_command_succeeds ( command ):
+    code = os.system( command )
+    if code != 0:
+        print( f'Above errors yielded error code {code}.' )
+        print( f'How2Data build exiting with error code 1.' )
+        sys.exit( 1 )
+# Run a shell command and don't care whether it gives an error.
+def run_shell_command_ignoring_errors ( command ):
+    code = os.system( command )
+    if code != 0:
+        print( f'Above errors yielded error code {code}.' )
+        print( f'How2Data build ignoring them and continuing anyway...' )

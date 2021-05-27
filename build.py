@@ -21,7 +21,7 @@ to_delete = ' '.join( [
     os.path.join( solution_imgs_folder, f'*{ext}' ) for ext in img_extensions
 ] )
 print( f'Running: rm {to_delete}' )
-os.system( f'rm {to_delete}' )
+run_shell_command_ignoring_errors( f'rm {to_delete}' )
 
 # Copy files to Jekyll input folder
 section_heading( 'Copying files to Jekyll input folder' )
@@ -57,9 +57,7 @@ delete_ungenerated_markdown()
 
 # Run Jekyll on newly copied files
 section_heading( 'Running Jekyll build process' )
-code = os.system( 'bundle exec jekyll build' )
-if code != 0:
-    sys.exit( code )
+ensure_shell_command_succeeds( 'bundle exec jekyll build' )
 
 # State completion
 section_heading( 'Build completed successfully.' )
