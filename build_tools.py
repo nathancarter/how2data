@@ -212,9 +212,13 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
     input_file = os.path.join( solutions_folder, solution_row['task name'],
         solution_row['software'], solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    if not force_rerun_solution and not must_rebuild_file( input_file, output_file ):
+    task_file = os.path.join( tasks_folder, solution_row['task name'] + '.md' )
+    if not force_rerun_solution \
+    and not must_rebuild_file( input_file, output_file ) \
+    and not must_rebuild_file( task_file, output_file ):
         print( f'Not rebuilding this: {output_file}' )
         print( f'   It is newer than: {input_file}' )
+        print( f'     and newer than: {task_file}' )
         mark_as_regenerated( out_filename )
         return
     content = adjust_image_filenames(
@@ -229,7 +233,8 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
         .replace( 'PERMALINK', solution_row['permalink'] )
         .replace( 'TASK_PAGE_LINK', f'[See all solutions.](../{task_row["permalink"]})' )
         .replace( 'DESCRIPTION',
-            adjust_image_filenames( adjust_image_for_task, task_row['content'] ) )
+            adjust_image_filenames( adjust_image_for_task,
+                make_all_task_names_links( task_row['content'] ) ) )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
             os.path.join( solutions_folder, solution_row['task name'], solution_row['software'] ),
