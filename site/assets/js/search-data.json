@@ -175,7 +175,7 @@
   },"29": {
     "doc": "Welcome",
     "title": "Welcome",
-    "content": "# Welcome to *How to Data!* This is a how-to website for students of data science. It will contain answers to a wide variety of how-to questions about data-related software and programming languages. ## Under Construction This site is still under construction. Please check back later to see what this site will become. ## Current Contents | Content | Quantity |:------------------------------|-----------:| [Topics](topics) | 3 | [Tasks](tasks) | 8 | [Solutions](tasks) | 16 | [Software packages](software) | 2 | ",
+    "content": "# Welcome to *How to Data!* This is a how-to website for students of data science. It will contain answers to a wide variety of how-to questions about data-related software and programming languages. ## Under Construction This site is still under construction. Please check back later to see what this site will become. | Content | Quantity |:------------------------------|-----------:| [Topics](topics) | 3 | [Tasks](tasks) | 8 | [Solutions](tasks) | 16 | [Software packages](software) | 2 | ",
     "url": "/how2data/site/",
     "relUrl": "/"
   },"30": {
