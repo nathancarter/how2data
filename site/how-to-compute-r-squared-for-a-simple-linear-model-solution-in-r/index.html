@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to fit a linear model to two columns of data (solution, in R) - How to Data</title>
+    <title>How to compute R-squared for a simple linear model (solution, in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to fit a linear model to two columns of data (solution, in R) | How to Data</title>
+<title>How to compute R-squared for a simple linear model (solution, in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to fit a linear model to two columns of data (solution, in R)" />
+<meta property="og:title" content="How to compute R-squared for a simple linear model (solution, in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model-solution-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model-solution-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to fit a linear model to two columns of data (solution, in R)" />
+<meta property="twitter:title" content="How to compute R-squared for a simple linear model (solution, in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r/","headline":"How to fit a linear model to two columns of data (solution, in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model-solution-in-r/","headline":"How to compute R-squared for a simple linear model (solution, in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,16 +215,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r">
+          <h1 id="how-to-compute-r-squared-for-a-simple-linear-model-solution-in-r">
         
         
-          <a href="#how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r" class="anchor-heading" aria-labelledby="how-to-fit-a-linear-model-to-two-columns-of-data-solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to fit a linear model to two columns of data (solution, in R)
+          <a href="#how-to-compute-r-squared-for-a-simple-linear-model-solution-in-r" class="anchor-heading" aria-labelledby="how-to-compute-r-squared-for-a-simple-linear-model-solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute R-squared for a simple linear model (solution, in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-fit-a-linear-model-to-two-columns-of-data">See all solutions.</a></p>
+<p><a href="../how-to-compute-r-squared-for-a-simple-linear-model">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -234,17 +234,16 @@
       </h2>
     
 
-<p>Let’s say we have two columns of data, one for a single independent variable
-$x$ and the other for a single dependent variable $y$.  How can I find the
-best fit linear model that predicts $y$ based on $x$?</p>
-
-<p>In other words, what are the model coefficients $\beta_0$ and $\beta_1$ that
-give me the best linear model $\hat y=\beta_0+\beta_1x$ based on my data?</p>
+<p>Let’s say we have fit a linear model to two columns of data,
+one for a single independent variable $x$
+and the other for a single dependent variable $y$.
+How can we compute $R^2$ for that model,
+to measure its goodness of fit?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li>How to compute R-squared for a simple linear model</li>
+  <li>How to fit a linear model to two columns of data</li>
 </ul>
       <h2 id="solution">
         
@@ -257,10 +256,25 @@ give me the best linear model $\hat y=\beta_0+\beta_1x$ based on my data?</p>
 
 <!-- beginning of wrapper -->
 
-<p>This solution uses fake example data.
-When using this code, replace our fake data with your real data.</p>
+<p>We assume you have already fit a linear model to the data,
+as in the code below, which is explained fully in a separate task,
+<a href="../how-to-fit-a-linear-model-to-two-columns-of-data">How to fit a linear model to two columns of data</a>.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">xs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">393</span><span class="p">,</span><span class="w"> </span><span class="m">453</span><span class="p">,</span><span class="w"> </span><span class="m">553</span><span class="p">,</span><span class="w"> </span><span class="m">679</span><span class="p">,</span><span class="w"> </span><span class="m">729</span><span class="p">,</span><span class="w"> </span><span class="m">748</span><span class="p">,</span><span class="w"> </span><span class="m">817</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">ys</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">  </span><span class="m">24</span><span class="p">,</span><span class="w">  </span><span class="m">25</span><span class="p">,</span><span class="w">  </span><span class="m">27</span><span class="p">,</span><span class="w">  </span><span class="m">36</span><span class="p">,</span><span class="w">  </span><span class="m">55</span><span class="p">,</span><span class="w">  </span><span class="m">68</span><span class="p">,</span><span class="w">  </span><span class="m">84</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>You can get a lot of information about your model from its summary.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -271,38 +285,44 @@ When using this code, replace our fake data with your real data.</p>
 9
 10
 11
-</pre></td><td class="rouge-code"><pre><span class="c1"># Here is the fake data you should replace with your real data.</span><span class="w">
-</span><span class="n">xs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">393</span><span class="p">,</span><span class="w"> </span><span class="m">453</span><span class="p">,</span><span class="w"> </span><span class="m">553</span><span class="p">,</span><span class="w"> </span><span class="m">679</span><span class="p">,</span><span class="w"> </span><span class="m">729</span><span class="p">,</span><span class="w"> </span><span class="m">748</span><span class="p">,</span><span class="w"> </span><span class="m">817</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">ys</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">  </span><span class="m">24</span><span class="p">,</span><span class="w">  </span><span class="m">25</span><span class="p">,</span><span class="w">  </span><span class="m">27</span><span class="p">,</span><span class="w">  </span><span class="m">36</span><span class="p">,</span><span class="w">  </span><span class="m">55</span><span class="p">,</span><span class="w">  </span><span class="m">68</span><span class="p">,</span><span class="w">  </span><span class="m">84</span><span class="w"> </span><span class="p">)</span><span class="w">
-
-</span><span class="c1"># If you need the model coefficients stored in variables for later use, do:</span><span class="w">
-</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">beta0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
-</span><span class="n">beta1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">
-
-</span><span class="c1"># If you just need to see the coefficients, do this alone:</span><span class="w">
-</span><span class="n">lm</span><span class="p">(</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
+12
+13
+14
+15
+16
+17
 </pre></td><td class="rouge-code"><pre>Call:
 lm(formula = ys ~ xs)
 
+Residuals:
+      1       2       3       4       5       6       7 
+  9.163   2.199  -9.072 -16.795  -4.431   6.047  12.890 
+
 Coefficients:
-(Intercept)           xs  
-   -37.3214       0.1327  
+             Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept) -37.32142   18.99544  -1.965  0.10664   
+xs            0.13272    0.02959   4.485  0.00649 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 11.62 on 5 degrees of freedom
+Multiple R-squared:  0.8009,	Adjusted R-squared:  0.7611 
+F-statistic: 20.12 on 1 and 5 DF,  p-value: 0.006486
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The linear model in this example is approximately $y=0.133x-37.32$.</p>
+<p>In particular, it contains the $R^2$ value.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.8009488
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Content last modified on 28 May 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to fit a linear model to two columns of data/R/solution.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to compute R-squared for a simple linear model/R/solution.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
