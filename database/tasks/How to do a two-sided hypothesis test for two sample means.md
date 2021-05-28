@@ -8,3 +8,4 @@ Related tasks:
 
  * How to compute a confidence interval for a sample mean
  * How to do a two-sided hypothesis test for a sample mean
+ * How to do a one-way analysis of variance (ANOVA)
