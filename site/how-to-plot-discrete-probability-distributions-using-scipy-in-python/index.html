@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to plot discrete probability distributions (using SciPy, in Python) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/how2data/site/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/how2data/site/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/how2data/site/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/how2data/site/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to plot discrete probability distributions (using SciPy, in Python) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="How to plot discrete probability distributions (using SciPy, in Python)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="/how2data/site/how-to-plot-discrete-probability-distributions-using-scipy-in-python/" />
+<meta property="og:url" content="/how2data/site/how-to-plot-discrete-probability-distributions-using-scipy-in-python/" />
+<meta property="og:site_name" content="How to Data" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to plot discrete probability distributions (using SciPy, in Python)" />
+<script type="application/ld+json">
+{"@type":"WebPage","url":"/how2data/site/how-to-plot-discrete-probability-distributions-using-scipy-in-python/","headline":"How to plot discrete probability distributions (using SciPy, in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .filter( isNotPlainText )
+        .forEach( codeBlock => {
+            const button = makeButton()
+            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+            // button.style.position = 'relative'
+            button.addEventListener( 'click', () => {
+                window.navigator.clipboard.writeText( codeBlock.innerText )
+                button.innerText = 'Copied!'
+                setTimeout( () => button.innerText = 'Copy', 3000 )
+            } )
+        } )
+    } )
+</script>
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/how2data/site/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-plot-discrete-probability-distributions-using-scipy-in-python">
+        
+        
+          <a href="#how-to-plot-discrete-probability-distributions-using-scipy-in-python" class="anchor-heading" aria-labelledby="how-to-plot-discrete-probability-distributions-using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to plot discrete probability distributions (using SciPy, in Python)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-plot-discrete-probability-distributions">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>There are many famous discrete probability distributions, such as the
+binomial and geometric distributions.  How can we get access to them in
+software, to plot the distribution as a series of points?</p>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>You can import many different random variables from SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> module.
+The full list of them is online <a href="https://docs.scipy.org/doc/scipy/reference/stats.html#discrete-distributions">here</a>.</p>
+
+<p>The challenge with plotting a random variable is knowing the appropriate
+sample space, because some random variables have sample spaces of infinite
+width, which cannot be plotted.</p>
+
+<p>The example below uses a geometric distribution, whose sample space is
+${1,2,3,\ldots}$.  We specify that we just want to use $x$ values
+in the set ${1,2,\ldots,10}$.  (In some software, the geometric
+distribution’s sample space begins at 0, but not in SciPy.)</p>
+
+<p>We style the plot below so that it is clear the sample space is discrete.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">geom</span><span class="p">(</span> <span class="mf">0.5</span> <span class="p">)</span>     <span class="c1"># use a geometric distribution with p=0.5
+</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span> <span class="p">)</span>   <span class="c1"># specify the range to be 1,2,3,...,10
+</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">pmf</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>          <span class="c1"># compute the shape of the distribution
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s">'o'</span> <span class="p">)</span>   <span class="c1"># plot circles...
+</span><span class="n">plt</span><span class="p">.</span><span class="n">vlines</span><span class="p">(</span> <span class="n">xs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ys</span> <span class="p">)</span>   <span class="c1"># ...and lines
+</span><span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">(</span> <span class="n">bottom</span><span class="o">=</span><span class="mi">0</span> <span class="p">)</span>      <span class="c1"># ensure sensible bottom border
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>Content last modified on 28 May 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to plot discrete probability distributions/Python/using SciPy.md">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+
+        
+
+        
+
+        
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+
+
