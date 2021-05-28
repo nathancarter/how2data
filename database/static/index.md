@@ -17,6 +17,4 @@ programming languages.
 This site is still under construction.
 Please check back later to see what this site will become.
 
-## Current Contents
-
 OVERALL_STATS
