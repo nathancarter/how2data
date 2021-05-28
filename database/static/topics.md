@@ -20,3 +20,8 @@ collect tasks in a way that's helpful this site's readers.
 ## All topics, in alphabetical order
 
 LIST_OF_TOPICS
+
+## Under construction
+
+There will be many more topics added to this site in time.
+This website has just begun!  Check back later.

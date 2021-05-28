@@ -7,9 +7,11 @@ nav_order: 2
 
 # About *How to Data*
 
-Here we will later describe all of the following things about this site:
+## Under Construction
 
- * project purpose
- * project scope
- * project history
- * why the funny name
+This website has just begun!  Check back later when this page has been expanded to explain:
+
+ * its purpose
+ * its scope
+ * its history
+ * why it has a funny name
