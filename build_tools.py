@@ -196,6 +196,11 @@ github_url = 'https://github.com/nathancarter/how2data'
 new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
     return f'{github_url}/tree/main/{path_in_project( filename )}'
+def make_all_task_names_links ( markdown ):
+    for index, task_row in tasks_df.iterrows():
+        markdown = markdown.replace( task_row['task name'],
+            f'[{task_row["task name"]}](../{task_row["permalink"]})' )
+    return markdown
 
 ###
 ###  TOOLS THAT BUILD PAGES IN THE SITE
@@ -214,7 +219,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
         return
     content = adjust_image_filenames(
         adjust_image_for_solution( solution_row['task name'], solution_row['software'] ),
-        solution_row['content'] )
+        make_all_task_names_links( solution_row['content'] ) )
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
     task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
@@ -296,7 +301,8 @@ see [our Contributing page](contributing) for how to help extend this website.
         .replace( 'TITLE', row['task name'] )
         .replace( 'PERMALINK', row['permalink'] )
         .replace( 'DESCRIPTION',
-            adjust_image_filenames( adjust_image_for_task, row['content'] ) )
+            adjust_image_filenames( adjust_image_for_task,
+                make_all_task_names_links( row['content'] ) ) )
         .replace( 'SOLUTIONS', all_solutions )
         .replace( 'TOPICS', related_topics )
         .replace( 'OPPORTUNITIES', opportunities )
@@ -341,15 +347,11 @@ def build_software_page ( row ):
 def build_topic_page ( row ):
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    content = row['content']
-    for index, task_row in tasks_df.iterrows():
-        content = content.replace( task_row['task name'],
-            f'[{task_row["task name"]}](../{task_row["permalink"]})' )
     write_text_file( output_file,
         files_df[files_df['filename'] == 'topic-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['topic name'] )
         .replace( 'PERMALINK', row['permalink'] )
-        .replace( 'CONTENT', content )
+        .replace( 'CONTENT', make_all_task_names_links( row['content'] ) )
         .replace( 'CONTRIBUTORS',
             f'Contributed by {row["author"]}' if row["author"] != np.nan else '' )
     )
