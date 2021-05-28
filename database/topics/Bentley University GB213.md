@@ -5,21 +5,20 @@ author: Nathan Carter (ncarter@bentley.edu)
 GB213 is an undergraduate Business Statistics course at Bentley University.
 The description from the course catalog can be found
 [here](https://catalog.bentley.edu/undergraduate/courses/gb/).
+Topics included in the course are listed ask
+[tasks](../tasks) below.
 
 Mathematical topics include random variables,
 discrete and continuous probability distributions,
 confidence intervals, hypothesis testing, single-variable linear models,
 and optionally ANOVA and/or $\chi^2$ tests, time permitting.
 
-## Under Construction
-
-This topic will be expanded later.  It is not yet complete.
-
 ## Random variables and probability distributions
 
  * How to generate random values from a distribution
  * How to compute probabilities from a distribution
- * How to plot probability distributions
+ * How to plot continuous probability distributions
+ * How to plot discrete probability distributions
 
 ## Confidence intervals and hypothesis testing
 
@@ -30,3 +29,9 @@ This topic will be expanded later.  It is not yet complete.
 ## Linear modeling
 
  * How to fit a linear model to two columns of data
+ * How to compute R-squared for a simple linear model
+
+## Optional end-of-semester topics
+
+ * How to do a one-way analysis of variance (ANOVA)
+ * How to perform a chi-squared test on a contingency table
