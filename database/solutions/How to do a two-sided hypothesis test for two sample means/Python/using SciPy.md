@@ -6,7 +6,7 @@ If we call the mean of the first sample $\bar x_1$ and the mean of the
 second sample $\bar x_2$, then this is a two-sided test
 with the null hypothesis $H_0:\bar x_1=\bar x_2$.
 We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
-(false positive, finding we should reject $H_0$ when it's actually true.)
+(false positive, finding we should reject $H_0$ when it's actually true).
 
 ```python
 from scipy import stats
