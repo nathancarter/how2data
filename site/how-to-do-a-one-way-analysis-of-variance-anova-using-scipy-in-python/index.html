@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute probabilities from a distribution (using SciPy, in Python) - How to Data</title>
+    <title>How to do a one-way analysis of variance (ANOVA) (using SciPy, in Python) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute probabilities from a distribution (using SciPy, in Python) | How to Data</title>
+<title>How to do a one-way analysis of variance (ANOVA) (using SciPy, in Python) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute probabilities from a distribution (using SciPy, in Python)" />
+<meta property="og:title" content="How to do a one-way analysis of variance (ANOVA) (using SciPy, in Python)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-probabilities-from-a-distribution-using-scipy-in-python/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-probabilities-from-a-distribution-using-scipy-in-python/" />
+<link rel="canonical" href="/how2data/site/how-to-do-a-one-way-analysis-of-variance-anova-using-scipy-in-python/" />
+<meta property="og:url" content="/how2data/site/how-to-do-a-one-way-analysis-of-variance-anova-using-scipy-in-python/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute probabilities from a distribution (using SciPy, in Python)" />
+<meta property="twitter:title" content="How to do a one-way analysis of variance (ANOVA) (using SciPy, in Python)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-probabilities-from-a-distribution-using-scipy-in-python/","headline":"How to compute probabilities from a distribution (using SciPy, in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-a-one-way-analysis-of-variance-anova-using-scipy-in-python/","headline":"How to do a one-way analysis of variance (ANOVA) (using SciPy, in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,16 +215,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-probabilities-from-a-distribution-using-scipy-in-python">
+          <h1 id="how-to-do-a-one-way-analysis-of-variance-anova-using-scipy-in-python">
         
         
-          <a href="#how-to-compute-probabilities-from-a-distribution-using-scipy-in-python" class="anchor-heading" aria-labelledby="how-to-compute-probabilities-from-a-distribution-using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute probabilities from a distribution (using SciPy, in Python)
+          <a href="#how-to-do-a-one-way-analysis-of-variance-anova-using-scipy-in-python" class="anchor-heading" aria-labelledby="how-to-do-a-one-way-analysis-of-variance-anova-using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to do a one-way analysis of variance (ANOVA) (using SciPy, in Python)
         
         
       </h1>
     
 
-<p><a href="../how-to-compute-probabilities-from-a-distribution">See all solutions.</a></p>
+<p><a href="../how-to-do-a-one-way-analysis-of-variance-anova">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -234,16 +234,18 @@
       </h2>
     
 
-<p>There are many famous continuous probability distributions, such as the
-normal and exponential distributions.  How can we get access to them in
-software, to compute the probability of a value/values occurring?</p>
+<p>If we have multiple independent samples of the same quantity
+(such as students’ SAT scores from several different schools),
+we may want to test whether the means of each of the samlpes
+are the same.  Analysis of Variance (ANOVA) can determine whether
+any two of the sample means differ significantly.
+How can we do an ANOVA?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li>How to generate random values from a distribution</li>
-  <li>How to plot continuous probability distributions</li>
-  <li>How to plot discrete probability distributions</li>
+  <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a>
+(which is just an ANOVA with only two samples)</li>
 </ul>
       <h2 id="solution">
         
@@ -256,11 +258,25 @@ software, to compute the probability of a value/values occurring?</p>
 
 <!-- beginning of wrapper -->
 
-<p>You can import many different random variables from SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> module.
-The full list of them is online <a href="https://docs.scipy.org/doc/scipy/reference/stats.html#discrete-distributions">here</a>.</p>
+<p>Let’s assume we have our samples in several different Python lists.
+(Although anything like a list is also supported, including pandas Series.)
+Here I’ll construct some made-up data about SAT scores at four different
+schools.</p>
 
-<p>To compute a probability from a <strong>discrete</strong> distribution, create a random
-variable, then use its Probability Mass Function, <code class="language-plaintext highlighter-rouge">pmf</code>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">school1_SATs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1100</span><span class="p">,</span> <span class="mi">1250</span><span class="p">,</span> <span class="mi">1390</span><span class="p">,</span> <span class="mi">970</span><span class="p">,</span> <span class="mi">1510</span> <span class="p">]</span>
+<span class="n">school2_SATs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1010</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">1090</span><span class="p">,</span> <span class="mi">1110</span> <span class="p">]</span>
+<span class="n">school3_SATs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1550</span><span class="p">,</span> <span class="mi">1300</span><span class="p">,</span> <span class="mi">1270</span><span class="p">,</span> <span class="mi">1210</span> <span class="p">]</span>
+<span class="n">school4_SATs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">850</span><span class="p">,</span> <span class="mi">1110</span><span class="p">,</span> <span class="mi">1070</span><span class="p">,</span> <span class="mi">910</span><span class="p">,</span> <span class="mi">920</span> <span class="p">]</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>ANOVA tests the null hypothesis that all group means are equal.
+You choose $\alpha$, the probability of Type I error
+(false positive, finding we should reject $H_0$ when it’s actually true).
+I will use $\alpha=0.05$ in this example.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -270,48 +286,28 @@ variable, then use its Probability Mass Function, <code class="language-plaintex
 6
 7
 8
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+9
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
 
-<span class="c1"># Create a binomial random variable with 10 trials
-# and probability 0.5 of success on each trial
-</span><span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">binom</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span> <span class="p">)</span>
-
-<span class="c1"># What is the probability of exactly 3 successes?
-</span><span class="n">X</span><span class="p">.</span><span class="n">pmf</span><span class="p">(</span> <span class="mi">3</span> <span class="p">)</span>
+<span class="c1"># Run a one-way ANOVA and print out alpha, the p value,
+# and whether the comparison says to reject the null hypothesis.
+</span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">F_statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">f_oneway</span><span class="p">(</span>
+    <span class="n">school1_SATs</span><span class="p">,</span> <span class="n">school2_SATs</span><span class="p">,</span> <span class="n">school3_SATs</span><span class="p">,</span> <span class="n">school4_SATs</span> <span class="p">)</span>
+<span class="n">reject_H0</span> <span class="o">=</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span>
+<span class="n">alpha</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">reject_H0</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.11718750000000014
+</pre></td><td class="rouge-code"><pre>(0.05, 0.0342311478489849, True)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>To compute a probability from a <strong>continuous</strong> distribution, create a random
-variable, then use its Cumulative Density Function, <code class="language-plaintext highlighter-rouge">cdf</code>.  You can only
-compute the probability that a random value will fall in an interval $[a,b]$,
-not the probability that it will equal a specific value.</p>
+<p>The result we see above is to reject $H_0$, and therefore conclude
+that at least one pair of means is statistically significantly different.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<p>Content last modified on 28 May 2021.</p>
 
-<span class="c1"># Create a normal random variable with mean μ=10 and standard deviation σ=5
-</span><span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span>
-
-<span class="c1"># What is the probability of the value lying in the interval [12,13]?
-</span><span class="n">X</span><span class="p">.</span><span class="n">cdf</span><span class="p">(</span> <span class="mi">13</span> <span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="p">.</span><span class="n">cdf</span><span class="p">(</span> <span class="mi">12</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.07032514063960227
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Content last modified on 27 May 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to compute probabilities from a distribution/Python/using SciPy.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to do a one-way analysis of variance (ANOVA)/Python/using SciPy.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 

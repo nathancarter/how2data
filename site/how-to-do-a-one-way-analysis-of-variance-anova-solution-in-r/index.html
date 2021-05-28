@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to do a two-sided hypothesis test for two sample means (solution, in R) - How to Data</title>
+    <title>How to do a one-way analysis of variance (ANOVA) (solution, in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to do a two-sided hypothesis test for two sample means (solution, in R) | How to Data</title>
+<title>How to do a one-way analysis of variance (ANOVA) (solution, in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to do a two-sided hypothesis test for two sample means (solution, in R)" />
+<meta property="og:title" content="How to do a one-way analysis of variance (ANOVA) (solution, in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-do-a-one-way-analysis-of-variance-anova-solution-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-do-a-one-way-analysis-of-variance-anova-solution-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to do a two-sided hypothesis test for two sample means (solution, in R)" />
+<meta property="twitter:title" content="How to do a one-way analysis of variance (ANOVA) (solution, in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r/","headline":"How to do a two-sided hypothesis test for two sample means (solution, in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-a-one-way-analysis-of-variance-anova-solution-in-r/","headline":"How to do a one-way analysis of variance (ANOVA) (solution, in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,16 +215,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r">
+          <h1 id="how-to-do-a-one-way-analysis-of-variance-anova-solution-in-r">
         
         
-          <a href="#how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r" class="anchor-heading" aria-labelledby="how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to do a two-sided hypothesis test for two sample means (solution, in R)
+          <a href="#how-to-do-a-one-way-analysis-of-variance-anova-solution-in-r" class="anchor-heading" aria-labelledby="how-to-do-a-one-way-analysis-of-variance-anova-solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to do a one-way analysis of variance (ANOVA) (solution, in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">See all solutions.</a></p>
+<p><a href="../how-to-do-a-one-way-analysis-of-variance-anova">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -234,17 +234,18 @@
       </h2>
     
 
-<p>If we have two samples, $x_1,\ldots,x_n$ and $x’_1,\ldots,x’_m$,
-and we compute the mean of each one, we might want to ask whether
-the two means seem approximately equal.  Or more precisely, is their
-difference statistically significant at a given level?</p>
+<p>If we have multiple independent samples of the same quantity
+(such as students’ SAT scores from several different schools),
+we may want to test whether the means of each of the samlpes
+are the same.  Analysis of Variance (ANOVA) can determine whether
+any two of the sample means differ significantly.
+How can we do an ANOVA?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li>How to compute a confidence interval for a sample mean</li>
-  <li>How to do a two-sided hypothesis test for a sample mean</li>
-  <li>How to do a one-way analysis of variance (ANOVA)</li>
+  <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a>
+(which is just an ANOVA with only two samples)</li>
 </ul>
       <h2 id="solution">
         
@@ -257,11 +258,10 @@ difference statistically significant at a given level?</p>
 
 <!-- beginning of wrapper -->
 
-<p>If we call the mean of the first sample $\bar x_1$ and the mean of the
-second sample $\bar x_2$, then this is a two-sided test
-with the null hypothesis $H_0:\bar x_1=\bar x_2$.
-We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
-(false positive, finding we should reject $H_0$ when it’s actually true).</p>
+<p>R expects you to have all the samples in one vector,
+and the groups they came from in a separate, categorical vector.
+So, for example, if we had SAT scores from four different schools
+(named A, B, C, and D), then our data might be arranged like this.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -271,14 +271,27 @@ We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
 6
 7
 8
-</pre></td><td class="rouge-code"><pre><span class="c1"># Replace these first three lines with the values from your situation.</span><span class="w">
-</span><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.10</span><span class="w">
-</span><span class="n">sample1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">sample2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">17</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="p">)</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">SAT.scores</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+    </span><span class="m">1100</span><span class="p">,</span><span class="w"> </span><span class="m">1250</span><span class="p">,</span><span class="w"> </span><span class="m">1390</span><span class="p">,</span><span class="w"> </span><span class="m">970</span><span class="p">,</span><span class="w"> </span><span class="m">1510</span><span class="p">,</span><span class="w"> </span><span class="m">1010</span><span class="p">,</span><span class="w"> </span><span class="m">1050</span><span class="p">,</span><span class="w"> </span><span class="m">1090</span><span class="p">,</span><span class="w"> </span><span class="m">1110</span><span class="p">,</span><span class="w">
+    </span><span class="m">900</span><span class="p">,</span><span class="w"> </span><span class="m">1550</span><span class="p">,</span><span class="w"> </span><span class="m">1300</span><span class="p">,</span><span class="w"> </span><span class="m">1270</span><span class="p">,</span><span class="w"> </span><span class="m">1210</span><span class="p">,</span><span class="w"> </span><span class="m">900</span><span class="p">,</span><span class="w"> </span><span class="m">850</span><span class="p">,</span><span class="w"> </span><span class="m">1110</span><span class="p">,</span><span class="w"> </span><span class="m">1070</span><span class="p">,</span><span class="w"> </span><span class="m">910</span><span class="p">,</span><span class="w"> </span><span class="m">920</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="n">school.names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+    </span><span class="s1">'A'</span><span class="p">,</span><span class="w"> </span><span class="s1">'A'</span><span class="p">,</span><span class="w"> </span><span class="s1">'A'</span><span class="p">,</span><span class="w"> </span><span class="s1">'A'</span><span class="p">,</span><span class="w"> </span><span class="s1">'A'</span><span class="p">,</span><span class="w"> </span><span class="s1">'B'</span><span class="p">,</span><span class="w"> </span><span class="s1">'B'</span><span class="p">,</span><span class="w"> </span><span class="s1">'B'</span><span class="p">,</span><span class="w"> </span><span class="s1">'B'</span><span class="p">,</span><span class="w">
+    </span><span class="s1">'C'</span><span class="p">,</span><span class="w"> </span><span class="s1">'C'</span><span class="p">,</span><span class="w"> </span><span class="s1">'C'</span><span class="p">,</span><span class="w"> </span><span class="s1">'C'</span><span class="p">,</span><span class="w"> </span><span class="s1">'C'</span><span class="p">,</span><span class="w"> </span><span class="s1">'D'</span><span class="p">,</span><span class="w"> </span><span class="s1">'D'</span><span class="p">,</span><span class="w"> </span><span class="s1">'D'</span><span class="p">,</span><span class="w"> </span><span class="s1">'D'</span><span class="p">,</span><span class="w"> </span><span class="s1">'D'</span><span class="p">,</span><span class="w"> </span><span class="s1">'D'</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-</span><span class="c1"># Run a one-sample t-test and print out alpha, the p value,</span><span class="w">
-</span><span class="c1"># and whether the comparison says to reject the null hypothesis.</span><span class="w">
-</span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">sample1</span><span class="p">,</span><span class="w"> </span><span class="n">sample2</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
+<p>ANOVA tests the null hypothesis that all group means are equal.
+You choose $\alpha$, the probability of Type I error
+(false positive, finding we should reject $H_0$ when it’s actually true).
+I will use $\alpha=0.05$ in this example.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># Run a one-way ANOVA and print a summary of all the output</span><span class="w">
+</span><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aov</span><span class="p">(</span><span class="w"> </span><span class="n">SAT.scores</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">school.names</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -286,48 +299,36 @@ We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
 3
 4
 5
-6
-7
-8
-9
-10
-</pre></td><td class="rouge-code"><pre>	Welch Two Sample t-test
-
-data:  sample1 and sample2
-t = -2.4617, df = 5.7201, p-value = 0.05097
-alternative hypothesis: true difference in means is not equal to 0
-90 percent confidence interval:
- -7.0057683 -0.7942317
-sample estimates:
-mean of x mean of y 
-      8.5      12.4 
+</pre></td><td class="rouge-code"><pre>             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+school.names  3 321715  107238   3.689 0.0342 *
+Residuals    16 465140   29071                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Although we can deduce the answer to our question from the above output,
-by comparing the $p$ value with $\alpha$ manually, we can also ask R
-to do it.</p>
+<p>The $p$-value reported in that output is $0.0433$.
+You could manually check whether $p&lt;\alpha$.
+Since it is, we would reject $H_0$, and therefore conclude
+that at least one pair of means is statistically significantly different.</p>
+
+<p>Or you could ask R to do the comparison for you, but getting the $p$-value
+from the ANOVA summary is fiddly:</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="c1"># Is there enough evidence to reject the null hypothesis?</span><span class="w">
-</span><span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">sample1</span><span class="p">,</span><span class="w"> </span><span class="n">sample2</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">result</span><span class="o">$</span><span class="n">p.value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alpha</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">
+</span><span class="n">p.value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unname</span><span class="p">(</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="w"> </span><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)[</span><span class="m">9</span><span class="p">]</span><span class="w">
+</span><span class="n">p.value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alpha</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre>[1] TRUE
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>In this case, the samples give us enough evidence to reject the null hypothesis
-at the $\alpha=0.10$ level.  The data suggest that $\bar x_1\neq\bar x_2$.</p>
-
-<p>Here we did not assume that the two samples had equal variance.
-If in your case they do, you can pass the parameter <code class="language-plaintext highlighter-rouge">var.equal=TRUE</code> to <code class="language-plaintext highlighter-rouge">t.test</code>.</p>
-
 <p>Content last modified on 28 May 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to do a two-sided hypothesis test for two sample means/R/solution.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/solutions/How to do a one-way analysis of variance (ANOVA)/R/solution.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
