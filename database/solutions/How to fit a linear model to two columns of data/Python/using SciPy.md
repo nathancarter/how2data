@@ -25,3 +25,5 @@ beta1 = model.slope
 # do this alone:
 stats.linregress( xs, ys )
 ```
+
+The linear model in this example is approximately $y=0.133x-37.32$.

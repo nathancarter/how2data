@@ -18,3 +18,5 @@ beta1 = model$coefficients[2]
 # If you just need to see the coefficients, do this alone:
 lm( ys ~ xs )
 ```
+
+The linear model in this example is approximately $y=0.133x-37.32$.
