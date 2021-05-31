@@ -1,0 +1,17 @@
+---
+author: "Nathan Carter (ncarter@bentley.edu) - replace with your name and email"
+---
+
+Replace the entire contents of this RMarkdown file with your solution to your
+task, using alternating markdown and code cells as needed.  Obviously the
+content below is just a silly example.  Try not to leave any blank code cells in
+the final version.
+
+We assume the user chooses the caterpillar length with the variable in line 1.
+Feel free to change its value to the length of caterpillar you wish to see.
+
+```{r}
+caterpillar.length <- 5
+paste( c( "`O", replicate( caterpillar.length, "oo") ), collapse = "," )
+```
+
