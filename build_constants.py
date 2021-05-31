@@ -15,11 +15,8 @@ database_config_file = os.path.join( main_folder, 'database', 'database.yml' )
 jekyll_input_folder  = os.path.join( main_folder, 'jekyll-input' )
 static_folder        = os.path.join( main_folder, 'database', 'static' )
 tasks_folder         = os.path.join( main_folder, 'database', 'tasks' )
-task_imgs_folder     = os.path.join( jekyll_input_folder, 'assets', 'task-images' )
 topics_folder        = os.path.join( main_folder, 'database', 'topics' )
-topic_imgs_folder    = os.path.join( jekyll_input_folder, 'assets', 'topic-images' )
-solutions_folder     = os.path.join( main_folder, 'database', 'solutions' )
-solution_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'solution-images' )
+jekyll_imgs_folder   = os.path.join( jekyll_input_folder, 'assets', 'dynamic-images' )
 # How to make an absolute path relative to this project
 def path_in_project ( maybe_abs_path ):
     prefix = main_folder

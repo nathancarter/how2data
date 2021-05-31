@@ -17,17 +17,35 @@ import sys
 ###  ENSURE KEY FOLDERS EXIST
 ###
 
-ensure_folder_exists( os.path.join( tasks_folder, 'images' ) )
 ensure_folder_exists( os.path.join( topics_folder, 'images' ) )
-ensure_folder_exists( task_imgs_folder )
-ensure_folder_exists( solution_imgs_folder )
-ensure_folder_exists( topic_imgs_folder )
+ensure_folder_exists( jekyll_imgs_folder )
 
 ###
 ###  READ STATIC PAGES, TEMPLATES, AND OTHER MISC. FILES FROM DISK
 ###
 
-json = [ ]
+json = [
+    {
+        'type' : 'topic image',
+        'filename' : topic_image,
+        'full path' : path_in_project( os.path.join( topics_folder, topic_image ) ),
+        'metadata' : np.nan,
+        'content' : np.nan,
+        'raw content' : np.nan
+    } \
+    for topic_image in just_imgs( os.listdir( os.path.join( topics_folder, 'images' ) ) )
+] + [
+    {
+        'type' : 'task image',
+        'filename' : task_image,
+        'full path' : path_in_project( os.path.join( task_folder, task_image ) ),
+        'metadata' : np.nan,
+        'content' : np.nan,
+        'raw content' : np.nan
+    } \
+    for task_folder in subfolders( tasks_folder ) \
+    for task_image in just_imgs( task_folder )
+]
 for filename in just_docs( os.listdir( static_folder ) ):
     full_filename = os.path.join( static_folder, filename )
     metadata, content = file_split_yaml_header( full_filename )
@@ -39,43 +57,25 @@ for filename in just_docs( os.listdir( static_folder ) ):
         'content' : content,
         'raw content' : read_text_file( full_filename )
     } )
-json += [
-    {
-        'type' : 'task image',
-        'filename' : task_image,
-        'full path' : path_in_project( os.path.join( tasks_folder, task_image ) ),
-        'metadata' : np.nan,
-        'content' : np.nan,
-        'raw content' : np.nan
-    } \
-    for task_image in just_imgs( os.listdir( os.path.join( tasks_folder, 'images' ) ) )
-] + [
-    {
-        'type' : 'topic image',
-        'filename' : topic_image,
-        'full path' : path_in_project( os.path.join( topics_folder, topic_image ) ),
-        'metadata' : np.nan,
-        'content' : np.nan,
-        'raw content' : np.nan
-    } \
-    for topic_image in just_imgs( os.listdir( os.path.join( topics_folder, 'images' ) ) )
-]
 files_df = pd.DataFrame( json )
 
 ###
 ###  READ TASK LIST FROM DISK
 ###
 
-tasks_df = pd.DataFrame( [
-    {
-        'task name' : without_extension( task_file ),
-        'task filename' : path_in_project( os.path.join( tasks_folder, task_file ) ),
-        'content' : read_text_file( os.path.join( tasks_folder, task_file ) ),
-        'permalink' : blogify( without_extension( task_file ) )
-    } \
-    for task_file in just_docs( os.listdir( tasks_folder ) ) \
-    if task_file != 'README.md'
-] )
+rows = [ ]
+for task_folder in subfolders( tasks_folder ):
+    task_desc_file = os.path.join( tasks_folder, task_folder, 'description.md' )
+    if not os.path.isfile( task_desc_file ):
+        print( 'Build error: Missing task description file:', task_desc_file )
+        sys.exit( 1 )
+    rows.append( {
+        'task name' : task_folder,
+        'task filename' : path_in_project( task_desc_file ),
+        'content' : read_text_file( task_desc_file ),
+        'permalink' : blogify( task_folder )
+    } )
+tasks_df = pd.DataFrame( rows )
 # Add links to task pages
 tasks_df['markdown link'] = tasks_df['task name'].apply(
     lambda name: f'[{name}](../{blogify(name)})' )
@@ -111,12 +111,12 @@ topics_df['markdown link'] = topics_df['topic name'].apply(
 ###
 
 json = [ ]
-for task_name in subfolders( solutions_folder ):
-    for software_name in subfolders( os.path.join( solutions_folder, task_name ) ):
+for task_name in subfolders( tasks_folder ):
+    for software_name in subfolders( os.path.join( tasks_folder, task_name ) ):
         for solution_file in docs_inside( os.path.join(
-                solutions_folder, task_name, software_name ) ):
+                tasks_folder, task_name, software_name ) ):
             input_file = os.path.join(
-                solutions_folder, task_name, software_name, solution_file )
+                tasks_folder, task_name, software_name, solution_file )
             next = {
                 'task name' : task_name,
                 'software' : software_name,
@@ -150,11 +150,11 @@ solution_images_df = pd.DataFrame( [
         'solution name' : without_extension( solution_file ),
         'image filename' : image_file,
         'image path' : path_in_project( os.path.join(
-            solutions_folder, task_name, software_name, image_file ) )
+            tasks_folder, task_name, software_name, image_file ) )
     } \
-    for task_name in subfolders( solutions_folder ) \
-    for software_name in subfolders( os.path.join( solutions_folder, task_name ) ) \
-    for image_file in imgs_inside( os.path.join( solutions_folder, task_name, software_name ) )
+    for task_name in subfolders( tasks_folder ) \
+    for software_name in subfolders( os.path.join( tasks_folder, task_name ) ) \
+    for image_file in imgs_inside( os.path.join( tasks_folder, task_name, software_name ) )
 ] )
 
 ###
@@ -189,19 +189,13 @@ software_df['num solutions'] = software_df['name'].apply( lambda name: \
     sum( solutions_df['software'] == name ) )
 
 ###
-###  CHECK CONSISTENCY AMONG solutions_df, tasks_df, and software_df
+###  CHECK CONSISTENCY AMONG solutions_df AND software_df
 ###
 
 for index, task_row in solutions_df.iterrows():
-    if task_row['task name'] not in list( tasks_df['task name'] ):
-        print( 'Build error: Solution folder not named after any existing task' )
-        print( '     Folder:', os.path.join( solutions_folder, task_row['task name'] ) )
-        print( '   Basename:', task_row['task name'] )
-        print( '    Options:', ', '.join( tasks_df['task name'] ) )
-        sys.exit( 1 )
     if task_row['software'] not in list( software_df['name'] ):
         print( 'Build error: Software folder not named after any existing package' )
         print( '     Folder:', os.path.join(
-            solutions_folder, task_row['task name'], task_row['software'] ) )
+            tasks_folder, task_row['task name'], task_row['software'] ) )
         print( '   Packages:', ', '.join( list( software_df['name'] ) ) )
         sys.exit( 1 )

@@ -18,7 +18,7 @@ rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
 # Delete files generated in last build
 section_heading( 'Deleting old files from Jekyll input folder' )
 to_delete = ' '.join( [
-    os.path.join( solution_imgs_folder, f'*{ext}' ) for ext in img_extensions
+    os.path.join( jekyll_imgs_folder, f'*{ext}' ) for ext in img_extensions
 ] )
 print( f'Running: rm {to_delete}' )
 run_shell_command_ignoring_errors( f'rm {to_delete}' )
@@ -36,8 +36,8 @@ for filename in files_df[files_df['type'] == 'static page']['filename']:
     copy_static_file( filename, replacements )
 for index, row in solution_images_df.iterrows():
     copy_solution_image_file( row['task name'], row['software'], row['image filename'] )
-for filename in files_df[files_df['type'] == 'task image']['filename']:
-    copy_task_image_file( filename )
+for index, row in files_df[files_df['type'] == 'task image'].iterrows():
+    copy_task_image_file( row['full path'], row['filename'] )
 
 # Generate files from database
 section_heading( 'Generating files from database content' )

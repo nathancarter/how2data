@@ -103,16 +103,16 @@ def copy_static_file ( filename, replacements = dict() ):
 # Function for copying an image file from a solutions subfolder to the Jekyll
 # input folder.
 def copy_solution_image_file ( task, software, image ):
-    source = os.path.join( solutions_folder, task, software, image )
-    dest = os.path.join( solution_imgs_folder, f'{task}-{software}-{image}' )
+    source = os.path.join( tasks_folder, task, software, image )
+    dest = os.path.join( jekyll_imgs_folder, f'{task}-{software}-{image}' )
     shutil.copy2( source, dest )
     print( 'Copied: Source:', source )
     print( '        Dest:  ', dest )
 # Function for copying a task file from a solutions subfolder to the Jekyll
 # input folder.
-def copy_task_image_file ( filename ):
-    source = os.path.join( tasks_folder, filename )
-    dest = os.path.join( task_imgs_folder, filename )
+def copy_task_image_file ( full_path, filename ):
+    source = full_path
+    dest = os.path.join( jekyll_imgs_folder, filename )
     shutil.copy2( source, dest )
     print( 'Copied: Source:', source )
     print( '        Dest:  ', dest )
@@ -189,9 +189,9 @@ def run_markdown ( markdown, folder, software ):
 
 def adjust_image_for_solution ( task, software ):
     def result ( filename ):
-        return os.path.join( '..', 'assets', 'solution-images', f'{task}-{software}-{filename}' )
+        return os.path.join( '..', 'assets', 'dynamic-images', f'{task}-{software}-{filename}' )
 def adjust_image_for_task ( filename ):
-    return os.path.join( '..', 'assets', 'task-images', filename )
+    return os.path.join( '..', 'assets', 'dynamic-images', filename )
 github_url = 'https://github.com/nathancarter/how2data'
 new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
@@ -209,10 +209,10 @@ def make_all_task_names_links ( markdown ):
 # Main function to build a solution page.  1st parameter is any row from solutions_df.
 def build_solution_page ( solution_row, force_rerun_solution=False ):
     out_filename = solution_row['permalink'] + '.md'
-    input_file = os.path.join( solutions_folder, solution_row['task name'],
+    input_file = os.path.join( tasks_folder, solution_row['task name'],
         solution_row['software'], solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    task_file = os.path.join( tasks_folder, solution_row['task name'] + '.md' )
+    task_file = os.path.join( tasks_folder, solution_row['task name'], 'description.md' )
     if not force_rerun_solution \
     and not must_rebuild_file( input_file, output_file ) \
     and not must_rebuild_file( task_file, output_file ):
@@ -237,7 +237,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
                 make_all_task_names_links( task_row['content'] ) ) )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
-            os.path.join( solutions_folder, solution_row['task name'], solution_row['software'] ),
+            os.path.join( tasks_folder, solution_row['task name'], solution_row['software'] ),
             solution_row['software'] ) ) )
         .replace( 'CONTRIBUTORS',
             f'Contributed by {solution_row["author"]}' if solution_row["author"] != np.nan else '' )
