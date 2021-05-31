@@ -129,6 +129,8 @@ def read_doc_to_markdown ( filename ):
                 print( 'Unknown cell type:', cell['cell_type'] )
                 print( '     In this file:', filename )
                 sys.exit( 1 )
+        while raw[0] == '\n':
+            raw = raw[1:]
         return raw
     print( 'Unknown document type:', extension )
     print( '        For this file:', filename )
