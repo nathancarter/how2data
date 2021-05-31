@@ -100,15 +100,7 @@ def copy_static_file ( filename, replacements = dict() ):
     print( '        Replacements:', len(replacements) )
     mark_as_regenerated( filename )
 
-# Function for copying an image file from a solutions subfolder to the Jekyll
-# input folder.
-def copy_solution_image_file ( task, software, image ):
-    source = os.path.join( tasks_folder, task, software, image )
-    dest = os.path.join( jekyll_imgs_folder, f'{task}-{software}-{image}' )
-    shutil.copy2( source, dest )
-    print( 'Copied: Source:', source )
-    print( '        Dest:  ', dest )
-# Function for copying a task file from a solutions subfolder to the Jekyll
+# Function for copying a task file from a task folder to the Jekyll
 # input folder.
 def copy_task_image_file ( full_path, filename ):
     source = full_path
@@ -187,11 +179,9 @@ def run_markdown ( markdown, folder, software ):
 ###  BUILD TOOLS USED BELOW
 ###
 
-def adjust_image_for_solution ( task, software ):
+def adjust_image_for_task ( task ):
     def result ( filename ):
-        return os.path.join( '..', 'assets', 'dynamic-images', f'{task}-{software}-{filename}' )
-def adjust_image_for_task ( filename ):
-    return os.path.join( '..', 'assets', 'dynamic-images', filename )
+        return os.path.join( '..', 'assets', 'dynamic-images', f'{task}-{filename}' )
 github_url = 'https://github.com/nathancarter/how2data'
 new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
@@ -210,9 +200,10 @@ def make_all_task_names_links ( markdown ):
 def build_solution_page ( solution_row, force_rerun_solution=False ):
     out_filename = solution_row['permalink'] + '.md'
     input_file = os.path.join( tasks_folder, solution_row['task name'],
-        solution_row['software'], solution_row['solution filename'] )
+        solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    task_file = os.path.join( tasks_folder, solution_row['task name'], 'description.md' )
+    task_file = os.path.join( tasks_folder, solution_row['task name'],
+        'description.md' )
     if not force_rerun_solution \
     and not must_rebuild_file( input_file, output_file ) \
     and not must_rebuild_file( task_file, output_file ):
@@ -222,7 +213,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
         mark_as_regenerated( out_filename )
         return
     content = adjust_image_filenames(
-        adjust_image_for_solution( solution_row['task name'], solution_row['software'] ),
+        adjust_image_for_task( solution_row['task name'] ),
         make_all_task_names_links( solution_row['content'] ) )
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
@@ -233,11 +224,11 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
         .replace( 'PERMALINK', solution_row['permalink'] )
         .replace( 'TASK_PAGE_LINK', f'[See all solutions.](../{task_row["permalink"]})' )
         .replace( 'DESCRIPTION',
-            adjust_image_filenames( adjust_image_for_task,
+            adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
                 make_all_task_names_links( task_row['content'] ) ) )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
             content,
-            os.path.join( tasks_folder, solution_row['task name'], solution_row['software'] ),
+            os.path.join( tasks_folder, solution_row['task name'] ),
             solution_row['software'] ) ) )
         .replace( 'CONTRIBUTORS',
             f'Contributed by {solution_row["author"]}' if solution_row["author"] != np.nan else '' )
@@ -306,7 +297,7 @@ see [our Contributing page](contributing) for how to help extend this website.
         .replace( 'TITLE', row['task name'] )
         .replace( 'PERMALINK', row['permalink'] )
         .replace( 'DESCRIPTION',
-            adjust_image_filenames( adjust_image_for_task,
+            adjust_image_filenames( adjust_image_for_task( row['task name'] ),
                 make_all_task_names_links( row['content'] ) ) )
         .replace( 'SOLUTIONS', all_solutions )
         .replace( 'TOPICS', related_topics )

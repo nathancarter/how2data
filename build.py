@@ -34,8 +34,6 @@ replacements = {
 }
 for filename in files_df[files_df['type'] == 'static page']['filename']:
     copy_static_file( filename, replacements )
-for index, row in solution_images_df.iterrows():
-    copy_solution_image_file( row['task name'], row['software'], row['image filename'] )
 for index, row in files_df[files_df['type'] == 'task image'].iterrows():
     copy_task_image_file( row['full path'], row['filename'] )
 

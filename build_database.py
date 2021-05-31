@@ -112,50 +112,37 @@ topics_df['markdown link'] = topics_df['topic name'].apply(
 
 json = [ ]
 for task_name in subfolders( tasks_folder ):
-    for software_name in subfolders( os.path.join( tasks_folder, task_name ) ):
-        for solution_file in docs_inside( os.path.join(
-                tasks_folder, task_name, software_name ) ):
-            input_file = os.path.join(
-                tasks_folder, task_name, software_name, solution_file )
-            next = {
-                'task name' : task_name,
-                'software' : software_name,
-                'solution name' : without_extension( solution_file ),
-                'solution filename' : solution_file,
-                'solution path' : path_in_project( input_file ),
-                'solution title' :
-                    f'{task_name} ({without_extension( solution_file )}, in {software_name})'
-            }
-            metadata, content = file_split_yaml_header( input_file )
-            next['content'] = content + modification_text( input_file )
-            for key, value in metadata.items():
-                next[key] = value
-            next['raw content'] = read_text_file( input_file )
-            next['permalink'] = blogify( next['solution title'] )
-            json.append( next )
+    for solution_file in docs_inside( os.path.join( tasks_folder, task_name ) ):
+        if solution_file == 'description.md':
+            continue
+        bits = without_extension( solution_file ).split( ', ' )
+        software_name = bits[0]
+        if len( bits ) == 1:
+            solution_name = 'solution'
+        else:
+            solution_name = ', '.join( bits[1:] )
+        input_file = os.path.join( tasks_folder, task_name, solution_file )
+        next = {
+            'task name' : task_name,
+            'software' : software_name,
+            'solution name' : solution_name,
+            'solution filename' : solution_file,
+            'solution path' : path_in_project( input_file ),
+            'solution title' :
+                f'{task_name} (in {without_extension( solution_file )})'
+        }
+        metadata, content = file_split_yaml_header( input_file )
+        next['content'] = content + modification_text( input_file )
+        for key, value in metadata.items():
+            next[key] = value
+        next['raw content'] = read_text_file( input_file )
+        next['permalink'] = blogify( next['solution title'] )
+        json.append( next )
 solutions_df = pd.DataFrame( json )
 # Add links to solution pages to each solution row
 def link_to_solution ( solution_row ):
     return f'[{solution_row["solution name"]}](../{blogify(solution_row["solution title"])})'
 solutions_df['markdown link'] = solutions_df.apply( link_to_solution, axis=1 )
-
-###
-###  READ SOLUTION IMAGES FROM DISK
-###
-
-solution_images_df = pd.DataFrame( [
-    {
-        'task name' : task_name,
-        'software' : software_name,
-        'solution name' : without_extension( solution_file ),
-        'image filename' : image_file,
-        'image path' : path_in_project( os.path.join(
-            tasks_folder, task_name, software_name, image_file ) )
-    } \
-    for task_name in subfolders( tasks_folder ) \
-    for software_name in subfolders( os.path.join( tasks_folder, task_name ) ) \
-    for image_file in imgs_inside( os.path.join( tasks_folder, task_name, software_name ) )
-] )
 
 ###
 ###  READ SOFTWARE PACKAGE LIST FROM CONFIG FILE
