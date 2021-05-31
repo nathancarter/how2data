@@ -65,14 +65,12 @@ files_df = pd.DataFrame( json )
 
 rows = [ ]
 for task_folder in subfolders( tasks_folder ):
-    task_desc_file = os.path.join( tasks_folder, task_folder, 'description.md' )
-    if not os.path.isfile( task_desc_file ):
-        print( 'Build error: Missing task description file:', task_desc_file )
-        sys.exit( 1 )
+    task_desc_file = get_unique_markdown_doc(
+        os.path.join( tasks_folder, task_folder, 'description' ) )
     rows.append( {
         'task name' : task_folder,
         'task filename' : path_in_project( task_desc_file ),
-        'content' : read_text_file( task_desc_file ),
+        'content' : read_doc_to_markdown( task_desc_file ),
         'permalink' : blogify( task_folder )
     } )
 tasks_df = pd.DataFrame( rows )
@@ -89,14 +87,15 @@ for topic_file in just_docs( os.listdir( topics_folder ) ):
     if topic_file == 'README.md':
         continue
     full_filename = os.path.join( topics_folder, topic_file )
-    metadata, content = file_split_yaml_header( full_filename )
+    markdown = read_doc_to_markdown( full_filename )
+    metadata, content = string_split_yaml_header( markdown )
     content += modification_text( full_filename )
     next = {
         'topic name' : without_extension( topic_file ),
         'topic filename' : path_in_project( full_filename ),
         'permalink' : blogify( without_extension( topic_file ) ),
         'content' : content,
-        'raw content' : read_text_file( full_filename )
+        'raw content' : markdown
     }
     for key, value in metadata.items():
         next[key] = value
@@ -113,7 +112,7 @@ topics_df['markdown link'] = topics_df['topic name'].apply(
 json = [ ]
 for task_name in subfolders( tasks_folder ):
     for solution_file in docs_inside( os.path.join( tasks_folder, task_name ) ):
-        if solution_file == 'description.md':
+        if without_extension( solution_file ) == 'description':
             continue
         bits = without_extension( solution_file ).split( ', ' )
         software_name = bits[0]
@@ -131,11 +130,12 @@ for task_name in subfolders( tasks_folder ):
             'solution title' :
                 f'{task_name} (in {without_extension( solution_file )})'
         }
-        metadata, content = file_split_yaml_header( input_file )
+        markdown = read_doc_to_markdown( input_file )
+        metadata, content = string_split_yaml_header( markdown )
         next['content'] = content + modification_text( input_file )
         for key, value in metadata.items():
             next[key] = value
-        next['raw content'] = read_text_file( input_file )
+        next['raw content'] = markdown
         next['permalink'] = blogify( next['solution title'] )
         json.append( next )
 solutions_df = pd.DataFrame( json )

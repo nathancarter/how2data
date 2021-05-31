@@ -13,6 +13,13 @@ import os
 import re
 import time
 import sys
+import json
+
+# Get pieces of a filename/path
+def file_extension ( filename ):
+    return os.path.splitext( filename )[1]
+def without_extension ( filename ):
+    return os.path.splitext( filename )[0]
 
 # Get all contents of a text file
 def read_text_file ( file ):
@@ -33,12 +40,11 @@ def ensure_folder_exists ( path ):
 def read_yaml_from_file ( file ):
     return YAML().load( read_text_file( file ) )
 
-# Open a text file and split out the YAML header,
-# returning the YAML dictionary and the remaining text content
-# as a pair
-def file_split_yaml_header ( filename ):
-    with open( filename, 'r' ) as f:
-        lines = f.readlines()
+# Split out the YAML header and content of a markdown document given as
+# a text string, returning the YAML dictionary and the remaining text
+# content as a pair.
+def string_split_yaml_header ( text ):
+    lines = [ line+'\n' for line in text.split( '\n' ) ]
     # if yaml header exists, find its end and return it and the content
     if lines[0] == '---\n':
         lines = lines[1:]
@@ -49,9 +55,13 @@ def file_split_yaml_header ( filename ):
         )
     # otherwise return an empty yaml header and just the content
     return {}, ''.join( lines )
+# Open a text file and 
+def file_split_yaml_header ( filename ):
+    with open( filename, 'r' ) as f:
+        return string_split_yaml_header( f.read() )
 
 # Tools to easily filter for certain types of content within a folder
-doc_extensions = [ '.md', '.markdown' ]
+doc_extensions = [ '.md', '.markdown', '.Rmd', '.ipynb' ]
 img_extensions = [ '.jpg', '.jpeg', '.png', '.gif' ]
 def has_any_extension ( filename, extensions ):
     return any( ( filename.endswith( ext ) for ext in extensions ) )
@@ -67,9 +77,62 @@ def subfolders ( folder ):
     return [ x for x in os.listdir( folder ) \
              if os.path.isdir( os.path.join( folder, x ) ) ]
 def docs_inside ( folder ):
-    return [ x for x in os.listdir( folder ) if is_doc( x ) ]
+    result = [ x for x in os.listdir( folder ) if is_doc( x ) ]
+    filenames = list( map( without_extension, result ) )
+    if len( set( filenames ) ) < len( filenames ):
+        print( 'Documents with same name and different extensions!' )
+        print( 'In this folder:', folder )
+        sys.exit( 1 )
+    return result
 def imgs_inside ( folder ):
     return [ x for x in os.listdir( folder ) if is_img( x ) ]
+
+# Crucial function:  This finds the unique file with the given filename and
+# path, but with any extension from doc_extensions, and reads it in,
+# converting to markdown if necessary.  If there is no such file, or are
+# multiple such files, it quits with an error.
+def get_unique_markdown_doc ( path_and_base_filename ):
+    which_exist = [ extension for extension in doc_extensions \
+        if os.path.exists( path_and_base_filename + extension ) and \
+        os.path.isfile( path_and_base_filename + extension ) ]
+    if len( which_exist ) == 0:
+        print( 'No document file found with this base:', path_and_base_filename )
+        print( '          and any of these extensions:', ' '.join( doc_extensions ) )
+        sys.exit( 1 )
+    if len( which_exist ) > 1:
+        print( 'Multiple documents found with this base:', path_and_base_filename )
+        for extension in doc_extensions:
+            print( '                                  Found:',
+                path_and_base_filename + extension )
+        sys.exit( 1 )
+    return path_and_base_filename + which_exist[0]
+# To pair with previous function:  Read any document whose extension is in
+# doc_extensions into markdown text.  It can support markdown (no conversion
+# needed) or RMarkdown (tiny conversion needed) or Jupyter notebooks (more
+# conversion needed).
+def read_doc_to_markdown ( filename ):
+    extension = file_extension( filename )
+    raw = read_text_file( filename )
+    if extension in [ '.md', '.markdown' ]:
+        return raw
+    if extension in [ '.Rmd' ]:
+        return raw.replace( '```{r}', '```R' )
+    if extension in [ '.ipynb' ]:
+        cells = json.loads( raw )['cells']
+        raw = ''
+        for cell in cells:
+            if cell['cell_type'] == 'markdown':
+                raw += '\n' + ''.join( cell['source'] ) + '\n'
+            elif cell['cell_type'] == 'code':
+                raw += '\n```python\n' + ''.join( cell['source'] ) + '\n```\n'
+            else:
+                print( 'Unknown cell type:', cell['cell_type'] )
+                print( '     In this file:', filename )
+                sys.exit( 1 )
+        return raw
+    print( 'Unknown document type:', extension )
+    print( '        For this file:', filename )
+    sys.exit( 1 )
 
 # Function for printing section headings in the console output
 def section_heading ( title ):
@@ -81,12 +144,6 @@ def section_heading ( title ):
 # How to blogify a title into a filename (with lower case and hyphens).
 def blogify ( title ):
     return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
-
-# Get pieces of a filename/path
-def file_extension ( filename ):
-    return os.path.splitext( filename )[1]
-def without_extension ( filename ):
-    return os.path.splitext( filename )[0]
 
 # Must we rebuild an output file?  This function says yes if the output file
 # does not exist, or is older than the input file that would be used to build it.
