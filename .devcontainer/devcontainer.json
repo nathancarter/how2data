@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
-    "name": "Jupyter Data Science Notebooks with Hugo",
+    "name": "Jupyter Data Science Notebooks with Jekyll",
     "build": {
         "dockerfile": "Dockerfile"
     },
