@@ -202,8 +202,8 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
     input_file = os.path.join( tasks_folder, solution_row['task name'],
         solution_row['solution filename'] )
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    task_file = os.path.join( tasks_folder, solution_row['task name'],
-        'description.md' )
+    task_file = get_unique_markdown_doc( os.path.join(
+        tasks_folder, solution_row['task name'], 'description' ) )
     if not force_rerun_solution \
     and not must_rebuild_file( input_file, output_file ) \
     and not must_rebuild_file( task_file, output_file ):
