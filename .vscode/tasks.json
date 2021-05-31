@@ -4,16 +4,18 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run build script",
+            "label": "Rebuild How to Data website",
             "type": "shell",
-            "command": "./build.sh",
-            "panel": "dedicated",
-            "clear": true,
+            "command": "bash build.sh",
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
+        },
+        {
+            "label": "Serve website locally for testing",
+            "type": "shell",
+            "command": "bash serve.sh",
+            "problemMatcher": [],
+            "group": "build"
         }
     ]
 }
