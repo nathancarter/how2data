@@ -21,6 +21,7 @@ required, such as Maxima or SymPy.
  * How to graph mathematical functions
  * How to write a piecewise-defined function
  * How to graph a two-variable function as a surface
+ * How to write symbolic equations
 
 ## Limits, Sequences, and Series
 
