@@ -44,6 +44,7 @@ required, such as Maxima or SymPy.
  * How to compute the derivative of a function
  * How to compute the Taylor series for a function
  * How to compute the error bounds on a Taylor approximation
+ * How to do implicit differentiation
 
 ## Under Construction
 
