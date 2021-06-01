@@ -13,6 +13,10 @@ implicit differentiation, Taylor series, and continuous probability.
 By-hand computation is minimized and the use of a computer algebra system is
 required, such as Maxima or SymPy.
 
+## Basic mathematics
+
+ * How to do basic mathematical computations
+
 ## Under Construction
 
 This topic will be expanded later.  This is just a placeholder for now.

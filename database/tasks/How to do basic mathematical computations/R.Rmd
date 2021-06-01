@@ -1,0 +1,35 @@
+---
+author: Nathan Carter (ncarter@bentley.edu)
+---
+
+For those expressions that need the Python math package, use the code
+`import math` beforehand to ensure that package is loaded.  Alternatively,
+you can write `from math import *` and thus drop the `math` prefixes in
+the table below.
+
+| Rathematical notation | R code |
+|--|--|
+| $x+y$ | `x+y` |
+| $x-y$ | `x-y` |
+| $xy$ | `x*y` |
+| $\frac xy$ | `x/y` |
+| $x^y$ | `x^y` |
+| $\vert x\vert$ | `abs(x)` |
+| $\ln x$ | `log(x)` |
+| $\log_a b$ | `log(b,a)` |
+| $e^x$ | `exp(x)` |
+| $\pi$ | `pi` |
+| $\sin x$ | `sin(x)` |
+| $\sin^{-1} x$ | `asin(x)` |
+| $\sqrt x$ | `sqrt(x)` |
+
+Other trigonometric functions are also available besides just `sin`,
+including `cos`, `tan`, etc.
+
+R naturally applies these functions across vectors.  For example, you can
+square all the entries in a vector as in the example below.
+
+```{r}
+example.vector <- c( -3, 2, 0.5, -1, 10, 9.2, -3.3 )
+example.vector ^ 2
+```
