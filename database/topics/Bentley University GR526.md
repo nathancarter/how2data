@@ -28,6 +28,10 @@ required, such as Maxima or SymPy.
  * How to graph mathematical sequences
  * How to define a mathematical series (and evaluate it)
 
+## Derivatives
+
+ * How to compute the derivative of a function
+
 ## Under Construction
 
 This topic will be expanded later.  This is just a placeholder for now.
