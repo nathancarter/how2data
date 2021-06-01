@@ -9,7 +9,7 @@ FROM jupyter/datascience-notebook
 # [Optional] Uncomment this section to install additional OS packages.
 USER root
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
- && apt-get -y install --no-install-recommends ruby-full build-essential zlib1g-dev
+ && apt-get -y install --no-install-recommends ruby-full build-essential zlib1g-dev zip
 USER jovyan
 RUN mkdir ~/gems
 ENV GEM_HOME=/home/jovyan/gems PATH="/home/jovyan/gems/bin:${PATH}"

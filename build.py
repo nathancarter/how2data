@@ -53,6 +53,16 @@ for index, row in topics_df.iterrows():
     build_topic_page( row )
 delete_ungenerated_markdown()
 
+# Zip up examples to reference from the Contributing page
+section_heading( 'Zipping examples for contributors' )
+ensure_shell_command_succeeds(
+    'pandoc --to=docx ' + \
+    '--output="examples/How to use this folder.docx" ' + \
+    '"examples/How to use this folder.md"' )
+ensure_shell_command_succeeds(
+    'cd examples && zip -orv9 ' + \
+    '../jekyll-input/assets/downloads/examples-for-contributing-to-how-to-data.zip *' )
+
 # Run Jekyll on newly copied files
 section_heading( 'Running Jekyll build process' )
 ensure_shell_command_succeeds( 'bundle exec jekyll build' )

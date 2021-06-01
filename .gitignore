@@ -1,5 +1,6 @@
 jekyll-input/.jekyll-cache/
 jekyll-input/*.md
 jekyll-input/assets/dynamic-images/
+jekyll-input/assets/downloads/examples*.zip
 __pycache__/
 scratch/
