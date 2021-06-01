@@ -19,6 +19,7 @@ required, such as Maxima or SymPy.
  * How to create symbolic variables
  * How to substitute a value for a symbolic variable
  * How to graph mathematical functions
+ * How to write a piecewise-defined function
 
 ## Limits
 
