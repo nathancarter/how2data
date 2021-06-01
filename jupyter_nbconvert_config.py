@@ -2,7 +2,7 @@ c.ExtractOutputPreprocessor.enabled = False
 c.NbConvertBase.display_data_priority = [
     # 'text/html',
     'application/pdf',
-    # 'text/latex',
+    'text/latex',
     'image/svg+xml',
     'image/png',
     'image/jpeg',
