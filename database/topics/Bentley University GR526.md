@@ -21,11 +21,12 @@ required, such as Maxima or SymPy.
  * How to graph mathematical functions
  * How to write a piecewise-defined function
 
-## Limits
+## Limits, Sequences, and Series
 
  * How to compute the limit of a function
- * How to define a mathematical sequence (and compute the limit of one)
+ * How to define a mathematical sequence
  * How to graph mathematical sequences
+ * How to define a mathematical series (and evaluate it)
 
 ## Under Construction
 

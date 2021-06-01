@@ -6,3 +6,7 @@ real numbers, often written $a_0,a_1,a_2,\ldots$, or collectively as $a_n$.
 even though some definitions start with index 1, at $a_1$, instead.)
 
 How can we express sequences in mathematical software?
+
+Related tasks:
+
+ * How to define a mathematical series
