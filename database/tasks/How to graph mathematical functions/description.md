@@ -5,3 +5,4 @@ plot a graph of it using the standard Cartesian coordinate system.
 Related tasks:
 
  * How to graph mathematical sequences
+ * How to graph a two-variable function as a surface
