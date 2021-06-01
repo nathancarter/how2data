@@ -46,6 +46,7 @@ required, such as Maxima or SymPy.
  * How to compute the Taylor series for a function
  * How to compute the error bounds on a Taylor approximation
  * How to do implicit differentiation
+ * How to find the critical numbers of a function
 
 ## Under Construction
 
