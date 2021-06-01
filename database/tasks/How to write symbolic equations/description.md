@@ -8,3 +8,4 @@ using software?
 Related tasks:
 
  * How to solve symbolic equations
+ * How to isolate one variable in an equation

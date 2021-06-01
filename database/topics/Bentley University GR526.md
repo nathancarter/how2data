@@ -23,6 +23,7 @@ required, such as Maxima or SymPy.
  * How to graph a two-variable function as a surface
  * How to write symbolic equations
  * How to solve symbolic equations
+ * How to isolate one variable in an equation
 
 ## Limits, Sequences, and Series
 
