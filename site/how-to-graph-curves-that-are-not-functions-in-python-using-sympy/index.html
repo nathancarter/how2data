@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to graph curves that are not functions (in Python, using SymPy) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/how2data/site/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/how2data/site/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/how2data/site/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/how2data/site/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to graph curves that are not functions (in Python, using SymPy) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="How to graph curves that are not functions (in Python, using SymPy)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="/how2data/site/how-to-graph-curves-that-are-not-functions-in-python-using-sympy/" />
+<meta property="og:url" content="/how2data/site/how-to-graph-curves-that-are-not-functions-in-python-using-sympy/" />
+<meta property="og:site_name" content="How to Data" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to graph curves that are not functions (in Python, using SymPy)" />
+<script type="application/ld+json">
+{"@type":"WebPage","url":"/how2data/site/how-to-graph-curves-that-are-not-functions-in-python-using-sympy/","headline":"How to graph curves that are not functions (in Python, using SymPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .filter( isNotPlainText )
+        .forEach( codeBlock => {
+            const button = makeButton()
+            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+            // button.style.position = 'relative'
+            button.addEventListener( 'click', () => {
+                window.navigator.clipboard.writeText( codeBlock.innerText )
+                button.innerText = 'Copied!'
+                setTimeout( () => button.innerText = 'Copy', 3000 )
+            } )
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/how2data/site/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/how2data/site/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-graph-curves-that-are-not-functions-in-python-using-sympy">
+        
+        
+          <a href="#how-to-graph-curves-that-are-not-functions-in-python-using-sympy" class="anchor-heading" aria-labelledby="how-to-graph-curves-that-are-not-functions-in-python-using-sympy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to graph curves that are not functions (in Python, using SymPy)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-graph-curves-that-are-not-functions">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>Assume we have an equation in which $y$ cannot be isolated as a function of $x$.
+(The standard example is the formula for the unit circle, $x^2+y^2=1$.)
+We would still like to be able to use software to plot such curves.  How?</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-graph-mathematical-functions">How to graph mathematical functions</a></li>
+  <li><a href="../how-to-do-implicit-differentiation">How to do implicit differentiation</a></li>
+</ul>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>This answer assumes you have imported SymPy as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>                   <span class="c1"># load all math functions
+</span><span class="n">init_printing</span><span class="p">(</span> <span class="n">use_latex</span><span class="o">=</span><span class="s">'mathjax'</span> <span class="p">)</span>  <span class="c1"># use pretty math output
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Let’s consider the example of the unit circle, $x^2+y^2=1$.</p>
+
+<p>To plot it, SymPy first expects us to move everything to the left-hand side
+of the equation, so in this case, we would have $x^2+y^2-1=0$.</p>
+
+<p>We then use that left hand side to represent the equation as a single formula,
+and we can plot it with SymPy’s <code class="language-plaintext highlighter-rouge">plot_implicit</code> function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x y'</span> <span class="p">)</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>   <span class="c1"># to represent x^2+y^2=1
+</span><span class="n">plot_implicit</span><span class="p">(</span> <span class="n">formula</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>&lt;sympy.plotting.plot.Plot at 0x7f9fb118fa60&gt;
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 01 June 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to graph curves that are not functions/Python, using SymPy.ipynb">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+
+        
+
+        
+
+        
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+
+
