@@ -4,3 +4,7 @@ and we would like to plot a graph of it using the standard
 Cartesian coordinate system.  The result will not look like a curve,
 because a sequence is separate points instead of a smooth curve.
 
+Related tasks:
+
+ * How to graph mathematical functions
+ * How to define a mathematical sequence

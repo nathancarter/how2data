@@ -7,3 +7,7 @@ values.
 If we want to do symbolic mathematics in a software package, how can we tell
 the computer that we want to use variables in the mathematical sense, as
 symbols whose value may be unknown?
+
+Related tasks:
+
+ * How to substitute a value for a symbolic variable
