@@ -13,14 +13,21 @@ implicit differentiation, Taylor series, and continuous probability.
 By-hand computation is minimized and the use of a computer algebra system is
 required, such as Maxima or SymPy.
 
-## Basic symbolic mathematics
+## Basic Symbolic Mathematics
 
  * How to do basic mathematical computations
  * How to create symbolic variables
  * How to substitute a value for a symbolic variable
+
+## Functions and Graphs
+
  * How to graph mathematical functions
+ * How to graph curves that are not functions
  * How to write a piecewise-defined function
  * How to graph a two-variable function as a surface
+
+## Equations and Systems
+
  * How to write symbolic equations
  * How to solve symbolic equations
  * How to isolate one variable in an equation
