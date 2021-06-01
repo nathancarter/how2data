@@ -324,9 +324,18 @@ def build_software_page ( row ):
         tasks_df.apply( link_to_other_solutions, axis=1 )
     solution_needed = my_tasks_table.iloc[:,1].isin([''])
     table1 = my_tasks_table[~solution_needed]
+    if len( table1 ) > 0:
+        table1 = table1.to_markdown( index=False )
+    else:
+        table1 = f'*No tasks have solutions in {row["name"]} yet.*  ' + \
+            'Consider [submitting one!](../contributing)'
     table2 = my_tasks_table[solution_needed].copy()
     table2[f'Solutions in {row["name"]}'] = \
-        f'none yet<br/>(Want to [submit one](contributing)?)'
+        f'none yet<br/>(Want to [submit one](../contributing)?)'
+    if len( table2 ) > 0:
+        table2 = table2.to_markdown( index=False )
+    else:
+        table2 = f'*None---all tasks have solutions in {row["name"]}!*'
     write_text_file( output_file,
         files_df[files_df['filename'] == 'software-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['title'] )
@@ -334,8 +343,8 @@ def build_software_page ( row ):
         .replace( 'PERMALINK', row['permalink'] )
         .replace( 'SOFTWARE_ICON', row['large icon markdown'] )
         .replace( 'NUMBER_OF_SOLUTIONS', str( row['num solutions'] ) )
-        .replace( 'SOFTWARE_TASK_TABLE', table1.to_markdown( index=False ) )
-        .replace( 'OPPORTUNITIES', table2.to_markdown( index=False ) )
+        .replace( 'SOFTWARE_TASK_TABLE', table1 )
+        .replace( 'OPPORTUNITIES', table2 )
     )
     mark_as_regenerated( out_filename )
 
