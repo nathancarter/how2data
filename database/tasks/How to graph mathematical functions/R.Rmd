@@ -1,0 +1,23 @@
+---
+author: Nathan Carter (ncarter@bentley.edu)
+---
+
+Let's assume we want to graph the function $x^2-5x+9$ from $x=-10$ to $x=10$.
+
+We compute a series of $(x,y)$ pairs to generate the plot.
+Notice how R automatically computes a $y$ value for each $x$ value
+if we just include all the $x$s in the formula we wish to graph.
+
+```{r}
+xs <- seq(-10,10,length.out=100)   # 100 values from x=-10 to x=10
+ys <- xs^2 - 5*xs + 9              # compute all corresponding ys
+plot( xs, ys, type='l' )
+```
+
+You can also plot more than one function on the same graph.
+
+```{r}
+ys2 <- 10*sin(xs) + 20             # ys for the formula y=10sin(x)+20
+plot( xs, ys, type='l' )           # make the original plot
+lines( xs, ys2 )                   # add the second plot to it
+```
