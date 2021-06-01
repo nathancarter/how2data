@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute R-squared for a simple linear model (in R) - How to Data</title>
+    <title>How to define a mathematical series - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute R-squared for a simple linear model (in R) | How to Data</title>
+<title>How to define a mathematical series | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute R-squared for a simple linear model (in R)" />
+<meta property="og:title" content="How to define a mathematical series" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-define-a-mathematical-series/" />
+<meta property="og:url" content="/how2data/site/how-to-define-a-mathematical-series/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute R-squared for a simple linear model (in R)" />
+<meta property="twitter:title" content="How to define a mathematical series" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model-in-r/","headline":"How to compute R-squared for a simple linear model (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-define-a-mathematical-series/","headline":"How to define a mathematical series","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,118 +215,136 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-r-squared-for-a-simple-linear-model-in-r">
+          <h1 id="how-to-define-a-mathematical-series">
         
         
-          <a href="#how-to-compute-r-squared-for-a-simple-linear-model-in-r" class="anchor-heading" aria-labelledby="how-to-compute-r-squared-for-a-simple-linear-model-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute R-squared for a simple linear model (in R)
+          <a href="#how-to-define-a-mathematical-series" class="anchor-heading" aria-labelledby="how-to-define-a-mathematical-series"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to define a mathematical series
         
         
       </h1>
     
-
-<p><a href="../how-to-compute-r-squared-for-a-simple-linear-model">See all solutions.</a></p>
-      <h2 id="task">
+      <h2 id="description">
         
         
-          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
         
         
       </h2>
     
 
-<p>Let’s say we have fit a linear model to two columns of data,
-one for a single independent variable $x$
-and the other for a single dependent variable $y$.
-How can we compute $R^2$ for that model,
-to measure its goodness of fit?</p>
+<p>In mathematics, a series is a sum of values from a sequence, typically
+real numbers.  Finite series are written as $a_0+a_1+\cdots+a_n$, or</p>
+
+\[\sum_{i=0}^n a_i.\]
+
+<p>Infinite series are written as $a_0+a_1+a_2+\cdots$, or</p>
+
+\[\sum_{n=0}^\infty a_n.\]
+
+<p>How can we express series in mathematical software?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li><a href="../how-to-fit-a-linear-model-to-two-columns-of-data">How to fit a linear model to two columns of data</a></li>
+  <li><a href="../how-to-define-a-mathematical-series">How to define a mathematical series</a></li>
 </ul>
-      <h2 id="solution">
+      <h2 id="using-sympy-in-python">
         
         
-          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+          <a href="#using-sympy-in-python" class="anchor-heading" aria-labelledby="using-sympy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SymPy, in Python
         
         
       </h2>
     
 
-<!-- beginning of wrapper -->
+<p><a href="../how-to-define-a-mathematical-series-in-python-using-sympy">View this solution alone.</a></p>
 
-<p>We assume you have already fit a linear model to the data,
-as in the code below, which is explained fully in a separate task,
-<a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
+<p>This answer assumes you have imported SymPy as follows.</p>
 
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-</pre></td><td class="rouge-code"><pre><span class="n">xs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">393</span><span class="p">,</span><span class="w"> </span><span class="m">453</span><span class="p">,</span><span class="w"> </span><span class="m">553</span><span class="p">,</span><span class="w"> </span><span class="m">679</span><span class="p">,</span><span class="w"> </span><span class="m">729</span><span class="p">,</span><span class="w"> </span><span class="m">748</span><span class="p">,</span><span class="w"> </span><span class="m">817</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">ys</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">  </span><span class="m">24</span><span class="p">,</span><span class="w">  </span><span class="m">25</span><span class="p">,</span><span class="w">  </span><span class="m">27</span><span class="p">,</span><span class="w">  </span><span class="m">36</span><span class="p">,</span><span class="w">  </span><span class="m">55</span><span class="p">,</span><span class="w">  </span><span class="m">68</span><span class="p">,</span><span class="w">  </span><span class="m">84</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">)</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>                   <span class="c1"># load all math functions
+</span><span class="n">init_printing</span><span class="p">(</span> <span class="n">use_latex</span><span class="o">=</span><span class="s">'mathjax'</span> <span class="p">)</span>  <span class="c1"># use pretty math output
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>You can get a lot of information about your model from its summary.</p>
+<p>We define here the same sequence we defined in the task entitled
+<a href="../how-to-define-a-mathematical-sequence">how to define a mathematical sequence</a>.</p>
 
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-</pre></td><td class="rouge-code"><pre>Call:
-lm(formula = ys ~ xs)
-
-Residuals:
-      1       2       3       4       5       6       7 
-  9.163   2.199  -9.072 -16.795  -4.431   6.047  12.890 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)   
-(Intercept) -37.32142   18.99544  -1.965  0.10664   
-xs            0.13272    0.02959   4.485  0.00649 **
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 11.62 on 5 degrees of freedom
-Multiple R-squared:  0.8009,	Adjusted R-squared:  0.7611 
-F-statistic: 20.12 on 1 and 5 DF,  p-value: 0.006486
+</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'n'</span> <span class="p">)</span>                       <span class="c1"># use n as a symbol
+</span><span class="n">a_n</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">)</span>              <span class="c1"># formula for a term
+</span><span class="n">seq</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span> <span class="n">a_n</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">oo</span><span class="p">)</span> <span class="p">)</span>  <span class="c1"># build the sequence
+</span><span class="n">seq</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>In particular, it contains the $R^2$ value.</p>
+<p>$\displaystyle \left[1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \ldots\right]$</p>
 
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>We can turn it into a mathematical series by simply replacing the word
+<code class="language-plaintext highlighter-rouge">sequence</code> with the word <code class="language-plaintext highlighter-rouge">Sum</code>.  This does not compute the answer, but
+just writes the series for us to view.  In this case, it is an infinite
+series.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.8009488
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Sum</span><span class="p">(</span> <span class="n">a_n</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">oo</span><span class="p">)</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle \sum_{n=0}^{\infty} \frac{1}{n + 1}$</p>
+
+<p>You can compute the answer by appending the code <code class="language-plaintext highlighter-rouge">.doit()</code> to the above code,
+which asks SymPy to “do” (or evaluate) the sum.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Sum</span><span class="p">(</span> <span class="n">a_n</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">oo</span><span class="p">)</span> <span class="p">).</span><span class="n">doit</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle \infty$</p>
+
+<p>In this case, the series diverges.</p>
+
+<p>We can also create and evaluate finite series by replacing the <code class="language-plaintext highlighter-rouge">oo</code> with a number.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Sum</span><span class="p">(</span> <span class="n">a_n</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="p">).</span><span class="n">doit</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle \frac{83711}{27720}$</p>
 
 <p>Content last modified on 01 June 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute R-squared for a simple linear model/R.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to define a mathematical series/Python, using SymPy.ipynb">edit the source</a>.</p>
+      <h2 id="topics-that-include-this-task">
+        
+        
+          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
+        
+        
+      </h2>
+    
 
-<!-- ending of wrapper -->
+<ul>
+  <li><a href="../bentley-university-gr526">Bentley University GR526</a></li>
+</ul>
+      <h2 id="opportunities">
+        
+        
+          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
+        
+        
+      </h2>
+    
 
-<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+<p>This website does not yet contain a solution for this task in any of the following
+software packages.</p>
+
+<ul>
+  <li>R</li>
+</ul>
+
+<p>If you can contribute a solution using any of these pieces of software,
+see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 
