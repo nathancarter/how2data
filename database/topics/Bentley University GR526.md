@@ -32,6 +32,7 @@ required, such as Maxima or SymPy.
 ## Derivatives
 
  * How to compute the derivative of a function
+ * How to compute the Taylor series for a function
 
 ## Under Construction
 
