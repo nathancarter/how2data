@@ -8,13 +8,18 @@ nav_order: 1
 
 # Welcome to *How to Data!*
 
+## Our goals
+
 This is a how-to website for students of data science.  It will contain
-answers to a wide variety of how-to questions about data-related software and
-programming languages.
+answers to a wide variety of [how-to questions](../tasks) about data-related
+[software and programming languages](../software).  It is organized around
+[student coursework](../topics).
 
-## Under Construction
+It began at [Bentley University](http://www.bentley.edu), but accepts
+contributions from any school or business, and is happy to work with you to
+add content that would be useful to your students or employees.  See the
+[Contributing page](../contributing) for details.
 
-This site is still under construction.
-Please check back later to see what this site will become.
+## Our work so far
 
 OVERALL_STATS
