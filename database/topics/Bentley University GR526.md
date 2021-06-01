@@ -20,6 +20,10 @@ required, such as Maxima or SymPy.
  * How to substitute a value for a symbolic variable
  * How to graph mathematical functions
 
+## Limits
+
+ * How to compute the limit of a function
+
 ## Under Construction
 
 This topic will be expanded later.  This is just a placeholder for now.
