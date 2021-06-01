@@ -219,7 +219,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
     task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
-    write_text_file( output_file,
+    write_markdown( output_file,
         files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', solution_row['solution title'] )
         .replace( 'PERMALINK', solution_row['permalink'] )
@@ -293,7 +293,7 @@ see [our Contributing page](contributing) for how to help extend this website.
         related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
     else:
         related_topics = '*None*'
-    write_text_file( output_file,
+    write_markdown( output_file,
         files_df[files_df['filename'] == 'task-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['task name'] )
         .replace( 'PERMALINK', row['permalink'] )
@@ -337,7 +337,7 @@ def build_software_page ( row ):
         table2 = table2.to_markdown( index=False )
     else:
         table2 = f'*None---all tasks have solutions in {row["name"]}!*'
-    write_text_file( output_file,
+    write_markdown( output_file,
         files_df[files_df['filename'] == 'software-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['title'] )
         .replace( 'SOFTWARE_NAME', row['name'] )
@@ -353,7 +353,7 @@ def build_software_page ( row ):
 def build_topic_page ( row ):
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    write_text_file( output_file,
+    write_markdown( output_file,
         files_df[files_df['filename'] == 'topic-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', row['topic name'] )
         .replace( 'PERMALINK', row['permalink'] )

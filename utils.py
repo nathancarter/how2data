@@ -30,6 +30,11 @@ def read_text_file ( file ):
 def write_text_file ( file, text ):
     with open( file, 'w' ) as f:
         f.write( text )
+# When writing Markdown, be aware that Jekyll messes with \{ and \},
+# which screws up our math, so fix them.
+def write_markdown ( file, markdown ):
+    write_text_file( file, markdown.replace( '\\{', '\\\\{' )
+                                   .replace( '\\}', '\\\\}' ) )
 
 # Ensure that a folder exists, creating it if needed
 def ensure_folder_exists ( path ):
