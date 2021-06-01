@@ -24,6 +24,7 @@ required, such as Maxima or SymPy.
 ## Limits
 
  * How to compute the limit of a function
+ * How to define a mathematical sequence (and compute the limit of one)
 
 ## Under Construction
 
