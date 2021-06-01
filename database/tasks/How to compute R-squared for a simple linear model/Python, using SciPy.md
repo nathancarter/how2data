@@ -4,7 +4,7 @@ author: Nathan Carter (ncarter@bentley.edu)
 
 We assume you have already fit a linear model to the data,
 as in the code below, which is explained fully in a separate task,
-How to fit a linear model to two columns of data.
+how to fit a linear model to two columns of data.
 
 ```python
 import scipy.stats as stats

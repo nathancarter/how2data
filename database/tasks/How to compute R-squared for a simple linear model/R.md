@@ -4,7 +4,7 @@ author: Nathan Carter (ncarter@bentley.edu)
 
 We assume you have already fit a linear model to the data,
 as in the code below, which is explained fully in a separate task,
-How to fit a linear model to two columns of data.
+how to fit a linear model to two columns of data.
 
 ```R
 xs <- c( 393, 453, 553, 679, 729, 748, 817 )
