@@ -4,6 +4,16 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Rebuild website and serve locally for testing",
+            "type": "shell",
+            "command": "bash build.sh && bash serve.sh",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "Rebuild How to Data website",
             "type": "shell",
             "command": "bash build.sh",
@@ -14,6 +24,13 @@
             "label": "Serve website locally for testing",
             "type": "shell",
             "command": "bash serve.sh",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "Create new task from template",
+            "type": "shell",
+            "command": "bash create_task.sh",
             "problemMatcher": [],
             "group": "build"
         }
