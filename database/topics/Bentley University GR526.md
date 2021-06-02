@@ -40,13 +40,18 @@ required, such as Maxima or SymPy.
  * How to graph mathematical sequences
  * How to define a mathematical series (and evaluate it)
 
-## Derivatives
+## Differentiation
 
  * How to compute the derivative of a function
  * How to compute the Taylor series for a function
  * How to compute the error bounds on a Taylor approximation
  * How to do implicit differentiation
  * How to find the critical numbers of a function
+
+## Antidifferentiation
+
+ * How to write and evaluate indefinite integrals
+ * How to write and evaluate definite integrals
 
 ## Under Construction
 
