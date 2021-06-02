@@ -21,7 +21,7 @@ required, such as Maxima or SymPy.
 
 ## Functions and Graphs
 
- * How to compute teh domain of a function
+ * How to compute the domain of a function
  * How to graph mathematical functions
  * How to graph curves that are not functions
  * How to write a piecewise-defined function
