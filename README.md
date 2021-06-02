@@ -12,7 +12,7 @@ software and programming languages.
 ## Licenses
 
 The website content is licensed under the
-[CC-by-4.0](https://choosealicense.com/licenses/cc-by-4.0/).
+[CC-by-4.0](https://choosealicense.com/licenses/cc-by-4.0/) license.
 This includes the contents of the `database/`, `jekyll-input/`, and `site/`
 folders within this repository.  Anyone submitting website content via a pull
 request to this repository implicitly agrees that the work they are submitting
