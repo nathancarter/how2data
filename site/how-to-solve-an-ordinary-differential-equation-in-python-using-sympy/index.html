@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute the domain of a function - How to Data</title>
+    <title>How to solve an ordinary differential equation (in Python, using SymPy) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute the domain of a function | How to Data</title>
+<title>How to solve an ordinary differential equation (in Python, using SymPy) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute the domain of a function" />
+<meta property="og:title" content="How to solve an ordinary differential equation (in Python, using SymPy)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-the-domain-of-a-function/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-the-domain-of-a-function/" />
+<link rel="canonical" href="/how2data/site/how-to-solve-an-ordinary-differential-equation-in-python-using-sympy/" />
+<meta property="og:url" content="/how2data/site/how-to-solve-an-ordinary-differential-equation-in-python-using-sympy/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute the domain of a function" />
+<meta property="twitter:title" content="How to solve an ordinary differential equation (in Python, using SymPy)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-domain-of-a-function/","headline":"How to compute the domain of a function","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-solve-an-ordinary-differential-equation-in-python-using-sympy/","headline":"How to solve an ordinary differential equation (in Python, using SymPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,36 +215,39 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-the-domain-of-a-function">
+          <h1 id="how-to-solve-an-ordinary-differential-equation-in-python-using-sympy">
         
         
-          <a href="#how-to-compute-the-domain-of-a-function" class="anchor-heading" aria-labelledby="how-to-compute-the-domain-of-a-function"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the domain of a function
+          <a href="#how-to-solve-an-ordinary-differential-equation-in-python-using-sympy" class="anchor-heading" aria-labelledby="how-to-solve-an-ordinary-differential-equation-in-python-using-sympy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to solve an ordinary differential equation (in Python, using SymPy)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-solve-an-ordinary-differential-equation">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
     
 
-<p>Given a mathematical function $f(x)$, we often want to know the set of $x$
-values for which the function is defined.  That set is called its domain.
-How can we compute the domain of $f(x)$ using mathematical software?</p>
-      <h2 id="using-sympy-in-python">
+<p>Elsewhere we’ve seen <a href="../how-to-write-an-ordinary-differential-equation">how to write an ordinary differential equation</a>.
+Once one is written, how can we ask software to solve it?  And since ODEs
+often come with initial conditions that impact the solution, how can we
+include those as well?</p>
+      <h2 id="solution">
         
         
-          <a href="#using-sympy-in-python" class="anchor-heading" aria-labelledby="using-sympy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SymPy, in Python
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-compute-the-domain-of-a-function-in-python-using-sympy">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>This answer assumes you have imported SymPy as follows.</p>
 
@@ -254,73 +257,66 @@ How can we compute the domain of $f(x)$ using mathematical software?</p>
 </span><span class="n">init_printing</span><span class="p">(</span> <span class="n">use_latex</span><span class="o">=</span><span class="s">'mathjax'</span> <span class="p">)</span>  <span class="c1"># use pretty math output
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We also need to import another tool that SymPy doesn’t pull in by default.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sympy.calculus.util</span> <span class="kn">import</span> <span class="n">continuous_domain</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>We can then ask about a function’s domain.  We provide the function,
-the variable we’re asking about, and the set of numbers we’re working
-inside of.  For a simple one-variable function, we’re typically working
-in just the real numbers.</p>
+<p>Let’s re-use here the code from <a href="../how-to-write-an-ordinary-differential-equation">how to write an ordinary differential equation</a>,
+to write $\frac{dy}{dx}=y$.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
+4
+5
 </pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x'</span> <span class="p">)</span>
-<span class="n">formula</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">)</span>
-<span class="n">continuous_domain</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">Reals</span> <span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s">'y'</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">dydx</span> <span class="o">=</span> <span class="n">Derivative</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="p">)</span>
+<span class="n">ode</span> <span class="o">=</span> <span class="n">dydx</span> <span class="o">-</span> <span class="n">y</span>
+<span class="n">ode</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle \left(-\infty, -1\right) \cup \left(-1, \infty\right)$</p>
+<p>$\displaystyle - y{\left(x \right)} + \frac{d}{d x} y{\left(x \right)}$</p>
 
-<p>It’s sometimes easier to instead ask where the function is <em>not</em> defined.
-We can just ask for the complement of the domain.</p>
+<p>You can solve an ODE by using the <code class="language-plaintext highlighter-rouge">dsolve</code> command.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="n">domain</span> <span class="o">=</span> <span class="n">continuous_domain</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">Reals</span> <span class="p">)</span>
-<span class="n">Complement</span><span class="p">(</span> <span class="n">S</span><span class="p">.</span><span class="n">Reals</span><span class="p">,</span> <span class="n">domain</span> <span class="p">)</span>
+</pre></td><td class="rouge-code"><pre><span class="n">solution</span> <span class="o">=</span> <span class="n">dsolve</span><span class="p">(</span> <span class="n">ode</span> <span class="p">)</span>
+<span class="n">solution</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle \left\{-1\right\}$</p>
+<p>$\displaystyle y{\left(x \right)} = C_{1} e^{x}$</p>
 
-<p>The function is <em>undefined</em> only at $x=-1$.</p>
+<p>If there are initial conditions that need to be substituted in for $x$ and $y$,
+it is crucial to substitute for $y$ first and then $x$.  Let’s assume we have the
+initial condition $(3,5)$.  We might proceed as follows.</p>
 
-<p>Content last modified on 01 June 2021.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">with_inits</span> <span class="o">=</span> <span class="n">solution</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="mi">5</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span>
+<span class="n">with_inits</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the domain of a function/Python, using SymPy.ipynb">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
+<p>$\displaystyle 5 = C_{1} e^{3}$</p>
 
-<ul>
-  <li><a href="../bentley-university-gr526">Bentley University GR526</a></li>
-</ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">solve</span><span class="p">(</span> <span class="n">with_inits</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
+<p>$\displaystyle \left[ \frac{5}{e^{3}}\right]$</p>
 
-<ul>
-  <li>R</li>
-</ul>
+<p>To substitute $C_1=\frac{5}{e^3}$ into the solution, note that $C_1$ is written as <code class="language-plaintext highlighter-rouge">var('C1')</code>.</p>
 
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">solution</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">var</span><span class="p">(</span><span class="s">'C1'</span><span class="p">),</span> <span class="mi">5</span><span class="o">/</span><span class="n">E</span><span class="o">**</span><span class="mi">3</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle y{\left(x \right)} = \frac{5 e^{x}}{e^{3}}$</p>
+
+<p>Content last modified on 02 June 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to solve an ordinary differential equation/Python, using SymPy.ipynb">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
 
         
 
