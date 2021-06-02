@@ -59,6 +59,8 @@ ensure_shell_command_succeeds(
     'pandoc --to=docx ' + \
     '--output="examples/How to use this folder.docx" ' + \
     '"examples/How to use this folder.md"' )
+ensure_folder_exists(
+    os.path.join( jekyll_input_folder, 'assets', 'downloads' ) )
 ensure_shell_command_succeeds(
     'cd examples && zip -orv9 ' + \
     '../jekyll-input/assets/downloads/examples-for-contributing-to-how-to-data.zip *' )
