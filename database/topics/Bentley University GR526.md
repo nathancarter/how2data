@@ -53,6 +53,11 @@ required, such as Maxima or SymPy.
  * How to write and evaluate indefinite integrals
  * How to write and evaluate definite integrals
 
+## Differential Equations
+
+ * How to write an ordinary differential equation
+ * How to solve an ordinary differential equation
+
 ## Under Construction
 
 This topic will be expanded later.  This is just a placeholder for now.
