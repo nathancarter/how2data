@@ -313,7 +313,7 @@ are not independent.</p>
 
 <p><a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r">View this solution alone.</a></p>
 
-<p>Here we will use a $2\times4$ array to store a contingency table of
+<p>Here we will use a $2\times4$ matrix to store a contingency table of
 education vs. gender, taken from
 <a href="https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/chi-square-tests">Penn State University’s online stats review website</a>.
 You should use your own data.
@@ -322,8 +322,10 @@ You should use your own data.
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">array</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">60</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">46</span><span class="p">,</span><span class="w"> </span><span class="m">41</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">44</span><span class="p">,</span><span class="w"> </span><span class="m">53</span><span class="p">,</span><span class="w"> </span><span class="m">57</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w">
-               </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,</span><span class="s1">'M'</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'HS'</span><span class="p">,</span><span class="s1">'BS'</span><span class="p">,</span><span class="s1">'MS'</span><span class="p">,</span><span class="s1">'PhD'</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+4
+</pre></td><td class="rouge-code"><pre><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">60</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">46</span><span class="p">,</span><span class="w"> </span><span class="m">41</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">44</span><span class="p">,</span><span class="w"> </span><span class="m">53</span><span class="p">,</span><span class="w"> </span><span class="m">57</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w">
+                </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,</span><span class="s1">'M'</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'HS'</span><span class="p">,</span><span class="s1">'BS'</span><span class="p">,</span><span class="s1">'MS'</span><span class="p">,</span><span class="s1">'PhD'</span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w">
+                </span><span class="n">byrow</span><span class="w"> </span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span><span class="n">data</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
@@ -331,8 +333,8 @@ You should use your own data.
 2
 3
 </pre></td><td class="rouge-code"><pre>  HS BS MS PhD
-F 60 46 40 53 
-M 54 41 44 57 
+F 60 54 46 41 
+M 40 44 53 57 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The $\chi^2$ test’s null hypothesis is that the two variables are independent.
@@ -354,7 +356,7 @@ We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
 </pre></td><td class="rouge-code"><pre>	Pearson's Chi-squared test
 
 data:  data
-X-squared = 0.91634, df = 3, p-value = 0.8215
+X-squared = 8.0061, df = 3, p-value = 0.04589
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>We can manually compare the $p$-value to an $\alpha$ we’ve chosen, or ask R to do it.</p>
@@ -366,13 +368,13 @@ X-squared = 0.91634, df = 3, p-value = 0.8215
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] FALSE
+</pre></td><td class="rouge-code"><pre>[1] TRUE
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Something is clearly wrong with either this example or the corresponding Python example,
 because they are giving very different results for the same data.</p>
 
-<p>Content last modified on 28 May 2021.</p>
+<p>Content last modified on 07 June 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform a chi-squared test on a contingency table/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
