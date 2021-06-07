@@ -57,7 +57,3 @@ required, such as Maxima or SymPy.
 
  * How to write an ordinary differential equation
  * How to solve an ordinary differential equation
-
-## Under Construction
-
-This topic will be expanded later.  This is just a placeholder for now.

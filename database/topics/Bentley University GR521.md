@@ -11,6 +11,25 @@ discrete and continuous probability distributions,
 confidence intervals, hypothesis testing, single-variable linear models,
 and optionally advanced topics such as data mining, time permitting.
 
-## Under Construction
+## Random variables and probability distributions
 
-This topic will be expanded later.  This is just a placeholder for now.
+ * How to generate random values from a distribution
+ * How to compute probabilities from a distribution
+ * How to plot continuous probability distributions
+ * How to plot discrete probability distributions
+
+## Confidence intervals and hypothesis testing
+
+ * How to compute a confidence interval for a sample mean
+ * How to do a two-sided hypothesis test for a sample mean
+ * How to do a two-sided hypothesis test for two sample means
+
+## Linear modeling
+
+ * How to fit a linear model to two columns of data
+ * How to compute R-squared for a simple linear model
+
+## Other end-of-semester topics, time permitting
+
+ * How to do a one-way analysis of variance (ANOVA)
+ * How to perform a chi-squared test on a contingency table

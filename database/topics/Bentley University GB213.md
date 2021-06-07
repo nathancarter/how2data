@@ -26,12 +26,7 @@ and optionally ANOVA and/or $\chi^2$ tests, time permitting.
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a two-sided hypothesis test for two sample means
 
-## Linear modeling
+## Linear modeling, time permitting
 
  * How to fit a linear model to two columns of data
  * How to compute R-squared for a simple linear model
-
-## Optional end-of-semester topics
-
- * How to do a one-way analysis of variance (ANOVA)
- * How to perform a chi-squared test on a contingency table
