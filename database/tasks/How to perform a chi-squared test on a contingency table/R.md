@@ -2,15 +2,16 @@
 author: Nathan Carter (ncarter@bentley.edu)
 ---
 
-Here we will use a $2\times4$ array to store a contingency table of
+Here we will use a $2\times4$ matrix to store a contingency table of
 education vs. gender, taken from
 [Penn State University's online stats review website](https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/chi-square-tests).
 You should use your own data.
 (Note: R's `table` function is useful for creating contingency tables from data.)
 
 ```R
-data <- array( c( 60, 54, 46, 41, 40, 44, 53, 57 ), dim=c(2,4),
-               dimnames=list( c('F','M'), c('HS','BS','MS','PhD') ) )
+data <- matrix( c( 60, 54, 46, 41, 40, 44, 53, 57 ), ncol = 4,
+                dimnames=list( c('F','M'), c('HS','BS','MS','PhD') ),
+                byrow =TRUE)
 data
 ```
 
