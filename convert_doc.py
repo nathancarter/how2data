@@ -28,7 +28,7 @@
 #
 # ## Python
 #
-# We use the highly complex `+` opeator.  Note the subtlety:
+# We use the highly complex `+` operator.  Note the subtlety:
 #
 # ```python
 # a + b
