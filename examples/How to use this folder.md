@@ -31,7 +31,7 @@ use as an example.
       important.
 
 To submit your new task and/or solution, visit
-[the folder on GitHub](https://github.com/nathancarter/how2data/tree/main/database/tasks-and-solutions)
+[the folder on GitHub](https://github.com/nathancarter/how2data/tree/main/database/tasks)
 where the *How to Data* tasks and solutions live.
 You will upload your work there in one of two ways:
 
@@ -86,7 +86,7 @@ use as an example.
       `R, using ggplot2.Rmd`.  Note the commas, which are important.
 
 To submit your new task and/or solution, visit
-[the folder on GitHub](https://github.com/nathancarter/how2data/tree/main/database/tasks-and-solutions)
+[the folder on GitHub](https://github.com/nathancarter/how2data/tree/main/database/tasks)
 where the *How to Data* tasks and solutions live.
 You will upload your work there in one of two ways:
 
