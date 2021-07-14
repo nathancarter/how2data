@@ -1,0 +1,37 @@
+---
+author: "Nathan Carter (ncarter@bentley.edu) - replace with your name and email"
+---
+
+We first load a famous dataset, Fisher's irises, just to have some example
+data to use in the code that follows.
+
+```{r}
+library(datasets)
+data(iris)
+```
+
+The easiest way to get summary statistics for an R `data.frame` is with the
+`summary` function.
+
+```{r}
+summary(iris)
+```
+
+The columns from the original dataset are the column headings in the summary
+output, and the statistics computed for each are listed below those headings.
+
+We can also compute these statistics (and others) one at a time for any given
+set of data points.  Here, we let `xs` be one column from the above
+`data.frame` but you could use any vector or list.
+
+```
+xs <- iris$Sepal.Length
+
+mean( xs )           # mean, or average, or center of mass
+median( xs )         # 50th percentile
+quantile( xs, 0.25 ) # compute any percentile, such as the 25th
+var( xs )            # variance
+sd( xs )             # standard deviation, the square root of the variance
+sort( xs )           # data in increasing order
+sum( xs )            # sum, or total
+```
