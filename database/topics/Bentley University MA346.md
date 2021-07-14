@@ -1,0 +1,27 @@
+---
+author: Nathan Carter (ncarter@bentley.edu)
+---
+
+MA346 is an undergraduate data science course at Bentley University.
+The description from the course catalog can be found
+[here](https://catalog.bentley.edu/undergraduate/courses/ma/).
+Topics included in the course are listed as
+[tasks](../tasks) below.
+
+Mathematical topics include functions and relations, a review of basic
+statistics, and (time permitting) networks, matrices, and an introduction
+to supervised learning.
+
+Computing topics include Jupyter notebooks (locally and in the cloud),
+Python and pandas, abstraction, concatenation and merging, map-reduce,
+split-apply-combine, data munging, version control, and dashboards.
+
+Communication topics include best practices for writing reports, documenting
+code and computational notebooks, and data visualization.
+
+## Basics
+
+ * How to do basic mathematical computations
+ * How to compute summary statistics
+
+*This page is not yet complete.  More content will be added here over time.*

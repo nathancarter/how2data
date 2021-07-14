@@ -11,6 +11,11 @@ discrete and continuous probability distributions,
 confidence intervals, hypothesis testing, single-variable linear models,
 and optionally advanced topics such as data mining, time permitting.
 
+## Basics
+
+ * How to do basic mathematical computations
+ * How to compute summary statistics
+
 ## Random variables and probability distributions
 
  * How to generate random values from a distribution
