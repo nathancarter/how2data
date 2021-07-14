@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to do basic mathematical computations (in Python, using NumPy)" />
 <script type="application/ld+json">
-{"url":"/how2data/site/how-to-do-basic-mathematical-computations-in-python-using-numpy/","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do basic mathematical computations (in Python, using NumPy)","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-basic-mathematical-computations-in-python-using-numpy/","headline":"How to do basic mathematical computations (in Python, using NumPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -284,6 +284,26 @@ or logarithms, in Python vs. R vs. Excel, and so on?</p>
       <td>no</td>
     </tr>
     <tr>
+      <td>$\left\lfloor\frac xy\right\rfloor$</td>
+      <td><code class="language-plaintext highlighter-rouge">x//y</code></td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td>$\left\lfloor\frac xy\right\rfloor$</td>
+      <td><code class="language-plaintext highlighter-rouge">np.floor_divide(x,y)</code></td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td>remainder of $x\div y$</td>
+      <td><code class="language-plaintext highlighter-rouge">x%y</code></td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td>remainder of $x\div y$</td>
+      <td><code class="language-plaintext highlighter-rouge">np.remainder(x,y)</code></td>
+      <td>yes</td>
+    </tr>
+    <tr>
       <td>$x^y$</td>
       <td><code class="language-plaintext highlighter-rouge">x**y</code></td>
       <td>no</td>
@@ -360,7 +380,7 @@ feature.  For example, to square all numbers in an array, see below.</p>
 </pre></td><td class="rouge-code"><pre>array([  9.  ,   4.  ,   0.25,   1.  , 100.  ,  84.64,  10.89])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 01 June 2021.</p>
+<p>Content last modified on 14 July 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do basic mathematical computations/Python, using NumPy.ipynb">edit the source</a>.</p>
 

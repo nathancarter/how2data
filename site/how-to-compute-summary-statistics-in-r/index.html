@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to do implicit differentiation - How to Data</title>
+    <title>How to compute summary statistics (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to do implicit differentiation | How to Data</title>
+<title>How to compute summary statistics (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to do implicit differentiation" />
+<meta property="og:title" content="How to compute summary statistics (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-do-implicit-differentiation/" />
-<meta property="og:url" content="/how2data/site/how-to-do-implicit-differentiation/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-summary-statistics-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-summary-statistics-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to do implicit differentiation" />
+<meta property="twitter:title" content="How to compute summary statistics (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-do-implicit-differentiation/","headline":"How to do implicit differentiation","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-summary-statistics-in-r/","headline":"How to compute summary statistics (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,105 +215,113 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-do-implicit-differentiation">
+          <h1 id="how-to-compute-summary-statistics-in-r">
         
         
-          <a href="#how-to-do-implicit-differentiation" class="anchor-heading" aria-labelledby="how-to-do-implicit-differentiation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to do implicit differentiation
+          <a href="#how-to-compute-summary-statistics-in-r" class="anchor-heading" aria-labelledby="how-to-compute-summary-statistics-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute summary statistics (in R)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-compute-summary-statistics">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
     
 
-<p>Assume we have an equation in which $y$ cannot be isolated as a function of $x$.
-(The standard example is the formula for the unit circle, $x^2+y^2=1$.)
-We would still like to be able to compute the derivative of $y$ with respect to $x$.</p>
-
-<p>Related tasks:</p>
-
-<ul>
-  <li><a href="../how-to-graph-curves-that-are-not-functions">How to graph curves that are not functions</a></li>
-</ul>
-      <h2 id="using-sympy-in-python">
+<p>The phrase “summary statistics” usually refers to a common set of simple
+computations that can be done about any dataset, including mean, median,
+variance, and some of the others shown below.</p>
+      <h2 id="solution">
         
         
-          <a href="#using-sympy-in-python" class="anchor-heading" aria-labelledby="using-sympy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SymPy, in Python
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-do-implicit-differentiation-in-python-using-sympy">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
-<p>This answer assumes you have imported SymPy as follows.</p>
+<p>We first load a famous dataset, Fisher’s irises, just to have some example
+data to use in the code that follows.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>                   <span class="c1"># load all math functions
-</span><span class="n">init_printing</span><span class="p">(</span> <span class="n">use_latex</span><span class="o">=</span><span class="s">'mathjax'</span> <span class="p">)</span>  <span class="c1"># use pretty math output
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Let’s consider the example of the unit circle, $x^2+y^2=1$.</p>
+<p>The easiest way to get summary statistics for an R <code class="language-plaintext highlighter-rouge">data.frame</code> is with the
+<code class="language-plaintext highlighter-rouge">summary</code> function.</p>
 
-<p>To plot it, SymPy first expects us to move everything to the left-hand side
-of the equation, so in this case, we would have $x^2+y^2-1=0$.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We then use that left hand side to represent the equation as a single formula,
-and computue $\frac{dy}{dx}$ using the <code class="language-plaintext highlighter-rouge">idiff</code> function (standing for
-“implicit differentiation”).</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x y'</span> <span class="p">)</span>
-<span class="n">formula</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>   <span class="c1"># to represent x^2+y^2=1
-</span><span class="n">idiff</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="p">)</span>
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle - \frac{x}{y}$</p>
+<p>The columns from the original dataset are the column headings in the summary
+output, and the statistics computed for each are listed below those headings.</p>
 
-<p>So in this case, $\frac{dy}{dx}=-\frac xy$.</p>
+<p>We can also compute these statistics (and others) one at a time for any given
+set of data points.  Here, we let <code class="language-plaintext highlighter-rouge">xs</code> be one column from the above
+<code class="language-plaintext highlighter-rouge">data.frame</code> but you could use any vector or list.</p>
 
-<p>Content last modified on 01 June 2021.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>xs &lt;- iris$Sepal.Length
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do implicit differentiation/Python, using SymPy.ipynb">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
+mean( xs )           # mean, or average, or center of mass
+median( xs )         # 50th percentile
+quantile( xs, 0.25 ) # compute any percentile, such as the 25th
+var( xs )            # variance
+sd( xs )             # standard deviation, the square root of the variance
+sort( xs )           # data in increasing order
+sum( xs )            # sum, or total
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<ul>
-  <li><a href="../bentley-university-gr526">Bentley University GR526</a></li>
-</ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
+<p>Content last modified on 14 July 2021.</p>
 
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/R.Rmd">edit the source</a>.</p>
 
-<ul>
-  <li>R</li>
-</ul>
+<!-- ending of wrapper -->
 
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+<p>Contributed by Nathan Carter (ncarter@bentley.edu) - replace with your name and email</p>
 
         
 

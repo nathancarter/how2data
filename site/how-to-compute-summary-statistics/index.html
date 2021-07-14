@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute probabilities from a distribution - How to Data</title>
+    <title>How to compute summary statistics - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute probabilities from a distribution | How to Data</title>
+<title>How to compute summary statistics | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute probabilities from a distribution" />
+<meta property="og:title" content="How to compute summary statistics" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-probabilities-from-a-distribution/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-probabilities-from-a-distribution/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-summary-statistics/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-summary-statistics/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute probabilities from a distribution" />
+<meta property="twitter:title" content="How to compute summary statistics" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-probabilities-from-a-distribution/","headline":"How to compute probabilities from a distribution","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-summary-statistics/","headline":"How to compute summary statistics","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,10 +215,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-probabilities-from-a-distribution">
+          <h1 id="how-to-compute-summary-statistics">
         
         
-          <a href="#how-to-compute-probabilities-from-a-distribution" class="anchor-heading" aria-labelledby="how-to-compute-probabilities-from-a-distribution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute probabilities from a distribution
+          <a href="#how-to-compute-summary-statistics" class="anchor-heading" aria-labelledby="how-to-compute-summary-statistics"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute summary statistics
         
         
       </h1>
@@ -232,33 +232,57 @@
       </h2>
     
 
-<p>There are many famous continuous probability distributions, such as the
-normal and exponential distributions.  How can we get access to them in
-software, to compute the probability of a value/values occurring?</p>
-
-<p>Related tasks:</p>
-
-<ul>
-  <li><a href="../how-to-generate-random-values-from-a-distribution">How to generate random values from a distribution</a></li>
-  <li><a href="../how-to-plot-continuous-probability-distributions">How to plot continuous probability distributions</a></li>
-  <li><a href="../how-to-plot-discrete-probability-distributions">How to plot discrete probability distributions</a></li>
-</ul>
-      <h2 id="using-scipy-in-python">
+<p>The phrase “summary statistics” usually refers to a common set of simple
+computations that can be done about any dataset, including mean, median,
+variance, and some of the others shown below.</p>
+      <h2 id="using-pandas-and-numpy-in-python">
         
         
-          <a href="#using-scipy-in-python" class="anchor-heading" aria-labelledby="using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SciPy, in Python
+          <a href="#using-pandas-and-numpy-in-python" class="anchor-heading" aria-labelledby="using-pandas-and-numpy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using pandas and NumPy, in Python
         
         
       </h2>
     
 
-<p><a href="../how-to-compute-probabilities-from-a-distribution-in-python-using-scipy">View this solution alone.</a></p>
+<p><a href="../how-to-compute-summary-statistics-in-python-using-pandas-and-numpy">View this solution alone.</a></p>
 
-<p>You can import many different random variables from SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> module.
-The full list of them is online <a href="https://docs.scipy.org/doc/scipy/reference/stats.html#discrete-distributions">here</a>.</p>
+<p>We first load a famous dataset, Fisher’s irises, just to have some example data to use in the code that follows.</p>
 
-<p>To compute a probability from a <strong>discrete</strong> distribution, create a random
-variable, then use its Probability Mass Function, <code class="language-plaintext highlighter-rouge">pmf</code>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span> <span class="s">'iris'</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The easiest way to get summary statistics for a pandas DataFrame is with the <code class="language-plaintext highlighter-rouge">describe</code> function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>       Sepal.Length  Sepal.Width  Petal.Length  Petal.Width
+count    150.000000   150.000000    150.000000   150.000000
+mean       5.843333     3.057333      3.758000     1.199333
+std        0.828066     0.435866      1.765298     0.762238
+min        4.300000     2.000000      1.000000     0.100000
+25%        5.100000     2.800000      1.600000     0.300000
+50%        5.800000     3.000000      4.350000     1.300000
+75%        6.400000     3.300000      5.100000     1.800000
+max        7.900000     4.400000      6.900000     2.500000
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The individual statistics are the row headings, and the numeric columns from the original dataset are listed across the top.</p>
+
+<p>We can also compute these statistics (and others) one at a time for any given set of data points.  Here, we let <code class="language-plaintext highlighter-rouge">xs</code> be one column from the above DataFrame, but you could use any NumPy array or pandas DataFrame instead.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -268,48 +292,25 @@ variable, then use its Probability Mass Function, <code class="language-plaintex
 6
 7
 8
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="n">xs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Sepal.Length'</span><span class="p">]</span>
 
-<span class="c1"># Create a binomial random variable with 10 trials
-# and probability 0.5 of success on each trial
-</span><span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">binom</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.5</span> <span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
-<span class="c1"># What is the probability of exactly 3 successes?
-</span><span class="n">X</span><span class="p">.</span><span class="n">pmf</span><span class="p">(</span> <span class="mi">3</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>           <span class="c1"># mean, or average, or center of mass
+</span><span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>         <span class="c1"># 50th percentile
+</span><span class="n">np</span><span class="p">.</span><span class="n">percentile</span><span class="p">(</span> <span class="n">xs</span><span class="p">,</span> <span class="mi">25</span> <span class="p">)</span> <span class="c1"># compute any percentile, such as the 25th
+</span><span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>            <span class="c1"># variance
+</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>            <span class="c1"># standard deviation, the square root of the variance
+</span><span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>           <span class="c1"># data in increasing order
+</span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>            <span class="c1"># sum, or total
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.11718750000000014
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>Content last modified on 14 July 2021.</p>
 
-<p>To compute a probability from a <strong>continuous</strong> distribution, create a random
-variable, then use its Cumulative Density Function, <code class="language-plaintext highlighter-rouge">cdf</code>.  You can only
-compute the probability that a random value will fall in an interval $[a,b]$,
-not the probability that it will equal a specific value.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-
-<span class="c1"># Create a normal random variable with mean μ=10 and standard deviation σ=5
-</span><span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span> <span class="p">)</span>
-
-<span class="c1"># What is the probability of the value lying in the interval [12,13]?
-</span><span class="n">X</span><span class="p">.</span><span class="n">cdf</span><span class="p">(</span> <span class="mi">13</span> <span class="p">)</span> <span class="o">-</span> <span class="n">X</span><span class="p">.</span><span class="n">cdf</span><span class="p">(</span> <span class="mi">12</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.07032514063960227
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Content last modified on 27 May 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/Python, using SciPy.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/Python, using pandas and NumPy.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -319,50 +320,78 @@ not the probability that it will equal a specific value.</p>
       </h2>
     
 
-<p><a href="../how-to-compute-probabilities-from-a-distribution-in-r">View this solution alone.</a></p>
+<p><a href="../how-to-compute-summary-statistics-in-r">View this solution alone.</a></p>
 
-<p>Because R is designed for use in statistics,
-it comes with many probability distributions built in.
-A list of them is online <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Probability-distributions">here</a>.</p>
-
-<p>To compute a probability from a <strong>discrete</strong> distribution, prefix the name
-of the distribution with <code class="language-plaintext highlighter-rouge">d</code> (for “density”) and call it as a function on the
-value whose probability you want to know, plus any parameters the distrubtion needs.</p>
+<p>We first load a famous dataset, Fisher’s irises, just to have some example
+data to use in the code that follows.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The easiest way to get summary statistics for an R <code class="language-plaintext highlighter-rouge">data.frame</code> is with the
+<code class="language-plaintext highlighter-rouge">summary</code> function.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a binomial random variable with 10 trials</span><span class="w">
-</span><span class="c1"># and probability 0.5 of success on each trial,</span><span class="w">
-</span><span class="c1"># what is the probability of exactly 3 successes?</span><span class="w">
-</span><span class="n">dbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.1171875
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>To compute a probability from a <strong>continuous</strong> distribution, prefix the
-name with <code class="language-plaintext highlighter-rouge">d</code>, just as in the example above.  But you can compute only
-the probability that a random value will fall in an interval $[a,b]$,
-not the probability that it will equal a specific value.</p>
+<p>The columns from the original dataset are the column headings in the summary
+output, and the statistics computed for each are listed below those headings.</p>
 
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<p>We can also compute these statistics (and others) one at a time for any given
+set of data points.  Here, we let <code class="language-plaintext highlighter-rouge">xs</code> be one column from the above
+<code class="language-plaintext highlighter-rouge">data.frame</code> but you could use any vector or list.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a normal random variable with mean μ=10 and standard deviation σ=5,</span><span class="w">
-</span><span class="c1"># what is the probability of the value lying in the interval [12,13]?</span><span class="w">
-</span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>xs &lt;- iris$Sepal.Length
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.07032514
+mean( xs )           # mean, or average, or center of mass
+median( xs )         # 50th percentile
+quantile( xs, 0.25 ) # compute any percentile, such as the 25th
+var( xs )            # variance
+sd( xs )             # standard deviation, the square root of the variance
+sort( xs )           # data in increasing order
+sum( xs )            # sum, or total
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 27 May 2021.</p>
+<p>Content last modified on 14 July 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/R.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -372,10 +401,7 @@ not the probability that it will equal a specific value.</p>
       </h2>
     
 
-<ul>
-  <li><a href="../bentley-university-gb213">Bentley University GB213</a></li>
-  <li><a href="../bentley-university-gr521">Bentley University GR521</a></li>
-</ul>
+<p><em>None</em></p>
 
         
 
