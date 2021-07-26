@@ -1,5 +1,5 @@
 ---
-author: "Nathan Carter (ncarter@bentley.edu) - replace with your name and email"
+author: "Nathan Carter (ncarter@bentley.edu)"
 ---
 
 We first load a famous dataset, Fisher's irises, just to have some example
