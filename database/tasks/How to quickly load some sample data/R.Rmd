@@ -2,8 +2,14 @@
 author: "Nathan Carter (ncarter@bentley.edu) - replace with your name and email"
 ---
 
-R comes with many built-in datasets.  You can load any one of them with the built-in,
-global `data` function, as follows.
+R comes with many datasets in its `datasets` package.
+Ensure that you have it installed as follows.
+
+```{r}
+library(datasets)
+```
+
+Then you can load any one of them with the `data` function, as follows.
 
 ```{r}
 data(iris)  # Load the famous Fisher's irises dataset.
