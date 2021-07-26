@@ -4,3 +4,4 @@ jekyll-input/assets/dynamic-images/
 jekyll-input/assets/downloads/examples*.zip
 __pycache__/
 scratch/
+.Rhistory
