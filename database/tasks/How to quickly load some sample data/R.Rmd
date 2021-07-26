@@ -7,7 +7,7 @@ global `data` function, as follows.
 
 ```{r}
 data(iris)  # Load the famous Fisher's irises dataset.
-iris        # It has been placed in a variable of the same name.
+head(iris)  # It has been placed in a variable of the same name.
 ```
 
 To page through a list of all available datasets, just call `data()` with no arguments.
