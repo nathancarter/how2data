@@ -2,7 +2,9 @@
 author: Nathan Carter (ncarter@bentley.edu)
 ---
 
-Let's create a small example DataFrame to use here.  Naturally, you would apply this solution to your own data instead.
+Let's create a small example DataFrame to use here (using the method from
+how to create a data frame from scratch).
+Naturally, you would apply this solution to your own data instead.
 
 ```python
 import pandas as pd

@@ -1,0 +1,18 @@
+---
+author: "Nathan Carter (ncarter@bentley.edu)"
+---
+
+In R, the `data.frame` function can be used to build data frames.
+Each column in your data should be a separate parameter, with its name provided,
+followed by an equals sign, followed by the vector of column contents,
+as shown in the example below.
+
+```{r}
+data <- data.frame(
+    last.name =  c( 'Potter', 'Weasley', 'Granger', 'Malfoy' ),
+    first.name = c( 'Harry', 'Ron', 'Hermione', 'Draco' ),
+    house =      c( 'Griffindor', 'Griffindor', 'Griffindor', 'Slytherin' )
+)
+data
+```
+
