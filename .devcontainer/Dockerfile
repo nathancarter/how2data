@@ -5,7 +5,7 @@ FROM jupyter/datascience-notebook
 # the Jupyter datascience-notebook image:
 USER jovyan
 RUN pip3 --disable-pip-version-check --no-cache-dir \
-    install rdatasets \
+    install rdatasets pingouin \
  && rm -rf /tmp/pip-tmp
 
 # [Optional] Uncomment this section to install additional OS packages.
