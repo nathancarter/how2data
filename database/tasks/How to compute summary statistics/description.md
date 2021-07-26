@@ -5,4 +5,5 @@ variance, and some of the others shown below.
 
 Related tasks:
 
+ * How to summarize a column
  * How to summarize and compare data by groups
