@@ -237,6 +237,13 @@
 <p>The phrase “summary statistics” usually refers to a common set of simple
 computations that can be done about any dataset, including mean, median,
 variance, and some of the others shown below.</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-summarize-a-column">How to summarize a column</a></li>
+  <li><a href="../how-to-summarize-and-compare-data-by-groups">How to summarize and compare data by groups</a></li>
+</ul>
       <h2 id="solution">
         
         
@@ -248,12 +255,74 @@ variance, and some of the others shown below.</p>
 
 <!-- beginning of wrapper -->
 
-<p>We first load a famous dataset, Fisher’s irises, just to have some example data to use in the code that follows.</p>
+<p>We first load a famous dataset, Fisher’s irises, just to have some example data to use in the code that follows.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span> <span class="s">'iris'</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>How big is the dataset?  The output shows number of rows then number of columns.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">shape</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(150, 5)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>What are the columns and their data types?  Are any values missing?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 150 entries, 0 to 149
+Data columns (total 5 columns):
+ #   Column        Non-Null Count  Dtype  
+---  ------        --------------  -----  
+ 0   Sepal.Length  150 non-null    float64
+ 1   Sepal.Width   150 non-null    float64
+ 2   Petal.Length  150 non-null    float64
+ 3   Petal.Width   150 non-null    float64
+ 4   Species       150 non-null    object 
+dtypes: float64(4), object(1)
+memory usage: 6.0+ KB
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>What do the first few rows look like?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>  <span class="c1"># Default is 5, but you can do df.head(20) or any number.
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>   Sepal.Length  Sepal.Width  Petal.Length  Petal.Width Species
+0           5.1          3.5           1.4          0.2  setosa
+1           4.9          3.0           1.4          0.2  setosa
+2           4.7          3.2           1.3          0.2  setosa
+3           4.6          3.1           1.5          0.2  setosa
+4           5.0          3.6           1.4          0.2  setosa
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The easiest way to get summary statistics for a pandas DataFrame is with the <code class="language-plaintext highlighter-rouge">describe</code> function.</p>
@@ -310,7 +379,7 @@ max        7.900000     4.400000      6.900000     2.500000
 </span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>            <span class="c1"># sum, or total
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 14 July 2021.</p>
+<p>Content last modified on 26 July 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/Python, using pandas and NumPy.ipynb">edit the source</a>.</p>
 

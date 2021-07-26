@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to plot interaction effects of treatments (in Python, using Matplotlib and Seaborn) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/how2data/site/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/how2data/site/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/how2data/site/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/how2data/site/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to plot interaction effects of treatments (in Python, using Matplotlib and Seaborn) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="How to plot interaction effects of treatments (in Python, using Matplotlib and Seaborn)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="/how2data/site/how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn/" />
+<meta property="og:url" content="/how2data/site/how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn/" />
+<meta property="og:site_name" content="How to Data" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to plot interaction effects of treatments (in Python, using Matplotlib and Seaborn)" />
+<script type="application/ld+json">
+{"@type":"WebPage","url":"/how2data/site/how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn/","headline":"How to plot interaction effects of treatments (in Python, using Matplotlib and Seaborn)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .filter( isNotPlainText )
+        .forEach( codeBlock => {
+            const button = makeButton()
+            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+            // button.style.position = 'relative'
+            button.addEventListener( 'click', () => {
+                window.navigator.clipboard.writeText( codeBlock.innerText )
+                button.innerText = 'Copied!'
+                setTimeout( () => button.innerText = 'Copy', 3000 )
+            } )
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/how2data/site/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/how2data/site/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn">
+        
+        
+          <a href="#how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn" class="anchor-heading" aria-labelledby="how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to plot interaction effects of treatments (in Python, using Matplotlib and Seaborn)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-plot-interaction-effects-of-treatments">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>When there are multiple treatment conditions with multiple levels and you wish to undertsand the interaction effects of each of them, a plot can be useful.  How can we create the right kind of plot for that situation?</p>
+
+<ul>
+  <li><a href="../how-to-create-basic-plots">How to create basic plots</a></li>
+  <li><a href="../how-to-add-details-to-a-plot">How to add details to a plot</a></li>
+  <li><a href="../how-to-create-a-histogram">How to create a histogram</a></li>
+  <li><a href="../how-to-create-a-box-and-whisker-plot">How to create a box (and whisker) plot</a></li>
+  <li><a href="../how-to-change-axes-ticks-and-scale-in-a-plot">How to change axes, ticks, and scale in a plot</a></li>
+  <li><a href="../how-to-create-bivariate-plots-to-compare-groups">How to create bivariate plots to compare groups</a></li>
+</ul>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'ToothGrowth'</span><span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>To plot the interaction effects among tooth length, supplement, and dosage, we can use the pointplot function in the Seaborn package.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'dose'</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s">'len'</span><span class="p">,</span><span class="n">hue</span><span class="o">=</span><span class="s">'supp'</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'lower right'</span><span class="p">)</span>  <span class="c1"># Default is upper right, which overlaps the data here.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>Looking at the output, we first see that there is an interaction effect because the two supp lines intersect. We also see that there is a difference in length when giving 0.5mg and 1mg dosage of either of the two delivery methods. However, there is barely any difference between the delivery methods when the dosage level is 2mg.</p>
+
+<p>Content last modified on 26 July 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to plot interaction effects of treatments/Python, using Matplotlib and Seaborn.ipynb">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Krtin Juneja (KJUNEJA@falcon.bentley.edu)</p>
+
+        
+
+        
+
+        
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+
+

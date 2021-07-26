@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to change axes, ticks, and scale in a plot (in Python, using Matplotlib) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/how2data/site/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/how2data/site/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/how2data/site/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/how2data/site/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to change axes, ticks, and scale in a plot (in Python, using Matplotlib) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="How to change axes, ticks, and scale in a plot (in Python, using Matplotlib)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="/how2data/site/how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib/" />
+<meta property="og:url" content="/how2data/site/how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib/" />
+<meta property="og:site_name" content="How to Data" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to change axes, ticks, and scale in a plot (in Python, using Matplotlib)" />
+<script type="application/ld+json">
+{"@type":"WebPage","url":"/how2data/site/how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib/","headline":"How to change axes, ticks, and scale in a plot (in Python, using Matplotlib)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .filter( isNotPlainText )
+        .forEach( codeBlock => {
+            const button = makeButton()
+            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+            // button.style.position = 'relative'
+            button.addEventListener( 'click', () => {
+                window.navigator.clipboard.writeText( codeBlock.innerText )
+                button.innerText = 'Copied!'
+                setTimeout( () => button.innerText = 'Copy', 3000 )
+            } )
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/how2data/site/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/how2data/site/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib">
+        
+        
+          <a href="#how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib" class="anchor-heading" aria-labelledby="how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to change axes, ticks, and scale in a plot (in Python, using Matplotlib)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-change-axes-ticks-and-scale-in-a-plot">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>The mathematical markings and measurements in a plot can make a big difference on its readability and usefulness.  These include the range of each axis, which points on that axis are marked with tick marks, and whether the axes use linear or logarithmic scaling.  How can we customize these options?</p>
+
+<p>Related topics:</p>
+
+<ul>
+  <li><a href="../how-to-create-basic-plots">How to create basic plots</a></li>
+  <li><a href="../how-to-create-a-histogram">How to create a histogram</a></li>
+  <li><a href="../how-to-create-a-box-and-whisker-plot">How to create a box (and whisker) plot</a></li>
+  <li><a href="../how-to-add-details-to-a-plot">How to add details to a plot</a></li>
+  <li><a href="../how-to-create-bivariate-plots-to-compare-groups">How to create bivariate plots to compare groups</a></li>
+  <li><a href="../how-to-plot-interaction-effects-of-treatments">How to plot interaction effects of treatments</a></li>
+</ul>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>We will create some fake data using Python lists, for simplicity.  But everything we show below works also if your data is in columns of a DataFrame, such as <code class="language-plaintext highlighter-rouge">df['age']</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">patient_id</span>     <span class="o">=</span> <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>   <span class="mi">5</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>   <span class="mi">7</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span>   <span class="mi">9</span> <span class="p">]</span>
+<span class="n">patient_height</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">60</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">65</span><span class="p">,</span>  <span class="mi">66</span><span class="p">,</span>  <span class="mi">66</span><span class="p">,</span>  <span class="mi">70</span><span class="p">,</span>  <span class="mi">72</span><span class="p">,</span>  <span class="mi">72</span><span class="p">,</span>  <span class="mi">76</span> <span class="p">]</span>
+<span class="n">patient_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">169</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span> <span class="mi">198</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">244</span><span class="p">,</span> <span class="mi">196</span> <span class="p">]</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The conventional way to import matplotlib in Python is as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>You can change the plot range and where tick marks are shown, in either the $x$ or $y$ directions (or both) as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">patient_height</span><span class="p">,</span> <span class="n">patient_weight</span> <span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">(</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">80</span> <span class="p">]</span> <span class="p">)</span>          <span class="c1"># Plot from x=0 to x=80.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">(</span> <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">250</span> <span class="p">]</span> <span class="p">)</span>         <span class="c1"># Plot from y=0 to y=250.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="p">)</span>   <span class="c1"># Put x axis ticks every 10 units.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">yticks</span><span class="p">(</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span> <span class="p">)</span>  <span class="c1"># Y ticks every 50.  You can provide any list.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>If you need either axis to be logarithmically scaled, it takes just one line of code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>   <span class="c1"># Just using this to make random data.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xscale</span><span class="p">(</span> <span class="s">'log'</span> <span class="p">)</span>  <span class="c1"># You can include one of these two
+</span><span class="n">plt</span><span class="p">.</span><span class="n">yscale</span><span class="p">(</span> <span class="s">'log'</span> <span class="p">)</span>  <span class="c1"># lines, or both, or neither.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>Content last modified on 23 July 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to change axes, ticks, and scale in a plot/Python, using Matplotlib.md">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+
+        
+
+        
+
+        
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+
+
