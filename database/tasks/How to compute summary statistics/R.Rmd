@@ -10,6 +10,24 @@ library(datasets)
 data(iris)
 ```
 
+How big is the dataset?  The output shows number of rows then number of columns.
+
+```{r}
+dim(iris)  # Short for "dimensions."
+```
+
+What are the columns and their data types?  Can I see a sample of each column?
+
+```{r}
+str(iris)  # Short for "structure."
+```
+
+What do the first few rows look like?
+
+```{r}
+head(iris) # Gives 5 rows by default.  You can do head(iris,10), etc.
+```
+
 The easiest way to get summary statistics for an R `data.frame` is with the
 `summary` function.
 
