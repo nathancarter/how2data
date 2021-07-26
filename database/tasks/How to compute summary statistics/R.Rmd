@@ -3,7 +3,7 @@ author: "Nathan Carter (ncarter@bentley.edu) - replace with your name and email"
 ---
 
 We first load a famous dataset, Fisher's irises, just to have some example
-data to use in the code that follows.
+data to use in the code that follows.  (See how to quickly load some sample data.)
 
 ```{r}
 library(datasets)
