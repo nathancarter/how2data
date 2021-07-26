@@ -8,4 +8,5 @@ Related topics:
 * How to create a histogram
 * How to change axes, ticks, and scale in a plot
 * How to create bivariate plots to compare groups
+* How to plot interaction effects of treatments
 

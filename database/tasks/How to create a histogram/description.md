@@ -7,4 +7,5 @@ Related topics:
 * How to create a box (and whisker) plot
 * How to add details to a plot
 * How to create bivariate plots to compare groups
+* How to plot interaction effects of treatments
 
