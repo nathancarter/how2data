@@ -24,4 +24,20 @@ code and computational notebooks, and data visualization.
  * How to do basic mathematical computations
  * How to compute summary statistics
 
+## Data manipulation
+
+ * How to convert a text column into dates
+
+## Statistics in Python
+
+ * How to compute covariance and correlation coefficients
+
+## Plotting
+
+ * How to create basic plots
+ * How to add details to a plot
+ * How to change axes, ticks, and scale in a plot
+ * How to create a histogram
+ * How to create a box (and whisker) plot
+
 *This page is not yet complete.  More content will be added here over time.*
