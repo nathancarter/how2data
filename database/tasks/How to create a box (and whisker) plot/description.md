@@ -7,4 +7,5 @@ Related topics:
 * How to add details to a plot
 * How to create a histogram
 * How to change axes, ticks, and scale in a plot
+* How to create bivariate plots to compare groups
 
