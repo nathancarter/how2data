@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to perform an analysis of covariance (ANCOVA) - How to Data</title>
+    <title>How to compare two nested linear models (in Python, using statsmodels) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to perform an analysis of covariance (ANCOVA) | How to Data</title>
+<title>How to compare two nested linear models (in Python, using statsmodels) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to perform an analysis of covariance (ANCOVA)" />
+<meta property="og:title" content="How to compare two nested linear models (in Python, using statsmodels)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-perform-an-analysis-of-covariance-ancova/" />
-<meta property="og:url" content="/how2data/site/how-to-perform-an-analysis-of-covariance-ancova/" />
+<link rel="canonical" href="/how2data/site/how-to-compare-two-nested-linear-models-in-python-using-statsmodels/" />
+<meta property="og:url" content="/how2data/site/how-to-compare-two-nested-linear-models-in-python-using-statsmodels/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to perform an analysis of covariance (ANCOVA)" />
+<meta property="twitter:title" content="How to compare two nested linear models (in Python, using statsmodels)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-perform-an-analysis-of-covariance-ancova/","headline":"How to perform an analysis of covariance (ANCOVA)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-nested-linear-models-in-python-using-statsmodels/","headline":"How to compare two nested linear models (in Python, using statsmodels)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,24 +215,28 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-perform-an-analysis-of-covariance-ancova">
+          <h1 id="how-to-compare-two-nested-linear-models-in-python-using-statsmodels">
         
         
-          <a href="#how-to-perform-an-analysis-of-covariance-ancova" class="anchor-heading" aria-labelledby="how-to-perform-an-analysis-of-covariance-ancova"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform an analysis of covariance (ANCOVA)
+          <a href="#how-to-compare-two-nested-linear-models-in-python-using-statsmodels" class="anchor-heading" aria-labelledby="how-to-compare-two-nested-linear-models-in-python-using-statsmodels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compare two nested linear models (in Python, using statsmodels)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-compare-two-nested-linear-models">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
     
 
-<p>Recall that covariates are variables that may be related to the outcome but are unaffected by treatment assignment.  In a randomized experiment with one or more observed covariates, an analysis of covariance (ANCOVA) addresses this question:  How would the mean outcome in each treatment group change if all groups were equal with respect to the covariate? The goal is to remove any variability in the outcome associated with the covariate from the unexplained variability used to determine statistical significance.</p>
+<p>Model $A$ is said to be “nested” in model $B$ if the predictors included in $A$ are a subset of those included in $B$.  In such a situation, how can we determine if the larger model (in this case $B$) is significantly better than the smaller (reduced) model?</p>
+
+<p>Or we might ask, how do we perform an Extra Sums of Squares test to compare nested linear models?</p>
 
 <p>Related tasks:</p>
 
@@ -241,17 +245,18 @@
   <li>How to compare two linear models using ANOVA</li>
   <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
   <li><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></li>
+  <li><a href="../how-to-perform-an-analysis-of-covariance-ancova">How to perform an analysis of covariance (ANCOVA)</a></li>
 </ul>
-      <h2 id="using-pingouin-in-python">
+      <h2 id="solution">
         
         
-          <a href="#using-pingouin-in-python" class="anchor-heading" aria-labelledby="using-pingouin-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using pingouin, in Python
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
 
@@ -261,59 +266,83 @@
 <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'mtcars'</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Let’s use ANCOVA to check the effect of the engine type (0 = V-shaped, 1 = straight, in the variable <code class="language-plaintext highlighter-rouge">vs</code>) on the miles per gallon when considering the weight of the car as a covariate. We will use the <code class="language-plaintext highlighter-rouge">ancova</code> function from the <code class="language-plaintext highlighter-rouge">pingouin</code> package to conduct the test.</p>
+<p>Consider a model using number of cylinders (cyl) and weight of car (wt) to predict its fuel efficiency (mpg). We create this model and perform an ANOVA to see if the predictors are significant. We use the Ordinary Least Squares module from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">pingouin</span> <span class="kn">import</span> <span class="n">ancova</span>
-<span class="n">ancova</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s">'mpg'</span><span class="p">,</span> <span class="n">covar</span><span class="o">=</span><span class="s">'wt'</span><span class="p">,</span> <span class="n">between</span><span class="o">=</span><span class="s">'vs'</span><span class="p">)</span>
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="n">add_model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'mpg ~ cyl + wt'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre>     Source          SS  DF          F         p-unc       np2
-0        vs   54.228061   1   7.017656  1.292580e-02  0.194839
-1        wt  405.425409   1  52.466123  5.632548e-08  0.644024
-2  Residual  224.093877  29        NaN           NaN       NaN
+</pre></td><td class="rouge-code"><pre>            df      sum_sq     mean_sq           F        PR(&gt;F)
+cyl        1.0  817.712952  817.712952  124.043687  5.424327e-12
+wt         1.0  117.162269  117.162269   17.773034  2.220200e-04
+Residual  29.0  191.171966    6.592137         NaN           NaN
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The $p$-value for each variable is in the <code class="language-plaintext highlighter-rouge">p-unc</code> column.  Since we are interested in the covariate <code class="language-plaintext highlighter-rouge">wt</code>, we consider the second value in that column.  At the 5% significance level, we compare it with $0.05$ and find it to be lower.  So we reject the null hypothesis and conclude that the covariate <code class="language-plaintext highlighter-rouge">wt</code> is a significant predictor of the outcome.</p>
+<p>In the final column of output we see that all numbers are below $0.05$, which suggests that both predictors are significant.  But do the two predictors have an interaction effect?  Let’s create a model containing the interaction term.</p>
 
-<p>Note: Unfortunately, a two-factor ANCOVA is not possible in pingouin. However, a model with more than one covariate is possible, as you can provide a list as the <code class="language-plaintext highlighter-rouge">covar</code> parameter when calling <code class="language-plaintext highlighter-rouge">ancova</code>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">int_model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'mpg ~ cyl*wt'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">int_model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>            df      sum_sq     mean_sq           F        PR(&gt;F)
+cyl        1.0  817.712952  817.712952  145.856269  1.280635e-12
+wt         1.0  117.162269  117.162269   20.898350  8.942713e-05
+cyl:wt     1.0   34.195767   34.195767    6.099533  1.988242e-02
+Residual  28.0  156.976199    5.606293         NaN           NaN
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>As seen in the final column of output, there is a significant interaction between the two predictors (bottom number being below $0.05$). To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.stats.anova</span> <span class="kn">import</span> <span class="n">anova_lm</span>
+<span class="n">anova_lm</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span> <span class="n">int_model</span><span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>   df_resid         ssr  df_diff    ss_diff         F    Pr(&gt;F)
+0      29.0  191.171966      0.0        NaN       NaN       NaN
+1      28.0  156.976199      1.0  34.195767  6.099533  0.019882
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We have just performed this hypothesis test:</p>
+
+<p>$H_0 =$ the two models are equally as useful for predicting the outcome</p>
+
+<p>$H_a =$ the larger model is significantly better than the smaller model</p>
+
+<p>The one number in the final column is our test statistic.  Since is below our chosen threshold of $0.05$, it is best to use the second model.</p>
+
+<p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
 
 <p>Content last modified on 31 August 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform an analysis of covariance (ANCOVA)/Python, using pingouin.ipynb">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/Python, using statsmodels.ipynb">edit the source</a>.</p>
 
-<p><em>None</em></p>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
+<!-- ending of wrapper -->
 
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
-
-<ul>
-  <li>R</li>
-</ul>
-
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+<p>Contributed by Krtin Juneja (KJUNEJA@falcon.bentley.edu)</p>
 
         
 

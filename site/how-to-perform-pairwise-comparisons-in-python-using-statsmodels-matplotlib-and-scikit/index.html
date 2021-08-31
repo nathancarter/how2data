@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compare two linear models using ANOVA (in Python, using statsmodels) - How to Data</title>
+    <title>How to perform pairwise comparisons (in Python, using statsmodels, Matplotlib and scikit) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compare two linear models using ANOVA (in Python, using statsmodels) | How to Data</title>
+<title>How to perform pairwise comparisons (in Python, using statsmodels, Matplotlib and scikit) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compare two linear models using ANOVA (in Python, using statsmodels)" />
+<meta property="og:title" content="How to perform pairwise comparisons (in Python, using statsmodels, Matplotlib and scikit)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels/" />
-<meta property="og:url" content="/how2data/site/how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels/" />
+<link rel="canonical" href="/how2data/site/how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit/" />
+<meta property="og:url" content="/how2data/site/how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compare two linear models using ANOVA (in Python, using statsmodels)" />
+<meta property="twitter:title" content="How to perform pairwise comparisons (in Python, using statsmodels, Matplotlib and scikit)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels/","headline":"How to compare two linear models using ANOVA (in Python, using statsmodels)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit/","headline":"How to perform pairwise comparisons (in Python, using statsmodels, Matplotlib and scikit)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,16 +215,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels">
+          <h1 id="how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit">
         
         
-          <a href="#how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels" class="anchor-heading" aria-labelledby="how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compare two linear models using ANOVA (in Python, using statsmodels)
+          <a href="#how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit" class="anchor-heading" aria-labelledby="how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform pairwise comparisons (in Python, using statsmodels, Matplotlib and scikit)
         
         
       </h1>
     
 
-<p><a href="../how-to-compare-two-linear-models-using-anova">See all solutions.</a></p>
+<p><a href="../how-to-perform-pairwise-comparisons">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -234,16 +234,13 @@
       </h2>
     
 
-<p>Suppose you have a dataset and have two models - one without interaction (additive model) and one with (interactive model). How would you determine which of the two is better?</p>
+<p>When analyzing data from a completely randomized single-factor design, suppose that you have performed an ANOVA and noticed that there’s a significant difference between the treatment levels.  How can pairwise comparisons help us explore further?</p>
 
 <p>Related tasks:</p>
 
 <ul>
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
-  <li><a href="../how-to-compare-two-linear-models-using-anova">How to compare two linear models using ANOVA</a></li>
-  <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
-  <li><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></li>
-  <li><a href="../how-to-perform-an-analysis-of-covariance-ancova">How to perform an analysis of covariance (ANCOVA)</a></li>
+  <li><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">How to perform post-hoc analysis with Tukey’s HSD test</a></li>
 </ul>
       <h2 id="solution">
         
@@ -256,44 +253,58 @@
 
 <!-- beginning of wrapper -->
 
-<p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+<p>The solution below uses an example dataset that details the counts of insects in an agricultural experiment with six types of insecticides, labeled A through F.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
+3
 </pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'mtcars'</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'InsectSprays'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Consider a model using number of cylinders (cyl) and weight of car (wt) to predict its fuel efficiency (mpg). We create this model and perform an ANOVA to see if the predictors are significant. We use the Ordinary Least Squares module from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>   count spray
+0     10     A
+1      7     A
+2     20     A
+3     14     A
+4     14     A
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Before we perform any post hoc analysis, we need to see if the count of insects depends on the type of insecticide given by conducting a one way ANOVA.  (See also <a href="../how-to-do-a-one-way-analysis-of-variance-anova">how to do a one-way analysis of variance (ANOVA)</a>.)</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-5
 </pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="n">add_model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'mpg ~ cyl + wt'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
-
+<span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'count ~ spray'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
-<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-</pre></td><td class="rouge-code"><pre>            df      sum_sq     mean_sq           F        PR(&gt;F)
-cyl        1.0  817.712952  817.712952  124.043687  5.424327e-12
-wt         1.0  117.162269  117.162269   17.773034  2.220200e-04
-Residual  29.0  191.171966    6.592137         NaN           NaN
+</pre></td><td class="rouge-code"><pre>            df       sum_sq     mean_sq          F        PR(&gt;F)
+spray      5.0  2668.833333  533.766667  34.702282  3.182584e-17
+Residual  66.0  1015.166667   15.381313        NaN           NaN
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The final column of output suggests that both predictors are significant.  But do the two predictors have an interaction effect?  Let’s create a model containing the interaction term.</p>
+<p>At the 5% significance level, we see that the count differs according to the type of insecticide used. We assume that the model assumptions are met, but do not verify that here.</p>
+
+<p>If we would like to compare the pairs without any corrections, we can use the ‘pairwise t test’ in the <code class="language-plaintext highlighter-rouge">scikit_posthocs</code> package.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="n">int_model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'mpg ~ cyl*wt'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
-<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">int_model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">scikit_posthocs</span> <span class="k">as</span> <span class="n">sp</span>
+<span class="n">sp</span><span class="p">.</span><span class="n">posthoc_ttest</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">val_col</span><span class="o">=</span><span class="s">'count'</span><span class="p">,</span> <span class="n">group_col</span><span class="o">=</span><span class="s">'spray'</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pool_sd</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -301,36 +312,40 @@ Residual  29.0  191.171966    6.592137         NaN           NaN
 3
 4
 5
-</pre></td><td class="rouge-code"><pre>            df      sum_sq     mean_sq           F        PR(&gt;F)
-cyl        1.0  817.712952  817.712952  145.856269  1.280635e-12
-wt         1.0  117.162269  117.162269   20.898350  8.942713e-05
-cyl:wt     1.0   34.195767   34.195767    6.099533  1.988242e-02
-Residual  28.0  156.976199    5.606293         NaN           NaN
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="rouge-code"><pre>              A             B             C             D             E  \
+A  1.000000e+00  6.044761e-01  7.266893e-11  9.816910e-08  2.753922e-09   
+B  6.044761e-01  1.000000e+00  8.509776e-12  1.212803e-08  3.257986e-10   
+C  7.266893e-11  8.509776e-12  1.000000e+00  8.141205e-02  3.794750e-01   
+D  9.816910e-08  1.212803e-08  8.141205e-02  1.000000e+00  3.794750e-01   
+E  2.753922e-09  3.257986e-10  3.794750e-01  3.794750e-01  1.000000e+00   
+F  1.805998e-01  4.079858e-01  2.794343e-13  4.035610e-10  1.054387e-11   
+
+              F  
+A  1.805998e-01  
+B  4.079858e-01  
+C  2.794343e-13  
+D  4.035610e-10  
+E  1.054387e-11  
+F  1.000000e+00  
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>As seen in the final column of output, there is a significant interaction between the two predictors. To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
+<p>You can add the type of correction like the Bonferroni correction, Fisher’s Least Significant Difference (LSD) method, Dunnett’s procedure or Scheffe’s method in place of ‘None’ for the <code class="language-plaintext highlighter-rouge">p.adjust</code> argument; <a href="https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_ttest/">see details here</a>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.stats.anova</span> <span class="kn">import</span> <span class="n">anova_lm</span>
-<span class="n">anova_lm</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span> <span class="n">int_model</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>You can also explore further with <a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">how to perform post-hoc analysis with Tukey’s HSD test</a>.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>   df_resid         ssr  df_diff    ss_diff         F    Pr(&gt;F)
-0      29.0  191.171966      0.0        NaN       NaN       NaN
-1      28.0  156.976199      1.0  34.195767  6.099533  0.019882
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>Content last modified on 31 August 2021.</p>
 
-<p>Since the final column shows that model 2 is significant, it is best to use model 2.</p>
-
-<p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
-
-<p>Content last modified on 26 July 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two linear models using ANOVA/Python, using statsmodels.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform pairwise comparisons/Python, using statsmodels, Matplotlib and scikit.ipynb">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 

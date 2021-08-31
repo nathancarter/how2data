@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compare two linear models using ANOVA - How to Data</title>
+    <title>How to compare two nested linear models - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compare two linear models using ANOVA | How to Data</title>
+<title>How to compare two nested linear models | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compare two linear models using ANOVA" />
+<meta property="og:title" content="How to compare two nested linear models" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compare-two-linear-models-using-anova/" />
-<meta property="og:url" content="/how2data/site/how-to-compare-two-linear-models-using-anova/" />
+<link rel="canonical" href="/how2data/site/how-to-compare-two-nested-linear-models/" />
+<meta property="og:url" content="/how2data/site/how-to-compare-two-nested-linear-models/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compare two linear models using ANOVA" />
+<meta property="twitter:title" content="How to compare two nested linear models" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-linear-models-using-anova/","headline":"How to compare two linear models using ANOVA","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-nested-linear-models/","headline":"How to compare two nested linear models","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -215,10 +215,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compare-two-linear-models-using-anova">
+          <h1 id="how-to-compare-two-nested-linear-models">
         
         
-          <a href="#how-to-compare-two-linear-models-using-anova" class="anchor-heading" aria-labelledby="how-to-compare-two-linear-models-using-anova"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compare two linear models using ANOVA
+          <a href="#how-to-compare-two-nested-linear-models" class="anchor-heading" aria-labelledby="how-to-compare-two-nested-linear-models"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compare two nested linear models
         
         
       </h1>
@@ -232,13 +232,15 @@
       </h2>
     
 
-<p>Suppose you have a dataset and have two models - one without interaction (additive model) and one with (interactive model). How would you determine which of the two is better?</p>
+<p>Model $A$ is said to be “nested” in model $B$ if the predictors included in $A$ are a subset of those included in $B$.  In such a situation, how can we determine if the larger model (in this case $B$) is significantly better than the smaller (reduced) model?</p>
+
+<p>Or we might ask, how do we perform an Extra Sums of Squares test to compare nested linear models?</p>
 
 <p>Related tasks:</p>
 
 <ul>
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
-  <li><a href="../how-to-compare-two-linear-models-using-anova">How to compare two linear models using ANOVA</a></li>
+  <li>How to compare two linear models using ANOVA</li>
   <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
   <li><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></li>
   <li><a href="../how-to-perform-an-analysis-of-covariance-ancova">How to perform an analysis of covariance (ANCOVA)</a></li>
@@ -252,7 +254,7 @@
       </h2>
     
 
-<p><a href="../how-to-compare-two-linear-models-using-anova-in-python-using-statsmodels">View this solution alone.</a></p>
+<p><a href="../how-to-compare-two-nested-linear-models-in-python-using-statsmodels">View this solution alone.</a></p>
 
 <p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
 
@@ -286,7 +288,7 @@ wt         1.0  117.162269  117.162269   17.773034  2.220200e-04
 Residual  29.0  191.171966    6.592137         NaN           NaN
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The final column of output suggests that both predictors are significant.  But do the two predictors have an interaction effect?  Let’s create a model containing the interaction term.</p>
+<p>In the final column of output we see that all numbers are below $0.05$, which suggests that both predictors are significant.  But do the two predictors have an interaction effect?  Let’s create a model containing the interaction term.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -306,7 +308,7 @@ cyl:wt     1.0   34.195767   34.195767    6.099533  1.988242e-02
 Residual  28.0  156.976199    5.606293         NaN           NaN
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>As seen in the final column of output, there is a significant interaction between the two predictors. To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
+<p>As seen in the final column of output, there is a significant interaction between the two predictors (bottom number being below $0.05$). To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -322,13 +324,19 @@ Residual  28.0  156.976199    5.606293         NaN           NaN
 1      28.0  156.976199      1.0  34.195767  6.099533  0.019882
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Since the final column shows that model 2 is significant, it is best to use model 2.</p>
+<p>We have just performed this hypothesis test:</p>
+
+<p>$H_0 =$ the two models are equally as useful for predicting the outcome</p>
+
+<p>$H_a =$ the larger model is significantly better than the smaller model</p>
+
+<p>The one number in the final column is our test statistic.  Since is below our chosen threshold of $0.05$, it is best to use the second model.</p>
 
 <p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
 
-<p>Content last modified on 26 July 2021.</p>
+<p>Content last modified on 31 August 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two linear models using ANOVA/Python, using statsmodels.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         

@@ -234,13 +234,13 @@
       </h2>
     
 
-<p>An analysis of covariance (ANCOVA) addresses the question of whether the means of an outcome variable computed on various groups would have been different if the means of a chosen covariate were equal for the same groups. The goal is to remove from the unexplained variability any variability associated with the covariate.</p>
+<p>Recall that covariates are variables that may be related to the outcome but are unaffected by treatment assignment.  In a randomized experiment with one or more observed covariates, an analysis of covariance (ANCOVA) addresses this question:  How would the mean outcome in each treatment group change if all groups were equal with respect to the covariate? The goal is to remove any variability in the outcome associated with the covariate from the unexplained variability used to determine statistical significance.</p>
 
 <p>Related tasks:</p>
 
 <ul>
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
-  <li><a href="../how-to-compare-two-linear-models-using-anova">How to compare two linear models using ANOVA</a></li>
+  <li>How to compare two linear models using ANOVA</li>
   <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
   <li><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></li>
 </ul>
@@ -281,11 +281,11 @@
 2  Residual  224.093877  29        NaN           NaN       NaN
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>At the 5% significance level, we reject the null hypothesis and conclude that the engine type significantly impacts the miles per gallon while accounting for the weight of the car.</p>
+<p>The $p$-value for each variable is in the <code class="language-plaintext highlighter-rouge">p-unc</code> column.  Since we are interested in the covariate <code class="language-plaintext highlighter-rouge">wt</code>, we consider the second value in that column.  At the 5% significance level, we compare it with $0.05$ and find it to be lower.  So we reject the null hypothesis and conclude that the covariate <code class="language-plaintext highlighter-rouge">wt</code> is a significant predictor of the outcome.</p>
 
 <p>Note: Unfortunately, a two-factor ANCOVA is not possible in pingouin. However, a model with more than one covariate is possible, as you can provide a list as the <code class="language-plaintext highlighter-rouge">covar</code> parameter when calling <code class="language-plaintext highlighter-rouge">ancova</code>.</p>
 
-<p>Content last modified on 26 July 2021.</p>
+<p>Content last modified on 31 August 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform an analysis of covariance (ANCOVA)/Python, using pingouin.ipynb">edit the source</a>.</p>
 
