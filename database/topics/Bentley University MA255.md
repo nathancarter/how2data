@@ -16,18 +16,17 @@ as well as in marketing.
 this topic page is under construction.*
 
  * How to summarize a column
- * How to calculate descriptive statistics for a dataset
-
- * How to perform an exploratory analysis to compare groups
+ * How to compute summary statistics
+ * How to summarize and compare data by groups
  * How to create bivariate plots to compare groups
  * How to plot interaction effects of treatments
-
  * How to analyze the sample means of different treatment conditions
- * How to check the assumptions of a model
- * How to compare two ANOVA models
+ * How to check the assumptions of a linear model
+ * How to compare two nested linear models
  * How to conduct a mixed designs ANOVA
  * How to conduct a repeated measures ANOVA
- * How to conduct the power of a test
- * How to perform an ANCOVA test
- * How to perform an unplanned comparison test
+ * How to compute the power of a test
+ * How to perform an analysis of covariance (ANCOVA)
+ * How to perform pairwise comparisons
+ * How to perform post-hoc analysis with Tukey's HSD test
  * How to test for a treatment effect in a single factor design
