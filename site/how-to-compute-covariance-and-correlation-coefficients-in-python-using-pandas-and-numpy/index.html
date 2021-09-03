@@ -267,11 +267,11 @@
 5
 6
 </pre></td><td class="rouge-code"><pre>       col1      col2      col3      col4      col5
-0  0.230431  0.582533  0.991434  0.739073  0.327734
-1  0.125229  0.722491  0.355302  0.833584  0.138107
-2  0.461317  0.684065  0.888877  0.561240  0.049271
-3  0.133538  0.901752  0.993773  0.542505  0.948823
-4  0.930034  0.665386  0.320827  0.908514  0.088380
+0  0.741246  0.137502  0.628215  0.075355  0.566732
+1  0.873955  0.470118  0.178253  0.870899  0.024347
+2  0.924785  0.163942  0.967510  0.479294  0.786474
+3  0.248639  0.292448  0.631178  0.167557  0.955622
+4  0.262946  0.901932  0.256266  0.448065  0.920966
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>If you have two pandas Series, you can compute the covariance of just those two variables.  Note that every column in a DataFrame is a pandas series.</p>
@@ -282,8 +282,8 @@
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[ 0.09645398, -0.00955601],
-       [-0.00955601,  0.05878234]])
+</pre></td><td class="rouge-code"><pre>array([[ 0.07307505, -0.03082308],
+       [-0.03082308,  0.06344653]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>You can also compare all of a DataFrame’s columns among one another, each as a separate variable.</p>
@@ -299,11 +299,11 @@
 5
 6
 </pre></td><td class="rouge-code"><pre>          col1      col2      col3      col4      col5
-col1  0.096454 -0.009556 -0.052318  0.013896 -0.009116
-col2 -0.009556  0.058782 -0.028798  0.033634  0.011250
-col3 -0.052318 -0.028798  0.111899 -0.043065  0.015956
-col4  0.013896  0.033634 -0.043065  0.058399 -0.016705
-col5 -0.009116  0.011250  0.015956 -0.016705  0.099596
+col1  0.073075 -0.030823  0.033849  0.014174 -0.044199
+col2 -0.030823  0.063447 -0.024053 -0.002086  0.038075
+col3  0.033849 -0.024053  0.092001 -0.051577  0.039353
+col4  0.014174 -0.002086 -0.051577  0.078394 -0.067215
+col5 -0.044199  0.038075  0.039353 -0.067215  0.140294
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The Pearson correlation coefficient can be computed with <code class="language-plaintext highlighter-rouge">np.corrcoef</code> in place of <code class="language-plaintext highlighter-rouge">np.cov</code>.</p>
@@ -314,8 +314,8 @@ col5 -0.009116  0.011250  0.015956 -0.016705  0.099596
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[ 1.        , -0.12690915],
-       [-0.12690915,  1.        ]])
+</pre></td><td class="rouge-code"><pre>array([[ 1.        , -0.45267611],
+       [-0.45267611,  1.        ]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>And pandas DataFrames have a built in method to do this for all numeric columns.</p>
@@ -331,14 +331,14 @@ col5 -0.009116  0.011250  0.015956 -0.016705  0.099596
 5
 6
 </pre></td><td class="rouge-code"><pre>          col1      col2      col3      col4      col5
-col1  1.000000 -0.126909 -0.503593  0.185146 -0.093005
-col2 -0.126909  1.000000 -0.355079  0.574052  0.147034
-col3 -0.503593 -0.355079  1.000000 -0.532730  0.151143
-col4  0.185146  0.574052 -0.532730  1.000000 -0.219035
-col5 -0.093005  0.147034  0.151143 -0.219035  1.000000
+col1  1.000000 -0.452676  0.412820  0.187262 -0.436526
+col2 -0.452676  1.000000 -0.314823 -0.029585  0.403572
+col3  0.412820 -0.314823  1.000000 -0.607317  0.346391
+col4  0.187262 -0.029585 -0.607317  1.000000 -0.640922
+col5 -0.436526  0.403572  0.346391 -0.640922  1.000000
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 23 July 2021.</p>
+<p>Content last modified on 01 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute covariance and correlation coefficients/Python, using pandas and NumPy.md">edit the source</a>.</p>
 
