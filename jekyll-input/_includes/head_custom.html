@@ -78,8 +78,8 @@
         .forEach( codeBlock => {
             const button = makeButton()
             codeBlock.insertBefore( button, codeBlock.childNodes[0] )
-            // button.style.position = 'relative'
             button.addEventListener( 'click', () => {
+                button.innerText = '' // don't copy the word "copy"
                 window.navigator.clipboard.writeText( codeBlock.innerText )
                 button.innerText = 'Copied!'
                 setTimeout( () => button.innerText = 'Copy', 3000 )
