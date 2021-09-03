@@ -67,7 +67,7 @@ ensure_shell_command_succeeds(
 
 # Run Jekyll on newly copied files
 section_heading( 'Running Jekyll build process' )
-ensure_shell_command_succeeds( 'bundle exec jekyll build' )
+ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental' )
 
 # State completion
 section_heading( 'Build completed successfully.' )
