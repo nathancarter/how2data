@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute the limit of a function (in Python, using SymPy)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-limit-of-a-function-in-python-using-sympy/","headline":"How to compute the limit of a function (in Python, using SymPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-limit-of-a-function-in-python-using-sympy/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute the limit of a function (in Python, using SymPy)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,12 +77,24 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
+  --  And ensure that the tasks table doesn't clip and force scrolling
   --
   -->
 
 <style>
     .rouge-gutter {
         width: 3em;
+    }
+    .table-wrapper {
+        overflow-x: unset;
+        max-width: unset;
+        width: unset;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+    table {
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
     }
 </style>
 
@@ -111,8 +123,8 @@
         .forEach( codeBlock => {
             const button = makeButton()
             codeBlock.insertBefore( button, codeBlock.childNodes[0] )
-            // button.style.position = 'relative'
             button.addEventListener( 'click', () => {
+                button.innerText = '' // don't copy the word "copy"
                 window.navigator.clipboard.writeText( codeBlock.innerText )
                 button.innerText = 'Copied!'
                 setTimeout( () => button.innerText = 'Copy', 3000 )
