@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Tasks" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/tasks/","description":"Reference site for common computing tasks in statistics and data science","headline":"Tasks","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/tasks/","headline":"Tasks","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,7 +77,8 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
-  --  And ensure that the tasks table doesn't clip and force scrolling
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
   --
   -->
 
@@ -85,16 +86,8 @@
     .rouge-gutter {
         width: 3em;
     }
-    .table-wrapper {
-        overflow-x: unset;
-        max-width: unset;
-        width: unset;
-        border-radius: unset;
-        box-shadow: unset;
-    }
-    table {
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
+    .main-content table a {
+        white-space: unset;
     }
 </style>
 
@@ -245,310 +238,253 @@ To see them categorized, check out the <a href="../topics">topics page</a>.</p>
   <thead>
     <tr>
       <th style="text-align: left">Task</th>
-      <th style="text-align: left"><a href="../software-package-python">Solutions in Python</a></th>
-      <th style="text-align: left"><a href="../software-package-r">Solutions in R</a></th>
+      <th style="text-align: left">Solutions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left"><a href="../how-to-add-details-to-a-plot">How to add details to a plot</a></td>
-      <td style="text-align: left"><a href="../how-to-add-details-to-a-plot-in-python-using-matplotlib">using Matplotlib</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-add-details-to-a-plot-in-python-using-matplotlib">using Matplotlib</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-analyze-the-sample-means-of-different-treatment-conditions">How to analyze the sample means of different treatment conditions</a></td>
-      <td style="text-align: left"><a href="../how-to-analyze-the-sample-means-of-different-treatment-conditions-in-python-using-matplotlib-and-seaborn">using Matplotlib and Seaborn</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-analyze-the-sample-means-of-different-treatment-conditions-in-python-using-matplotlib-and-seaborn">using Matplotlib and Seaborn</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-change-axes-ticks-and-scale-in-a-plot">How to change axes, ticks, and scale in a plot</a></td>
-      <td style="text-align: left"><a href="../how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib">using Matplotlib</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-change-axes-ticks-and-scale-in-a-plot-in-python-using-matplotlib">using Matplotlib</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-check-the-assumptions-of-a-linear-model">How to check the assumptions of a linear model</a></td>
-      <td style="text-align: left"><a href="../how-to-check-the-assumptions-of-a-linear-model-in-python-using-numpy-scipy-sklearn-matplotlib-and-seaborn">using NumPy, SciPy, sklearn, Matplotlib and Seaborn</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-check-the-assumptions-of-a-linear-model-in-python-using-numpy-scipy-sklearn-matplotlib-and-seaborn">using NumPy, SciPy, sklearn, Matplotlib and Seaborn</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-choose-the-sample-size-in-a-study">How to choose the sample size in a study</a></td>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left"><a href="../how-to-choose-the-sample-size-in-a-study-in-r">solution</a></td>
+      <td style="text-align: left">In R: <a href="../how-to-choose-the-sample-size-in-a-study-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compare-two-nested-linear-models">How to compare two nested linear models</a></td>
-      <td style="text-align: left"><a href="../how-to-compare-two-nested-linear-models-in-python-using-statsmodels">using statsmodels</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compare-two-nested-linear-models-in-python-using-statsmodels">using statsmodels</a><br />In R: <a href="../how-to-compare-two-nested-linear-models-in-r">solution</a></td>
     </tr>
     <tr>
-      <td style="text-align: left"><a href="../how-to-compute-r-squared-for-a-simple-linear-model">How to compute R-squared for a simple linear model</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-r-squared-for-a-simple-linear-model-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-r-squared-for-a-simple-linear-model-in-r">solution</a></td>
+      <td style="text-align: left"><a href="../how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs">How to compute a confidence interval for a mean difference (matched pairs)</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python">solution</a><br />In R: <a href="../how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-a-confidence-interval-for-a-sample-mean">How to compute a confidence interval for a sample mean</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-a-confidence-interval-for-a-sample-mean-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-compute-a-confidence-interval-for-a-sample-mean-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-covariance-and-correlation-coefficients">How to compute covariance and correlation coefficients</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-covariance-and-correlation-coefficients-in-python-using-pandas-and-numpy">using pandas and NumPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-covariance-and-correlation-coefficients-in-python-using-pandas-and-numpy">using pandas and NumPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-probabilities-from-a-distribution">How to compute probabilities from a distribution</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-probabilities-from-a-distribution-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-probabilities-from-a-distribution-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-probabilities-from-a-distribution-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-compute-probabilities-from-a-distribution-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-compute-r-squared-for-a-simple-linear-model">How to compute R-squared for a simple linear model</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-r-squared-for-a-simple-linear-model-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-compute-r-squared-for-a-simple-linear-model-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-summary-statistics">How to compute summary statistics</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-summary-statistics-in-python-using-pandas-and-numpy">using pandas and NumPy</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-summary-statistics-in-r">solution</a></td>
-    </tr>
-    <tr>
-      <td style="text-align: left"><a href="../how-to-compute-the-taylor-series-for-a-function">How to compute the Taylor series for a function</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-the-taylor-series-for-a-function-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-summary-statistics-in-python-using-pandas-and-numpy">using pandas and NumPy</a><br />In R: <a href="../how-to-compute-summary-statistics-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-the-derivative-of-a-function">How to compute the derivative of a function</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-the-derivative-of-a-function-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-the-derivative-of-a-function-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-the-domain-of-a-function">How to compute the domain of a function</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-the-domain-of-a-function-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-the-domain-of-a-function-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-the-error-bounds-on-a-taylor-approximation">How to compute the error bounds on a Taylor approximation</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-the-error-bounds-on-a-taylor-approximation-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-the-error-bounds-on-a-taylor-approximation-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-the-limit-of-a-function">How to compute the limit of a function</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-the-limit-of-a-function-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-the-limit-of-a-function-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-compute-the-power-of-a-test">How to compute the power of a test</a></td>
-      <td style="text-align: left"><a href="../how-to-compute-the-power-of-a-test-in-python-using-statsmodels">using statsmodels</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-the-power-of-a-test-in-python-using-statsmodels">using statsmodels</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-compute-the-taylor-series-for-a-function">How to compute the Taylor series for a function</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-compute-the-taylor-series-for-a-function-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></td>
-      <td style="text-align: left"><a href="../how-to-conduct-a-mixed-designs-anova-in-python-using-pandas-and-pingouin">using pandas and pingouin</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-conduct-a-mixed-designs-anova-in-python-using-pandas-and-pingouin">using pandas and pingouin</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></td>
-      <td style="text-align: left"><a href="../how-to-conduct-a-repeated-measures-anova-in-python-using-pandas-and-pingouin">using pandas and pingouin</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-conduct-a-repeated-measures-anova-in-python-using-pandas-and-pingouin">using pandas and pingouin</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-convert-a-text-column-into-dates">How to convert a text column into dates</a></td>
-      <td style="text-align: left"><a href="../how-to-convert-a-text-column-into-dates-in-python-using-pandas">using pandas</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-convert-a-text-column-into-dates-in-python-using-pandas">using pandas</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-create-a-box-and-whisker-plot">How to create a box (and whisker) plot</a></td>
-      <td style="text-align: left"><a href="../how-to-create-a-box-and-whisker-plot-in-python-using-matplotlib">using Matplotlib</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-create-a-box-and-whisker-plot-in-python-using-matplotlib">using Matplotlib</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-create-a-data-frame-from-scratch">How to create a data frame from scratch</a></td>
-      <td style="text-align: left"><a href="../how-to-create-a-data-frame-from-scratch-in-python">solution</a></td>
-      <td style="text-align: left"><a href="../how-to-create-a-data-frame-from-scratch-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-create-a-data-frame-from-scratch-in-python">solution</a><br />In R: <a href="../how-to-create-a-data-frame-from-scratch-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-create-a-histogram">How to create a histogram</a></td>
-      <td style="text-align: left"><a href="../how-to-create-a-histogram-in-python-using-matplotlib">using Matplotlib</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-create-a-histogram-in-python-using-matplotlib">using Matplotlib</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-create-basic-plots">How to create basic plots</a></td>
-      <td style="text-align: left"><a href="../how-to-create-basic-plots-in-python-using-matplotlib">using Matplotlib</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-create-basic-plots-in-python-using-matplotlib">using Matplotlib</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-create-bivariate-plots-to-compare-groups">How to create bivariate plots to compare groups</a></td>
-      <td style="text-align: left"><a href="../how-to-create-bivariate-plots-to-compare-groups-in-python-using-matplotlib-and-seaborn">using Matplotlib and Seaborn</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-create-bivariate-plots-to-compare-groups-in-python-using-matplotlib-and-seaborn">using Matplotlib and Seaborn</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-create-symbolic-variables">How to create symbolic variables</a></td>
-      <td style="text-align: left"><a href="../how-to-create-symbolic-variables-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-create-symbolic-variables-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-define-a-mathematical-sequence">How to define a mathematical sequence</a></td>
-      <td style="text-align: left"><a href="../how-to-define-a-mathematical-sequence-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-define-a-mathematical-sequence-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-define-a-mathematical-series">How to define a mathematical series</a></td>
-      <td style="text-align: left"><a href="../how-to-define-a-mathematical-series-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-define-a-mathematical-series-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></td>
-      <td style="text-align: left"><a href="../how-to-do-a-one-way-analysis-of-variance-anova-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-do-a-one-way-analysis-of-variance-anova-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-one-way-analysis-of-variance-anova-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-one-way-analysis-of-variance-anova-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean">How to do a two-sided hypothesis test for a sample mean</a></td>
-      <td style="text-align: left"><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a></td>
-      <td style="text-align: left"><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-basic-mathematical-computations">How to do basic mathematical computations</a></td>
-      <td style="text-align: left"><a href="../how-to-do-basic-mathematical-computations-in-python-using-numpy">using NumPy</a>, <a href="../how-to-do-basic-mathematical-computations-in-python-using-sympy">using SymPy</a>, <a href="../how-to-do-basic-mathematical-computations-in-python">solution</a></td>
-      <td style="text-align: left"><a href="../how-to-do-basic-mathematical-computations-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-basic-mathematical-computations-in-python-using-numpy">using NumPy</a>, <a href="../how-to-do-basic-mathematical-computations-in-python-using-sympy">using SymPy</a>, <a href="../how-to-do-basic-mathematical-computations-in-python">solution</a><br />In R: <a href="../how-to-do-basic-mathematical-computations-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-implicit-differentiation">How to do implicit differentiation</a></td>
-      <td style="text-align: left"><a href="../how-to-do-implicit-differentiation-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-implicit-differentiation-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-find-the-critical-numbers-of-a-function">How to find the critical numbers of a function</a></td>
-      <td style="text-align: left"><a href="../how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-fit-a-linear-model-to-two-columns-of-data">How to fit a linear model to two columns of data</a></td>
-      <td style="text-align: left"><a href="../how-to-fit-a-linear-model-to-two-columns-of-data-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-fit-a-linear-model-to-two-columns-of-data-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-fit-a-linear-model-to-two-columns-of-data-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-fit-a-linear-model-to-two-columns-of-data-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-generate-random-values-from-a-distribution">How to generate random values from a distribution</a></td>
-      <td style="text-align: left"><a href="../how-to-generate-random-values-from-a-distribution-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-generate-random-values-from-a-distribution-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-generate-random-values-from-a-distribution-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-generate-random-values-from-a-distribution-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-graph-a-two-variable-function-as-a-surface">How to graph a two-variable function as a surface</a></td>
-      <td style="text-align: left"><a href="../how-to-graph-a-two-variable-function-as-a-surface-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-graph-a-two-variable-function-as-a-surface-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-graph-curves-that-are-not-functions">How to graph curves that are not functions</a></td>
-      <td style="text-align: left"><a href="../how-to-graph-curves-that-are-not-functions-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-graph-curves-that-are-not-functions-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-graph-mathematical-functions">How to graph mathematical functions</a></td>
-      <td style="text-align: left"><a href="../how-to-graph-mathematical-functions-in-python-using-numpy-and-matplotlib">using NumPy and Matplotlib</a>, <a href="../how-to-graph-mathematical-functions-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"><a href="../how-to-graph-mathematical-functions-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-graph-mathematical-functions-in-python-using-numpy-and-matplotlib">using NumPy and Matplotlib</a>, <a href="../how-to-graph-mathematical-functions-in-python-using-sympy">using SymPy</a><br />In R: <a href="../how-to-graph-mathematical-functions-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-graph-mathematical-sequences">How to graph mathematical sequences</a></td>
-      <td style="text-align: left"><a href="../how-to-graph-mathematical-sequences-in-python-using-sympy-and-matplotlib">using SymPy and Matplotlib</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-graph-mathematical-sequences-in-python-using-sympy-and-matplotlib">using SymPy and Matplotlib</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-isolate-one-variable-in-an-equation">How to isolate one variable in an equation</a></td>
-      <td style="text-align: left"><a href="../how-to-isolate-one-variable-in-an-equation-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-isolate-one-variable-in-an-equation-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table">How to perform a chi-squared test on a contingency table</a></td>
-      <td style="text-align: left"><a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-perform-an-analysis-of-covariance-ancova">How to perform an analysis of covariance (ANCOVA)</a></td>
-      <td style="text-align: left"><a href="../how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin">using pingouin</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin">using pingouin</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-perform-pairwise-comparisons">How to perform pairwise comparisons</a></td>
-      <td style="text-align: left"><a href="../how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit">using statsmodels, Matplotlib and scikit</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit">using statsmodels, Matplotlib and scikit</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">How to perform post-hoc analysis with Tukey’s HSD test</a></td>
-      <td style="text-align: left"><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-python-using-statsmodels-matplotlib-and-scikit">using statsmodels, Matplotlib and scikit</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-python-using-statsmodels-matplotlib-and-scikit">using statsmodels, Matplotlib and scikit</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-plot-continuous-probability-distributions">How to plot continuous probability distributions</a></td>
-      <td style="text-align: left"><a href="../how-to-plot-continuous-probability-distributions-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-plot-continuous-probability-distributions-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-plot-continuous-probability-distributions-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-plot-continuous-probability-distributions-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-plot-discrete-probability-distributions">How to plot discrete probability distributions</a></td>
-      <td style="text-align: left"><a href="../how-to-plot-discrete-probability-distributions-in-python-using-scipy">using SciPy</a></td>
-      <td style="text-align: left"><a href="../how-to-plot-discrete-probability-distributions-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-plot-discrete-probability-distributions-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-plot-discrete-probability-distributions-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-plot-interaction-effects-of-treatments">How to plot interaction effects of treatments</a></td>
-      <td style="text-align: left"><a href="../how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn">using Matplotlib and Seaborn</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-plot-interaction-effects-of-treatments-in-python-using-matplotlib-and-seaborn">using Matplotlib and Seaborn</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-quickly-load-some-sample-data">How to quickly load some sample data</a></td>
-      <td style="text-align: left"><a href="../how-to-quickly-load-some-sample-data-in-python">solution</a></td>
-      <td style="text-align: left"><a href="../how-to-quickly-load-some-sample-data-in-r">solution</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-quickly-load-some-sample-data-in-python">solution</a><br />In R: <a href="../how-to-quickly-load-some-sample-data-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-solve-an-ordinary-differential-equation">How to solve an ordinary differential equation</a></td>
-      <td style="text-align: left"><a href="../how-to-solve-an-ordinary-differential-equation-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-solve-an-ordinary-differential-equation-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-solve-symbolic-equations">How to solve symbolic equations</a></td>
-      <td style="text-align: left"><a href="../how-to-solve-symbolic-equations-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-solve-symbolic-equations-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-substitute-a-value-for-a-symbolic-variable">How to substitute a value for a symbolic variable</a></td>
-      <td style="text-align: left"><a href="../how-to-substitute-a-value-for-a-symbolic-variable-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-substitute-a-value-for-a-symbolic-variable-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-summarize-a-column">How to summarize a column</a></td>
-      <td style="text-align: left"><a href="../how-to-summarize-a-column-in-python">solution</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-summarize-a-column-in-python">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-summarize-and-compare-data-by-groups">How to summarize and compare data by groups</a></td>
-      <td style="text-align: left"><a href="../how-to-summarize-and-compare-data-by-groups-in-python">solution</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-summarize-and-compare-data-by-groups-in-python">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design">How to test for a treatment effect in a single factor design</a></td>
-      <td style="text-align: left"><a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels">using SciPy and statsmodels</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels">using SciPy and statsmodels</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-write-a-piecewise-defined-function">How to write a piecewise-defined function</a></td>
-      <td style="text-align: left"><a href="../how-to-write-a-piecewise-defined-function-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-write-a-piecewise-defined-function-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-write-an-ordinary-differential-equation">How to write an ordinary differential equation</a></td>
-      <td style="text-align: left"><a href="../how-to-write-an-ordinary-differential-equation-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-write-an-ordinary-differential-equation-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-write-and-evaluate-definite-integrals">How to write and evaluate definite integrals</a></td>
-      <td style="text-align: left"><a href="../how-to-write-and-evaluate-definite-integrals-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-write-and-evaluate-definite-integrals-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-write-and-evaluate-indefinite-integrals">How to write and evaluate indefinite integrals</a></td>
-      <td style="text-align: left"><a href="../how-to-write-and-evaluate-indefinite-integrals-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-write-and-evaluate-indefinite-integrals-in-python-using-sympy">using SymPy</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-write-symbolic-equations">How to write symbolic equations</a></td>
-      <td style="text-align: left"><a href="../how-to-write-symbolic-equations-in-python-using-sympy">using SymPy</a></td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">In Python: <a href="../how-to-write-symbolic-equations-in-python-using-sympy">using SymPy</a></td>
     </tr>
   </tbody>
 </table></div>

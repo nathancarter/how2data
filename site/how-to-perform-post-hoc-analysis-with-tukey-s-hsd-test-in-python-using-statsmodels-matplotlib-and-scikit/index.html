@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to perform post-hoc analysis with Tukey’s HSD test (in Python, using statsmodels, Matplotlib and scikit)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-python-using-statsmodels-matplotlib-and-scikit/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to perform post-hoc analysis with Tukey’s HSD test (in Python, using statsmodels, Matplotlib and scikit)","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-python-using-statsmodels-matplotlib-and-scikit/","headline":"How to perform post-hoc analysis with Tukey’s HSD test (in Python, using statsmodels, Matplotlib and scikit)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,7 +77,8 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
-  --  And ensure that the tasks table doesn't clip and force scrolling
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
   --
   -->
 
@@ -85,16 +86,8 @@
     .rouge-gutter {
         width: 3em;
     }
-    .table-wrapper {
-        overflow-x: unset;
-        max-width: unset;
-        width: unset;
-        border-radius: unset;
-        box-shadow: unset;
-    }
-    table {
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
+    .main-content table a {
+        white-space: unset;
     }
 </style>
 
@@ -361,7 +354,7 @@ group1 group2 meandiff p-adj   lower    upper  reject
 
 <p>The plot informs us that insecticide F is significantly different from E, D and C as their confidence intervals do not overlap while it is not significantly different from B and A as their confidence intervals do overlap. This can be verified by looking at the previous output table.</p>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 31 August 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform post-hoc analysis with Tukey's HSD test/Python, using statsmodels, Matplotlib and scikit.ipynb">edit the source</a>.</p>
 

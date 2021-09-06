@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Bentley University MA346" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/bentley-university-ma346/","description":"Reference site for common computing tasks in statistics and data science","headline":"Bentley University MA346","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/bentley-university-ma346/","headline":"Bentley University MA346","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,7 +77,8 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
-  --  And ensure that the tasks table doesn't clip and force scrolling
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
   --
   -->
 
@@ -85,16 +86,8 @@
     .rouge-gutter {
         width: 3em;
     }
-    .table-wrapper {
-        overflow-x: unset;
-        max-width: unset;
-        width: unset;
-        border-radius: unset;
-        box-shadow: unset;
-    }
-    table {
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
+    .main-content table a {
+        white-space: unset;
     }
 </style>
 
@@ -308,7 +301,7 @@ code and computational notebooks, and data visualization.</p>
 
 <p><em>This page is not yet complete.  More content will be added here over time.</em></p>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 23 July 2021.</p>
 
 <p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
 

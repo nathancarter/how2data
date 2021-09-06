@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to write and evaluate definite integrals" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-write-and-evaluate-definite-integrals/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to write and evaluate definite integrals","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-write-and-evaluate-definite-integrals/","headline":"How to write and evaluate definite integrals","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,7 +77,8 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
-  --  And ensure that the tasks table doesn't clip and force scrolling
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
   --
   -->
 
@@ -85,16 +86,8 @@
     .rouge-gutter {
         width: 3em;
     }
-    .table-wrapper {
-        overflow-x: unset;
-        max-width: unset;
-        width: unset;
-        border-radius: unset;
-        box-shadow: unset;
-    }
-    table {
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
+    .main-content table a {
+        white-space: unset;
     }
 </style>
 

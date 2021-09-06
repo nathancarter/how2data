@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compare two nested linear models" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-nested-linear-models/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compare two nested linear models","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-nested-linear-models/","headline":"How to compare two nested linear models","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,7 +77,8 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
-  --  And ensure that the tasks table doesn't clip and force scrolling
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
   --
   -->
 
@@ -85,16 +86,8 @@
     .rouge-gutter {
         width: 3em;
     }
-    .table-wrapper {
-        overflow-x: unset;
-        max-width: unset;
-        width: unset;
-        border-radius: unset;
-        box-shadow: unset;
-    }
-    table {
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
+    .main-content table a {
+        white-space: unset;
     }
 </style>
 
@@ -252,7 +245,6 @@
 
 <ul>
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
-  <li>How to compare two linear models using ANOVA</li>
   <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
   <li><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></li>
   <li><a href="../how-to-perform-an-analysis-of-covariance-ancova">How to perform an analysis of covariance (ANCOVA)</a></li>
@@ -346,9 +338,113 @@ Residual  28.0  156.976199    5.606293         NaN           NaN
 
 <p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 31 August 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/Python, using statsmodels.ipynb">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compare-two-nested-linear-models-in-r">View this solution alone.</a></p>
+
+<p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine. (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">install.packages</span><span class="p">(</span><span class="s2">"datasets"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>Warning message:
+“package ‘datasets’ is a base package, and should not be updated”
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Consider a model using number of cylinders (cyl) and weight of car (wt) to predict its fuel efficiency (mpg). We create this model and perform an ANOVA to see if the predictors are significant.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1"># Build the model</span><span class="w">
+</span><span class="n">add_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">cyl</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Perform an ANOVA</span><span class="w">
+</span><span class="n">anova</span><span class="p">(</span><span class="n">add_model</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>          Df Sum Sq   Mean Sq    F value   Pr(&gt;F)      
+cyl        1 817.7130 817.712952 124.04369 5.424327e-12
+wt         1 117.1623 117.162269  17.77303 2.220200e-04
+Residuals 29 191.1720   6.592137        NA           NA
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The final column of output suggests that both predictors are significant. But do the two predictors have an interaction effect? Let’s create a model containing the interaction term.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1"># Build the model with interaction</span><span class="w">
+</span><span class="n">int_model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">cyl</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Perform an ANOVA</span><span class="w">
+</span><span class="n">anova</span><span class="p">(</span><span class="n">int_model</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>          Df Sum Sq    Mean Sq    F value    Pr(&gt;F)      
+cyl        1 817.71295 817.712952 145.856269 1.280635e-12
+wt         1 117.16227 117.162269  20.898350 8.942713e-05
+cyl:wt     1  34.19577  34.195767   6.099533 1.988242e-02
+Residuals 28 156.97620   5.606293         NA           NA
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>As seen in the final column of output, there is a significant interaction between the two predictors. To check which model is better, we can conduct an ANOVA comparing the two models.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="c1"># Use ANOVA to compare the models</span><span class="w">
+</span><span class="n">anova</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span><span class="w"> </span><span class="n">int_model</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>  Res.Df RSS      Df Sum of Sq F        Pr(&gt;F)    
+1 29     191.1720 NA       NA        NA         NA
+2 28     156.9762  1 34.19577  6.099533 0.01988242
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We have just performed this hypothesis test:</p>
+
+<p>$H_0 =$ the two models are equally as useful for predicting the outcome</p>
+
+<p>$H_a =$ the larger model is significantly better than the smaller model</p>
+
+<p>The one number in the final column is our test statistic.  Since is below our chosen threshold of $0.05$, it is best to use the second model.</p>
+
+<p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
+
+<p>Content last modified on 06 September 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -361,24 +457,6 @@ Residual  28.0  156.976199    5.606293         NaN           NaN
 <ul>
   <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
 </ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
-
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
-
-<ul>
-  <li>R</li>
-</ul>
-
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

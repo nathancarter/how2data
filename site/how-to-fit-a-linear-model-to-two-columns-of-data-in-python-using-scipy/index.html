@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to fit a linear model to two columns of data (in Python, using SciPy)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-in-python-using-scipy/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to fit a linear model to two columns of data (in Python, using SciPy)","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-fit-a-linear-model-to-two-columns-of-data-in-python-using-scipy/","headline":"How to fit a linear model to two columns of data (in Python, using SciPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -77,7 +77,8 @@
 <!--
   --
   --  Fix inconsistent gutter width for code cells
-  --  And ensure that the tasks table doesn't clip and force scrolling
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
   --
   -->
 
@@ -85,16 +86,8 @@
     .rouge-gutter {
         width: 3em;
     }
-    .table-wrapper {
-        overflow-x: unset;
-        max-width: unset;
-        width: unset;
-        border-radius: unset;
-        box-shadow: unset;
-    }
-    table {
-        border-radius: 4px;
-        box-shadow: 0 1px 2px rgb(0 0 0 / 12%), 0 3px 10px rgb(0 0 0 / 8%);
+    .main-content table a {
+        white-space: unset;
     }
 </style>
 
@@ -308,12 +301,12 @@ the data are stored in NumPy arrays or pandas Series.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>LinregressResult(slope=0.1327195637885226, intercept=-37.32141898334582, rvalue=0.8949574425541466, pvalue=0.006486043236692156, stderr=0.029588975845594334)
+</pre></td><td class="rouge-code"><pre>LinregressResult(slope=0.1327195637885226, intercept=-37.32141898334582, rvalue=0.8949574425541466, pvalue=0.006486043236692156, stderr=0.029588975845594334, intercept_stderr=18.995444317768097)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The linear model in this example is approximately $y=0.133x-37.32$.</p>
 
-<p>Content last modified on 02 June 2021.</p>
+<p>Content last modified on 28 May 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to fit a linear model to two columns of data/Python, using SciPy.md">edit the source</a>.</p>
 
