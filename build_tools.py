@@ -221,13 +221,14 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
         f'[edit the source]({edit_on_github_url(input_file)}).'
     task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
     contributors = solution_row["author"]
-    if contributors == np.nan:
-        contributors = ''
-    elif type( contributors ) == str:
+    if type( contributors ) == str:
         contributors = f'Contributed by {contributors}'
     else:
-        contributors = 'Contributed by:\n\n' + \
-            '\n'.join( [ f' * {author}' for author in contributors ] )
+        try:
+            contributors = 'Contributed by:\n\n' + \
+                '\n'.join( [ f' * {author}' for author in contributors ] )
+        except TypeError:
+            contributors = ''
     write_markdown( output_file,
         files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', solution_row['solution title'] )
