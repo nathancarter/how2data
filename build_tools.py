@@ -220,6 +220,14 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
     task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
+    contributors = solution_row["author"]
+    if contributors == np.nan:
+        contributors = ''
+    elif type( contributors ) == str:
+        contributors = f'Contributed by {contributors}'
+    else:
+        contributors = 'Contributed by:\n\n' + \
+            '\n'.join( [ f' * {author}' for author in contributors ] )
     write_markdown( output_file,
         files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
         .replace( 'TITLE', solution_row['solution title'] )
@@ -232,8 +240,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
             content,
             os.path.join( tasks_folder, solution_row['task name'] ),
             solution_row['software'] ) ) )
-        .replace( 'CONTRIBUTORS',
-            f'Contributed by {solution_row["author"]}' if solution_row["author"] != np.nan else '' )
+        .replace( 'CONTRIBUTORS', contributors )
     )
     print( f'Built solution for: {solution_row["task name"]}' )
     print( f'          Software: {solution_row["software"]}' )
