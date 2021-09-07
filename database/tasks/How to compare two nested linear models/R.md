@@ -7,7 +7,7 @@ author:
 The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine. (See how to quickly load some sample data.)
 
 ```R
-install.packages("datasets")
+# install.packages("datasets") # if you have not done so already
 library(datasets)
 data(mtcars)
 df <- mtcars
