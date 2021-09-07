@@ -45,4 +45,4 @@ radius <- critical.val*sqrt(diff.variance)/sqrt(n) # radius of confidence interv
 c( diff.mean - radius, diff.mean + radius )        # confidence interval
 ```
 
-Either method gives the same result. Our 95% confidence interval is $(0.70338, 13.2966)$.
+Either method gives the same result. Our 95% confidence interval is $[0.70338, 13.2966]$.
