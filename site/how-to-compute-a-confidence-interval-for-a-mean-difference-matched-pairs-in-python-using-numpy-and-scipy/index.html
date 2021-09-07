@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute a confidence interval for a mean difference (matched pairs) (in Python) - How to Data</title>
+    <title>How to compute a confidence interval for a mean difference (matched pairs) (in Python, using NumPy and SciPy) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute a confidence interval for a mean difference (matched pairs) (in Python) | How to Data</title>
+<title>How to compute a confidence interval for a mean difference (matched pairs) (in Python, using NumPy and SciPy) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute a confidence interval for a mean difference (matched pairs) (in Python)" />
+<meta property="og:title" content="How to compute a confidence interval for a mean difference (matched pairs) (in Python, using NumPy and SciPy)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python-using-numpy-and-scipy/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python-using-numpy-and-scipy/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute a confidence interval for a mean difference (matched pairs) (in Python)" />
+<meta property="twitter:title" content="How to compute a confidence interval for a mean difference (matched pairs) (in Python, using NumPy and SciPy)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python/","headline":"How to compute a confidence interval for a mean difference (matched pairs) (in Python)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python-using-numpy-and-scipy/","headline":"How to compute a confidence interval for a mean difference (matched pairs) (in Python, using NumPy and SciPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -192,7 +192,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
 
       
     </nav>
@@ -220,10 +220,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python">
+          <h1 id="how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python-using-numpy-and-scipy">
         
         
-          <a href="#how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a mean difference (matched pairs) (in Python)
+          <a href="#how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python-using-numpy-and-scipy" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs-in-python-using-numpy-and-scipy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a mean difference (matched pairs) (in Python, using NumPy and SciPy)
         
         
       </h1>
@@ -299,11 +299,11 @@ Let’s assume we’ve chosen a confidence level of $\alpha$ = 0.05.</p>
 </pre></td><td class="rouge-code"><pre>(0.7033861582274517, 13.296613841772547)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our 95% confidence interval for the mean difference is $(0.70338, 13.2966)$.</p>
+<p>Our 95% confidence interval for the mean difference is $[0.70338, 13.2966]$.</p>
 
-<p>Content last modified on 06 September 2021.</p>
+<p>Content last modified on 07 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a mean difference (matched pairs)/Python.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a mean difference (matched pairs)/Python, using NumPy and SciPy.ipynb">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
