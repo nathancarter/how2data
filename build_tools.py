@@ -66,6 +66,17 @@ stats_table = pd.DataFrame( {
     ]
 } )
 
+# The contributors list
+contributors_list = list( solutions_df['author'] )
+sole_authors = set( filter( lambda x: type(x)==str, contributors_list ) )
+multi_authors = list( filter( lambda x: type(x)!=str, contributors_list ) )
+contributors_list = list( sole_authors.union( [
+    author for authors in multi_authors for author in authors
+] ) )
+contributors_list.sort()
+contributors_list_markdown = \
+    '\n'.join( [ f' * {contributor}' for contributor in contributors_list ] )
+
 ###
 ###  MOVING/TRACKING FILES
 ###

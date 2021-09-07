@@ -30,7 +30,8 @@ replacements = {
     'SET_OF_TASKS' : tasks_table_with_links.to_markdown( index=False ),
     'LIST_OF_TOPICS' : '\n'.join( [
         f' * {link}' for link in topics_df['markdown link'] ] ),
-    'OVERALL_STATS' : stats_table.to_markdown( index=False )
+    'OVERALL_STATS' : stats_table.to_markdown( index=False ),
+    'CONTRIBUTORS_LIST' : contributors_list_markdown
 }
 for filename in files_df[files_df['type'] == 'static page']['filename']:
     copy_static_file( filename, replacements )
