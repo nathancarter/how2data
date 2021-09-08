@@ -237,7 +237,7 @@
       </h2>
     
 
-<p>When analyzing data from a completely randomized single-factor design, suppose that you have performed an ANOVA and noticed that there’s a significant difference between the treatment levels.  How can pairwise comparisons help us explore further?</p>
+<p>When analyzing data from a completely randomized single-factor design, suppose that you have performed an ANOVA and noticed that there’s a significant difference between at least one pair of treatment levels.  How can pairwise comparisons help us explore which pairs of treatment levels are different?</p>
 
 <p>Related tasks:</p>
 
@@ -342,11 +342,11 @@ E  1.054387e-11
 F  1.000000e+00  
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>You can add the type of correction like the Bonferroni correction, Fisher’s Least Significant Difference (LSD) method, Dunnett’s procedure or Scheffe’s method in place of ‘None’ for the <code class="language-plaintext highlighter-rouge">p.adjust</code> argument; <a href="https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_ttest/">see details here</a>.</p>
+<p>Techniques to adjust the above table for multiple comparisons include the Bonferroni correction, Fisher’s Least Significant Difference (LSD) method, Dunnett’s procedure, and Scheffe’s method.  These can be used in place of ‘None’ for the <code class="language-plaintext highlighter-rouge">p.adjust</code> argument; <a href="https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_ttest/">see details here</a>.</p>
 
-<p>You can also explore further with <a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">how to perform post-hoc analysis with Tukey’s HSD test</a>.</p>
+<p>You can also determine the magnitude of these differences; see <a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">how to perform post-hoc analysis with Tukey’s HSD test</a>.</p>
 
-<p>Content last modified on 31 August 2021.</p>
+<p>Content last modified on 08 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform pairwise comparisons/Python, using statsmodels, Matplotlib and scikit.ipynb">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
