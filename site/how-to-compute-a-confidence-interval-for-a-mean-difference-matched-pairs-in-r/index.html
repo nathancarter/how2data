@@ -255,13 +255,6 @@ Let’s assume we’ve chosen a confidence level of $\alpha$ = 0.05.</p>
 
 <!-- beginning of wrapper -->
 
-<p>This example computes a 95% confidence interval,
-but you can choose a different level by choosing a different value for $\alpha$.</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.05</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
 <p>We have two samples of data, $x_1, x_2, x_3, \ldots, x_k$ and $x’_1, x’_2, x’_3, \ldots, x’_k$.
 We’re going to use some fake data below just as an example; replace it with your real data.</p>
 
@@ -272,10 +265,12 @@ We’re going to use some fake data below just as an example; replace it with yo
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The shortest way to create the confidence interval is with R’s <code class="language-plaintext highlighter-rouge">t.test()</code> function.
-It’s just one line of code.</p>
+It’s just one line of code (after we choose $\alpha$).</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">t.test</span><span class="p">(</span><span class="n">sample.1</span><span class="p">,</span><span class="w"> </span><span class="n">sample.2</span><span class="p">,</span><span class="w"> </span><span class="n">paired</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="w">
+2
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">       </span><span class="c1"># replace with your chosen alpha (here, a 95% confidence level)</span><span class="w">
+</span><span class="n">t.test</span><span class="p">(</span><span class="n">sample.1</span><span class="p">,</span><span class="w"> </span><span class="n">sample.2</span><span class="p">,</span><span class="w"> </span><span class="n">paired</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -336,7 +331,7 @@ mean of the differences
 
 <p>Either method gives the same result. Our 95% confidence interval is $[0.70338, 13.2966]$.</p>
 
-<p>Content last modified on 08 September 2021.</p>
+<p>Content last modified on 09 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a mean difference (matched pairs)/R.md">edit the source</a>.</p>
 

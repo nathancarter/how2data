@@ -260,9 +260,6 @@ already chosen, such as $\alpha=0.95$.</p>
 
 <!-- beginning of wrapper -->
 
-<p>This solution uses a 95% confidence level, but you can change that in the
-first line of code, by specifing a different <code class="language-plaintext highlighter-rouge">alpha</code>.</p>
-
 <p>When applying this technique, you would have a series of data values for which
 you needed to compute a confidence interval for the mean.  But in order to
 provide code that runs independently, we create some fake data below.  When
@@ -278,16 +275,16 @@ using this code, replace our fake data with your real data.</p>
 8
 9
 10
-</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.95</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">       </span><span class="c1"># replace with your chosen alpha (here, a 95% confidence level)</span><span class="w">
 </span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">435</span><span class="p">,</span><span class="m">542</span><span class="p">,</span><span class="m">435</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">54</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">543</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">432</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">36</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">876</span><span class="p">,</span><span class="m">65</span><span class="p">,</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># fake</span><span class="w">
 
 </span><span class="c1"># If you need the two values stored in variables for later use, do:</span><span class="w">
-</span><span class="n">answer</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">answer</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span><span class="n">lower_bound</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">answer</span><span class="o">$</span><span class="n">conf.int</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
 </span><span class="n">upper_bound</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">answer</span><span class="o">$</span><span class="n">conf.int</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">
 
 </span><span class="c1"># If you just need to see the results in a report, do this alone:</span><span class="w">
-</span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -312,7 +309,7 @@ mean of x
  210.1765 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 02 June 2021.</p>
+<p>Content last modified on 09 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a sample mean/R.md">edit the source</a>.</p>
 

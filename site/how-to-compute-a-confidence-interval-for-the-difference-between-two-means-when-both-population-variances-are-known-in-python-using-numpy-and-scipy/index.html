@@ -296,8 +296,8 @@ and population variances if you use this code.</p>
 11
 </pre></td><td class="rouge-code"><pre><span class="c1"># Find the critical value from the normal distribution
 </span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">critical_val</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>       <span class="c1"># replace with your chosen alpha (here, a 95% confidence level)
+</span><span class="n">critical_val</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Find the lower and upper bounds of the confidence interval
 </span><span class="n">upper_bound</span> <span class="o">=</span> <span class="p">(</span><span class="n">xbar1</span> <span class="o">-</span> <span class="n">xbar2</span><span class="p">)</span> <span class="o">+</span> \
@@ -313,7 +313,7 @@ and population variances if you use this code.</p>
 
 <p>Our 95% confidence interval for the true difference between the population means is $[5.1579, 8.842]$.</p>
 
-<p>Content last modified on 08 September 2021.</p>
+<p>Content last modified on 09 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for the difference between two means when both population variances are known/Python, using NumPy and SciPy.ipynb">edit the source</a>.</p>
 

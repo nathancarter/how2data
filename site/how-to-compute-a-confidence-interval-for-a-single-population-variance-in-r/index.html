@@ -284,7 +284,7 @@ code.</p>
 10
 11
 </pre></td><td class="rouge-code"><pre><span class="c1"># Find the critical values from the right and left tails of the Chi-square distribution</span><span class="w">
-</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.05</span><span class="w">       </span><span class="c1"># replace with your chosen alpha (here, a 95% confidence level)</span><span class="w">
+</span><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">       </span><span class="c1"># replace with your chosen alpha (here, a 95% confidence level)</span><span class="w">
 </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="w">
 </span><span class="n">left_critical_val</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">qchisq</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="o">/</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">lower.tail</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
 </span><span class="n">right_critical_val</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">qchisq</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="n">lower.tail</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
@@ -311,7 +311,7 @@ code.</p>
 <p>Our 95% confidence interval for the standard deviation
 of Germany’s DAX closing prices is $[1104642, 1256248]$.</p>
 
-<p>Content last modified on 08 September 2021.</p>
+<p>Content last modified on 09 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a single population variance/R.md">edit the source</a>.</p>
 
