@@ -13,11 +13,10 @@ Any solution on this website lists the author(s) at the bottom of the page.
 [Here's an example.](/how-to-compare-two-nested-linear-models-in-r)
 Scroll to the bottom of it to see the authors.
 
-The following people have each contributed at least one solution.
+A complete list of authors who have contributed solutions so far appears below.
+Want to become one of them?  [Here's how!](../contributing)
 
 CONTRIBUTORS_LIST
-
-Want to contribute content?  [Here's how!](../contributing)
 
 ## Advisors
 
@@ -29,7 +28,7 @@ on website structure or content.
 
 ## Supporters
 
-Bentley University supported the creation of this website in 2021 with:
+Bentley University supported the creation of this website in 2021 with the following resources.
 
  * a grant supporting Prof. Carter's work creating the site infrastructure
  * a research assistantship for a student to add site content
