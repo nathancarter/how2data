@@ -12,10 +12,10 @@ alpha <- 0.05       # replace with your chosen alpha (here, a 95% confidence lev
 data <- c( 435,542,435,4,54,43,5,43,543,5,432,43,36,7,876,65,5 ) # fake
 
 # If you need the two values stored in variables for later use, do:
-answer <- t.test( data, conf.level=alpha )
+answer <- t.test( data, conf.level=1-alpha )
 lower_bound <- answer$conf.int[1]
 upper_bound <- answer$conf.int[2]
 
 # If you just need to see the results in a report, do this alone:
-t.test( data, conf.level=alpha )
+t.test( data, conf.level=1-alpha )
 ```
