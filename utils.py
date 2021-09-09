@@ -60,7 +60,7 @@ def string_split_yaml_header ( text ):
         )
     # otherwise return an empty yaml header and just the content
     return {}, ''.join( lines )
-# Open a text file and 
+# Open a text file and run the above function on it
 def file_split_yaml_header ( filename ):
     with open( filename, 'r' ) as f:
         return string_split_yaml_header( f.read() )

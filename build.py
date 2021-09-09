@@ -8,7 +8,7 @@
 #
 #######################
 
-import os, sys
+import os, sys, glob
 from build_tools import *
 
 # Command line parameters
@@ -56,15 +56,16 @@ delete_ungenerated_markdown()
 
 # Zip up examples to reference from the Contributing page
 section_heading( 'Zipping examples for contributors' )
-ensure_shell_command_succeeds(
-    'pandoc --to=docx ' + \
-    '--output="examples/How to use this folder.docx" ' + \
-    '"examples/How to use this folder.md"' )
-ensure_folder_exists(
-    os.path.join( jekyll_input_folder, 'assets', 'downloads' ) )
-ensure_shell_command_succeeds(
-    'cd examples && zip -orv9 ' + \
-    '../jekyll-input/assets/downloads/examples-for-contributing-to-how-to-data.zip *' )
+infiles = glob.iglob( 'examples/*', recursive=True )
+outfile = 'jekyll-input/assets/downloads/examples-for-contributing-to-how-to-data.zip'
+if any( ( must_rebuild_file( infile, outfile ) for infile in infiles ) ):
+    howto = 'examples/How to use this folder'
+    ensure_shell_command_succeeds( f'pandoc --to=docx --output="{howto}.docx" "{howto}.md"' )
+    ensure_folder_exists(
+        os.path.join( jekyll_input_folder, 'assets', 'downloads' ) )
+    ensure_shell_command_succeeds( f'cd examples && zip -orv9 "../{outfile}" *' )
+else:
+    print( 'No changes to source; no action needed.' )
 
 # Run Jekyll on newly copied files
 section_heading( 'Running Jekyll build process' )
