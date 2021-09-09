@@ -26,7 +26,7 @@ We can then use that data to create the confidence interval.
 
 ```R
 # Find the critical value from the normal distribution
-alpha <- 0.05  # replace with your chosen alpha (this is a 95% confidence level)
+alpha <- 0.05       # replace with your chosen alpha (here, a 95% confidence level)
 critical.val <- qnorm(p=alpha/2, lower.tail=FALSE)
 
 # Find the lower and upper bounds of the confidence interval

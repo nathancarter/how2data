@@ -15,7 +15,7 @@ assume that the variances are equal.  If you know them to be equal in your situa
 replace `FALSE` with `TRUE`.
 
 ```R
-alpha <- 0.05
+alpha <- 0.05       # replace with your chosen alpha (here, a 95% confidence level)
 conf.interval <- t.test(sample.1, sample.2, var.equal = FALSE, conf.level = 1-alpha)
 # If you need the upper and lower bounds later, store them in variables like this:
 lower.bound <- conf.interval$conf.int[1]

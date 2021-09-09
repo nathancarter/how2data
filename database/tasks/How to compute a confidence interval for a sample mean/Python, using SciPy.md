@@ -11,7 +11,7 @@ provide code that runs independently, we create some fake data below.  When
 using this code, replace our fake data with your real data.
 
 ```python
-alpha = 0.95
+alpha = 0.05       # replace with your chosen alpha (here, a 95% confidence level)
 data = [ 435,542,435,4,54,43,5,43,543,5,432,43,36,7,876,65,5 ] # fake
 
 # We will use NumPy and SciPy to compute some of the statistics below.

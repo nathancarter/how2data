@@ -2,13 +2,6 @@
 author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
 ---
 
-This example computes a 95% confidence interval,
-but you can choose a different level by choosing a different value for $\alpha$.
-
-```R
-alpha = 0.05
-```
-
 We have two samples of data, $x_1, x_2, x_3, \ldots, x_k$ and $x'_1, x'_2, x'_3, \ldots, x'_k$.
 We're going to use some fake data below just as an example; replace it with your real data.
 
@@ -18,9 +11,10 @@ sample.2 <- c(9, 1, 11, 13, 3, 6)
 ```
 
 The shortest way to create the confidence interval is with R's `t.test()` function.
-It's just one line of code.
+It's just one line of code (after we choose $\alpha$).
 
 ```R
+alpha <- 0.05       # replace with your chosen alpha (here, a 95% confidence level)
 t.test(sample.1, sample.2, paired = TRUE, conf.level = 1-alpha)
 ```
 

@@ -18,7 +18,7 @@ Now that we have our sample data loaded, let's go ahead and make the confidence 
 
 ```R
 # Find the critical values from the right and left tails of the Chi-square distribution
-alpha = 0.05       # replace with your chosen alpha (here, a 95% confidence level)
+alpha <- 0.05       # replace with your chosen alpha (here, a 95% confidence level)
 n <- length(sample)
 left_critical_val <- qchisq(p = alpha/2, df = n-1, lower.tail=FALSE)
 right_critical_val <- qchisq(p = 1-alpha/2, df = n-1, lower.tail=FALSE)
