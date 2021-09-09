@@ -67,12 +67,16 @@ stats_table = pd.DataFrame( {
 } )
 
 # The contributors list
-contributors_list = list( solutions_df['author'] )
-sole_authors = list( filter( lambda x: type(x)==str, contributors_list ) )
-multi_authors = list( filter( lambda x: type(x)!=str, contributors_list ) )
-contributors_list = sole_authors + [
-    author for authors in multi_authors for author in authors
-]
+contributors_list = [ ]
+for entry in solutions_df['author']:
+    if type(entry) == str:  # maybe it's a single-author solution
+        contributors_list.append( entry )
+    else:
+        try:  # maybe it's a multi-author solution, so add each one
+            for author in entry:
+                contributors_list.append( author )
+        except TypeError:  # probably author was NaN, so do nothing
+            pass
 contributors_list = pd.Series( contributors_list ).value_counts()
 contributors_list_markdown = pd.DataFrame( {
     'Author' : contributors_list.index,
