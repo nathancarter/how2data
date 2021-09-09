@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute a confidence interval for a single population variance (in Python, using Using SciPy) - How to Data</title>
+    <title>How to compute adjusted R-squared (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute a confidence interval for a single population variance (in Python, using Using SciPy) | How to Data</title>
+<title>How to compute adjusted R-squared (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute a confidence interval for a single population variance (in Python, using Using SciPy)" />
+<meta property="og:title" content="How to compute adjusted R-squared (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-single-population-variance-in-python-using-using-scipy/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-single-population-variance-in-python-using-using-scipy/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-adjusted-r-squared-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-adjusted-r-squared-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute a confidence interval for a single population variance (in Python, using Using SciPy)" />
+<meta property="twitter:title" content="How to compute adjusted R-squared (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-single-population-variance-in-python-using-using-scipy/","headline":"How to compute a confidence interval for a single population variance (in Python, using Using SciPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-adjusted-r-squared-in-r/","headline":"How to compute adjusted R-squared (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,16 +220,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-a-confidence-interval-for-a-single-population-variance-in-python-using-using-scipy">
+          <h1 id="how-to-compute-adjusted-r-squared-in-r">
         
         
-          <a href="#how-to-compute-a-confidence-interval-for-a-single-population-variance-in-python-using-using-scipy" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-single-population-variance-in-python-using-using-scipy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a single population variance (in Python, using Using SciPy)
+          <a href="#how-to-compute-adjusted-r-squared-in-r" class="anchor-heading" aria-labelledby="how-to-compute-adjusted-r-squared-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute adjusted R-squared (in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-compute-a-confidence-interval-for-a-single-population-variance">See all solutions.</a></p>
+<p><a href="../how-to-compute-adjusted-r-squared">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -239,9 +239,9 @@
       </h2>
     
 
-<p>Let’s say we want to compute a confidence interval for the variability of a population.
-We take a sample of data, $x_1, x_2, x_3, \ldots, x_k$ and compute its variance, $s^2$.
-How do we construct a confidence interval for the population variance $\sigma^2$?</p>
+<p>If we have fit a multiple linear regression model,
+how can we compute the Adjusted $R^2$ for that model,
+to measure its goodness of fit?</p>
       <h2 id="solution">
         
         
@@ -253,27 +253,29 @@ How do we construct a confidence interval for the population variance $\sigma^2$
 
 <!-- beginning of wrapper -->
 
-<p>We’ll use R’s dataset EuStockMarkets here. This dataset has information on the daily closing prices of 4 European stock indices. We’re going to look at the variability of Germany’s DAX closing prices. For more information on how this is done, see <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.  You can replace the example data below with your actual data.</p>
+<p>We assume you have already fit a multiple linear regression model to the data, as in the code below.
+(If you’re unfamiliar with how to do so, see <a href="../how-to-fit-a-multiple-linear-regression-model">how to fit a multiple linear regression model</a>.)
+The data shown below is fake, and we assume you will replace it with your own real data if you use this code.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="c1"># Load in EuStockMarkets data
-</span><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'EuStockMarkets'</span><span class="p">)</span>
+</pre></td><td class="rouge-code"><pre><span class="n">x1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">7</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">18</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">)</span><span class="w">
+</span><span class="n">x2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">18</span><span class="p">,</span><span class="w"> </span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">)</span><span class="w">
+</span><span class="n">x3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">11</span><span class="p">,</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">24</span><span class="p">,</span><span class="w"> </span><span class="m">60</span><span class="p">,</span><span class="w"> </span><span class="m">32</span><span class="p">,</span><span class="w"> </span><span class="m">29</span><span class="p">,</span><span class="w"> </span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">130</span><span class="p">,</span><span class="w"> </span><span class="m">76</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">120</span><span class="p">)</span><span class="w">
+</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x3</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<span class="c1"># Select the column for Germany's DAX closing prices
-</span><span class="n">sample</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'DAX'</span><span class="p">]</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>You can get a lot of information about your model from its summary.</p>
 
-<p>Now that we have our sample data loaded, let’s go ahead and make the confidence interval using SciPy.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -285,29 +287,51 @@ How do we construct a confidence interval for the population variance $\sigma^2$
 10
 11
 12
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre>Call:
+lm(formula = y ~ x1 + x2 + x3)
 
-<span class="c1"># Find the critical values from the right and left tails of the Chi-square distribution
-</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>       <span class="c1"># replace with your chosen alpha (here, a 95% confidence level)
-</span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="n">sample</span> <span class="p">)</span>
-<span class="n">left_critical_val</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">chi2</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">right_critical_val</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">chi2</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-25.031 -20.218  -8.373  22.937  35.640 
 
-<span class="c1"># Find the upper and lower bounds of the confidence interval and print them out
-</span><span class="n">lower_bound</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">sample</span><span class="p">.</span><span class="n">var</span><span class="p">())</span><span class="o">/</span><span class="n">left_critical_val</span>
-<span class="n">upper_bound</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">sample</span><span class="p">.</span><span class="n">var</span><span class="p">())</span><span class="o">/</span><span class="n">right_critical_val</span>
-<span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span>
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)   77.244     27.366   2.823   0.0302 *
+x1            -2.701      2.855  -0.946   0.3806  
+x2             7.299      2.875   2.539   0.0441 *
+x3            -4.861      2.187  -2.223   0.0679 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 30.13 on 6 degrees of freedom
+Multiple R-squared:  0.5936,	Adjusted R-squared:  0.3904 
+F-statistic: 2.921 on 3 and 6 DF,  p-value: 0.1222
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>In particular, that printout contains the Adjusted $R^2$ value; it is the second value in the right-hand column, near the top.</p>
+
+<p>You can also obtain it directly, as follows:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">$</span><span class="n">adj.r.squared</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>(1104642.2801539514, 1256248.1273200295)
+</pre></td><td class="rouge-code"><pre>[1] 0.3903924
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our 95% confidence interval for the standard deviation of Germany’s DAX closing prices is $[1104642, 1256248]$.</p>
+<p>In this case, the Adjusted $R^2$ is $0.3904$.</p>
 
-<p>Content last modified on 07 September 2021.</p>
+<p>Content last modified on 09 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a single population variance/Python, using Using SciPy.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute adjusted R-squared/R.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
