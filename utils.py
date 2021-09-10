@@ -66,7 +66,7 @@ def file_split_yaml_header ( filename ):
         return string_split_yaml_header( f.read() )
 
 # Tools to easily filter for certain types of content within a folder
-doc_extensions = [ '.md', '.markdown', '.Rmd', '.ipynb' ]
+doc_extensions = [ '.md', '.markdown', '.Rmd', '.ipynb', '.doc', '.docx' ]
 img_extensions = [ '.jpg', '.jpeg', '.png', '.gif' ]
 def has_any_extension ( filename, extensions ):
     return any( ( filename.endswith( ext ) for ext in extensions ) )
@@ -111,32 +111,57 @@ def get_unique_markdown_doc ( path_and_base_filename ):
                 path_and_base_filename + extension )
         sys.exit( 1 )
     return path_and_base_filename + which_exist[0]
-# To pair with previous function:  Read any document whose extension is in
+# Function that converts an .ipynb file into markdown text.
+# If that .ipynb file has markdown links to images stored as cell attachments,
+# they are converted into data URIs.
+def ipynb_to_markdown ( filename ):
+    with open( filename, 'r' ) as f:
+        cells = json.load( f )['cells']
+    attached_src_attr = \
+        re.compile( 'src="attachment:([^"]*)"|src=\'attachment:([^\']*)\'' )
+    result = ''
+    for cell in cells:
+        if cell['cell_type'] == 'markdown':
+            new_chunk = '\n' + ''.join( cell['source'] ) + '\n'
+            match = attached_src_attr.search( new_chunk )
+            while match:
+                before = new_chunk[:match.start()]
+                after = new_chunk[match.end():]
+                src = match.group( 1 ) if match.group( 1 ) else match.group( 2 )
+                attachment = cell['attachments'][src]
+                mime_type = list( attachment.keys() )[0]
+                base_64_data = attachment[mime_type]
+                new_attr = f'src="data:{mime_type};base64, {base_64_data}"'
+                new_chunk = before + new_attr + after
+                match = attached_src_attr.search( new_chunk )
+            result += new_chunk
+        elif cell['cell_type'] == 'code':
+            result += '\n```python\n' + ''.join( cell['source'] ) + '\n```\n'
+        else:
+            print( 'Unknown cell type:', cell['cell_type'] )
+            print( '     In this file:', filename )
+            sys.exit( 1 )
+    while result[0] == '\n':
+        result = result[1:]
+    return result
+# To pair with get_unique_markdown_doc:  Read any document whose extension is in
 # doc_extensions into markdown text.  It can support markdown (no conversion
 # needed) or RMarkdown (tiny conversion needed) or Jupyter notebooks (more
 # conversion needed).
 def read_doc_to_markdown ( filename ):
     extension = file_extension( filename )
-    raw = read_text_file( filename )
     if extension in [ '.md', '.markdown' ]:
-        return raw
+        return read_text_file( filename )
     if extension in [ '.Rmd' ]:
-        return raw.replace( '```{r}', '```R' )
+        return read_text_file( filename ).replace( '```{r}', '```R' )
     if extension in [ '.ipynb' ]:
-        cells = json.loads( raw )['cells']
-        raw = ''
-        for cell in cells:
-            if cell['cell_type'] == 'markdown':
-                raw += '\n' + ''.join( cell['source'] ) + '\n'
-            elif cell['cell_type'] == 'code':
-                raw += '\n```python\n' + ''.join( cell['source'] ) + '\n```\n'
-            else:
-                print( 'Unknown cell type:', cell['cell_type'] )
-                print( '     In this file:', filename )
-                sys.exit( 1 )
-        while raw[0] == '\n':
-            raw = raw[1:]
-        return raw
+        return ipynb_to_markdown( filename )
+    if extension in [ '.doc', '.docx' ]:
+        tmp_file = os.path.join( *os.path.split( filename )[:-1], 'temp.ipynb' )
+        ensure_shell_command_succeeds( f'pandoc -o "{tmp_file}" "{filename}"' )
+        result = ipynb_to_markdown( tmp_file )
+        ensure_shell_command_succeeds( f'rm "{tmp_file}"' )
+        return result
     print( 'Unknown document type:', extension )
     print( '        For this file:', filename )
     sys.exit( 1 )
