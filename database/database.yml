@@ -5,3 +5,6 @@ software:
   - name: R
     icon: https://www.r-project.org/logo/Rlogo.png
     website: https://www.r-project.org/
+  - name: Excel
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg/512px-Microsoft_Office_Excel_%282019%E2%80%93present%29.svg.png
+    website: https://www.microsoft.com/en-us/microsoft-365/excel
