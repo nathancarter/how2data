@@ -181,10 +181,17 @@ def modification_text ( filename ):
         '\n\nContent last modified on %d %B %Y.', mod_time )
 
 # Run a shell command and stop the whole app if it gives an error.
-def ensure_shell_command_succeeds ( command ):
+# However, if the cleanup command is given, run that one even if you abort.
+def ensure_shell_command_succeeds ( command, cleanup = None ):
     code = os.system( command )
     if code != 0:
         print( f'Above errors yielded error code {code}.' )
+    cleanup_code = 0
+    if cleanup != None:
+        cleanup_code = os.system( cleanup )
+        if cleanup_code != 0:
+            print( f'When attempting to clean up, got error code {cleanup_code}!' )
+    if code != 0 or cleanup_code != 0:
         print( f'How2Data build exiting with error code 1.' )
         sys.exit( 1 )
 # Run a shell command and don't care whether it gives an error.

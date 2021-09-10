@@ -179,16 +179,15 @@ def run_markdown ( markdown, folder, software ):
     write_text_file( tmp_md_doc, markdown )
     # run it, creating a notebook containing the outputs
     ensure_shell_command_succeeds( 'jupytext --to ipynb ' + \
-        f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"' )
-    ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
+        f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
+        f'rm "{tmp_md_doc}"' )
     # convert that to markdown again
     jupyter_config_file = os.path.join( main_folder,
         f'jupyter_nbconvert_config_{software}.py' )
     command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \
         f"--JupyterApp.config_file='{jupyter_config_file}' " + \
         f'--output="{tmp_md_doc}" "{ipynb_out}"'
-    ensure_shell_command_succeeds( command_to_run )
-    ensure_shell_command_succeeds( f'rm "{ipynb_out}"' )
+    ensure_shell_command_succeeds( command_to_run, f'rm "{ipynb_out}"' )
     # read it back into a string
     result = read_text_file( tmp_md_doc )
     ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
