@@ -20,7 +20,7 @@
     "forwardPorts": [ 1313, 4000 ],
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "pip install tabulate jupytext",
+    "postCreateCommand": "./.devcontainer/install-packages.sh",
     "postStartCommand": "bundle install",
 
     // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
