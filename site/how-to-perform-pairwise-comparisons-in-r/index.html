@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to perform pairwise comparisons - How to Data</title>
+    <title>How to perform pairwise comparisons (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to perform pairwise comparisons | How to Data</title>
+<title>How to perform pairwise comparisons (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to perform pairwise comparisons" />
+<meta property="og:title" content="How to perform pairwise comparisons (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-perform-pairwise-comparisons/" />
-<meta property="og:url" content="/how2data/site/how-to-perform-pairwise-comparisons/" />
+<link rel="canonical" href="/how2data/site/how-to-perform-pairwise-comparisons-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-perform-pairwise-comparisons-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to perform pairwise comparisons" />
+<meta property="twitter:title" content="How to perform pairwise comparisons (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-perform-pairwise-comparisons/","headline":"How to perform pairwise comparisons","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-perform-pairwise-comparisons-in-r/","headline":"How to perform pairwise comparisons (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,18 +220,20 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-perform-pairwise-comparisons">
+          <h1 id="how-to-perform-pairwise-comparisons-in-r">
         
         
-          <a href="#how-to-perform-pairwise-comparisons" class="anchor-heading" aria-labelledby="how-to-perform-pairwise-comparisons"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform pairwise comparisons
+          <a href="#how-to-perform-pairwise-comparisons-in-r" class="anchor-heading" aria-labelledby="how-to-perform-pairwise-comparisons-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform pairwise comparisons (in R)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-perform-pairwise-comparisons">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
@@ -245,136 +247,16 @@
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
   <li><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">How to perform post-hoc analysis with Tukey’s HSD test</a></li>
 </ul>
-      <h2 id="using-statsmodels-matplotlib-and-scikit-in-python">
+      <h2 id="solution">
         
         
-          <a href="#using-statsmodels-matplotlib-and-scikit-in-python" class="anchor-heading" aria-labelledby="using-statsmodels-matplotlib-and-scikit-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using statsmodels, Matplotlib and scikit, in Python
-        
-        
-      </h2>
-    
-
-<p><a href="../how-to-perform-pairwise-comparisons-in-python-using-statsmodels-matplotlib-and-scikit">View this solution alone.</a></p>
-
-<p>The solution below uses an example dataset that details the counts of insects in an agricultural experiment with six types of insecticides, labeled A through F.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'InsectSprays'</span><span class="p">)</span>
-<span class="n">df</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-</pre></td><td class="rouge-code"><pre>    count spray
-0      10     A
-1       7     A
-2      20     A
-3      14     A
-4      14     A
-..    ...   ...
-67     10     F
-68     26     F
-69     26     F
-70     24     F
-71     13     F
-
-[72 rows x 2 columns]
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Before we perform any post hoc analysis, we need to see if the count of insects depends on the type of insecticide given by conducting a one way ANOVA.  (See also <a href="../how-to-do-a-one-way-analysis-of-variance-anova">how to do a one-way analysis of variance (ANOVA)</a>.)</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'count ~ spray'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
-<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
-<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>            df       sum_sq     mean_sq          F        PR(&gt;F)
-spray      5.0  2668.833333  533.766667  34.702282  3.182584e-17
-Residual  66.0  1015.166667   15.381313        NaN           NaN
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>At the 5% significance level, we see that the count differs according to the type of insecticide used. We assume that the model assumptions are met, but do not verify that here.</p>
-
-<p>If we would like to compare the pairs without any corrections, we can use the ‘pairwise t test’ in the <code class="language-plaintext highlighter-rouge">scikit_posthocs</code> package.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">scikit_posthocs</span> <span class="k">as</span> <span class="n">sp</span>
-<span class="n">sp</span><span class="p">.</span><span class="n">posthoc_ttest</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">val_col</span><span class="o">=</span><span class="s">'count'</span><span class="p">,</span> <span class="n">group_col</span><span class="o">=</span><span class="s">'spray'</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pool_sd</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-</pre></td><td class="rouge-code"><pre>              A             B             C             D             E  \
-A  1.000000e+00  6.044761e-01  7.266893e-11  9.816910e-08  2.753922e-09   
-B  6.044761e-01  1.000000e+00  8.509776e-12  1.212803e-08  3.257986e-10   
-C  7.266893e-11  8.509776e-12  1.000000e+00  8.141205e-02  3.794750e-01   
-D  9.816910e-08  1.212803e-08  8.141205e-02  1.000000e+00  3.794750e-01   
-E  2.753922e-09  3.257986e-10  3.794750e-01  3.794750e-01  1.000000e+00   
-F  1.805998e-01  4.079858e-01  2.794343e-13  4.035610e-10  1.054387e-11   
-
-              F  
-A  1.805998e-01  
-B  4.079858e-01  
-C  2.794343e-13  
-D  4.035610e-10  
-E  1.054387e-11  
-F  1.000000e+00  
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Techniques to adjust the above table for multiple comparisons include the Bonferroni correction, Fisher’s Least Significant Difference (LSD) method, Dunnett’s procedure, and Scheffe’s method.  These can be used in place of ‘None’ for the <code class="language-plaintext highlighter-rouge">p.adjust</code> argument; <a href="https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_ttest/">see details here</a>.</p>
-
-<p>You can also determine the magnitude of these differences; see <a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">how to perform post-hoc analysis with Tukey’s HSD test</a>.</p>
-
-<p>Content last modified on 10 September 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform pairwise comparisons/Python, using statsmodels, Matplotlib and scikit.ipynb">edit the source</a>.</p>
-      <h2 id="solution-in-r">
-        
-        
-          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-perform-pairwise-comparisons-in-r">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>The solution below uses an example dataset that details the counts of insects
 in an agricultural experiment with six types of insecticides, labeled A through F.
@@ -481,18 +363,10 @@ see <a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">how to p
 <p>Content last modified on 10 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform pairwise comparisons/R.md">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
 
-<ul>
-  <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
-</ul>
+<!-- ending of wrapper -->
+
+<p>Contributed by Krtin Juneja (KJUNEJA@falcon.bentley.edu)</p>
 
         
 

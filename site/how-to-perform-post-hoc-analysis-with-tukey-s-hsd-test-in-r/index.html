@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to perform post-hoc analysis with Tukey's HSD test - How to Data</title>
+    <title>How to perform post-hoc analysis with Tukey's HSD test (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to perform post-hoc analysis with Tukey’s HSD test | How to Data</title>
+<title>How to perform post-hoc analysis with Tukey’s HSD test (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to perform post-hoc analysis with Tukey’s HSD test" />
+<meta property="og:title" content="How to perform post-hoc analysis with Tukey’s HSD test (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test/" />
-<meta property="og:url" content="/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test/" />
+<link rel="canonical" href="/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to perform post-hoc analysis with Tukey’s HSD test" />
+<meta property="twitter:title" content="How to perform post-hoc analysis with Tukey’s HSD test (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test/","headline":"How to perform post-hoc analysis with Tukey’s HSD test","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-r/","headline":"How to perform post-hoc analysis with Tukey’s HSD test (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,18 +220,20 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-perform-post-hoc-analysis-with-tukeys-hsd-test">
+          <h1 id="how-to-perform-post-hoc-analysis-with-tukeys-hsd-test-in-r">
         
         
-          <a href="#how-to-perform-post-hoc-analysis-with-tukeys-hsd-test" class="anchor-heading" aria-labelledby="how-to-perform-post-hoc-analysis-with-tukeys-hsd-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform post-hoc analysis with Tukey’s HSD test
+          <a href="#how-to-perform-post-hoc-analysis-with-tukeys-hsd-test-in-r" class="anchor-heading" aria-labelledby="how-to-perform-post-hoc-analysis-with-tukeys-hsd-test-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform post-hoc analysis with Tukey’s HSD test (in R)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
@@ -245,295 +247,16 @@ pair of samples, while controlling for Type I error rate across all pairs.
 Thus the resulting intervals are a little wider than those produced using
 Fisher’s LSD method. How do we make these confidence intervals, with an
 appropriate visualization?</p>
-      <h2 id="using-statsmodels-matplotlib-and-scikit-in-python">
+      <h2 id="solution">
         
         
-          <a href="#using-statsmodels-matplotlib-and-scikit-in-python" class="anchor-heading" aria-labelledby="using-statsmodels-matplotlib-and-scikit-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using statsmodels, Matplotlib and scikit, in Python
-        
-        
-      </h2>
-    
-
-<p><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-python-using-statsmodels-matplotlib-and-scikit">View this solution alone.</a></p>
-
-<p>We load here the same data that appears in the solution for <a href="../how-to-perform-pairwise-comparisons">how to perform pairwise comparisons</a>. That solution used ANOVA to determine which pairs of groups have significant differences in their means; follow its link for more details.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'InsectSprays'</span><span class="p">)</span>
-<span class="n">df</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-</pre></td><td class="rouge-code"><pre>    count spray
-0      10     A
-1       7     A
-2      20     A
-3      14     A
-4      14     A
-..    ...   ...
-67     10     F
-68     26     F
-69     26     F
-70     24     F
-71     13     F
-
-[72 rows x 2 columns]
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>We now want to perform an unplanned comparison test on the data to determine the magnitudes of the differences between pairs of groups. We do this by applying Tukey’s HSD approach to perform pairwise comparisons and generate confidence intervals that maintain a specified experiment-wide error rate. Before that, the <code class="language-plaintext highlighter-rouge">pairwise_tukeyhsd</code> module needs to be imported from the <code class="language-plaintext highlighter-rouge">statsmodels</code> package.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.stats.multicomp</span> <span class="kn">import</span> <span class="n">pairwise_tukeyhsd</span>
-<span class="n">tukey</span> <span class="o">=</span> <span class="n">pairwise_tukeyhsd</span><span class="p">(</span><span class="n">endog</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">'count'</span><span class="p">],</span> <span class="n">groups</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s">'spray'</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">tukey</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-</pre></td><td class="rouge-code"><pre> Multiple Comparison of Means - Tukey HSD, FWER=0.05 
-=====================================================
-group1 group2 meandiff p-adj   lower    upper  reject
------------------------------------------------------
-     A      B   0.8333    0.9  -3.8659  5.5326  False
-     A      C -12.4167  0.001 -17.1159 -7.7174   True
-     A      D  -9.5833  0.001 -14.2826 -4.8841   True
-     A      E    -11.0  0.001 -15.6992 -6.3008   True
-     A      F   2.1667  0.728  -2.5326  6.8659  False
-     B      C   -13.25  0.001 -17.9492 -8.5508   True
-     B      D -10.4167  0.001 -15.1159 -5.7174   True
-     B      E -11.8333  0.001 -16.5326 -7.1341   True
-     B      F   1.3333    0.9  -3.3659  6.0326  False
-     C      D   2.8333 0.4921  -1.8659  7.5326  False
-     C      E   1.4167    0.9  -3.2826  6.1159  False
-     C      F  14.5833  0.001   9.8841 19.2826   True
-     D      E  -1.4167    0.9  -6.1159  3.2826  False
-     D      F    11.75  0.001   7.0508 16.4492   True
-     E      F  13.1667  0.001   8.4674 17.8659   True
------------------------------------------------------
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Because the above table contains a lot of information, it’s often helpful to visualize these intervals.
-Python’s <code class="language-plaintext highlighter-rouge">statsmodels</code> package does not have a built-in way to do so, but we can create our own as follows.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="n">rows</span> <span class="o">=</span> <span class="n">tukey</span><span class="p">.</span><span class="n">summary</span><span class="p">().</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">hlines</span><span class="p">(</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)),</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">],</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]</span> <span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">vlines</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span> <span class="n">rows</span> <span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s">'dashed'</span> <span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_yticks</span><span class="p">(</span> <span class="nb">range</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">rows</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_yticklabels</span><span class="p">(</span> <span class="p">[</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s">-</span><span class="si">{</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s">'</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rows</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p><img src="data:image/png;base64,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" alt="png" /></p>
-
-<p>Confidence intervals that cross the vertical, dashed line at $x=0$ are those in which the means across those groups may be equal.  Other intervals have mean differences whose 95% confidence intervals do not include zero.</p>
-
-<p>Content last modified on 10 September 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform post-hoc analysis with Tukey's HSD test/Python, using statsmodels, Matplotlib and scikit.ipynb">edit the source</a>.</p>
-      <h2 id="using-agricolae-in-r">
-        
-        
-          <a href="#using-agricolae-in-r" class="anchor-heading" aria-labelledby="using-agricolae-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using agricolae, in R
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-r-using-agricolae">View this solution alone.</a></p>
-
-<p>We load here the same data that appears in the solution for how to perform
-pairwise comparisons. That solution used ANOVA to determine which pairs of
-groups have significant differences in their means; follow its link for more
-details.</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="c1"># Load an inbuilt data set called InsectSprays and assign it to the variable df</span><span class="w">
-</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">InsectSprays</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-</pre></td><td class="rouge-code"><pre>   count spray
-1  10    A    
-2   7    A    
-3  20    A    
-4  14    A    
-5  14    A    
-6  12    A    
-7  10    A    
-8  23    A    
-9  17    A    
-10 20    A    
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>We now want to perform an unplanned comparison test on the data to determine
-the magnitudes of the differences between pairs of groups. Although R has a
-built-in <code class="language-plaintext highlighter-rouge">TukeyHSD</code> function, its output is not as complete as the <code class="language-plaintext highlighter-rouge">HSD.test</code>
-function in the agricolae package, so here we will use that latter function.
-We provide it the same ANOVA results that we computed in the solution to
-<a href="../how-to-perform-pairwise-comparisons">how to perform pairwise comparisons</a>.</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages( "agricolae" ) # if you have not already done this</span><span class="w">
-</span><span class="n">library</span><span class="p">(</span><span class="n">agricolae</span><span class="p">)</span><span class="w">
-</span><span class="n">aov1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aov</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">spray</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
-</span><span class="n">HSD.test</span><span class="p">(</span><span class="n">aov1</span><span class="p">,</span><span class="w"> </span><span class="s2">"spray"</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">console</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-</pre></td><td class="rouge-code"><pre>Study: aov1 ~ "spray"
-
-HSD Test for count 
-
-Mean Square Error:  15.38131 
-
-spray,  means
-
-      count      std  r Min Max
-A 14.500000 4.719399 12   7  23
-B 15.333333 4.271115 12   7  21
-C  2.083333 1.975225 12   0   7
-D  4.916667 2.503028 12   2  12
-E  3.500000 1.732051 12   1   6
-F 16.666667 6.213378 12   9  26
-
-Alpha: 0.05 ; DF Error: 66 
-Critical Value of Studentized Range: 4.150851 
-
-Comparison between treatments means
-
-       difference pvalue signif.        LCL       UCL
-A - B  -0.8333333 0.9952          -5.532742  3.866075
-A - C  12.4166667 0.0000     ***   7.717258 17.116075
-A - D   9.5833333 0.0000     ***   4.883925 14.282742
-A - E  11.0000000 0.0000     ***   6.300591 15.699409
-A - F  -2.1666667 0.7542          -6.866075  2.532742
-B - C  13.2500000 0.0000     ***   8.550591 17.949409
-B - D  10.4166667 0.0000     ***   5.717258 15.116075
-B - E  11.8333333 0.0000     ***   7.133925 16.532742
-B - F  -1.3333333 0.9603          -6.032742  3.366075
-C - D  -2.8333333 0.4921          -7.532742  1.866075
-C - E  -1.4166667 0.9489          -6.116075  3.282742
-C - F -14.5833333 0.0000     *** -19.282742 -9.883925
-D - E   1.4166667 0.9489          -3.282742  6.116075
-D - F -11.7500000 0.0000     *** -16.449409 -7.050591
-E - F -13.1666667 0.0000     *** -17.866075 -8.467258
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>The table above highlights for us those confidence intervals whose means are
-significantly different from zero, and provides other information as well.
-To see if there is any statistical different between the pairs, look at the
-“signif” column. The more asterisks appear there, the more significant the
-difference.</p>
-
-<p>Content last modified on 10 September 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform post-hoc analysis with Tukey's HSD test/R, using agricolae.md">edit the source</a>.</p>
-      <h2 id="solution-in-r">
-        
-        
-          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
-        
-        
-      </h2>
-    
-
-<p><a href="../how-to-perform-post-hoc-analysis-with-tukey-s-hsd-test-in-r">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>We load here the same data that appears in the solution for how to perform
 pairwise comparisons. That solution used ANOVA to determine which pairs of
@@ -923,18 +646,10 @@ mean differences whose 95% confidence intervals do not include zero.</p>
 <p>Content last modified on 10 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform post-hoc analysis with Tukey's HSD test/R.md">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
 
-<ul>
-  <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
-</ul>
+<!-- ending of wrapper -->
+
+<p>Contributed by Krtin Juneja (kjuneja@falcon.bentley.edu)</p>
 
         
 

@@ -239,14 +239,14 @@
       </h2>
     
 
-<p>When analyzing data from a completely randomized single-factor design, suppose that you have performed an ANOVA and noticed that there’s a significant difference between the treatment levels.  Perhaps you then explored further using the techniques in <a href="../how-to-perform-pairwise-comparisons">how to perform pairwise comparisons</a>.  How can we extend that with a post-hoc analysis using Tukey’s HSD test (honestly significant differences) and an approrpriate visualization?</p>
-
-<p>Related tasks:</p>
-
-<ul>
-  <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
-  <li><a href="../how-to-perform-pairwise-comparisons">How to perform pairwise comparisons</a></li>
-</ul>
+<p>If we run a one-way ANOVA test and find that there is a significant difference
+between population means, we might want to know which means are actually
+different from each other. One way to do so is with Tukey’s Honestly
+Significant Differences (HSD) method. It creates confidence intervals for each
+pair of samples, while controlling for Type I error rate across all pairs.
+Thus the resulting intervals are a little wider than those produced using
+Fisher’s LSD method. How do we make these confidence intervals, with an
+appropriate visualization?</p>
       <h2 id="solution">
         
         
@@ -258,14 +258,14 @@
 
 <!-- beginning of wrapper -->
 
-<p>We load here the same data that appears in the solution for <a href="../how-to-perform-pairwise-comparisons">how to perform pairwise comparisons</a>. That solution determined which pairs of groups have significant differences in their means; follow its link for more details.</p>
+<p>We load here the same data that appears in the solution for <a href="../how-to-perform-pairwise-comparisons">how to perform pairwise comparisons</a>. That solution used ANOVA to determine which pairs of groups have significant differences in their means; follow its link for more details.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 </pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'InsectSprays'</span><span class="p">)</span>
-<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -274,15 +274,31 @@
 4
 5
 6
-</pre></td><td class="rouge-code"><pre>   count spray
-0     10     A
-1      7     A
-2     20     A
-3     14     A
-4     14     A
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre>    count spray
+0      10     A
+1       7     A
+2      20     A
+3      14     A
+4      14     A
+..    ...   ...
+67     10     F
+68     26     F
+69     26     F
+70     24     F
+71     13     F
+
+[72 rows x 2 columns]
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We now want to perform a unplanned comparison test on the data to determine the magnitudes of the differences between pairs of groups. We do this by applying “Tukey’s HSD” approach to perform pairwise comparisons and generate confidence intervals that maintain a specified experiment-wise error rate. Before that, the <code class="language-plaintext highlighter-rouge">pairwise_tukeyhsd</code> module needs to be imported from the <code class="language-plaintext highlighter-rouge">statsmodels</code> package.</p>
+<p>We now want to perform an unplanned comparison test on the data to determine the magnitudes of the differences between pairs of groups. We do this by applying Tukey’s HSD approach to perform pairwise comparisons and generate confidence intervals that maintain a specified experiment-wide error rate. Before that, the <code class="language-plaintext highlighter-rouge">pairwise_tukeyhsd</code> module needs to be imported from the <code class="language-plaintext highlighter-rouge">statsmodels</code> package.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -355,7 +371,9 @@ Python’s <code class="language-plaintext highlighter-rouge">statsmodels</code>
 
 <p><img src="data:image/png;base64,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" alt="png" /></p>
 
-<p>Content last modified on 09 September 2021.</p>
+<p>Confidence intervals that cross the vertical, dashed line at $x=0$ are those in which the means across those groups may be equal.  Other intervals have mean differences whose 95% confidence intervals do not include zero.</p>
+
+<p>Content last modified on 10 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform post-hoc analysis with Tukey's HSD test/Python, using statsmodels, Matplotlib and scikit.ipynb">edit the source</a>.</p>
 
