@@ -266,35 +266,88 @@ appropriate visualization?</p>
 <span class="n">df</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-</pre></td><td class="rouge-code"><pre>    count spray
-0      10     A
-1       7     A
-2      20     A
-3      14     A
-4      14     A
-..    ...   ...
-67     10     F
-68     26     F
-69     26     F
-70     24     F
-71     13     F
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-[72 rows x 2 columns]
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>spray</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>10</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>26</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>26</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>24</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>13</td>
+      <td>F</td>
+    </tr>
+  </tbody>
+</table></div>
+<p>72 rows × 2 columns</p>
+</div>
 
 <p>We now want to perform an unplanned comparison test on the data to determine the magnitudes of the differences between pairs of groups. We do this by applying Tukey’s HSD approach to perform pairwise comparisons and generate confidence intervals that maintain a specified experiment-wide error rate. Before that, the <code class="language-plaintext highlighter-rouge">pairwise_tukeyhsd</code> module needs to be imported from the <code class="language-plaintext highlighter-rouge">statsmodels</code> package.</p>
 

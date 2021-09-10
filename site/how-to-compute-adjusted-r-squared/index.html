@@ -293,79 +293,72 @@ to measure its goodness of fit?</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
 </pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/scipy/stats/stats.py:1541: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
   warnings.warn("kurtosistest only valid for n&gt;=20 ... continuing "
-
-
-
-
-
-&lt;class 'statsmodels.iolib.summary.Summary'&gt;
-"""
-                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                      y   R-squared:                       0.594
-Model:                            OLS   Adj. R-squared:                  0.390
-Method:                 Least Squares   F-statistic:                     2.921
-Date:                Thu, 09 Sep 2021   Prob (F-statistic):              0.122
-Time:                        20:06:04   Log-Likelihood:                -45.689
-No. Observations:                  10   AIC:                             99.38
-Df Residuals:                       6   BIC:                             100.6
-Df Model:                           3                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P&gt;|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-const         77.2443     27.366      2.823      0.030      10.282     144.206
-x1            -2.7009      2.855     -0.946      0.381      -9.686       4.284
-x2             7.2989      2.875      2.539      0.044       0.265      14.333
-x3            -4.8607      2.187     -2.223      0.068     -10.211       0.490
-==============================================================================
-Omnibus:                        2.691   Durbin-Watson:                   2.123
-Prob(Omnibus):                  0.260   Jarque-Bera (JB):                1.251
-Skew:                           0.524   Prob(JB):                        0.535
-Kurtosis:                       1.620   Cond. No.                         58.2
-==============================================================================
-
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-"""
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="table-wrapper"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.594</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.390</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   2.921</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Fri, 10 Sep 2021</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
+</tr>
+<tr>
+  <th>Time:</th>                 <td>15:54:15</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    10</td>      <th>  AIC:               </th> <td>   99.38</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>     6</td>      <th>  BIC:               </th> <td>   100.6</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     3</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table></div>
+<div class="table-wrapper"><table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th> <td>   77.2443</td> <td>   27.366</td> <td>    2.823</td> <td> 0.030</td> <td>   10.282</td> <td>  144.206</td>
+</tr>
+<tr>
+  <th>x1</th>    <td>   -2.7009</td> <td>    2.855</td> <td>   -0.946</td> <td> 0.381</td> <td>   -9.686</td> <td>    4.284</td>
+</tr>
+<tr>
+  <th>x2</th>    <td>    7.2989</td> <td>    2.875</td> <td>    2.539</td> <td> 0.044</td> <td>    0.265</td> <td>   14.333</td>
+</tr>
+<tr>
+  <th>x3</th>    <td>   -4.8607</td> <td>    2.187</td> <td>   -2.223</td> <td> 0.068</td> <td>  -10.211</td> <td>    0.490</td>
+</tr>
+</table></div>
+<div class="table-wrapper"><table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 2.691</td> <th>  Durbin-Watson:     </th> <td>   2.123</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.260</td> <th>  Jarque-Bera (JB):  </th> <td>   1.251</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.524</td> <th>  Prob(JB):          </th> <td>   0.535</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 1.620</td> <th>  Cond. No.          </th> <td>    58.2</td>
+</tr>
+</table></div>
+<p><br /><br />Notes:<br />[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</p>
 
 <p>In particular, that printout contains the Adjusted $R^2$ value; it is the second value in the right-hand column, near the top.</p>
 
@@ -381,7 +374,7 @@ Notes:
 
 <p>In this case, the Adjusted $R^2$ is $0.3904$.</p>
 
-<p>Content last modified on 09 September 2021.</p>
+<p>Content last modified on 10 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute adjusted R-squared/Python, using Statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">

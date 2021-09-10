@@ -266,35 +266,88 @@
 <span class="n">df</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-</pre></td><td class="rouge-code"><pre>    count spray
-0      10     A
-1       7     A
-2      20     A
-3      14     A
-4      14     A
-..    ...   ...
-67     10     F
-68     26     F
-69     26     F
-70     24     F
-71     13     F
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-[72 rows x 2 columns]
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>spray</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>10</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>26</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>26</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>24</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>13</td>
+      <td>F</td>
+    </tr>
+  </tbody>
+</table></div>
+<p>72 rows × 2 columns</p>
+</div>
 
 <p>Before we perform any post hoc analysis, we need to see if the count of insects depends on the type of insecticide given by conducting a one way ANOVA.  (See also <a href="../how-to-do-a-one-way-analysis-of-variance-anova">how to do a one-way analysis of variance (ANOVA)</a>.)</p>
 
@@ -308,13 +361,51 @@
 <span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>            df       sum_sq     mean_sq          F        PR(&gt;F)
-spray      5.0  2668.833333  533.766667  34.702282  3.182584e-17
-Residual  66.0  1015.166667   15.381313        NaN           NaN
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>spray</th>
+      <td>5.0</td>
+      <td>2668.833333</td>
+      <td>533.766667</td>
+      <td>34.702282</td>
+      <td>3.182584e-17</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>66.0</td>
+      <td>1015.166667</td>
+      <td>15.381313</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>At the 5% significance level, we see that the count differs according to the type of insecticide used. We assume that the model assumptions are met, but do not verify that here.</p>
 
@@ -326,37 +417,90 @@ Residual  66.0  1015.166667   15.381313        NaN           NaN
 <span class="n">sp</span><span class="p">.</span><span class="n">posthoc_ttest</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">val_col</span><span class="o">=</span><span class="s">'count'</span><span class="p">,</span> <span class="n">group_col</span><span class="o">=</span><span class="s">'spray'</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pool_sd</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-</pre></td><td class="rouge-code"><pre>              A             B             C             D             E  \
-A  1.000000e+00  6.044761e-01  7.266893e-11  9.816910e-08  2.753922e-09   
-B  6.044761e-01  1.000000e+00  8.509776e-12  1.212803e-08  3.257986e-10   
-C  7.266893e-11  8.509776e-12  1.000000e+00  8.141205e-02  3.794750e-01   
-D  9.816910e-08  1.212803e-08  8.141205e-02  1.000000e+00  3.794750e-01   
-E  2.753922e-09  3.257986e-10  3.794750e-01  3.794750e-01  1.000000e+00   
-F  1.805998e-01  4.079858e-01  2.794343e-13  4.035610e-10  1.054387e-11   
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-              F  
-A  1.805998e-01  
-B  4.079858e-01  
-C  2.794343e-13  
-D  4.035610e-10  
-E  1.054387e-11  
-F  1.000000e+00  
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>1.000000e+00</td>
+      <td>6.044761e-01</td>
+      <td>7.266893e-11</td>
+      <td>9.816910e-08</td>
+      <td>2.753922e-09</td>
+      <td>1.805998e-01</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>6.044761e-01</td>
+      <td>1.000000e+00</td>
+      <td>8.509776e-12</td>
+      <td>1.212803e-08</td>
+      <td>3.257986e-10</td>
+      <td>4.079858e-01</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>7.266893e-11</td>
+      <td>8.509776e-12</td>
+      <td>1.000000e+00</td>
+      <td>8.141205e-02</td>
+      <td>3.794750e-01</td>
+      <td>2.794343e-13</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>9.816910e-08</td>
+      <td>1.212803e-08</td>
+      <td>8.141205e-02</td>
+      <td>1.000000e+00</td>
+      <td>3.794750e-01</td>
+      <td>4.035610e-10</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <td>2.753922e-09</td>
+      <td>3.257986e-10</td>
+      <td>3.794750e-01</td>
+      <td>3.794750e-01</td>
+      <td>1.000000e+00</td>
+      <td>1.054387e-11</td>
+    </tr>
+    <tr>
+      <th>F</th>
+      <td>1.805998e-01</td>
+      <td>4.079858e-01</td>
+      <td>2.794343e-13</td>
+      <td>4.035610e-10</td>
+      <td>1.054387e-11</td>
+      <td>1.000000e+00</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>Techniques to adjust the above table for multiple comparisons include the Bonferroni correction, Fisher’s Least Significant Difference (LSD) method, Dunnett’s procedure, and Scheffe’s method.  These can be used in place of ‘None’ for the <code class="language-plaintext highlighter-rouge">p.adjust</code> argument; <a href="https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_ttest/">see details here</a>.</p>
 

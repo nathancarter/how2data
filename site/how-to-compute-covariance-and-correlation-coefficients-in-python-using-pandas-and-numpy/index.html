@@ -265,19 +265,75 @@
 <span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>       col1      col2      col3      col4      col5
-0  0.230431  0.582533  0.991434  0.739073  0.327734
-1  0.125229  0.722491  0.355302  0.833584  0.138107
-2  0.461317  0.684065  0.888877  0.561240  0.049271
-3  0.133538  0.901752  0.993773  0.542505  0.948823
-4  0.930034  0.665386  0.320827  0.908514  0.088380
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>col1</th>
+      <th>col2</th>
+      <th>col3</th>
+      <th>col4</th>
+      <th>col5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.263520</td>
+      <td>0.803570</td>
+      <td>0.514936</td>
+      <td>0.925995</td>
+      <td>0.678391</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.554981</td>
+      <td>0.444687</td>
+      <td>0.742719</td>
+      <td>0.882195</td>
+      <td>0.719853</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.272787</td>
+      <td>0.527744</td>
+      <td>0.299307</td>
+      <td>0.324882</td>
+      <td>0.446657</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.421805</td>
+      <td>0.000464</td>
+      <td>0.769808</td>
+      <td>0.318595</td>
+      <td>0.383792</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.005127</td>
+      <td>0.031319</td>
+      <td>0.233333</td>
+      <td>0.288079</td>
+      <td>0.273122</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>If you have two pandas Series, you can compute the covariance of just those two variables.  Note that every column in a DataFrame is a pandas series.</p>
 
@@ -287,8 +343,8 @@
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[ 0.09645398, -0.00955601],
-       [-0.00955601,  0.05878234]])
+</pre></td><td class="rouge-code"><pre>array([[ 0.03876363, -0.01118424],
+       [-0.01118424,  0.10323356]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>You can also compare all of a DataFrame’s columns among one another, each as a separate variable.</p>
@@ -297,19 +353,75 @@
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">cov</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>          col1      col2      col3      col4      col5
-col1  0.096454 -0.009556 -0.052318  0.013896 -0.009116
-col2 -0.009556  0.058782 -0.028798  0.033634  0.011250
-col3 -0.052318 -0.028798  0.111899 -0.043065  0.015956
-col4  0.013896  0.033634 -0.043065  0.058399 -0.016705
-col5 -0.009116  0.011250  0.015956 -0.016705  0.099596
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>col1</th>
+      <th>col2</th>
+      <th>col3</th>
+      <th>col4</th>
+      <th>col5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>col1</th>
+      <td>0.038764</td>
+      <td>-0.011184</td>
+      <td>0.036492</td>
+      <td>0.010443</td>
+      <td>0.000424</td>
+    </tr>
+    <tr>
+      <th>col2</th>
+      <td>-0.011184</td>
+      <td>0.103234</td>
+      <td>-0.017756</td>
+      <td>0.023502</td>
+      <td>0.031411</td>
+    </tr>
+    <tr>
+      <th>col3</th>
+      <td>0.036492</td>
+      <td>-0.017756</td>
+      <td>0.097690</td>
+      <td>0.005633</td>
+      <td>-0.010821</td>
+    </tr>
+    <tr>
+      <th>col4</th>
+      <td>0.010443</td>
+      <td>0.023502</td>
+      <td>0.005633</td>
+      <td>0.073091</td>
+      <td>0.056259</td>
+    </tr>
+    <tr>
+      <th>col5</th>
+      <td>0.000424</td>
+      <td>0.031411</td>
+      <td>-0.010821</td>
+      <td>0.056259</td>
+      <td>0.063866</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>The Pearson correlation coefficient can be computed with <code class="language-plaintext highlighter-rouge">np.corrcoef</code> in place of <code class="language-plaintext highlighter-rouge">np.cov</code>.</p>
 
@@ -319,8 +431,8 @@ col5 -0.009116  0.011250  0.015956 -0.016705  0.099596
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[ 1.        , -0.12690915],
-       [-0.12690915,  1.        ]])
+</pre></td><td class="rouge-code"><pre>array([[ 1.       , -0.1768007],
+       [-0.1768007,  1.       ]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>And pandas DataFrames have a built in method to do this for all numeric columns.</p>
@@ -329,19 +441,75 @@ col5 -0.009116  0.011250  0.015956 -0.016705  0.099596
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>          col1      col2      col3      col4      col5
-col1  1.000000 -0.126909 -0.503593  0.185146 -0.093005
-col2 -0.126909  1.000000 -0.355079  0.574052  0.147034
-col3 -0.503593 -0.355079  1.000000 -0.532730  0.151143
-col4  0.185146  0.574052 -0.532730  1.000000 -0.219035
-col5 -0.093005  0.147034  0.151143 -0.219035  1.000000
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>col1</th>
+      <th>col2</th>
+      <th>col3</th>
+      <th>col4</th>
+      <th>col5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>col1</th>
+      <td>1.000000</td>
+      <td>-0.176801</td>
+      <td>0.593003</td>
+      <td>0.196192</td>
+      <td>0.008517</td>
+    </tr>
+    <tr>
+      <th>col2</th>
+      <td>-0.176801</td>
+      <td>1.000000</td>
+      <td>-0.176814</td>
+      <td>0.270565</td>
+      <td>0.386852</td>
+    </tr>
+    <tr>
+      <th>col3</th>
+      <td>0.593003</td>
+      <td>-0.176814</td>
+      <td>1.000000</td>
+      <td>0.066660</td>
+      <td>-0.136993</td>
+    </tr>
+    <tr>
+      <th>col4</th>
+      <td>0.196192</td>
+      <td>0.270565</td>
+      <td>0.066660</td>
+      <td>1.000000</td>
+      <td>0.823433</td>
+    </tr>
+    <tr>
+      <th>col5</th>
+      <td>0.008517</td>
+      <td>0.386852</td>
+      <td>-0.136993</td>
+      <td>0.823433</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>Content last modified on 23 July 2021.</p>
 

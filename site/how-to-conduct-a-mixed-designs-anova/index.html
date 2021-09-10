@@ -292,19 +292,69 @@
 <span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>   Subject      Music Room Type  Heart Rate
-0        1  Classical     Light          78
-1        2       Rock     Light          60
-2        3  Classical     Light          85
-3        4       Rock     Light          75
-4        5  Classical     Light          99
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Subject</th>
+      <th>Music</th>
+      <th>Room Type</th>
+      <th>Heart Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Classical</td>
+      <td>Light</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Rock</td>
+      <td>Light</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Classical</td>
+      <td>Light</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Rock</td>
+      <td>Light</td>
+      <td>75</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Classical</td>
+      <td>Light</td>
+      <td>99</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>We will use the <code class="language-plaintext highlighter-rouge">pingouin</code> statistics package to conduct a two-way mixed-design ANOVA. The parameters are as follows:</p>
 
@@ -321,15 +371,75 @@
 <span class="n">pg</span><span class="p">.</span><span class="n">mixed_anova</span><span class="p">(</span> <span class="n">dv</span><span class="o">=</span><span class="s">'Heart Rate'</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="s">'Room Type'</span><span class="p">,</span> <span class="n">between</span><span class="o">=</span><span class="s">'Music'</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s">'Subject'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>        Source      SS  DF1  DF2      MS         F     p-unc       np2  eps
-0        Music  162.45    1    8  162.45  1.586813  0.243288  0.165520  NaN
-1    Room Type  832.05    1    8  832.05  6.416426  0.035088  0.445077  1.0
-2  Interaction   76.05    1    8   76.05  0.586466  0.465781  0.068301  NaN
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Source</th>
+      <th>SS</th>
+      <th>DF1</th>
+      <th>DF2</th>
+      <th>MS</th>
+      <th>F</th>
+      <th>p-unc</th>
+      <th>np2</th>
+      <th>eps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Music</td>
+      <td>162.45</td>
+      <td>1</td>
+      <td>8</td>
+      <td>162.45</td>
+      <td>1.586813</td>
+      <td>0.243288</td>
+      <td>0.165520</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Room Type</td>
+      <td>832.05</td>
+      <td>1</td>
+      <td>8</td>
+      <td>832.05</td>
+      <td>6.416426</td>
+      <td>0.035088</td>
+      <td>0.445077</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Interaction</td>
+      <td>76.05</td>
+      <td>1</td>
+      <td>8</td>
+      <td>76.05</td>
+      <td>0.586466</td>
+      <td>0.465781</td>
+      <td>0.068301</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>The output informs us that, on average, the subjects that listened to classical music did not significantly differ ($p = 0.243288 &gt; 0.05$) from those that listened to rock music. However, there is, on average, a significant difference ($p = 0.035088 &lt; 0.05$) between each of the subject’s heart rate when put in a room with or without light. Additionally, since the interaction term is not significant ($p = 0.465781 &gt; 0.05$), we can use the additive (no interaction) model.</p>
 
