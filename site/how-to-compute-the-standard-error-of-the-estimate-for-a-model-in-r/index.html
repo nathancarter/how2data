@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute probabilities from a distribution (in R) - How to Data</title>
+    <title>How to compute the standard error of the estimate for a model (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute probabilities from a distribution (in R) | How to Data</title>
+<title>How to compute the standard error of the estimate for a model (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute probabilities from a distribution (in R)" />
+<meta property="og:title" content="How to compute the standard error of the estimate for a model (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-probabilities-from-a-distribution-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-probabilities-from-a-distribution-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute probabilities from a distribution (in R)" />
+<meta property="twitter:title" content="How to compute the standard error of the estimate for a model (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-probabilities-from-a-distribution-in-r/","headline":"How to compute probabilities from a distribution (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-r/","headline":"How to compute the standard error of the estimate for a model (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,16 +220,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-probabilities-from-a-distribution-in-r">
+          <h1 id="how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-r">
         
         
-          <a href="#how-to-compute-probabilities-from-a-distribution-in-r" class="anchor-heading" aria-labelledby="how-to-compute-probabilities-from-a-distribution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute probabilities from a distribution (in R)
+          <a href="#how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-r" class="anchor-heading" aria-labelledby="how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the standard error of the estimate for a model (in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-compute-probabilities-from-a-distribution">See all solutions.</a></p>
+<p><a href="../how-to-compute-the-standard-error-of-the-estimate-for-a-model">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -239,17 +239,13 @@
       </h2>
     
 
-<p>There are many famous continuous probability distributions, such as the
-normal and exponential distributions.  How can we get access to them in
-software, to compute the probability of a value/values occurring?</p>
+<p>One measure of the goodness of fit of a model is the standard error of its
+estimates.  If the actual values are $y_i$ and the estimates are $\hat y_i$,
+the definition of this quantity is as follows, for $n$ data points.</p>
 
-<p>Related tasks:</p>
+\[\sigma_{\text{est}} = \sqrt{ \frac{ \sum (y_i-\hat y_i)^2 }{ n } }\]
 
-<ul>
-  <li><a href="../how-to-generate-random-values-from-a-distribution">How to generate random values from a distribution</a></li>
-  <li><a href="../how-to-plot-continuous-probability-distributions">How to plot continuous probability distributions</a></li>
-  <li><a href="../how-to-plot-discrete-probability-distributions">How to plot discrete probability distributions</a></li>
-</ul>
+<p>If we’ve fit a linear model, how do we compute the standard error of its estimates?</p>
       <h2 id="solution">
         
         
@@ -261,68 +257,23 @@ software, to compute the probability of a value/values occurring?</p>
 
 <!-- beginning of wrapper -->
 
-<p>Because R is designed for use in statistics,
-it comes with many probability distributions built in.
-A list of them is online <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Probability-distributions">here</a>.</p>
-
-<p>To compute a probability from a <strong>discrete</strong> distribution, prefix the name
-of the distribution with <code class="language-plaintext highlighter-rouge">d</code> (for “density”) and call it as a function on the
-value whose probability you want to know, plus any parameters the distrubtion needs.</p>
+<p>Let’s assume that you already fit the linear model, as shown in the code below.
+This one uses a small amount of fake data, but it’s just an example.
+See also <a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a binomial random variable with 10 trials</span><span class="w">
-</span><span class="c1"># and probability 0.5 of success on each trial,</span><span class="w">
-</span><span class="c1"># what is the probability of exactly 3 successes?</span><span class="w">
-</span><span class="n">dbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">78</span><span class="p">,</span><span class="w"> </span><span class="m">60</span><span class="p">,</span><span class="w"> </span><span class="m">22</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">83</span><span class="p">,</span><span class="w"> </span><span class="m">59</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">)</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">126</span><span class="p">,</span><span class="w"> </span><span class="m">347</span><span class="p">,</span><span class="w"> </span><span class="m">298</span><span class="p">,</span><span class="w"> </span><span class="m">309</span><span class="p">,</span><span class="w"> </span><span class="m">450</span><span class="p">,</span><span class="w"> </span><span class="m">187</span><span class="p">,</span><span class="w"> </span><span class="m">266</span><span class="p">,</span><span class="w"> </span><span class="m">385</span><span class="p">,</span><span class="w"> </span><span class="m">400</span><span class="p">)</span><span class="w">
+</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.1171875
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>If you change the prefix to <code class="language-plaintext highlighter-rouge">p</code>, then R will compute the probability <em>up to</em>
-the parameter you specify, as in the following example.</p>
+<p>The standard error is shown as part of the model summary, reported by R’s
+built-in <code class="language-plaintext highlighter-rouge">summary</code> function; see the third line from the bottom.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a binomial random variable with 10 trials</span><span class="w">
-</span><span class="c1"># and probability 0.5 of success on each trial,</span><span class="w">
-</span><span class="c1"># what is the probability of up to (and including) 3 successes?</span><span class="w">
-</span><span class="n">pbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.171875
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>To compute a probability from a <strong>continuous</strong> distribution, prefix the
-name with <code class="language-plaintext highlighter-rouge">d</code>, just as in the example above.  But you can compute only
-the probability that a random value will fall in an interval $[a,b]$,
-not the probability that it will equal a specific value.</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a normal random variable with mean μ=10 and standard deviation σ=5,</span><span class="w">
-</span><span class="c1"># what is the probability of the value lying in the interval [12,13]?</span><span class="w">
-</span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.07032514
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Consequently, we can also compute:</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="c1"># the probability of a value &lt; 13</span><span class="w">
-</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># the probability of a value &gt; 13</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -330,25 +281,56 @@ not the probability that it will equal a specific value.</p>
 3
 4
 5
-</pre></td><td class="rouge-code"><pre>[1] 0.7257469
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre>Call:
+lm(formula = y ~ x)
 
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-193.776   -4.334   15.459   71.143  118.116 
 
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  354.082     76.733   4.614  0.00244 **
+x             -1.009      1.473  -0.685  0.51536   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-[1] 0.2742531
+Residual standard error: 107.1 on 7 degrees of freedom
+Multiple R-squared:  0.06283,	Adjusted R-squared:  -0.07106 
+F-statistic: 0.4693 on 1 and 7 DF,  p-value: 0.5154
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We can also extract just that one value using the code shown below.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 107.1191
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The standard error of the estimate is 107.119.</p>
 
 <p>Content last modified on 13 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/R.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the standard error of the estimate for a model/R.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
-<p>Contributed by:</p>
-
-<ul>
-  <li>Nathan Carter (ncarter@bentley.edu)</li>
-  <li>Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</li>
-</ul>
+<p>Contributed by Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</p>
 
         
 

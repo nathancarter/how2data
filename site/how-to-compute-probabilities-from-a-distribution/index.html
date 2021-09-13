@@ -344,7 +344,26 @@ value whose probability you want to know, plus any parameters the distrubtion ne
 </span><span class="n">dbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>0.1171875</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.1171875
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>If you change the prefix to <code class="language-plaintext highlighter-rouge">p</code>, then R will compute the probability <em>up to</em>
+the parameter you specify, as in the following example.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1"># For a binomial random variable with 10 trials</span><span class="w">
+</span><span class="c1"># and probability 0.5 of success on each trial,</span><span class="w">
+</span><span class="c1"># what is the probability of up to (and including) 3 successes?</span><span class="w">
+</span><span class="n">pbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.171875
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>To compute a probability from a <strong>continuous</strong> distribution, prefix the
 name with <code class="language-plaintext highlighter-rouge">d</code>, just as in the example above.  But you can compute only
@@ -359,9 +378,31 @@ not the probability that it will equal a specific value.</p>
 </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>0.0703251406396023</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.07032514
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 02 June 2021.</p>
+<p>Consequently, we can also compute:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="c1"># the probability of a value &lt; 13</span><span class="w">
+</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># the probability of a value &gt; 13</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>[1] 0.7257469
+
+
+
+[1] 0.2742531
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 13 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">

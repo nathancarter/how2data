@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute probabilities from a distribution (in R) - How to Data</title>
+    <title>How to compute the residuals of a linear model - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute probabilities from a distribution (in R) | How to Data</title>
+<title>How to compute the residuals of a linear model | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute probabilities from a distribution (in R)" />
+<meta property="og:title" content="How to compute the residuals of a linear model" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-probabilities-from-a-distribution-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-probabilities-from-a-distribution-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-the-residuals-of-a-linear-model/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-the-residuals-of-a-linear-model/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute probabilities from a distribution (in R)" />
+<meta property="twitter:title" content="How to compute the residuals of a linear model" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-probabilities-from-a-distribution-in-r/","headline":"How to compute probabilities from a distribution (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-residuals-of-a-linear-model/","headline":"How to compute the residuals of a linear model","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,135 +220,107 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-probabilities-from-a-distribution-in-r">
+          <h1 id="how-to-compute-the-residuals-of-a-linear-model">
         
         
-          <a href="#how-to-compute-probabilities-from-a-distribution-in-r" class="anchor-heading" aria-labelledby="how-to-compute-probabilities-from-a-distribution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute probabilities from a distribution (in R)
+          <a href="#how-to-compute-the-residuals-of-a-linear-model" class="anchor-heading" aria-labelledby="how-to-compute-the-residuals-of-a-linear-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the residuals of a linear model
         
         
       </h1>
     
-
-<p><a href="../how-to-compute-probabilities-from-a-distribution">See all solutions.</a></p>
-      <h2 id="task">
+      <h2 id="description">
         
         
-          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
-        
-        
-      </h2>
-    
-
-<p>There are many famous continuous probability distributions, such as the
-normal and exponential distributions.  How can we get access to them in
-software, to compute the probability of a value/values occurring?</p>
-
-<p>Related tasks:</p>
-
-<ul>
-  <li><a href="../how-to-generate-random-values-from-a-distribution">How to generate random values from a distribution</a></li>
-  <li><a href="../how-to-plot-continuous-probability-distributions">How to plot continuous probability distributions</a></li>
-  <li><a href="../how-to-plot-discrete-probability-distributions">How to plot discrete probability distributions</a></li>
-</ul>
-      <h2 id="solution">
-        
-        
-          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
         
         
       </h2>
     
 
-<!-- beginning of wrapper -->
+<p>If a model has been fit to a dataset, the <em>residuals</em> are the differences
+between the actual data points and the results the model would predict.
+Given a linear model and a dataset, how can we compute those residuals?</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
 
-<p>Because R is designed for use in statistics,
-it comes with many probability distributions built in.
-A list of them is online <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Probability-distributions">here</a>.</p>
+<p><a href="../how-to-compute-the-residuals-of-a-linear-model-in-r">View this solution alone.</a></p>
 
-<p>To compute a probability from a <strong>discrete</strong> distribution, prefix the name
-of the distribution with <code class="language-plaintext highlighter-rouge">d</code> (for “density”) and call it as a function on the
-value whose probability you want to know, plus any parameters the distrubtion needs.</p>
+<p>Let’s assume that you’ve already built a linear model similar to the one below.
+This one uses a small amount of fake data, but it’s just an example.
+See also <a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a binomial random variable with 10 trials</span><span class="w">
-</span><span class="c1"># and probability 0.5 of success on each trial,</span><span class="w">
-</span><span class="c1"># what is the probability of exactly 3 successes?</span><span class="w">
-</span><span class="n">dbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">xs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">393</span><span class="p">,</span><span class="w"> </span><span class="m">453</span><span class="p">,</span><span class="w"> </span><span class="m">553</span><span class="p">,</span><span class="w"> </span><span class="m">679</span><span class="p">,</span><span class="w"> </span><span class="m">729</span><span class="p">,</span><span class="w"> </span><span class="m">748</span><span class="p">,</span><span class="w"> </span><span class="m">817</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">ys</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">  </span><span class="m">24</span><span class="p">,</span><span class="w">  </span><span class="m">25</span><span class="p">,</span><span class="w">  </span><span class="m">27</span><span class="p">,</span><span class="w">  </span><span class="m">36</span><span class="p">,</span><span class="w">  </span><span class="m">55</span><span class="p">,</span><span class="w">  </span><span class="m">68</span><span class="p">,</span><span class="w">  </span><span class="m">84</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">ys</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We can extract the residuals of the model in either of two ways.</p>
+
+<p>R has a built-in <code class="language-plaintext highlighter-rouge">residuals()</code> function for this purpose.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">residuals</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.1171875
+2
+</pre></td><td class="rouge-code"><pre>         1          2          3          4          5          6          7 
+  9.162630   2.199457  -9.072500 -16.795165  -4.431143   6.047185  12.889535 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>If you change the prefix to <code class="language-plaintext highlighter-rouge">p</code>, then R will compute the probability <em>up to</em>
-the parameter you specify, as in the following example.</p>
+<p>The model itself has a <code class="language-plaintext highlighter-rouge">$residuals</code> attribute.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a binomial random variable with 10 trials</span><span class="w">
-</span><span class="c1"># and probability 0.5 of success on each trial,</span><span class="w">
-</span><span class="c1"># what is the probability of up to (and including) 3 successes?</span><span class="w">
-</span><span class="n">pbinom</span><span class="p">(</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="o">=</span><span class="m">0.5</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.171875
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>To compute a probability from a <strong>continuous</strong> distribution, prefix the
-name with <code class="language-plaintext highlighter-rouge">d</code>, just as in the example above.  But you can compute only
-the probability that a random value will fall in an interval $[a,b]$,
-not the probability that it will equal a specific value.</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="c1"># For a normal random variable with mean μ=10 and standard deviation σ=5,</span><span class="w">
-</span><span class="c1"># what is the probability of the value lying in the interval [12,13]?</span><span class="w">
-</span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.07032514
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Consequently, we can also compute:</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">     </span><span class="c1"># the probability of a value &lt; 13</span><span class="w">
-</span><span class="m">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pnorm</span><span class="p">(</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># the probability of a value &gt; 13</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="o">$</span><span class="n">residuals</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre>[1] 0.7257469
-
-
-
-[1] 0.2742531
+</pre></td><td class="rouge-code"><pre>         1          2          3          4          5          6          7 
+  9.162630   2.199457  -9.072500 -16.795165  -4.431143   6.047185  12.889535 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Content last modified on 13 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/R.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the residuals of a linear model/R.md">edit the source</a>.</p>
+      <h2 id="topics-that-include-this-task">
+        
+        
+          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
+        
+        
+      </h2>
+    
 
-<!-- ending of wrapper -->
+<p><em>None</em></p>
+      <h2 id="opportunities">
+        
+        
+          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
+        
+        
+      </h2>
+    
 
-<p>Contributed by:</p>
+<p>This website does not yet contain a solution for this task in any of the following
+software packages.</p>
 
 <ul>
-  <li>Nathan Carter (ncarter@bentley.edu)</li>
-  <li>Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</li>
+  <li>Python</li>
+  <li>Excel</li>
 </ul>
+
+<p>If you can contribute a solution using any of these pieces of software,
+see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 
