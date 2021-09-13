@@ -4,6 +4,7 @@ author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
 
 Let's assume that you've already built a linear model similar to the one below.
 This one uses a small amount of fake data, but it's just an example.
+See also how to fit a linear model to two columns of data.
 
 ```R
 xs <- c( 393, 453, 553, 679, 729, 748, 817 )
