@@ -1,5 +1,5 @@
 ---
-author: "Krtin Juneja (kjuneja@falcon.bentley.edu)"
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
 ---
 
 We load here the same data that appears in the solution for how to perform
