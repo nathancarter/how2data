@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute R-squared for a simple linear model - How to Data</title>
+    <title>How to test data for normality - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute R-squared for a simple linear model | How to Data</title>
+<title>How to test data for normality | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute R-squared for a simple linear model" />
+<meta property="og:title" content="How to test data for normality" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model/" />
+<link rel="canonical" href="/how2data/site/how-to-test-data-for-normality/" />
+<meta property="og:url" content="/how2data/site/how-to-test-data-for-normality/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute R-squared for a simple linear model" />
+<meta property="twitter:title" content="How to test data for normality" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-r-squared-for-a-simple-linear-model/","headline":"How to compute R-squared for a simple linear model","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-test-data-for-normality/","headline":"How to test data for normality","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,10 +220,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-r-squared-for-a-simple-linear-model">
+          <h1 id="how-to-test-data-for-normality">
         
         
-          <a href="#how-to-compute-r-squared-for-a-simple-linear-model" class="anchor-heading" aria-labelledby="how-to-compute-r-squared-for-a-simple-linear-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute R-squared for a simple linear model
+          <a href="#how-to-test-data-for-normality" class="anchor-heading" aria-labelledby="how-to-test-data-for-normality"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test data for normality
         
         
       </h1>
@@ -237,17 +237,15 @@
       </h2>
     
 
-<p>Let’s say we have fit a linear model to two columns of data,
-one for a single independent variable $x$
-and the other for a single dependent variable $y$.
-How can we compute $R^2$ for that model,
-to measure its goodness of fit?</p>
+<p>We often want to know whether a set of data is normally distributed,
+so that we can deduce what inference tests are appropriate to conduct.
+If we have a set of data and want to figure out if it comes from a population
+that follows a normal distribution, what tools can help us do so?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li><a href="../how-to-fit-a-linear-model-to-two-columns-of-data">How to fit a linear model to two columns of data</a></li>
-  <li><a href="../how-to-compute-adjusted-r-squared">How to compute adjusted R-squared</a></li>
+  <li><a href="../how-to-create-a-qq-plot">How to create a QQ-plot</a></li>
 </ul>
       <h2 id="using-scipy-in-python">
         
@@ -258,45 +256,56 @@ to measure its goodness of fit?</p>
       </h2>
     
 
-<p><a href="../how-to-compute-r-squared-for-a-simple-linear-model-in-python-using-scipy">View this solution alone.</a></p>
+<p><a href="../how-to-test-data-for-normality-in-python-using-scipy">View this solution alone.</a></p>
 
-<p>We assume you have already fit a linear model to the data,
-as in the code below, which is explained fully in a separate task,
-<a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
+<p>We’re going to use some fake restaurant data,
+but you can replace our fake data with your real data in the code below.
+The values in our fake data represent the amount of money that customers spent
+on a Sunday morning at the restaurant.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
-<span class="n">xs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">393</span><span class="p">,</span> <span class="mi">453</span><span class="p">,</span> <span class="mi">553</span><span class="p">,</span> <span class="mi">679</span><span class="p">,</span> <span class="mi">729</span><span class="p">,</span> <span class="mi">748</span><span class="p">,</span> <span class="mi">817</span> <span class="p">]</span>
-<span class="n">ys</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">24</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span>  <span class="mi">27</span><span class="p">,</span>  <span class="mi">36</span><span class="p">,</span>  <span class="mi">55</span><span class="p">,</span>  <span class="mi">68</span><span class="p">,</span>  <span class="mi">84</span> <span class="p">]</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">linregress</span><span class="p">(</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 
-<p>The $R$ value is part of the model object that <code class="language-plaintext highlighter-rouge">stats.linregress</code> returns.</p>
+<span class="c1"># Replace your data here
+</span><span class="n">spending</span> <span class="o">=</span> <span class="p">[</span><span class="mi">34</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+            <span class="mi">16</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">37</span><span class="p">]</span>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="p">.</span><span class="n">rvalue</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.8949574425541466
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>You can compute $R^2$ just by squaring it.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="p">.</span><span class="n">rvalue</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">spending</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">spending</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.8009488239830586
+</pre></td><td class="rouge-code"><pre>(36.52, 15.772127313713899)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 01 June 2021.</p>
+<p>We will now conduct a test of the following null hypothesis:
+The data comes from a population that is normally distributed with mean 36.52 and standard deviation 15.77.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute R-squared for a simple linear model/Python, using SciPy.md">edit the source</a>.</p>
+<p>We will use a value $\alpha=0.05$ as our Type I error rate.
+The <code class="language-plaintext highlighter-rouge">normaltest()</code> function in SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> package can perform D’Agostino and Pearson’s test for normality,
+which uses the skew and kurtosis of the data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>NormaltestResult(statistic=3.0866213696851097, pvalue=0.21367252674488552)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The p-value is apprximately 0.21367, which is greater than $\alpha=0.05$, so we fail to reject our null hypothesis.
+We would continue to operate under our original assumption that the data come from a normally distributed population.</p>
+
+<p>Content last modified on 16 September 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality/Python, using SciPy.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -306,24 +315,25 @@ as in the code below, which is explained fully in a separate task,
       </h2>
     
 
-<p><a href="../how-to-compute-r-squared-for-a-simple-linear-model-in-r">View this solution alone.</a></p>
+<p><a href="../how-to-test-data-for-normality-in-r">View this solution alone.</a></p>
 
-<p>We assume you have already fit a linear model to the data,
-as in the code below, which is explained fully in a separate task,
-<a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
+<p>We’re going to use some fake restaurant data,
+but you can replace our fake data with your real data in the code below.
+The values in our fake data represent the amount of money that customers spent
+on a Sunday morning at the restaurant.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="n">xs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">393</span><span class="p">,</span><span class="w"> </span><span class="m">453</span><span class="p">,</span><span class="w"> </span><span class="m">553</span><span class="p">,</span><span class="w"> </span><span class="m">679</span><span class="p">,</span><span class="w"> </span><span class="m">729</span><span class="p">,</span><span class="w"> </span><span class="m">748</span><span class="p">,</span><span class="w"> </span><span class="m">817</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">ys</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">  </span><span class="m">24</span><span class="p">,</span><span class="w">  </span><span class="m">25</span><span class="p">,</span><span class="w">  </span><span class="m">27</span><span class="p">,</span><span class="w">  </span><span class="m">36</span><span class="p">,</span><span class="w">  </span><span class="m">55</span><span class="p">,</span><span class="w">  </span><span class="m">68</span><span class="p">,</span><span class="w">  </span><span class="m">84</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1"># Replace your data here</span><span class="w">
+</span><span class="n">spending</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">37</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">22</span><span class="p">,</span><span class="w"> </span><span class="m">65</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w">
+              </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">28</span><span class="p">,</span><span class="w"> </span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">61</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">37</span><span class="p">)</span><span class="w">
 
-<p>You can get a lot of information about your model from its summary.</p>
-
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">mean</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
+</span><span class="n">sd</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -331,50 +341,43 @@ as in the code below, which is explained fully in a separate task,
 3
 4
 5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-</pre></td><td class="rouge-code"><pre>Call:
-lm(formula = ys ~ xs)
+</pre></td><td class="rouge-code"><pre>[1] 36.52
 
-Residuals:
-      1       2       3       4       5       6       7 
-  9.163   2.199  -9.072 -16.795  -4.431   6.047  12.890 
 
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)   
-(Intercept) -37.32142   18.99544  -1.965  0.10664   
-xs            0.13272    0.02959   4.485  0.00649 **
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 11.62 on 5 degrees of freedom
-Multiple R-squared:  0.8009,	Adjusted R-squared:  0.7611 
-F-statistic: 20.12 on 1 and 5 DF,  p-value: 0.006486
+[1] 15.77213
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>In particular, it contains the $R^2$ value.</p>
+<p>We will now conduct a test of the following null hypothesis:
+The data comes from a population that is normally distributed with mean 36.52 and standard deviation 15.77.</p>
+
+<p>We will use a value $\alpha=0.05$ as our Type I error rate.
+The <code class="language-plaintext highlighter-rouge">pearson.test()</code> function in the <code class="language-plaintext highlighter-rouge">nortest</code> package can perform Pearson’s $\chi^2$ test for normality.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="p">)</span><span class="o">$</span><span class="n">r.squared</span><span class="w">
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages("nortest") # if you have not already done so</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">nortest</span><span class="p">)</span><span class="w">
+</span><span class="n">pearson.test</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 0.8009488
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>	Pearson chi-square normality test
+
+data:  spending
+P = 3.48, p-value = 0.6264
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 01 June 2021.</p>
+<p>The p-value is 0.6264, which is greater than $\alpha=0.05$, so we fail to reject our null hypothesis.
+We would continue to operate under our original assumption that the data come from a normally distributed population.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute R-squared for a simple linear model/R.md">edit the source</a>.</p>
+<p>Content last modified on 16 September 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -384,10 +387,7 @@ F-statistic: 20.12 on 1 and 5 DF,  p-value: 0.006486
       </h2>
     
 
-<ul>
-  <li><a href="../bentley-university-gb213">Bentley University GB213</a></li>
-  <li><a href="../bentley-university-gr521">Bentley University GR521</a></li>
-</ul>
+<p><em>None</em></p>
       <h2 id="opportunities">
         
         

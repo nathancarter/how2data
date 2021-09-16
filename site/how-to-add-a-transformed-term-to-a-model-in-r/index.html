@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to perform a chi-squared test on a contingency table (in R) - How to Data</title>
+    <title>How to add a transformed term to a model (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to perform a chi-squared test on a contingency table (in R) | How to Data</title>
+<title>How to add a transformed term to a model (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to perform a chi-squared test on a contingency table (in R)" />
+<meta property="og:title" content="How to add a transformed term to a model (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-add-a-transformed-term-to-a-model-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-add-a-transformed-term-to-a-model-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to perform a chi-squared test on a contingency table (in R)" />
+<meta property="twitter:title" content="How to add a transformed term to a model (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r/","headline":"How to perform a chi-squared test on a contingency table (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-add-a-transformed-term-to-a-model-in-r/","headline":"How to add a transformed term to a model (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,16 +220,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r">
+          <h1 id="how-to-add-a-transformed-term-to-a-model-in-r">
         
         
-          <a href="#how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r" class="anchor-heading" aria-labelledby="how-to-perform-a-chi-squared-test-on-a-contingency-table-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform a chi-squared test on a contingency table (in R)
+          <a href="#how-to-add-a-transformed-term-to-a-model-in-r" class="anchor-heading" aria-labelledby="how-to-add-a-transformed-term-to-a-model-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to add a transformed term to a model (in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table">See all solutions.</a></p>
+<p><a href="../how-to-add-a-transformed-term-to-a-model">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -239,9 +239,14 @@
       </h2>
     
 
-<p>If we have a contingency table showing the frequencies observed in two
-categorical variables, how can we run a $\chi^2$ test to see if the two
-variables are independent?</p>
+<p>Sometimes, a simple linear model isn’t sufficient for our data, and we need more complex terms or transformed variables in the model to make adequate predictions. How do we include these complex and transformed terms in a regression model?</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-add-a-polynomial-term-to-a-model">How to add a polynomial term to a model</a></li>
+  <li><a href="../how-to-add-an-interaction-term-to-a-model">How to add an interaction term to a model</a></li>
+</ul>
       <h2 id="solution">
         
         
@@ -253,71 +258,126 @@ variables are independent?</p>
 
 <!-- beginning of wrapper -->
 
-<p>Here we will use a $2\times4$ matrix to store a contingency table of
-education vs. gender, taken from
-<a href="https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/chi-square-tests">Penn State University’s online stats review website</a>.
-You should use your own data.
-(Note: R’s <code class="language-plaintext highlighter-rouge">table</code> function is useful for creating contingency tables from data.)</p>
+<p>We’re going to use the <code class="language-plaintext highlighter-rouge">Pressure</code> dataset in R’s <code class="language-plaintext highlighter-rouge">ggplot</code> library as example data.
+It contains observations of pressure and temperature.
+You would use your own data instead.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-</pre></td><td class="rouge-code"><pre><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">60</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">46</span><span class="p">,</span><span class="w"> </span><span class="m">41</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">44</span><span class="p">,</span><span class="w"> </span><span class="m">53</span><span class="p">,</span><span class="w"> </span><span class="m">57</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w">
-                </span><span class="n">dimnames</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'F'</span><span class="p">,</span><span class="s1">'M'</span><span class="p">),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'HS'</span><span class="p">,</span><span class="s1">'BS'</span><span class="p">,</span><span class="s1">'MS'</span><span class="p">,</span><span class="s1">'PhD'</span><span class="p">)</span><span class="w"> </span><span class="p">),</span><span class="w">
-                </span><span class="n">byrow</span><span class="w"> </span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
-</span><span class="n">data</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages( "ggplot2" ) # if you haven't done this already</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="s2">"pressure"</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>  HS BS MS PhD
-F 60 54 46 41 
-M 40 44 53 57 
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>The $\chi^2$ test’s null hypothesis is that the two variables are independent.
-We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
-(false positive, finding we should reject $H_0$ when it’s actually true).</p>
-
-<p>R provides a <code class="language-plaintext highlighter-rouge">chisq.test</code> function that does exactly what we need.</p>
+<p>Let’s model temperature as the dependent variable with the logarithm of pressure
+as the independent variable.  To place the “log of pressure” term in the model, we use
+R’s <code class="language-plaintext highlighter-rouge">log</code> function, as shown below.  It uses the naturarl logarithm (base $e$).</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="n">results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">chisq.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">results</span><span class="w">
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># Build the model</span><span class="w">
+</span><span class="n">model.log</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">temperature</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pressure</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">model.log</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre>	Pearson's Chi-squared test
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre>Call:
+lm(formula = temperature ~ log(pressure), data = pressure)
 
-data:  data
-X-squared = 8.0061, df = 3, p-value = 0.04589
+Residuals:
+   Min     1Q Median     3Q    Max 
+-28.60 -22.30 -10.13  20.00  48.61 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    153.970      6.330   24.32 1.20e-14 ***
+log(pressure)   23.784      1.372   17.33 3.07e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 26.81 on 17 degrees of freedom
+Multiple R-squared:  0.9464,	Adjusted R-squared:  0.9433 
+F-statistic: 300.3 on 1 and 17 DF,  p-value: 3.07e-12
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We can manually compare the $p$-value to an $\alpha$ we’ve chosen, or ask R to do it.</p>
+<p>The model is $\hat t = 153.97 + 23.784\log p$,
+where $t$ stands for temperature and $p$ for pressure.</p>
+
+<p>Another example transformation is the square root transformation.  As with <code class="language-plaintext highlighter-rouge">log</code>,
+just apply the <code class="language-plaintext highlighter-rouge">sqrt</code> function to the appropriate term when defining the model.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">            </span><span class="c1"># or choose your own alpha here</span><span class="w">
-</span><span class="n">results</span><span class="o">$</span><span class="n">p.value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">alpha</span><span class="w">  </span><span class="c1"># reject the null hypothesis?</span><span class="w">
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># Build the model</span><span class="w">
+</span><span class="n">model.sqrt</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">temperature</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">pressure</span><span class="p">),</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pressure</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">model.sqrt</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] TRUE
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre>Call:
+lm(formula = temperature ~ sqrt(pressure), data = pressure)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-98.72 -34.74  11.53  42.75  56.59 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      98.561     15.244   6.465 5.81e-06 ***
+sqrt(pressure)   11.446      1.367   8.372 1.95e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 51.16 on 17 degrees of freedom
+Multiple R-squared:  0.8048,	Adjusted R-squared:  0.7933 
+F-statistic:  70.1 on 1 and 17 DF,  p-value: 1.953e-07
 </pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The model is $\hat t = 98.561 + 11.446\sqrt{p}$,
+with $t$ and $p$ having the same meanings as above.</p>
 
 <p>Content last modified on 16 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform a chi-squared test on a contingency table/R.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to add a transformed term to a model/R.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
-<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+<p>Contributed by Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</p>
 
         
 
