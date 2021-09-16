@@ -8,3 +8,4 @@ to measure its goodness of fit?
 Related tasks:
 
  * How to fit a linear model to two columns of data
+ * How to compute adjusted R-squared
