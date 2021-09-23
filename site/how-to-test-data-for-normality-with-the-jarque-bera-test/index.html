@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to test data for normality (in R) - How to Data</title>
+    <title>How to test data for normality with the Jarque-Bera test - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to test data for normality (in R) | How to Data</title>
+<title>How to test data for normality with the Jarque-Bera test | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to test data for normality (in R)" />
+<meta property="og:title" content="How to test data for normality with the Jarque-Bera test" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-test-data-for-normality-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-test-data-for-normality-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-test-data-for-normality-with-the-jarque-bera-test/" />
+<meta property="og:url" content="/how2data/site/how-to-test-data-for-normality-with-the-jarque-bera-test/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to test data for normality (in R)" />
+<meta property="twitter:title" content="How to test data for normality with the Jarque-Bera test" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-test-data-for-normality-in-r/","headline":"How to test data for normality (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-test-data-for-normality-with-the-jarque-bera-test/","headline":"How to test data for normality with the Jarque-Bera test","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,20 +220,18 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-test-data-for-normality-in-r">
+          <h1 id="how-to-test-data-for-normality-with-the-jarque-bera-test">
         
         
-          <a href="#how-to-test-data-for-normality-in-r" class="anchor-heading" aria-labelledby="how-to-test-data-for-normality-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test data for normality (in R)
+          <a href="#how-to-test-data-for-normality-with-the-jarque-bera-test" class="anchor-heading" aria-labelledby="how-to-test-data-for-normality-with-the-jarque-bera-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test data for normality with the Jarque-Bera test
         
         
       </h1>
     
-
-<p><a href="../how-to-test-data-for-normality">See all solutions.</a></p>
-      <h2 id="task">
+      <h2 id="description">
         
         
-          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
         
         
       </h2>
@@ -242,89 +240,93 @@
 <p>We often want to know whether a set of data is normally distributed,
 so that we can deduce what inference tests are appropriate to conduct.
 If we have a set of data and want to figure out if it comes from a population
-that follows a normal distribution, what tools can help us do so?</p>
+that follows a normal distribution, one tool that can help is
+the Jarque-Bera test for normality.  How do we perform it?</p>
 
 <p>Related tasks:</p>
 
 <ul>
   <li><a href="../how-to-create-a-qq-plot">How to create a QQ-plot</a></li>
+  <li><a href="../how-to-test-data-for-normality-with-d-agostino-and-pearson-s-test">How to test data for normality with D’Agostino and Pearson’s test</a></li>
+  <li><a href="../how-to-test-data-for-normality-with-pearson-s-chi-squared-test">How to test data for normality with Pearson’s chi-squared test</a></li>
 </ul>
-      <h2 id="solution">
+      <h2 id="using-scipy-in-python">
         
         
-          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+          <a href="#using-scipy-in-python" class="anchor-heading" aria-labelledby="using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SciPy, in Python
         
         
       </h2>
     
 
-<!-- beginning of wrapper -->
+<p><a href="../how-to-test-data-for-normality-with-the-jarque-bera-test-in-python-using-scipy">View this solution alone.</a></p>
 
 <p>We’re going to use some fake restaurant data,
 but you can replace our fake data with your real data in the code below.
 The values in our fake data represent the amount of money that customers spent
 on a Sunday morning at the restaurant.</p>
 
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre><span class="c1"># Replace your data here</span><span class="w">
-</span><span class="n">spending</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">37</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">22</span><span class="p">,</span><span class="w"> </span><span class="m">65</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w">
-              </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">28</span><span class="p">,</span><span class="w"> </span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">61</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">37</span><span class="p">)</span><span class="w">
-
-</span><span class="n">mean</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
-</span><span class="n">sd</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre>[1] 36.52
-
-
-
-[1] 15.77213
+</pre></td><td class="rouge-code"><pre><span class="c1"># Replace your data here
+</span><span class="n">spending</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+             <span class="mi">16</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">37</span> <span class="p">]</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We will now conduct a test of the following null hypothesis:
-The data comes from a population that is normally distributed with mean 36.52 and standard deviation 15.77.</p>
+<p>If we assume that the skewness coefficient $S$ and the kurtosis coefficient $K$
+are both equal to zero, then our null hypothesis is $H_0: S=K=0$,
+or that the sample data comes from a normal distribution.
+We choose a value $0 \le \alpha \le 1$ as our Type 1 error rate.
+We’ll let $\alpha$ be 0.05 here.</p>
 
-<p>We will use a value $\alpha=0.05$ as our Type I error rate.
-The <code class="language-plaintext highlighter-rouge">pearson.test()</code> function in the <code class="language-plaintext highlighter-rouge">nortest</code> package can perform Pearson’s $\chi^2$ test for normality.</p>
+<p>We can use the <code class="language-plaintext highlighter-rouge">jarque_bera()</code> function in SciPy’s stats package to run the hypothesis test.</p>
 
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages("nortest") # if you have not already done so</span><span class="w">
-</span><span class="n">library</span><span class="p">(</span><span class="n">nortest</span><span class="p">)</span><span class="w">
-</span><span class="n">pearson.test</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
-</span></pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>	Pearson chi-square normality test
-
-data:  spending
-P = 3.48, p-value = 0.6264
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">jarque_bera</span><span class="p">(</span> <span class="n">spending</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The p-value is 0.6264, which is greater than $\alpha=0.05$, so we fail to reject our null hypothesis.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>Jarque_beraResult(statistic=1.3347292970972013, pvalue=0.5130588882194845)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Our $p$-value of about $0.5131$ is greater than $\alpha$, so we fail to reject our null hypothesis.
 We would continue to operate under our original assumption that the data come from a normally distributed population.</p>
 
-<p>Content last modified on 16 September 2021.</p>
+<p>Content last modified on 23 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality/R.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality with the Jarque-Bera test/Python, using SciPy.ipynb">edit the source</a>.</p>
+      <h2 id="topics-that-include-this-task">
+        
+        
+          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
+        
+        
+      </h2>
+    
 
-<!-- ending of wrapper -->
+<p><em>None</em></p>
+      <h2 id="opportunities">
+        
+        
+          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
+        
+        
+      </h2>
+    
 
-<p>Contributed by Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</p>
+<p>This website does not yet contain a solution for this task in any of the following
+software packages.</p>
+
+<ul>
+  <li>R</li>
+  <li>Excel</li>
+</ul>
+
+<p>If you can contribute a solution using any of these pieces of software,
+see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

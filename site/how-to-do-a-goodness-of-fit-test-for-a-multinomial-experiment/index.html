@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to test data for normality - How to Data</title>
+    <title>How to do a goodness of fit test for a multinomial experiment - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to test data for normality | How to Data</title>
+<title>How to do a goodness of fit test for a multinomial experiment | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to test data for normality" />
+<meta property="og:title" content="How to do a goodness of fit test for a multinomial experiment" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-test-data-for-normality/" />
-<meta property="og:url" content="/how2data/site/how-to-test-data-for-normality/" />
+<link rel="canonical" href="/how2data/site/how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment/" />
+<meta property="og:url" content="/how2data/site/how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to test data for normality" />
+<meta property="twitter:title" content="How to do a goodness of fit test for a multinomial experiment" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-test-data-for-normality/","headline":"How to test data for normality","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment/","headline":"How to do a goodness of fit test for a multinomial experiment","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -220,10 +220,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-test-data-for-normality">
+          <h1 id="how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment">
         
         
-          <a href="#how-to-test-data-for-normality" class="anchor-heading" aria-labelledby="how-to-test-data-for-normality"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test data for normality
+          <a href="#how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment" class="anchor-heading" aria-labelledby="how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to do a goodness of fit test for a multinomial experiment
         
         
       </h1>
@@ -237,16 +237,11 @@
       </h2>
     
 
-<p>We often want to know whether a set of data is normally distributed,
-so that we can deduce what inference tests are appropriate to conduct.
-If we have a set of data and want to figure out if it comes from a population
-that follows a normal distribution, what tools can help us do so?</p>
-
-<p>Related tasks:</p>
-
-<ul>
-  <li><a href="../how-to-create-a-qq-plot">How to create a QQ-plot</a></li>
-</ul>
+<p>If we have historical values for multiple population proportions,
+plus more recent samples from those same populations, we may want to
+compare to see if the proportions appear to have changed.
+This is called a goodness of fit test for a multinomial experiment.
+How can we execute it?</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -256,56 +251,77 @@ that follows a normal distribution, what tools can help us do so?</p>
       </h2>
     
 
-<p><a href="../how-to-test-data-for-normality-in-python-using-scipy">View this solution alone.</a></p>
+<p><a href="../how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment-in-python-using-scipy">View this solution alone.</a></p>
 
-<p>We’re going to use some fake restaurant data,
-but you can replace our fake data with your real data in the code below.
-The values in our fake data represent the amount of money that customers spent
-on a Sunday morning at the restaurant.</p>
+<p>Let’s say we have a dataset with the previous population proportions for four categories.  (This is contrived data, but the code below can be used on your actual data.)</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Frequency</th>
+      <th>Proportion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>43</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>62</td>
+      <td>0.36</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>52</td>
+      <td>0.30</td>
+    </tr>
+    <tr>
+      <td>D</td>
+      <td>16</td>
+      <td>0.09</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>We have also taken a more recent sample and found the number of observations from it that belong to each category. We want to determine if the proportions coming from the recent sample are equal to the previous proportions.</p>
+
+<p>SciPy expects that we will have two lists, one with the expected number of observations in each group (from the previous, or hypothesized proportions) and the other with the actual number of observations in each group (from the more recent sample). SciPy also expects that the total number of observations in each list is the same. We’ll create two lists below with the fake data from above, but you can replace them with your real data</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-
-<span class="c1"># Replace your data here
-</span><span class="n">spending</span> <span class="o">=</span> <span class="p">[</span><span class="mi">34</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
-            <span class="mi">16</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">37</span><span class="p">]</span>
-
-<span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">spending</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">spending</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></td><td class="rouge-code"><pre><span class="c1"># Replace your data in the next two lines
+</span><span class="n">old_observations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">43</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span>
+<span class="n">new_observations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">56</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>(36.52, 15.772127313713899)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>We set the null hypothesis to be that the proportions of each category from the recent sample are equal to the previous proportions</p>
 
-<p>We will now conduct a test of the following null hypothesis:
-The data comes from a population that is normally distributed with mean 36.52 and standard deviation 15.77.</p>
+\[H_0: p_A = 0.25\text{ and }\ p_B = 0.36\text{ and }\ p_C = 0.30\text{ and }\ p_D=0.09.\]
 
-<p>We will use a value $\alpha=0.05$ as our Type I error rate.
-The <code class="language-plaintext highlighter-rouge">normaltest()</code> function in SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> package can perform D’Agostino and Pearson’s test for normality,
-which uses the skew and kurtosis of the data.</p>
+<p>We choose a value $0 \le \alpha \le 1$ as our Type 1 error rate. We’ll let $\alpha$ be 0.05 here.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="n">stats</span><span class="p">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span>
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># Run the Chi-square test, giving the test statistic and p-value
+</span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">chisquare</span><span class="p">(</span><span class="n">f_obs</span><span class="o">=</span><span class="n">new_observations</span><span class="p">,</span> <span class="n">f_exp</span><span class="o">=</span><span class="n">old_observations</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>NormaltestResult(statistic=3.0866213696851097, pvalue=0.21367252674488552)
+</pre></td><td class="rouge-code"><pre>Power_divergenceResult(statistic=44.98776977898321, pvalue=9.30824439694332e-10)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The p-value is apprximately 0.21367, which is greater than $\alpha=0.05$, so we fail to reject our null hypothesis.
-We would continue to operate under our original assumption that the data come from a normally distributed population.</p>
+<p>Our $p$-value is less than $\alpha$, so we have sufficient evidence to reject the null hypothesis. It does appear that the proportion of at least one of the four categories is significantly different now from what it was previously.</p>
 
-<p>Content last modified on 16 September 2021.</p>
+<p>Content last modified on 23 September 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality/Python, using SciPy.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a goodness of fit test for a multinomial experiment/Python, using SciPy.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -315,12 +331,53 @@ We would continue to operate under our original assumption that the data come fr
       </h2>
     
 
-<p><a href="../how-to-test-data-for-normality-in-r">View this solution alone.</a></p>
+<p><a href="../how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment-in-r">View this solution alone.</a></p>
 
-<p>We’re going to use some fake restaurant data,
-but you can replace our fake data with your real data in the code below.
-The values in our fake data represent the amount of money that customers spent
-on a Sunday morning at the restaurant.</p>
+<p>Let’s say we have a dataset with the previous population proportions for four categories.
+(This is contrived data, but the code below can be used on your actual data.)</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Frequency</th>
+      <th>Proportion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>43</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>62</td>
+      <td>0.36</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>52</td>
+      <td>0.30</td>
+    </tr>
+    <tr>
+      <td>D</td>
+      <td>16</td>
+      <td>0.09</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>We have also taken a more recent sample and found the number of observations from it
+that belong to each category. We want to determine if the proportions
+coming from the recent sample are equal to the previous proportions.</p>
+
+<p>R expects that we will have two vectors, one with the expected number of observations
+in each group (from the previous, or hypothesized proportions) and the other with
+the actual number of observations in each group (from the more recent sample).
+R also expects that the total number of observations in each vector is the same.
+We’ll create two vectors below with the fake data from above,
+but you can replace them with your real data</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -328,56 +385,48 @@ on a Sunday morning at the restaurant.</p>
 4
 5
 6
-</pre></td><td class="rouge-code"><pre><span class="c1"># Replace your data here</span><span class="w">
-</span><span class="n">spending</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">34</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">37</span><span class="p">,</span><span class="w"> </span><span class="m">13</span><span class="p">,</span><span class="w"> </span><span class="m">22</span><span class="p">,</span><span class="w"> </span><span class="m">65</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w">
-              </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">23</span><span class="p">,</span><span class="w"> </span><span class="m">28</span><span class="p">,</span><span class="w"> </span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">61</span><span class="p">,</span><span class="w"> </span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">47</span><span class="p">,</span><span class="w"> </span><span class="m">37</span><span class="p">)</span><span class="w">
-
-</span><span class="n">mean</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
-</span><span class="n">sd</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="c1"># our fake data:</span><span class="w">
+</span><span class="n">old.observations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">43</span><span class="p">,</span><span class="w"> </span><span class="m">62</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">16</span><span class="p">)</span><span class="w">
+</span><span class="n">new.observations</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">80</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">)</span><span class="w">
+</span><span class="c1"># now organized into a data frame:</span><span class="w">
+</span><span class="n">categories</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"A"</span><span class="p">,</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C"</span><span class="p">,</span><span class="w"> </span><span class="s2">"D"</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span><span class="w"> </span><span class="n">old.observations</span><span class="p">,</span><span class="w"> </span><span class="n">new.observations</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre>[1] 36.52
+<p>We set the null hypothesis to be that the proportions of each category
+from the recent sample are equal to the previous proportions.</p>
 
+\[H_0: p_A = 0.25\text{ and }\ p_B = 0.36\text{ and }\ p_C = 0.30\text{ and }\ p_D=0.09.\]
 
-
-[1] 15.77213
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>We will now conduct a test of the following null hypothesis:
-The data comes from a population that is normally distributed with mean 36.52 and standard deviation 15.77.</p>
-
-<p>We will use a value $\alpha=0.05$ as our Type I error rate.
-The <code class="language-plaintext highlighter-rouge">pearson.test()</code> function in the <code class="language-plaintext highlighter-rouge">nortest</code> package can perform Pearson’s $\chi^2$ test for normality.</p>
+<p>We choose a value $0 \le \alpha \le 1$ as our Type 1 error rate.
+We’ll let $\alpha$ be 0.05 here.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages("nortest") # if you have not already done so</span><span class="w">
-</span><span class="n">library</span><span class="p">(</span><span class="n">nortest</span><span class="p">)</span><span class="w">
-</span><span class="n">pearson.test</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="c1"># Run the Chi-Square test, giving the test statistic and p-value</span><span class="w">
+</span><span class="n">chisq.test</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">new.observations</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="o">=</span><span class="n">data</span><span class="o">$</span><span class="n">old.observations</span><span class="p">,</span><span class="w"> </span><span class="n">rescale.p</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre>	Pearson chi-square normality test
+</pre></td><td class="rouge-code"><pre>	Chi-squared test for given probabilities
 
-data:  spending
-P = 3.48, p-value = 0.6264
+data:  data$new.observations
+X-squared = 44.988, df = 3, p-value = 9.308e-10
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The p-value is 0.6264, which is greater than $\alpha=0.05$, so we fail to reject our null hypothesis.
-We would continue to operate under our original assumption that the data come from a normally distributed population.</p>
+<p>Our $p$-value is less than $\alpha$, so we have sufficient evidence to reject the null hypothesis.
+It does appear that the proportion of at least one of the four categories
+is significantly different now from what it was previously.</p>
 
-<p>Content last modified on 16 September 2021.</p>
+<p>If instead you provided the population proportions as the old observations,
+that is, a vector of values that sum to 1, you can omit the <code class="language-plaintext highlighter-rouge">rescale.p</code> argument.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality/R.md">edit the source</a>.</p>
+<p>Content last modified on 23 September 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a goodness of fit test for a multinomial experiment/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
