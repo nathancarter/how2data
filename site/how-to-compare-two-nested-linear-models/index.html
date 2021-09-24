@@ -282,15 +282,59 @@
 <span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>            df      sum_sq     mean_sq           F        PR(&gt;F)
-cyl        1.0  817.712952  817.712952  124.043687  5.424327e-12
-wt         1.0  117.162269  117.162269   17.773034  2.220200e-04
-Residual  29.0  191.171966    6.592137         NaN           NaN
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>cyl</th>
+      <td>1.0</td>
+      <td>817.712952</td>
+      <td>817.712952</td>
+      <td>124.043687</td>
+      <td>5.424327e-12</td>
+    </tr>
+    <tr>
+      <th>wt</th>
+      <td>1.0</td>
+      <td>117.162269</td>
+      <td>117.162269</td>
+      <td>17.773034</td>
+      <td>2.220200e-04</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>29.0</td>
+      <td>191.171966</td>
+      <td>6.592137</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>In the final column of output we see that all numbers are below $0.05$, which suggests that both predictors are significant.  But do the two predictors have an interaction effect?  Let’s create a model containing the interaction term.</p>
 
@@ -300,17 +344,67 @@ Residual  29.0  191.171966    6.592137         NaN           NaN
 <span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">int_model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre>            df      sum_sq     mean_sq           F        PR(&gt;F)
-cyl        1.0  817.712952  817.712952  145.856269  1.280635e-12
-wt         1.0  117.162269  117.162269   20.898350  8.942713e-05
-cyl:wt     1.0   34.195767   34.195767    6.099533  1.988242e-02
-Residual  28.0  156.976199    5.606293         NaN           NaN
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>cyl</th>
+      <td>1.0</td>
+      <td>817.712952</td>
+      <td>817.712952</td>
+      <td>145.856269</td>
+      <td>1.280635e-12</td>
+    </tr>
+    <tr>
+      <th>wt</th>
+      <td>1.0</td>
+      <td>117.162269</td>
+      <td>117.162269</td>
+      <td>20.898350</td>
+      <td>8.942713e-05</td>
+    </tr>
+    <tr>
+      <th>cyl:wt</th>
+      <td>1.0</td>
+      <td>34.195767</td>
+      <td>34.195767</td>
+      <td>6.099533</td>
+      <td>1.988242e-02</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>28.0</td>
+      <td>156.976199</td>
+      <td>5.606293</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>As seen in the final column of output, there is a significant interaction between the two predictors (bottom number being below $0.05$). To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
 
@@ -320,13 +414,54 @@ Residual  28.0  156.976199    5.606293         NaN           NaN
 <span class="n">anova_lm</span><span class="p">(</span><span class="n">add_model</span><span class="p">,</span> <span class="n">int_model</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>   df_resid         ssr  df_diff    ss_diff         F    Pr(&gt;F)
-0      29.0  191.171966      0.0        NaN       NaN       NaN
-1      28.0  156.976199      1.0  34.195767  6.099533  0.019882
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df_resid</th>
+      <th>ssr</th>
+      <th>df_diff</th>
+      <th>ss_diff</th>
+      <th>F</th>
+      <th>Pr(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>29.0</td>
+      <td>191.171966</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28.0</td>
+      <td>156.976199</td>
+      <td>1.0</td>
+      <td>34.195767</td>
+      <td>6.099533</td>
+      <td>0.019882</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>We have just performed this hypothesis test:</p>
 
@@ -338,7 +473,7 @@ Residual  28.0  156.976199    5.606293         NaN           NaN
 
 <p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 31 August 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -436,7 +571,7 @@ Residuals 28 156.97620   5.606293         NA           NA
 
 <p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
 
-<p>Content last modified on 08 September 2021.</p>
+<p>Content last modified on 07 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">

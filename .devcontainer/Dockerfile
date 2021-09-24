@@ -5,8 +5,13 @@ FROM jupyter/datascience-notebook
 # the Jupyter datascience-notebook image:
 USER jovyan
 RUN pip3 --disable-pip-version-check --no-cache-dir \
-    install rdatasets pingouin scikit_posthocs \
+    install rdatasets pingouin scikit_posthocs tabulate jupytext \
  && rm -rf /tmp/pip-tmp
+# And these R packages that don't come built into the Jupyter datascience-notebook image:
+RUN R -e 'install.packages("agricolae",repos="http://cran.us.r-project.org")'
+RUN R -e 'install.packages("mosaic",repos="http://cran.us.r-project.org")'
+RUN R -e 'install.packages("gplots",repos="http://cran.us.r-project.org")'
+RUN R -e 'install.packages("nortest",repos="http://cran.us.r-project.org")'
 
 # [Optional] Uncomment this section to install additional OS packages.
 USER root

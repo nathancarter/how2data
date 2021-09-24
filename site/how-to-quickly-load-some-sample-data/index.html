@@ -268,19 +268,75 @@ datasets as follows:</p>
 </span><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>   Sepal.Length  Sepal.Width  Petal.Length  Petal.Width Species
-0           5.1          3.5           1.4          0.2  setosa
-1           4.9          3.0           1.4          0.2  setosa
-2           4.7          3.2           1.3          0.2  setosa
-3           4.6          3.1           1.5          0.2  setosa
-4           5.0          3.6           1.4          0.2  setosa
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal.Length</th>
+      <th>Sepal.Width</th>
+      <th>Petal.Length</th>
+      <th>Petal.Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>But what datasets are available?  There are many!  You can find a full list in the package itself.</p>
 
@@ -290,115 +346,210 @@ datasets as follows:</p>
 <span class="n">summary</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-</pre></td><td class="rouge-code"><pre>     Package        Item                                              Title  \
-0       boot        acme                             Monthly Excess Returns   
-1       boot        aids       Delay in AIDS Reporting in England and Wales   
-2       boot   aircondit             Failures of Air-conditioning Equipment   
-3       boot  aircondit7             Failures of Air-conditioning Equipment   
-4       boot        amis                     Car Speeding and Warning Signs   
-...      ...         ...                                                ...   
-1340   Zelig       tobin                                 Tobin's Tobit Data   
-1341   Zelig     turnout  Turnout Data Set from the National Election Su...   
-1342   Zelig  voteincome  Sample Turnout and Demographic Data from the 2...   
-1343   Zelig      Weimar                          1932 Weimar election data   
-1344   Zelig   Zelig.url                           Table of links for Zelig   
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-      Rows  Cols  n_binary  n_character  n_factor  n_logical  n_numeric  \
-0       60     3         0            1         0          0          2   
-1      570     6         1            0         0          0          6   
-2       12     1         0            0         0          0          1   
-3       24     1         0            0         0          0          1   
-4     8437     4         1            0         0          0          4   
-...    ...   ...       ...          ...       ...        ...        ...   
-1340    20     3         0            0         0          0          3   
-1341  2000     5         2            0         1          0          4   
-1342  1500     7         3            0         1          0          6   
-1343    10    11         0            0         0          0         11   
-1344    49     2         0            0         2          0          0   
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-                                                    CSV  \
-0     https://raw.github.com/vincentarelbundock/Rdat...   
-1     https://raw.github.com/vincentarelbundock/Rdat...   
-2     https://raw.github.com/vincentarelbundock/Rdat...   
-3     https://raw.github.com/vincentarelbundock/Rdat...   
-4     https://raw.github.com/vincentarelbundock/Rdat...   
-...                                                 ...   
-1340  https://raw.github.com/vincentarelbundock/Rdat...   
-1341  https://raw.github.com/vincentarelbundock/Rdat...   
-1342  https://raw.github.com/vincentarelbundock/Rdat...   
-1343  https://raw.github.com/vincentarelbundock/Rdat...   
-1344  https://raw.github.com/vincentarelbundock/Rdat...   
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Package</th>
+      <th>Item</th>
+      <th>Title</th>
+      <th>Rows</th>
+      <th>Cols</th>
+      <th>n_binary</th>
+      <th>n_character</th>
+      <th>n_factor</th>
+      <th>n_logical</th>
+      <th>n_numeric</th>
+      <th>CSV</th>
+      <th>Doc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>boot</td>
+      <td>acme</td>
+      <td>Monthly Excess Returns</td>
+      <td>60</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>boot</td>
+      <td>aids</td>
+      <td>Delay in AIDS Reporting in England and Wales</td>
+      <td>570</td>
+      <td>6</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>boot</td>
+      <td>aircondit</td>
+      <td>Failures of Air-conditioning Equipment</td>
+      <td>12</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>boot</td>
+      <td>aircondit7</td>
+      <td>Failures of Air-conditioning Equipment</td>
+      <td>24</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>boot</td>
+      <td>amis</td>
+      <td>Car Speeding and Warning Signs</td>
+      <td>8437</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1340</th>
+      <td>Zelig</td>
+      <td>tobin</td>
+      <td>Tobin's Tobit Data</td>
+      <td>20</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>1341</th>
+      <td>Zelig</td>
+      <td>turnout</td>
+      <td>Turnout Data Set from the National Election Su...</td>
+      <td>2000</td>
+      <td>5</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>1342</th>
+      <td>Zelig</td>
+      <td>voteincome</td>
+      <td>Sample Turnout and Demographic Data from the 2...</td>
+      <td>1500</td>
+      <td>7</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>6</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>1343</th>
+      <td>Zelig</td>
+      <td>Weimar</td>
+      <td>1932 Weimar election data</td>
+      <td>10</td>
+      <td>11</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>11</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+    <tr>
+      <th>1344</th>
+      <td>Zelig</td>
+      <td>Zelig.url</td>
+      <td>Table of links for Zelig</td>
+      <td>49</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+      <td>https://raw.github.com/vincentarelbundock/Rdat...</td>
+    </tr>
+  </tbody>
+</table></div>
+<p>1345 rows × 12 columns</p>
+</div>
 
-                                                    Doc  
-0     https://raw.github.com/vincentarelbundock/Rdat...  
-1     https://raw.github.com/vincentarelbundock/Rdat...  
-2     https://raw.github.com/vincentarelbundock/Rdat...  
-3     https://raw.github.com/vincentarelbundock/Rdat...  
-4     https://raw.github.com/vincentarelbundock/Rdat...  
-...                                                 ...  
-1340  https://raw.github.com/vincentarelbundock/Rdat...  
-1341  https://raw.github.com/vincentarelbundock/Rdat...  
-1342  https://raw.github.com/vincentarelbundock/Rdat...  
-1343  https://raw.github.com/vincentarelbundock/Rdat...  
-1344  https://raw.github.com/vincentarelbundock/Rdat...  
-
-[1345 rows x 12 columns]
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 26 July 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to quickly load some sample data/Python.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -445,7 +596,7 @@ Ensure that you have it installed as follows.</p>
 
 <p>To page through a list of all available datasets, just call <code class="language-plaintext highlighter-rouge">data()</code> with no arguments.</p>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 26 July 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to quickly load some sample data/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">

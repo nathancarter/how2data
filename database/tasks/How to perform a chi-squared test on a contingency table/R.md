@@ -32,6 +32,3 @@ We can manually compare the $p$-value to an $\alpha$ we've chosen, or ask R to d
 alpha <- 0.05            # or choose your own alpha here
 results$p.value < alpha  # reject the null hypothesis?
 ```
-
-Something is clearly wrong with either this example or the corresponding Python example,
-because they are giving very different results for the same data.
