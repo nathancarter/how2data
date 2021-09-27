@@ -4,7 +4,7 @@ author: Nathan Carter (ncarter@bentley.edu)
 
 This is a two-sided test with the null hypothesis $H_0:\mu=\bar x$.
 We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
-(false positive, finding we should reject $H_0$ when it's actually true.)
+(false positive, finding we should reject $H_0$ when it's actually true).
 
 ```python
 from scipy import stats
