@@ -55,14 +55,20 @@ color_scheme: my_colors
 exclude:
   - .sass-cache/
   - .jekyll-cache/
-  - gemfiles/
-  - Gemfile
-  - Gemfile.lock
-  - database/
+  - ./gemfiles/
+  - ./Gemfile
+  - ./Gemfile.lock
+  - ./database/
   - .devcontainer/
-  - build*.py
-  # - node_modules/
-  # - vendor/bundle/
-  # - vendor/cache/
-  # - vendor/gems/
-  # - vendor/ruby/
+  - ./build*.py
+  - ./site/
+  - ./resources/
+  - ./examples/
+  # - assets/
+  - .vscode/
+  - __pycache__/
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
