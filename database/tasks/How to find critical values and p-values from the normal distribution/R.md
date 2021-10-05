@@ -3,7 +3,7 @@ author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
 ---
 
 If we choose a value $0 \le \alpha \le 1$ as our Type 1 error rate,
-then we can find the *critical value* from the normal distribution using R's
+then we can find the critical value from the normal distribution using R's
 `qnorm()` function. The code below shows how to do this for left-tailed,
 right-tailed, and two-tailed hypothesis tests.
 
