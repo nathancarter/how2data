@@ -265,47 +265,15 @@ Naturally, you would apply this solution to your own data instead.</p>
 <span class="n">df</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5/7/19</td>
-      <td>Work</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5/10/19</td>
-      <td>Party</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5/11/19</td>
-      <td>More work</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>      Date      Event
+0   5/7/19       Work
+1  5/10/19      Party
+2  5/11/19  More work
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>If you’ve already got the data in a DataFrame column, and you wish to convert it to dates, use the <code class="language-plaintext highlighter-rouge">pd.to_datetime</code> function, which will do its best to read whatever format your dates are in:</p>
 
@@ -315,47 +283,15 @@ Naturally, you would apply this solution to your own data instead.</p>
 <span class="n">df</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2019-05-07</td>
-      <td>Work</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2019-05-10</td>
-      <td>Party</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2019-05-11</td>
-      <td>More work</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>        Date      Event
+0 2019-05-07       Work
+1 2019-05-10      Party
+2 2019-05-11  More work
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>But if they aren’t in a standard format, you can specify just about any format as in the following example.  <a href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">See the Python documentation</a> for format details.</p>
 
@@ -389,7 +325,7 @@ Naturally, you would apply this solution to your own data instead.</p>
 <span class="c1"># Note the double brackets, and indices start counting at zero.
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 26 July 2021.</p>
+<p>Content last modified on 01 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to convert a text column into dates/Python, using pandas.md">edit the source</a>.</p>
 
