@@ -216,13 +216,16 @@ def make_all_task_names_links ( markdown ):
 ###
 
 # Main function to build a solution page.  1st parameter is any row from solutions_df.
-def build_solution_page ( solution_row, force_rerun_solution=False ):
+def build_solution_page ( solution_row, force_rerun_solution=False,
+                          in_folder=None, out_folder=jekyll_input_folder,
+                          task_row=None ):
     out_filename = solution_row['permalink'] + '.md'
-    input_file = os.path.join( tasks_folder, solution_row['task name'],
-        solution_row['solution filename'] )
-    output_file = os.path.join( jekyll_input_folder, out_filename )
+    if in_folder is None:
+        in_folder = os.path.join( tasks_folder, solution_row['task name'] )
+    input_file = os.path.join( in_folder, solution_row['solution filename'] )
+    output_file = os.path.join( out_folder, out_filename )
     task_file = get_unique_markdown_doc( os.path.join(
-        tasks_folder, solution_row['task name'], 'description' ) )
+        in_folder, 'description' ) )
     if not force_rerun_solution \
     and not must_rebuild_file( input_file, output_file ) \
     and not must_rebuild_file( task_file, output_file ):
@@ -236,7 +239,8 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
         make_all_task_names_links( solution_row['content'] ) )
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
-    task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
+    if task_row is None:
+        task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
     contributors = solution_row["author"]
     if type( contributors ) == str:
         contributors = f'Contributed by {contributors}'
@@ -255,9 +259,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
             adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
                 make_all_task_names_links( task_row['content'] ) ) )
         .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
-            content,
-            os.path.join( tasks_folder, solution_row['task name'] ),
-            solution_row['software'] ) ) )
+            content, in_folder, solution_row['software'] ) ) )
         .replace( 'CONTRIBUTORS', contributors )
     )
     print( f'Built solution for: {solution_row["task name"]}' )
@@ -265,23 +267,24 @@ def build_solution_page ( solution_row, force_rerun_solution=False ):
     print( f'     Solution name: {solution_row["solution name"]}' )
     print()
     mark_as_regenerated( out_filename )
+    return output_file
 
 # How to fetch a generated solution's body from within the generated markdown
-def get_generated_solution_body ( solution_row ):
+def get_generated_solution_body ( solution_row, folder=jekyll_input_folder ):
     title = solution_row['solution title']
     generated_file = blogify( title ) + '.md'
-    all_content = read_text_file( os.path.join( jekyll_input_folder, generated_file ) )
+    all_content = read_text_file( os.path.join( folder, generated_file ) )
     return unwrap_from_html_comments( all_content )
 
 # How to build a task page; pass any row from tasks_df.
 # IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
 # using the build_solution_page() function on any files that need their solutions
 # rebuilt/updated.  See that function defined above.
-def build_task_page ( row ):
+def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
     out_filename = row['permalink'] + '.md'
-    output_file = os.path.join( jekyll_input_folder, out_filename )
+    output_file = os.path.join( out_folder, out_filename )
     all_solutions = ''
-    software_for_this_task = \
+    software_for_this_task = solution_rows if solution_rows is not None else \
         solutions_df[solutions_df['task name'] == row['task name']]
     for index, solution_row in software_for_this_task.iterrows():
         solution_name = without_extension( solution_row['solution name'] )
@@ -292,7 +295,7 @@ def build_task_page ( row ):
 
 [View this solution alone.](../{solution_row["permalink"]})
 
-{get_generated_solution_body( solution_row )}
+{get_generated_solution_body( solution_row, out_folder )}
 
 '''
     if all_solutions == '':
@@ -331,6 +334,7 @@ see [our Contributing page](contributing) for how to help extend this website.
         .replace( 'OPPORTUNITIES', opportunities )
     )
     mark_as_regenerated( out_filename )
+    return output_file
 
 # Generate a page for a given software package,
 # from a row in the software_df DataFrame.

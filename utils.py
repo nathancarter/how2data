@@ -36,6 +36,10 @@ def write_markdown ( file, markdown ):
     write_text_file( file, markdown.replace( '\\{', '\\\\{' )
                                    .replace( '\\}', '\\\\}' ) )
 
+# Prepend text to a file
+def prepend_text_to_file ( file, preamble ):
+    write_text_file( file, preamble + read_text_file( file ) )
+
 # Ensure that a folder exists, creating it if needed
 def ensure_folder_exists ( path ):
     if not os.path.isdir( path ):
