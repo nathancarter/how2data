@@ -8,10 +8,7 @@
             "type": "shell",
             "command": "bash build.sh && bash serve.sh",
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
             "label": "Rebuild How to Data website",
@@ -33,6 +30,16 @@
             "command": "bash create_task.sh",
             "problemMatcher": [],
             "group": "build"
-        }
+        },
+        {
+            "label": "Run preview build script",
+            "type": "shell",
+            "command": "python preview.py",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+       }
     ]
 }

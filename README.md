@@ -43,9 +43,14 @@ to do so as follows.
    defined in the repository.  Say yes.
    
    (This will be very slow but only once.  The container image gets cached.)
-1. To build the site, press `Ctrl+Shift+B` (on Mac `Cmd+Shift+B`), VSCode's
-   shortcut for "Run Build Task."
+1. To build the site, press `Ctrl+Alt+Shift+B` (on Mac `Cmd+Option+Shift+B`),
+   VSCode's shortcut for "Run Build Task" and choose the option
+   "Rebuild website and serve locally for testing."
    
    (Also very slow just once.  Later builds leverage a cache.)
 1. When complete, visit the test site at `http://localhost:4000/how2data/site/`.
    To stop the local server, press `Ctrl+C`.
+
+If you want to add content to the site, you may not want to rebuild the site
+every time you make changes, despite the speed improvements of caching.  See
+the `preview.py` script in this folder for a shortcut.
