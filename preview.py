@@ -34,7 +34,8 @@
 #  When you've gotten the source files into acceptable form using this method,
 #  you can then create a new task folder inside the database folder and move
 #  them there, then rebuild the site once as a sanity check before committing
-#  and pushing.
+#  and pushing.  There is a script to automate this process, finish_preview.sh,
+#  in this same folder.
 #
 #  Thus you run many times this preview script, which is fast, but you run
 #  only once the full site rebuilding script, which is slow.
