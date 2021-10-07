@@ -9,3 +9,5 @@ give me the best linear model $\hat y=\beta_0+\beta_1x$ based on my data?
 Related tasks:
 
  * How to compute R-squared for a simple linear model
+ * How to fit a multiple linear regression model
+ * How to predict the response variable in a linear model
