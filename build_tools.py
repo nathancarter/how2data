@@ -205,8 +205,9 @@ new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
     return f'{github_url}/tree/main/{path_in_project( filename )}'
 def make_all_task_names_links ( markdown ):
-    for index, task_row in tasks_df.iterrows():
-        markdown = re.sub( '(' + re.escape( task_row['task name'] ) + ')',
+    longer_first = tasks_df.sort_values( 'task name', ascending=False )
+    for index, task_row in longer_first.iterrows():
+        markdown = re.sub( '(?<!\\[)(' + re.escape( task_row['task name'] ) + ')',
             lambda x: f'[{x.group(0)}](../{task_row["permalink"]})',
             markdown, flags=re.IGNORECASE )
     return markdown
