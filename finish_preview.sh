@@ -10,10 +10,11 @@ then
   exit 1
 fi
 
-FOLDER="database/tasks/$@/"
-GENERATED="preview/generated/*"
+FOLDER="./database/tasks/$@/"
+SOURCES="./preview/*.*"
+GENERATED="./preview/generated/*"
 
-if [ ! "$(ls -A \"$GENERATED\")" ]
+if [ ! "$(ls -A $GENERATED)" ]
 then
   echo "Error: preview has not been run; this folder is empty: $GENERATED"
   exit 1
@@ -25,11 +26,11 @@ mkdir "$FOLDER"
 
 echo ""
 echo "> Moving files below to \"$FOLDER\""
-ls -1 preview/*.*
-mv preview/*.* "$FOLDER"
+ls -1 $SOURCES
+mv $SOURCES "$FOLDER"
 
 echo ""
 echo "> Removing files below"
-ls -1 preview/generated/*
-rm -rf preview/generated/*
+ls -1 $GENERATED
+rm -rf $GENERATED
 
