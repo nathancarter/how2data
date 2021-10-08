@@ -12,6 +12,7 @@ RUN R -e 'install.packages("agricolae",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("mosaic",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("gplots",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("nortest",repos="http://cran.us.r-project.org")'
+RUN R -e 'install.packages("DescTools",repos="http://cran.us.r-project.org")'
 
 # [Optional] Uncomment this section to install additional OS packages.
 USER root
