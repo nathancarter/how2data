@@ -8,3 +8,4 @@ Related tasks:
 
  * How to do a Kruskal-Wallis test
  * How to do a Wilcoxon rank-sum test
+ * How to do a Wilcoxon signed-rank test for matched pairs

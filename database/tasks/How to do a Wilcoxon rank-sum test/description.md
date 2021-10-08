@@ -10,3 +10,4 @@ Related tasks:
 
  * How to do a Kruskal-Wallis test
  * How to do a Wilcoxon signed-rank test
+ * How to do a Wilcoxon signed-rank test for matched pairs
