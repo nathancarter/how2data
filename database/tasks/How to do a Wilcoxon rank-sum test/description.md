@@ -9,3 +9,4 @@ the other)? One method is the Wilcoxon Rank-Sum Test.
 Related tasks:
 
  * How to do a Kruskal-Wallis test
+ * How to do a Wilcoxon signed-rank test
