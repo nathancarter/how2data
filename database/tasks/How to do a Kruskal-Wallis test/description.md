@@ -1,3 +1,4 @@
+
 If we have samples from several independent populations, we might want to test
 whether the population medians are equal.
 We may not be able to assume anything about the populations' variances,
@@ -8,4 +9,6 @@ How do we perform a Kruskal-Wallis Test?
 
 Related tasks:
 
-* How to do a one-way analysis of variance (ANOVA)
+ * How to do a one-way analysis of variance (ANOVA)
+ * How to use Bonferroni's Correction method
+ * How to do a Wilcoxon rank-sum test
