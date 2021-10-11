@@ -7,3 +7,7 @@ We want to determine if it is significantly different from, greater than,
 or less than zero (or any other hypothesized value).
 We can do so with a two-tailed, right-tailed, or left-tailed hypothesis test
 for matched pairs.
+
+Related tasks:
+
+ * How to compute a confidence interval for a mean difference (matched pairs)

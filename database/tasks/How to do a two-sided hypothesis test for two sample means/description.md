@@ -10,3 +10,5 @@ Related tasks:
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a one-way analysis of variance (ANOVA)
  * How to do a one-sided hypothesis test for two sample means
+ * How to do a hypothesis test for a mean difference (matched pairs)
+ * How to do a hypothesis test for a population proportion

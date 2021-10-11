@@ -7,6 +7,7 @@ Let's assume we've chosen a confidence level of $\alpha$ = 0.05.
 
 Related tasks:
 
+ * How to do a hypothesis test for a mean difference (matched pairs)
  * How to compute a confidence interval for a regression coefficient
  * How to compute a confidence interval for a sample mean
  * How to compute a confidence interval for a single population variance
