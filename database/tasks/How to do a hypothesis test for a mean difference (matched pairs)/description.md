@@ -11,3 +11,9 @@ for matched pairs.
 Related tasks:
 
  * How to compute a confidence interval for a mean difference (matched pairs)
+ * How to do a hypothesis test for a mean difference (matched pairs)
+ * How to do a hypothesis test for a population proportion
+ * How to do a hypothesis test for population variance
+ * How to do a one-sided hypothesis test for two sample means
+ * How to do a two-sided hypothesis test for a sample mean
+ * How to do a two-sided hypothesis test for two sample means
