@@ -10,6 +10,7 @@ Related tasks:
 
  * How to compute a confidence interval for the population proportion
  * How to do a hypothesis test for a mean difference (matched pairs)
+ * How to do a hypothesis test for the difference between means when both population variances are known
  * How to do a one-sided hypothesis test for two sample means
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a two-sided hypothesis test for two sample means
