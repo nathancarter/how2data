@@ -94,6 +94,7 @@
 <!--
   --
   --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
   --
   -->
 
@@ -112,16 +113,29 @@
             || isNotPlainText( element.parentNode ) )
     window.addEventListener( 'load', () => {
         Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
-        .filter( isNotPlainText )
         .forEach( codeBlock => {
-            const button = makeButton()
-            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
-            button.addEventListener( 'click', () => {
-                button.innerText = '' // don't copy the word "copy"
-                window.navigator.clipboard.writeText( codeBlock.innerText )
-                button.innerText = 'Copied!'
-                setTimeout( () => button.innerText = 'Copy', 3000 )
-            } )
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
         } )
     } )
 </script>
@@ -441,6 +455,38 @@ To see them categorized, check out the <a href="../topics">topics page</a>.</p>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment">How to do a goodness of fit test for a multinomial experiment</a></td>
       <td style="text-align: left">In Python: <a href="../how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-goodness-of-fit-test-for-a-multinomial-experiment-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-a-mean-difference-matched-pairs">How to do a hypothesis test for a mean difference (matched pairs)</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-hypothesis-test-for-a-mean-difference-matched-pairs-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-hypothesis-test-for-a-mean-difference-matched-pairs-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-a-population-proportion">How to do a hypothesis test for a population proportion</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-hypothesis-test-for-a-population-proportion-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-hypothesis-test-for-a-population-proportion-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-population-variance">How to do a hypothesis test for population variance</a></td>
+      <td style="text-align: left">In R: <a href="../how-to-do-a-hypothesis-test-for-population-variance-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-the-difference-between-means-when-both-population-variances-are-known">How to do a hypothesis test for the difference between means when both population variances are known</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-hypothesis-test-for-the-difference-between-means-when-both-population-variances-are-known-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-hypothesis-test-for-the-difference-between-means-when-both-population-variances-are-known-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-the-difference-between-two-proportions">How to do a hypothesis test for the difference between two proportions</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-hypothesis-test-for-the-difference-between-two-proportions-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-hypothesis-test-for-the-difference-between-two-proportions-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-the-mean-with-known-standard-deviation">How to do a hypothesis test for the mean with known standard deviation</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-hypothesis-test-for-the-mean-with-known-standard-deviation-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-hypothesis-test-for-the-mean-with-known-standard-deviation-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-for-the-ratio-of-two-population-variances">How to do a hypothesis test for the ratio of two population variances</a></td>
+      <td style="text-align: left">In Python: <a href="../how-to-do-a-hypothesis-test-for-the-ratio-of-two-population-variances-in-python-using-scipy">using SciPy</a><br />In R: <a href="../how-to-do-a-hypothesis-test-for-the-ratio-of-two-population-variances-in-r">solution</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="../how-to-do-a-hypothesis-test-of-a-coefficient-s-significance">How to do a hypothesis test of a coefficient’s significance</a></td>
+      <td style="text-align: left">In R: <a href="../how-to-do-a-hypothesis-test-of-a-coefficient-s-significance-in-r">solution</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../how-to-do-a-one-sided-hypothesis-test-for-two-sample-means">How to do a one-sided hypothesis test for two sample means</a></td>

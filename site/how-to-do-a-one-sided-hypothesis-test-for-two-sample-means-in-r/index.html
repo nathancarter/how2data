@@ -94,6 +94,7 @@
 <!--
   --
   --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
   --
   -->
 
@@ -112,16 +113,29 @@
             || isNotPlainText( element.parentNode ) )
     window.addEventListener( 'load', () => {
         Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
-        .filter( isNotPlainText )
         .forEach( codeBlock => {
-            const button = makeButton()
-            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
-            button.addEventListener( 'click', () => {
-                button.innerText = '' // don't copy the word "copy"
-                window.navigator.clipboard.writeText( codeBlock.innerText )
-                button.innerText = 'Copied!'
-                setTimeout( () => button.innerText = 'Copy', 3000 )
-            } )
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
         } )
     } )
 </script>
@@ -251,6 +265,8 @@ Or more precisely, is their difference significantly less than zero?</p>
   <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean">How to do a two-sided hypothesis test for a sample mean</a></li>
   <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a></li>
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
+  <li><a href="../how-to-do-a-hypothesis-test-for-a-mean-difference-matched-pairs">How to do a hypothesis test for a mean difference (matched pairs)</a></li>
+  <li><a href="../how-to-do-a-hypothesis-test-for-a-population-proportion">How to do a hypothesis test for a population proportion</a></li>
 </ul>
       <h2 id="solution">
         

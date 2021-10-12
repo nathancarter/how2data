@@ -94,6 +94,7 @@
 <!--
   --
   --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
   --
   -->
 
@@ -112,16 +113,29 @@
             || isNotPlainText( element.parentNode ) )
     window.addEventListener( 'load', () => {
         Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
-        .filter( isNotPlainText )
         .forEach( codeBlock => {
-            const button = makeButton()
-            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
-            button.addEventListener( 'click', () => {
-                button.innerText = '' // don't copy the word "copy"
-                window.navigator.clipboard.writeText( codeBlock.innerText )
-                button.innerText = 'Copied!'
-                setTimeout( () => button.innerText = 'Copy', 3000 )
-            } )
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
         } )
     } )
 </script>
@@ -247,13 +261,13 @@ or programming languages like Python and R.</p>
     <tr>
       <td style="text-align: left"><a href="../software-package-python">Python</a></td>
       <td style="text-align: left"><a href="../software-package-python"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/240px-Python.svg.png" alt="Python icon" style="height: 50px;" /></a></td>
-      <td style="text-align: right">86</td>
+      <td style="text-align: right">92</td>
       <td style="text-align: left"><a href="https://www.python.org/">https://www.python.org/</a></td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="../software-package-r">R</a></td>
       <td style="text-align: left"><a href="../software-package-r"><img src="https://www.r-project.org/logo/Rlogo.png" alt="R icon" style="height: 50px;" /></a></td>
-      <td style="text-align: right">58</td>
+      <td style="text-align: right">66</td>
       <td style="text-align: left"><a href="https://www.r-project.org/">https://www.r-project.org/</a></td>
     </tr>
     <tr>

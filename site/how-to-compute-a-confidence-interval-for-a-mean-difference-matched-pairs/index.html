@@ -94,6 +94,7 @@
 <!--
   --
   --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
   --
   -->
 
@@ -112,16 +113,29 @@
             || isNotPlainText( element.parentNode ) )
     window.addEventListener( 'load', () => {
         Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
-        .filter( isNotPlainText )
         .forEach( codeBlock => {
-            const button = makeButton()
-            codeBlock.insertBefore( button, codeBlock.childNodes[0] )
-            button.addEventListener( 'click', () => {
-                button.innerText = '' // don't copy the word "copy"
-                window.navigator.clipboard.writeText( codeBlock.innerText )
-                button.innerText = 'Copied!'
-                setTimeout( () => button.innerText = 'Copy', 3000 )
-            } )
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
         } )
     } )
 </script>
@@ -246,6 +260,7 @@ Let’s assume we’ve chosen a confidence level of $\alpha$ = 0.05.</p>
 <p>Related tasks:</p>
 
 <ul>
+  <li><a href="../how-to-do-a-hypothesis-test-for-a-mean-difference-matched-pairs">How to do a hypothesis test for a mean difference (matched pairs)</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-a-regression-coefficient">How to compute a confidence interval for a regression coefficient</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-a-sample-mean">How to compute a confidence interval for a sample mean</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-a-single-population-variance">How to compute a confidence interval for a single population variance</a></li>
