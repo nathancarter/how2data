@@ -12,6 +12,7 @@ Related tasks:
  * How to do a hypothesis test for a population proportion
  * How to do a hypothesis test for population variance
  * How to do a hypothesis test for the difference between two proportions
+ * How to do a hypothesis test for the mean with known standard deviation
  * How to do a hypothesis test for the ratio of two population variances
  * How to do a hypothesis test of a coefficient's significance
  * How to do a one-sided hypothesis test for two sample means
