@@ -13,6 +13,7 @@ Related tasks:
  * How to do a hypothesis test for the difference between means when both population variances are known
  * How to do a hypothesis test for the difference between two proportions
  * How to do a hypothesis test for the ratio of two population variances
+ * How to do a hypothesis test of a coefficient's significance
  * How to do a one-sided hypothesis test for two sample means
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a two-sided hypothesis test for two sample means
