@@ -12,20 +12,12 @@ with two delivery methods - orange juice or ascorbic acid (`supp`).
 df <- ToothGrowth
 ```
 
-This solution depends upon the `mosaic` package.
-
-```R
-# install.packages( "mosaic" ) # if you have not already done this
-
-# We load it here and silence all its warnings, for brevity,
-# but you can do just library(mosaic) if you prefer.
-suppressMessages(suppressWarnings(library(mosaic)))
-```
-
 If you wish to understand the distribution of the length of the tooth
 based on the delivery methods, you can construct a bivariate histogram plot.
 
 ```R
+# install.packages( "lattice" ) # if you have not already done this
+library(lattice)
 histogram( ~ len | supp, data = df)
 ```
 
