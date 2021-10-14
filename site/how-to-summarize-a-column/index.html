@@ -390,7 +390,7 @@ dtype: int64
 
 <p>This informs us that there are 10 observations for each of the combinations.</p>
 
-<p>Now consider the quantitative column “len” in the dataset (the length of the animal’s tooth).  We can compute summary statistics for it just as we can for a whole dataframe (as we cover in <a href="../how-to-compute-summary-statistics">how to compute summary statistics</a>).</p>
+<p>Now consider the quantitative column <code class="language-plaintext highlighter-rouge">len</code> in the dataset (the length of the animal’s tooth).  We can compute summary statistics for it just as we can for a whole dataframe (as we cover in <a href="../how-to-compute-summary-statistics">how to compute summary statistics</a>).</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">[</span><span class="s">'len'</span><span class="p">].</span><span class="n">describe</span><span class="p">()</span> <span class="c1"># Summary statistics
@@ -432,9 +432,87 @@ Name: len, dtype: float64
 Name: len, dtype: float64
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 13 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to summarize a column/Python.ipynb">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-summarize-a-column-in-r">View this solution alone.</a></p>
+
+<p>The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ToothGrowth</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Let us consider qualitative and quantitative variables separately.</p>
+
+<p>Consider the qualitative column “supp” in the dataset (which type of supplement the animal received).  To count the distribution of each categorical value, use <code class="language-plaintext highlighter-rouge">table()</code>:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">table</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">supp</span><span class="p">)</span><span class="w"> </span><span class="c1"># OR summary(df$supp)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>OJ VC 
+30 30 
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The output says that there are 30 observations under each of the two levels, Orange Juice and Ascorbic Acid.</p>
+
+<p>If you wish to jointly summarize two categorical columns, provide both to <code class="language-plaintext highlighter-rouge">table()</code>:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">table</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">supp</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">dose</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>     0.5  1  2
+  OJ  10 10 10
+  VC  10 10 10
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>This informs us that there are 10 observations for each of the combinations.</p>
+
+<p>Note: If there are more than 2 categorical variables of interest, you can use <code class="language-plaintext highlighter-rouge">ftable()</code> instead.</p>
+
+<p>Now consider the quantitative column <code class="language-plaintext highlighter-rouge">len</code> in the dataset (the length of the animal’s tooth).  We can compute summary statistics for it just as we can for a whole dataframe (as we cover in <a href="../how-to-compute-summary-statistics">how to compute summary statistics</a>).</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">len</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.20   13.07   19.25   18.81   25.27   33.90 
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The individual functions for mean, standard deviation, etc. covered under “<a href="../how-to-compute-summary-statistics">how to compute summary statistics</a>” apply to individual columns as well.  For example, we can compute quantiles:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">quantile</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="c1"># quantiles</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>    0%    25%    50%    75%   100% 
+ 4.200 13.075 19.250 25.275 33.900 
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 14 October 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to summarize a column/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -447,24 +525,6 @@ Name: len, dtype: float64
 <ul>
   <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
 </ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
-
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
-
-<ul>
-  <li>R</li>
-</ul>
-
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

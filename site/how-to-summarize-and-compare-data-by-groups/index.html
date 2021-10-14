@@ -277,21 +277,77 @@
 <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'ToothGrowth'</span><span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>To obtain the descriptive statistics of the quantitative column (“len” for length of teeth) based on the treatment levels (“supp”), we can combine the <code class="language-plaintext highlighter-rouge">groupby</code> and <code class="language-plaintext highlighter-rouge">describe</code> functions.</p>
+<p>To obtain the descriptive statistics of the quantitative column (<code class="language-plaintext highlighter-rouge">len</code> for length of teeth) based on the treatment levels (<code class="language-plaintext highlighter-rouge">supp</code>), we can combine the <code class="language-plaintext highlighter-rouge">groupby</code> and <code class="language-plaintext highlighter-rouge">describe</code> functions.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'supp'</span><span class="p">)[</span><span class="s">'len'</span><span class="p">].</span><span class="n">describe</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>      count       mean       std  min     25%   50%     75%   max
-supp                                                             
-OJ     30.0  20.663333  6.605561  8.2  15.525  22.7  25.725  30.9
-VC     30.0  16.963333  8.266029  4.2  11.200  16.5  23.100  33.9
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>supp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>OJ</th>
+      <td>30.0</td>
+      <td>20.663333</td>
+      <td>6.605561</td>
+      <td>8.2</td>
+      <td>15.525</td>
+      <td>22.7</td>
+      <td>25.725</td>
+      <td>30.9</td>
+    </tr>
+    <tr>
+      <th>VC</th>
+      <td>30.0</td>
+      <td>16.963333</td>
+      <td>8.266029</td>
+      <td>4.2</td>
+      <td>11.200</td>
+      <td>16.5</td>
+      <td>23.100</td>
+      <td>33.9</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>To choose which statistics you want to see, you could use the <code class="language-plaintext highlighter-rouge">agg</code> function and list the statistics you want.</p>
 
@@ -299,17 +355,65 @@ VC     30.0  16.963333  8.266029  4.2  11.200  16.5  23.100  33.9
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'supp'</span><span class="p">)[</span><span class="s">'len'</span><span class="p">].</span><span class="n">agg</span><span class="p">([</span><span class="s">'min'</span><span class="p">,</span><span class="s">'median'</span><span class="p">,</span><span class="s">'mean'</span><span class="p">,</span><span class="s">'max'</span><span class="p">,</span><span class="s">'std'</span><span class="p">,</span><span class="s">'count'</span><span class="p">])</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>      min  median       mean   max       std  count
-supp                                               
-OJ    8.2    22.7  20.663333  30.9  6.605561     30
-VC    4.2    16.5  16.963333  33.9  8.266029     30
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<p>If your focus is on just one statistics, you can often use its name in place of <code class="language-plaintext highlighter-rouge">agg</code>, as shown below, using the <code class="language-plaintext highlighter-rouge">quantile</code> function.</p>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>min</th>
+      <th>median</th>
+      <th>mean</th>
+      <th>max</th>
+      <th>std</th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>supp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>OJ</th>
+      <td>8.2</td>
+      <td>22.7</td>
+      <td>20.663333</td>
+      <td>30.9</td>
+      <td>6.605561</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>VC</th>
+      <td>4.2</td>
+      <td>16.5</td>
+      <td>16.963333</td>
+      <td>33.9</td>
+      <td>8.266029</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+
+<p>If your focus is on just one statistic, you can often use its name in place of <code class="language-plaintext highlighter-rouge">agg</code>, as shown below, using the <code class="language-plaintext highlighter-rouge">quantile</code> function.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'supp'</span><span class="p">)[</span><span class="s">'len'</span><span class="p">].</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.75</span><span class="p">])</span> <span class="c1"># Quartiles - default is median, i.e. 0.5
@@ -333,11 +437,67 @@ VC    0.25    11.200
 Name: len, dtype: float64
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>In this example, we grouped by just one category (“supp”), but the <code class="language-plaintext highlighter-rouge">groupby</code> function accepts a list of columns if you need to create subcategories, etc.</p>
+<p>In this example, we grouped by just one category (<code class="language-plaintext highlighter-rouge">supp</code>), but the <code class="language-plaintext highlighter-rouge">groupby</code> function accepts a list of columns if you need to create subcategories, etc.</p>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 13 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to summarize and compare data by groups/Python.ipynb">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-summarize-and-compare-data-by-groups-in-r">View this solution alone.</a></p>
+
+<p>The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ToothGrowth</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>To obtain the descriptive statistics of the quantitative column (<code class="language-plaintext highlighter-rouge">len</code> for length of teeth) based on the treatment levels (<code class="language-plaintext highlighter-rouge">supp</code>), we can use either the <code class="language-plaintext highlighter-rouge">tapply</code> or <code class="language-plaintext highlighter-rouge">favstats</code> functions.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">attach</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="n">tapply</span><span class="p">(</span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">supp</span><span class="p">,</span><span class="w"> </span><span class="n">summary</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>$OJ
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   8.20   15.53   22.70   20.66   25.73   30.90 
+
+$VC
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.20   11.20   16.50   16.96   23.10   33.90 
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>You can replace <code class="language-plaintext highlighter-rouge">summary</code> in the call to <code class="language-plaintext highlighter-rouge">tapply</code> with <code class="language-plaintext highlighter-rouge">mean</code>, <code class="language-plaintext highlighter-rouge">median</code>, <code class="language-plaintext highlighter-rouge">max</code>, <code class="language-plaintext highlighter-rouge">min</code>, or <code class="language-plaintext highlighter-rouge">quantile</code> to get just one value.  An example is shown below for quantiles.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">tapply</span><span class="p">(</span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">supp</span><span class="p">,</span><span class="w"> </span><span class="n">quantile</span><span class="p">,</span><span class="w"> </span><span class="n">prob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.25</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="c1"># 1st quartile</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>    OJ     VC 
+15.525 11.200 
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 14 October 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to summarize and compare data by groups/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -363,7 +523,6 @@ Name: len, dtype: float64
 software packages.</p>
 
 <ul>
-  <li>R</li>
   <li>Excel</li>
 </ul>
 

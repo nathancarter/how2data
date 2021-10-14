@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to test for a treatment effect in a single factor design (in Python, using SciPy and statsmodels) - How to Data</title>
+    <title>How to perform an analysis of covariance (ANCOVA) (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to test for a treatment effect in a single factor design (in Python, using SciPy and statsmodels) | How to Data</title>
+<title>How to perform an analysis of covariance (ANCOVA) (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to test for a treatment effect in a single factor design (in Python, using SciPy and statsmodels)" />
+<meta property="og:title" content="How to perform an analysis of covariance (ANCOVA) (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels/" />
-<meta property="og:url" content="/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels/" />
+<link rel="canonical" href="/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to test for a treatment effect in a single factor design (in Python, using SciPy and statsmodels)" />
+<meta property="twitter:title" content="How to perform an analysis of covariance (ANCOVA) (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to test for a treatment effect in a single factor design (in Python, using SciPy and statsmodels)","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-r/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to perform an analysis of covariance (ANCOVA) (in R)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,16 +234,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels">
+          <h1 id="how-to-perform-an-analysis-of-covariance-ancova-in-r">
         
         
-          <a href="#how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels" class="anchor-heading" aria-labelledby="how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test for a treatment effect in a single factor design (in Python, using SciPy and statsmodels)
+          <a href="#how-to-perform-an-analysis-of-covariance-ancova-in-r" class="anchor-heading" aria-labelledby="how-to-perform-an-analysis-of-covariance-ancova-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to perform an analysis of covariance (ANCOVA) (in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design">See all solutions.</a></p>
+<p><a href="../how-to-perform-an-analysis-of-covariance-ancova">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -253,7 +253,16 @@
       </h2>
     
 
-<p>Suppose you are given a dataset that has more than one treatment level and you wish to see if there is a unit-level treatment effect. How would you check that?</p>
+<p>Recall that covariates are variables that may be related to the outcome but are unaffected by treatment assignment.  In a randomized experiment with one or more observed covariates, an analysis of covariance (ANCOVA) addresses this question:  How would the mean outcome in each treatment group change if all groups were equal with respect to the covariate? The goal is to remove any variability in the outcome associated with the covariate from the unexplained variability used to determine statistical significance.</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
+  <li><a href="../how-to-compare-two-nested-linear-models">How to compare two nested linear models</a></li>
+  <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
+  <li><a href="../how-to-conduct-a-repeated-measures-anova">How to conduct a repeated measures ANOVA</a></li>
+</ul>
       <h2 id="solution">
         
         
@@ -265,113 +274,63 @@
 
 <!-- beginning of wrapper -->
 
-<p>The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+<p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'ToothGrowth'</span><span class="p">)</span>
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mtcars</span><span class="w">
+</span><span class="n">df</span><span class="o">$</span><span class="n">vs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">vs</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Let’s use ANCOVA to check the effect of the engine type (0 = V-shaped, 1 = straight, in the variable <code class="language-plaintext highlighter-rouge">vs</code>) on the miles per gallon when considering the weight of the car as a covariate. We will use the <code class="language-plaintext highlighter-rouge">ancova</code> function from the <code class="language-plaintext highlighter-rouge">pingouin</code> package to conduct the test.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">cov.model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="n">anova</span><span class="p">(</span><span class="n">cov.model</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>          Df Sum Sq    Mean Sq    F value    Pr(&gt;F)      
+wt         1 847.72525 847.725250 109.704168 2.284396e-11
+vs         1  54.22806  54.228061   7.017656 1.292580e-02
+Residuals 29 224.09388   7.727375         NA           NA
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>In this dataset, there are only two treatments (orange juice and ascorbic acid, in the variable <code class="language-plaintext highlighter-rouge">supp</code>).  We can therefore perrform a two-sample $t$ test. But first we must filter the outcome variable <code class="language-plaintext highlighter-rouge">len</code> (tooth length) based on <code class="language-plaintext highlighter-rouge">supp</code>.</p>
+<p>The $p$-value for each variable can be found in the final column of the output, called <code class="language-plaintext highlighter-rouge">Pr(&gt;F)</code>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<p>The $p$-value for the <code class="language-plaintext highlighter-rouge">wt</code> variable tests the null hypothesis, “The quantities <code class="language-plaintext highlighter-rouge">wt</code> and <code class="language-plaintext highlighter-rouge">mpg</code> are not related.”  Since it is below 0.05, we reject the null hypothesis, and conclude that <code class="language-plaintext highlighter-rouge">wt</code> is significant in predicting <code class="language-plaintext highlighter-rouge">mpg</code>.</p>
+
+<p>The $p$-value for the <code class="language-plaintext highlighter-rouge">vs</code> variable tests the null hypothesis, “The quantities <code class="language-plaintext highlighter-rouge">vs</code> and <code class="language-plaintext highlighter-rouge">mpg</code> are not related if we hold <code class="language-plaintext highlighter-rouge">wt</code> constant.”  Since it is below 0.05, we reject the null hypothesis, and conclude that <code class="language-plaintext highlighter-rouge">vs</code> is significant in predicting <code class="language-plaintext highlighter-rouge">mpg</code> even among cars with equal weight (<code class="language-plaintext highlighter-rouge">wt</code>).</p>
+
+<p>If we wish to create a 2-factor ANCOVA model, we can test to see if the engine type (0 = V-shaped, 1 = straight) and transmission type (0 = automatic, 1 = manual) have an effect on the Miles/gallon per car when considering the weight of the car as a covariate.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">cov.model.2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">am</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="n">anova</span><span class="p">(</span><span class="n">cov.model.2</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-</pre></td><td class="rouge-code"><pre><span class="n">subjects_receiving_oj</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'supp'</span><span class="p">]</span><span class="o">==</span><span class="s">'OJ'</span><span class="p">][</span><span class="s">'len'</span><span class="p">]</span>
-<span class="n">subjects_receiving_vc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'supp'</span><span class="p">]</span><span class="o">==</span><span class="s">'VC'</span><span class="p">][</span><span class="s">'len'</span><span class="p">]</span>
-
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
-<span class="n">stats</span><span class="p">.</span><span class="n">ttest_ind</span><span class="p">(</span> <span class="n">subjects_receiving_oj</span><span class="p">,</span> <span class="n">subjects_receiving_vc</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+</pre></td><td class="rouge-code"><pre>          Df Sum Sq     Mean Sq    F value    Pr(&gt;F)      
+wt         1 847.725250 847.725250 109.729918 3.420018e-11
+vs         1  54.228061  54.228061   7.019303 1.310627e-02
+am         1   7.778149   7.778149   1.006807 3.242621e-01
+Residuals 28 216.315728   7.725562         NA           NA
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_indResult(statistic=1.91526826869527, pvalue=0.06063450788093387)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>The $p$-values are again in the final column of output.  They show that at the 5% significance level, we would conclude that engine type (<code class="language-plaintext highlighter-rouge">vs</code>) significantly impacts the Miles/gallon per car while accounting for the weight of the car (<code class="language-plaintext highlighter-rouge">wt</code>) but the transmission type (<code class="language-plaintext highlighter-rouge">am</code>) does not.</p>
 
-<p>At the 5% significance level, we see that the length of the tooth does not differ between the two delivery methods. We assume that the model assumptions are met, but do not check that here.</p>
+<p>Content last modified on 14 October 2021.</p>
 
-<p>If there are multiple levels (two or more), you can apply the parametric ANOVA test which in this case will provide a similar $p$ value.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'len ~ supp'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
-
-<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
-<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>df</th>
-      <th>sum_sq</th>
-      <th>mean_sq</th>
-      <th>F</th>
-      <th>PR(&gt;F)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>supp</th>
-      <td>1.0</td>
-      <td>205.350000</td>
-      <td>205.350000</td>
-      <td>3.668253</td>
-      <td>0.060393</td>
-    </tr>
-    <tr>
-      <th>Residual</th>
-      <td>58.0</td>
-      <td>3246.859333</td>
-      <td>55.980333</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>We see the $p$ value in the final column is very similar.</p>
-
-<p>However, if the assumptions of ANOVA are not met, we can utilize a nonparametric approach via the Kruskal-Wallis Test. We use the filtered variables defined above and import the <code class="language-plaintext highlighter-rouge">kruskal</code> function from SciPy.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kruskal</span>
-<span class="n">kruskal</span><span class="p">(</span> <span class="n">subjects_receiving_oj</span><span class="p">,</span> <span class="n">subjects_receiving_vc</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>KruskalResult(statistic=3.4453580631407035, pvalue=0.06342967639688878)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Similar to the previous results, the length of the tooth does not differ between the delivery methods at the 5% significance level.</p>
-
-<p>Content last modified on 13 October 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test for a treatment effect in a single factor design/Python, using SciPy and statsmodels.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform an analysis of covariance (ANCOVA)/R.Rmd">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 

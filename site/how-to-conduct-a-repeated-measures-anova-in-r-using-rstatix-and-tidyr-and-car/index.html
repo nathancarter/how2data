@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to conduct a repeated measures ANOVA - How to Data</title>
+    <title>How to conduct a repeated measures ANOVA (in R, using rstatix and tidyr and car) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to conduct a repeated measures ANOVA | How to Data</title>
+<title>How to conduct a repeated measures ANOVA (in R, using rstatix and tidyr and car) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to conduct a repeated measures ANOVA" />
+<meta property="og:title" content="How to conduct a repeated measures ANOVA (in R, using rstatix and tidyr and car)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-conduct-a-repeated-measures-anova/" />
-<meta property="og:url" content="/how2data/site/how-to-conduct-a-repeated-measures-anova/" />
+<link rel="canonical" href="/how2data/site/how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car/" />
+<meta property="og:url" content="/how2data/site/how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to conduct a repeated measures ANOVA" />
+<meta property="twitter:title" content="How to conduct a repeated measures ANOVA (in R, using rstatix and tidyr and car)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-conduct-a-repeated-measures-anova/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to conduct a repeated measures ANOVA","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to conduct a repeated measures ANOVA (in R, using rstatix and tidyr and car)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,18 +234,20 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-conduct-a-repeated-measures-anova">
+          <h1 id="how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car">
         
         
-          <a href="#how-to-conduct-a-repeated-measures-anova" class="anchor-heading" aria-labelledby="how-to-conduct-a-repeated-measures-anova"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to conduct a repeated measures ANOVA
+          <a href="#how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car" class="anchor-heading" aria-labelledby="how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to conduct a repeated measures ANOVA (in R, using rstatix and tidyr and car)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-conduct-a-repeated-measures-anova">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
@@ -263,182 +265,16 @@
   <li><a href="../how-to-conduct-a-mixed-designs-anova">How to conduct a mixed designs ANOVA</a></li>
   <li><a href="../how-to-perform-an-analysis-of-covariance-ancova">How to perform an analysis of covariance (ANCOVA)</a></li>
 </ul>
-      <h2 id="using-pandas-and-pingouin-in-python">
+      <h2 id="solution">
         
         
-          <a href="#using-pandas-and-pingouin-in-python" class="anchor-heading" aria-labelledby="using-pandas-and-pingouin-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using pandas and pingouin, in Python
-        
-        
-      </h2>
-    
-
-<p><a href="../how-to-conduct-a-repeated-measures-anova-in-python-using-pandas-and-pingouin">View this solution alone.</a></p>
-
-<p>We create a hypothetical repeated measures dataset where the 5 subjects undergo all 4 skin treatments and their rating of the treatment is measured.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">{</span>
-    <span class="s">'Subject'</span><span class="p">:</span>        <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
-    <span class="s">'Skin Treatment'</span><span class="p">:</span> <span class="p">[</span><span class="s">'W'</span><span class="p">,</span><span class="s">'X'</span><span class="p">,</span><span class="s">'Y'</span><span class="p">,</span><span class="s">'Z'</span><span class="p">,</span><span class="s">'W'</span><span class="p">,</span><span class="s">'X'</span><span class="p">,</span><span class="s">'Y'</span><span class="p">,</span><span class="s">'Z'</span><span class="p">,</span><span class="s">'W'</span><span class="p">,</span><span class="s">'X'</span><span class="p">,</span>
-                       <span class="s">'Y'</span><span class="p">,</span><span class="s">'Z'</span><span class="p">,</span><span class="s">'W'</span><span class="p">,</span><span class="s">'X'</span><span class="p">,</span><span class="s">'Y'</span><span class="p">,</span><span class="s">'Z'</span><span class="p">,</span><span class="s">'W'</span><span class="p">,</span><span class="s">'X'</span><span class="p">,</span><span class="s">'Y'</span><span class="p">,</span><span class="s">'Z'</span><span class="p">],</span>
-    <span class="s">'Rating'</span><span class="p">:</span>         <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-<span class="p">}</span> <span class="p">)</span>
-<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Subject</th>
-      <th>Skin Treatment</th>
-      <th>Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>W</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>X</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>Y</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>Z</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2</td>
-      <td>W</td>
-      <td>8</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>Before we conduct a repeated measures ANOVA, we need to decide which approach to use - Univariate or Multivariate. We decide this using Mauchly’s test of sphericity. If we fail to reject the null hypothesis then we use the univariate approach.</p>
-
-<ul>
-  <li>$H_0 =$ the sphericity assumption holds</li>
-  <li>$H_A =$ the sphericity assumption is violated</li>
-</ul>
-
-<p>We use the <code class="language-plaintext highlighter-rouge">pingouin</code> statistics package to conduct the test.
-Most of the parameters below are self-explanatory, except that <code class="language-plaintext highlighter-rouge">dv</code> stands for dependent variable.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="n">pg</span>
-<span class="n">pg</span><span class="p">.</span><span class="n">sphericity</span><span class="p">(</span> <span class="n">dv</span><span class="o">=</span><span class="s">'Rating'</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="s">'Skin Treatment'</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s">'Subject'</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'mauchly'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>SpherResults(spher=True, W=0.06210054956238558, chi2=7.565056754547507, dof=5, pval=0.20708214225927316)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Since the $p$ value of <code class="language-plaintext highlighter-rouge">skin_treatment</code> is about $0.2071$, we fail to reject the sphericity assumption at a 5% significance level and use the univariate approach to conduct the repeated measures ANOVA.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="c1"># Compute a repeated measures ANOVA using a function pingouin adds to our DataFrame:
-</span><span class="n">df</span><span class="p">.</span><span class="n">rm_anova</span><span class="p">(</span> <span class="n">dv</span><span class="o">=</span><span class="s">'Rating'</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="s">'Skin Treatment'</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s">'Subject'</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Source</th>
-      <th>ddof1</th>
-      <th>ddof2</th>
-      <th>F</th>
-      <th>p-unc</th>
-      <th>np2</th>
-      <th>eps</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Skin Treatment</td>
-      <td>3</td>
-      <td>12</td>
-      <td>5.117647</td>
-      <td>0.016501</td>
-      <td>0.56129</td>
-      <td>0.541199</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>Since the $p$ value of about $0.017$ is less than 0.05, we conclude that there is significant evidence of a treatment effect.</p>
-
-<p>Note: If there is more than 1 repeated measures factor, you can add a list of them to the <code class="language-plaintext highlighter-rouge">within</code> parameter and conduct the test.</p>
-
-<p>Content last modified on 13 October 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to conduct a repeated measures ANOVA/Python, using pandas and pingouin.ipynb">edit the source</a>.</p>
-      <h2 id="using-rstatix-and-tidyr-and-car-in-r">
-        
-        
-          <a href="#using-rstatix-and-tidyr-and-car-in-r" class="anchor-heading" aria-labelledby="using-rstatix-and-tidyr-and-car-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using rstatix and tidyr and car, in R
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-conduct-a-repeated-measures-anova-in-r-using-rstatix-and-tidyr-and-car">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>We create a hypothetical repeated measures dataset where the 5 subjects undergo all 4 skin treatments and their rating of the treatment is measured.</p>
 
@@ -727,36 +563,10 @@ rfactor 0.858156 0.02319302
 <p>Content last modified on 14 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to conduct a repeated measures ANOVA/R, using rstatix and tidyr and car.Rmd">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
 
-<ul>
-  <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
-</ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
+<!-- ending of wrapper -->
 
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
-
-<ul>
-  <li>Excel</li>
-</ul>
-
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+<p>Contributed by Krtin Juneja (KJUNEJA@falcon.bentley.edu)</p>
 
         
 

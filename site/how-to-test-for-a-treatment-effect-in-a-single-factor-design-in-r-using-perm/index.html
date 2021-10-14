@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to test for a treatment effect in a single factor design - How to Data</title>
+    <title>How to test for a treatment effect in a single factor design (in R, using perm) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to test for a treatment effect in a single factor design | How to Data</title>
+<title>How to test for a treatment effect in a single factor design (in R, using perm) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to test for a treatment effect in a single factor design" />
+<meta property="og:title" content="How to test for a treatment effect in a single factor design (in R, using perm)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design/" />
-<meta property="og:url" content="/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design/" />
+<link rel="canonical" href="/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm/" />
+<meta property="og:url" content="/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to test for a treatment effect in a single factor design" />
+<meta property="twitter:title" content="How to test for a treatment effect in a single factor design (in R, using perm)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to test for a treatment effect in a single factor design","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to test for a treatment effect in a single factor design (in R, using perm)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,152 +234,36 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-test-for-a-treatment-effect-in-a-single-factor-design">
+          <h1 id="how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm">
         
         
-          <a href="#how-to-test-for-a-treatment-effect-in-a-single-factor-design" class="anchor-heading" aria-labelledby="how-to-test-for-a-treatment-effect-in-a-single-factor-design"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test for a treatment effect in a single factor design
+          <a href="#how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm" class="anchor-heading" aria-labelledby="how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test for a treatment effect in a single factor design (in R, using perm)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
     
 
 <p>Suppose you are given a dataset that has more than one treatment level and you wish to see if there is a unit-level treatment effect. How would you check that?</p>
-      <h2 id="using-scipy-and-statsmodels-in-python">
+      <h2 id="solution">
         
         
-          <a href="#using-scipy-and-statsmodels-in-python" class="anchor-heading" aria-labelledby="using-scipy-and-statsmodels-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SciPy and statsmodels, in Python
-        
-        
-      </h2>
-    
-
-<p><a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-python-using-scipy-and-statsmodels">View this solution alone.</a></p>
-
-<p>The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">rdatasets</span> <span class="kn">import</span> <span class="n">data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">(</span><span class="s">'ToothGrowth'</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>In this dataset, there are only two treatments (orange juice and ascorbic acid, in the variable <code class="language-plaintext highlighter-rouge">supp</code>).  We can therefore perrform a two-sample $t$ test. But first we must filter the outcome variable <code class="language-plaintext highlighter-rouge">len</code> (tooth length) based on <code class="language-plaintext highlighter-rouge">supp</code>.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="n">subjects_receiving_oj</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'supp'</span><span class="p">]</span><span class="o">==</span><span class="s">'OJ'</span><span class="p">][</span><span class="s">'len'</span><span class="p">]</span>
-<span class="n">subjects_receiving_vc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'supp'</span><span class="p">]</span><span class="o">==</span><span class="s">'VC'</span><span class="p">][</span><span class="s">'len'</span><span class="p">]</span>
-
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
-<span class="n">stats</span><span class="p">.</span><span class="n">ttest_ind</span><span class="p">(</span> <span class="n">subjects_receiving_oj</span><span class="p">,</span> <span class="n">subjects_receiving_vc</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_indResult(statistic=1.91526826869527, pvalue=0.06063450788093387)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>At the 5% significance level, we see that the length of the tooth does not differ between the two delivery methods. We assume that the model assumptions are met, but do not check that here.</p>
-
-<p>If there are multiple levels (two or more), you can apply the parametric ANOVA test which in this case will provide a similar $p$ value.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s">'len ~ supp'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
-
-<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
-<span class="n">sm</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>df</th>
-      <th>sum_sq</th>
-      <th>mean_sq</th>
-      <th>F</th>
-      <th>PR(&gt;F)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>supp</th>
-      <td>1.0</td>
-      <td>205.350000</td>
-      <td>205.350000</td>
-      <td>3.668253</td>
-      <td>0.060393</td>
-    </tr>
-    <tr>
-      <th>Residual</th>
-      <td>58.0</td>
-      <td>3246.859333</td>
-      <td>55.980333</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>We see the $p$ value in the final column is very similar.</p>
-
-<p>However, if the assumptions of ANOVA are not met, we can utilize a nonparametric approach via the Kruskal-Wallis Test. We use the filtered variables defined above and import the <code class="language-plaintext highlighter-rouge">kruskal</code> function from SciPy.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kruskal</span>
-<span class="n">kruskal</span><span class="p">(</span> <span class="n">subjects_receiving_oj</span><span class="p">,</span> <span class="n">subjects_receiving_vc</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>KruskalResult(statistic=3.4453580631407035, pvalue=0.06342967639688878)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>Similar to the previous results, the length of the tooth does not differ between the delivery methods at the 5% significance level.</p>
-
-<p>Content last modified on 13 October 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test for a treatment effect in a single factor design/Python, using SciPy and statsmodels.ipynb">edit the source</a>.</p>
-      <h2 id="using-perm-in-r">
-        
-        
-          <a href="#using-perm-in-r" class="anchor-heading" aria-labelledby="using-perm-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using perm, in R
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-test-for-a-treatment-effect-in-a-single-factor-design-in-r-using-perm">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
 
@@ -490,36 +374,10 @@ Kruskal-Wallis chi-squared = 3.4454, df = 1, p-value = 0.06343
 <p>Content last modified on 14 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test for a treatment effect in a single factor design/R, using perm.Rmd">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
 
-<ul>
-  <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
-</ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
+<!-- ending of wrapper -->
 
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
-
-<ul>
-  <li>Excel</li>
-</ul>
-
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+<p>Contributed by Krtin Juneja (KJUNEJA@falcon.bentley.edu)</p>
 
         
 
