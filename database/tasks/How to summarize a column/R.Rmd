@@ -1,0 +1,41 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See how to quickly load some sample data.)
+
+```{r}
+df <- ToothGrowth
+```
+
+Let us consider qualitative and quantitative variables separately.
+
+Consider the qualitative column "supp" in the dataset (which type of supplement the animal received).  To count the distribution of each categorical value, use `table()`:
+
+```{r}
+table(df$supp) # OR summary(df$supp)
+```
+
+The output says that there are 30 observations under each of the two levels, Orange Juice and Ascorbic Acid.
+
+If you wish to jointly summarize two categorical columns, provide both to `table()`:
+
+```{r}
+table(df$supp, df$dose)
+```
+
+This informs us that there are 10 observations for each of the combinations.
+
+Note: If there are more than 2 categorical variables of interest, you can use `ftable()` instead.
+
+Now consider the quantitative column `len` in the dataset (the length of the animal's tooth).  We can compute summary statistics for it just as we can for a whole dataframe (as we cover in how to compute summary statistics).
+
+```{r}
+summary(df$len)
+```
+
+The individual functions for mean, standard deviation, etc. covered under "how to compute summary statistics" apply to individual columns as well.  For example, we can compute quantiles:
+
+```{r}
+quantile(df$len) # quantiles
+```

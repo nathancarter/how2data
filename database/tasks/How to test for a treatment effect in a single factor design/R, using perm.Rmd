@@ -1,0 +1,44 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See how to quickly load some sample data.)
+
+```{r}
+df <- ToothGrowth
+```
+
+In this dataset, there are only two treatments (orange juice and ascorbic acid, in the variable `supp`).  We can therefore perrform a two-sample $t$ test. But first we must filter the outcome variable `len` (tooth length) based on `supp`.
+
+```{r}
+t.test(len ~ supp, data=df)
+```
+
+The $p$-value is reported in the first row of numerical output as 0.06063.  Because this is greater than 0.05, at a 5% significance level, we see that the length of the tooth does not differ between the two delivery methods.
+
+Since the `t.test` makes some assumptions, we can use the `permTS` function instead. It can conduct a permutation or randomization test, but it requires us to load the `perm` package first.
+
+```{r}
+# install.packages("perm") # If you have not already installed it
+library(perm) 
+permTS(len ~ supp, data=df)
+```
+
+The $p$-value is reported in the first row of numerical output as 0.06102.  Because this is greater than 0.05, at a 5% significance level, we see that the length of the tooth does not differ between the two delivery methods. We assume that the model assumptions are met but not shown in this task.
+
+If there are multiple levels (2 or more), you can apply the parametric ANOVA test which in this case will provide a similar $p$-value.
+
+```{r}
+aov1 <- aov(len ~ supp, data = df)
+summary(aov1)
+```
+
+The $p$-value for `supp` is shown at the end of the `supp` row, in the `Pr(>F)` column.  Because it is 0.0604, which is greater than 0.05, at a 5% significance level, we see that the length of the tooth does not differ between the delivery methods. 
+
+However, if the assumptions of ANOVA are not met, we can utilize the non parametric approach via the Kruskal-Wallis Test.
+
+```{r}
+kruskal.test(len ~ supp, data = df)
+```
+
+The $p$-value is the last part of the output, and is 0.06343.  Because it is greater than 0.05, at a 5% significance level, we see that the length of the tooth does not differ between the delivery methods. 

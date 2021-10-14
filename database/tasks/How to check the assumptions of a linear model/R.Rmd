@@ -1,0 +1,48 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+When performing a linear regression, the following assumptions should be checked.
+
+### 1. We have two or more columns of numerical data of the same length.
+
+The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See how to quickly load some sample data.)  We can see that our columns all have the same length.
+
+```{r}
+df <- mtcars
+head(df)
+```
+
+### 2. Scatter plots we've made suggest a linear relationship.
+
+Scatterplots are covererd in how to create basic plots, but after making the model,
+we can also examine the residuals.
+
+So let's make the model. Our predictors will be the number of cylinders and the weight of the car and the response will be miles per gallon. (See also how to fit a linear model to two columns of data.)
+
+```{r}
+model = lm(mpg~ cyl + wt, data=df)
+```
+
+We test for linearity with residual plots.  We show just one residual plot here; you should make one for each predictor.  R's plot function knows how to create residual plots.  (See also how to compute the residuals of a linear model.)
+
+```{r}
+plot(model, which = 1)
+```
+
+### 3. After making the model, the residuals seem normally distributed.
+
+We can check this by constructing a QQ-plot, which compares the distribution of the residuals to a normal distribution.
+Here we use SciPy, but there are other methods; see how to create a QQ-plot.
+
+```{r}
+plot(model, which = 2)
+```
+
+### 4. After making the model, the residuals seem homoscedastic.
+
+This assumption is sometimes called "equal variance," and can be checked by the `regplot` function in Seaborn. We must first standardize the residuals, which we can do with NumPy.  We want to see a plot with no clear pattern; a cone shape to the data would indicate heteroscedasticity, the opposite of homoscedasticity.
+
+```{r}
+plot(model, which = 3) # assumption of equal variance
+```

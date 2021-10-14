@@ -1,0 +1,81 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+We create a hypothetical repeated measures dataset where the 5 subjects undergo all 4 skin treatments and their rating of the treatment is measured.
+
+```{r}
+subject <- as.factor(c(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5))
+skin.treatment <- c('W','X','Y','Z','W','X','Y','Z','W','X',
+                    'Y','Z','W','X','Y','Z','W','X','Y','Z')
+rating <- c(7,5,8,4,8,10,7,5,7,6,5,4,7,7,4,5,8,8,6,6)
+df <- data.frame(subject,skin.treatment,rating)
+head(df)
+```
+
+Before we conduct a repeated measures ANOVA, we need to decide which approach to use - Univariate or Multivariate. We decide this using Mauchly's test of sphericity. If we fail to reject the null hypothesis then we use the univariate approach. 
+
+ * $H_0 =$ the sphericity assumption holds
+ * $H_A =$ the sphericity assumption is violated
+
+We use the `rstatix` package to conduct the test.
+
+ * The dependent variable is `rating`.
+ * The within-group factor is `skin.treatment`.
+ * The `Error()` term is critical in differentiating between a between subjects and within subjects model. It tells R that there is one observation per `subject` for each level of `skin.treatment`.
+
+```{r}
+# install.packages("rstatix") # If you have not already installed it
+library(rstatix)
+anova_test(rating ~ skin.treatment + Error(subject/skin.treatment), data=df)
+```
+
+The $p$-value we care about in the output is under "Macuhly's test for sphericity," for the variable `skin.treatment`.  Because the $p$-value is 0.207, we fail to reject the sphericity assumption at a 5% significance level and use the univariate approach. to conduct the repeated measures ANOVA.
+
+### Repeated measures ANOVA - univariate
+
+```{r}
+aov1 <- aov(rating ~ skin.treatment + Error(subject/skin.treatment), data=df)
+summary(aov1)
+```
+
+You can find the $p$-value at the end of the row of output marked for `skin.treatment`; it is 0.0165.  This is less than 0.05, so we conclude that there is significant evidence of a treatment effect.
+
+### Repeated measures ANOVA - multivariate
+
+If instead the first test had rejected the sphericity assumption, we would have used a multivariate approach for the repeated measures ANOVA.  We show here how to do such a test, even though it does not apply to this situation.  We must first reorganize the data into a matrix where each row represents a single subject, and columns represent levels of the treatment factor. This is possible using the `tidyr` package.
+
+```{r}
+# install.packages("tidyr") # If you have not already installed it
+library(tidyr)
+multi.data <- spread(df, skin.treatment, rating)
+multi.data <- as.matrix(multi.data[,-c(1)])
+multi.data
+```
+
+We then create a multivariate model and also set up a variable that defines the design of the study.
+
+```{r}
+# In this model there are no between-subjects factors, so we write ~ 1:
+multi.ml <- lm(multi.data ~ 1)
+# The design of the study is a single factor with four levels:
+rfactor <- factor(c("f1", "f2", "f3", "f4"))
+```
+
+Conduct the repeated measures ANOVA using a multivariate approach.  This requires creating a new model using the `Anova()` function that calculates ANOVA tables. The `car` package provides the `Anova()` function.  The parameters have the following meanings.
+
+ * `idata` includes information about the number of levels, in this case four.
+ * `idesign` states that `rfactor` describes a repeated-measures variable.
+ * `type` tells `Anova()` to calculate the "Type-III" sums of squares when forming the ANOVA table.
+ * `multivariate` suppresses output about multivariate statistical tests, which are relevant only when the experimental design includes multiple *dependent* variables.
+
+```{r}
+# install.packages("car") # If you have not already installed it
+library(car)
+multi.ml <- Anova(multi.ml, idata=data.frame(rfactor), idesign = ~rfactor, type="III")
+summary(multi.ml, multivariate=FALSE)
+```
+
+Although this test was run just as an example, and does not actually apply in this dataset, the output shows a $p$-value of 0.0165, at the end of the first `rfactor` row.  That $p$-value could be compared to a chosen $\alpha$.
+
+(We also see that Mauchly’s test was performed, which is not significant, and is the reason this data actually demands a univariate approach.)

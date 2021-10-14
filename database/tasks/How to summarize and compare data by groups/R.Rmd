@@ -1,0 +1,26 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See how to quickly load some sample data.)
+
+```{r}
+df <- ToothGrowth
+```
+
+To obtain the descriptive statistics of the quantitative column (`len` for length of teeth) based on the treatment levels (`supp`), we can use either the `tapply` or `favstats` functions.
+
+```{r}
+attach(df)
+tapply(len, supp, summary)
+```
+
+You can replace `summary` in the call to `tapply` with `mean`, `median`, `max`, `min`, or `quantile` to get just one value.  An example is shown below for quantiles.
+
+```{r}
+tapply(len, supp, quantile, prob = 0.25, data=df) # 1st quartile
+```
+
+
+
+

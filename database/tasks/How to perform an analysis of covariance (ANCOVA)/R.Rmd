@@ -1,0 +1,32 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See how to quickly load some sample data.)
+
+```{r}
+df <- mtcars
+df$vs <- as.factor(df$vs)
+```
+
+Let's use ANCOVA to check the effect of the engine type (0 = V-shaped, 1 = straight, in the variable `vs`) on the miles per gallon when considering the weight of the car as a covariate. We will use the `ancova` function from the `pingouin` package to conduct the test.
+
+```{r}
+cov.model <- lm(mpg ~ wt + vs, data = df)
+anova(cov.model)
+```
+
+The $p$-value for each variable can be found in the final column of the output, called `Pr(>F)`.
+
+The $p$-value for the `wt` variable tests the null hypothesis, "The quantities `wt` and `mpg` are not related."  Since it is below 0.05, we reject the null hypothesis, and conclude that `wt` is significant in predicting `mpg`.
+
+The $p$-value for the `vs` variable tests the null hypothesis, "The quantities `vs` and `mpg` are not related if we hold `wt` constant."  Since it is below 0.05, we reject the null hypothesis, and conclude that `vs` is significant in predicting `mpg` even among cars with equal weight (`wt`).
+
+If we wish to create a 2-factor ANCOVA model, we can test to see if the engine type (0 = V-shaped, 1 = straight) and transmission type (0 = automatic, 1 = manual) have an effect on the Miles/gallon per car when considering the weight of the car as a covariate.
+
+```{r}
+cov.model.2 <- lm(mpg ~ wt + vs + am, data = df)
+anova(cov.model.2)
+```
+
+The $p$-values are again in the final column of output.  They show that at the 5% significance level, we would conclude that engine type (`vs`) significantly impacts the Miles/gallon per car while accounting for the weight of the car (`wt`) but the transmission type (`am`) does not.

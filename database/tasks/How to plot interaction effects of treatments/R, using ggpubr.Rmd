@@ -1,0 +1,19 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See how to quickly load some sample data.)
+
+```{r}
+df <- ToothGrowth
+```
+
+To plot the interaction effects among tooth length, supplement, and dosage, we can use the `ggline` function in the `ggpubr` package.  You can change the `x` and `color` inputs below depending on your goals, but the `y` input should always be the dependent variable.
+
+```{r}
+# install.packages("ggpubr") # If you have not already installed it
+library(ggpubr)
+ggline(df, x="dose", y="len", color="supp", add=c("mean"))
+```
+
+Looking at the output, we first see that there is an interaction effect because the two supp lines intersect. We also see that there is a difference in length when giving 0.5mg and 1mg dosage of either of the two delivery methods. However, there is barely any difference between the delivery methods when the dosage level is 2mg.

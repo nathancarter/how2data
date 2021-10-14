@@ -1,0 +1,36 @@
+---
+author: "Krtin Juneja (KJUNEJA@falcon.bentley.edu)"
+---
+
+We create the data for a hypothetical $2\times2$ mixed design with the following attributes.
+
+ * Between-subjects treatment factor:  Type of music played (classical vs. rock)
+ * Within-subjects treatment factor:  Type of room (light vs. no light)
+ * Outcome variable:  Heart rate of subject
+
+```{r}
+subject    <- as.factor(c(1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10))
+music      <- c('Classical','Rock','Classical','Rock','Classical','Rock','Classical',
+                'Rock','Classical','Rock','Classical','Rock','Classical','Rock','Classical',
+                'Rock','Classical','Rock','Classical','Rock')
+room.type  <- c('Light','Light','Light','Light','Light','Light','Light','Light','Light',
+                'Light','No Light','No Light','No Light','No Light','No Light','No Light',
+                'No Light','No Light','No Light', 'No Light')
+heart.rate <- c(78,60,85,75,99,94,75,84,100,76,90,109,99,94,113,92,91,88,89,90)
+df <- data.frame(subject,music,room.type,heart.rate)
+head(df)
+```
+
+We conduct a two-way mixed-design ANOVA as shown below.  The specific parameters have these meanings:
+
+ * The dependent variable is `heart.rate`.
+ * The within-group factor is `room.type`.
+ * The between-group factor is `music`.
+ * The `Error()` term is critical in differentiating between a between subjects and within subjects model. It tells R that there is one observation per `subject` for each level of `room.type`.
+
+```{r}
+aov_mixed <- aov(heart.rate ~ room.type*music + Error(subject/room.type), data=df)
+summary(aov_mixed)
+```
+
+The output informs us that, on average, the subjects that listened to classical music did not significantly differ ($p = 0.243 > 0.05$) from those that listened to rock music. However, there is, on average, a significant difference ($p = 0.0351 < 0.05$) between each of the subject's heart rate when put in a room with or without light. Additionally, since the interaction term is not significant ($p = 0.4658 > 0.05$), we can use the additive (no interaction) model.

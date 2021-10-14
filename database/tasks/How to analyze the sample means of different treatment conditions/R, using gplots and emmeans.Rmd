@@ -1,0 +1,41 @@
+---
+author: Krtin Juneja (KJUNEJA@falcon.bentley.edu)
+---
+
+The solution below uses an example dataset about the teeth of 10 guinea pigs at three Vitamin C dosage levels (in mg) with two delivery methods (orange juice vs. ascorbic acid).  (See how to quickly load some sample data.)
+
+```{r}
+df <- ToothGrowth
+```
+
+To visually plot the means of the length of the tooth based on the Vitamin C dosage levels we can create a pointplot. We will use the `gplots` package. In the code below, `bars=TRUE` gives 95% confidence intervals for the means.
+
+```{r}
+# install.packages("gplots") # If you have not yet installed it
+library(gplots)
+plotmeans(len~dose, data=df, bars=TRUE)
+```
+
+The point plot informs us that as the dosage levels increase, the tooth length also increases. 
+
+To obtain the actual numbers, we can use the code below.  The first line converts the numerical dosage values to a categorical variable, which may not be necessary if your data was already categorical.  
+
+```{r}
+df$dose.factor = as.factor(df$dose)
+aov1 = aov(len~dose.factor, data=df) 
+model.tables(aov1, type='means')
+```
+
+If you wish to display the difference between the overall mean and the group means, you can simply omit the `type='means'` parameter.
+
+```{r}
+model.tables(aov1)
+```
+
+To also see the specific values for the confidence intervals plotted earlier, we can use the `emmeans` package (Estimated Marginal Means or Least-Squares Means).
+
+```{r}
+# install.packages("emmeans") # If you have not yet installed it
+library(emmeans)
+emmeans(aov1,'dose.factor')
+```
