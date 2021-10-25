@@ -24,6 +24,10 @@ RUN R -e 'install.packages("rstatix",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("ggpubr",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("perm",repos="http://cran.us.r-project.org")'
 
+# And installing mosaic in this context requires special care:
+RUN conda install -c conda-forge r-terra
+RUN R -e 'install.packages("mosaic",repos="http://cran.us.r-project.org")'
+
 # Install Jekyll for use in building the how2data website:
 USER jovyan
 RUN mkdir ~/gems
