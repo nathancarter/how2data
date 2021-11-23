@@ -17,6 +17,7 @@ import numpy as np
 import re
 import shutil
 import sys
+from datetime import datetime
 
 ###
 ###  GENERATING TABLES
@@ -382,6 +383,15 @@ def build_software_page ( row ):
 
 # Generate a page for a given topic, from a row in the topics_df DataFrame.
 def build_topic_page ( row ):
+    pdf_downloads = ''
+    for sindex, srow in software_df.iterrows():
+        pdf_filename = build_topic_pdf( row, srow )
+        if pdf_filename is not None:
+            pdf_filename = '../assets/downloads/' + pdf_filename
+            pdf_downloads += \
+                f' * [Solutions in {srow["name"]} (download PDF)]({pdf_filename})\n'
+    if pdf_downloads == '':
+        pdf_downloads = 'No PDF downloads available for this topic yet.'
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
     write_markdown( output_file,
@@ -391,5 +401,108 @@ def build_topic_page ( row ):
         .replace( 'CONTENT', make_all_task_names_links( row['content'] ) )
         .replace( 'CONTRIBUTORS',
             f'Contributed by {row["author"]}' if row["author"] != np.nan else '' )
+        .replace( 'DOWNLOADS', pdf_downloads )
     )
     mark_as_regenerated( out_filename )
+
+# Convert all HTML-style tables/etc. within markdown text to LaTeX instead
+def html_sections_to_latex ( markdown, folder=main_folder ):
+    # are there any sectionsn to process?  if not, just return the input
+    section = re.search( '\n<div(?:.|\n)*?<\\/div.*\n', markdown )
+    if section is None:
+        return markdown
+    # there is a section to process; use pandoc on a temporary HTML file
+    tmp_html_file = os.path.join( folder, 'tmp.html' )
+    tmp_tex_file = os.path.join( folder, 'tmp.tex' )
+    write_text_file( tmp_html_file, section.group(0) )
+    ensure_shell_command_succeeds(
+        f'pandoc --from=html --to=latex --output="{tmp_tex_file}" "{tmp_html_file}"',
+        f'rm "{tmp_html_file}"' )
+    section_as_tex = read_text_file( tmp_tex_file )
+    ensure_shell_command_succeeds( f'rm "{tmp_tex_file}"' )
+    # replace the section with its TeX-ified version
+    markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]
+    # recur on the new markdown, with one less section to process
+    return html_sections_to_latex( markdown )
+
+# Generate a PDF for a given topic, using a given software package.
+def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
+    site_url = 'https://nathancarter.github.io/how2data/site/'
+    # make first page with TOC that links to all later pages
+    description_and_toc = make_all_task_names_links( topic_row['content'] )
+    tasks = tasks_df[tasks_df.permalink.apply(
+        lambda link: link in description_and_toc )].copy()
+    tasks['where appears'] = tasks.permalink.apply(
+        lambda link: description_and_toc.index( link ) )
+    tasks = tasks.sort_values( by='where appears' )
+    # if none of those tasks were edited more recently than the last PDF we generated, stop
+    title = f'{topic_row["topic name"]} in {software_row["name"]}'
+    outfile = os.path.join( jekyll_input_folder, 'assets', 'downloads', title + '.pdf' )
+    must_build = False
+    if os.path.exists( outfile ):
+        pdf_modified = os.path.getmtime( outfile )
+        for index, task_row in tasks.iterrows():
+            task_modified = os.path.getmtime(
+                os.path.join( main_folder, task_row['task filename'] ) )
+            if task_modified > pdf_modified:
+                must_build = True
+        if not must_build:
+            print( f'PDF already up-to-date for: {title}' )
+            return title + '.pdf'
+    else:
+        must_build = True
+    # create the structure of the Markdown input to pandoc
+    markdown = files_df[files_df['filename'] == 'topic-pdf-template.md']['raw content'].iloc[0] \
+        .replace( 'TITLE', title ) \
+        .replace( 'SITE_URL', site_url ) \
+        .replace( 'DATE', datetime.now().strftime("%d %B %Y") ) \
+        .replace( 'DESCRIPTION', description_and_toc )
+    # now add all tasks, one at a time
+    solutions_in_sw = solutions_df[solutions_df['software'] == software_row['name']]
+    num_solutions = 0
+    for index, task_row in tasks.iterrows():
+        task_solutions = solutions_in_sw[solutions_in_sw['task name'] == task_row['task name']]
+        if len( task_solutions ) > 0:
+            solution = get_generated_solution_body( task_solutions.iloc[0,:] )
+            solution = solution.replace( '\\\\{', '\\{' ).replace( '\\\\}', '\\}' )
+            solution = html_sections_to_latex( solution )
+            num_solutions += 1
+        else:
+            solution = 'How to Data does not yet contain a solution for this task in ' \
+                     + software_row['name'] + '.'
+        markdown += files_df[files_df['filename'] == 'topic-pdf-solution-template.md']['raw content'].iloc[0] \
+            .replace( 'TASK', task_row['task name'] ) \
+            .replace( 'DESCRIPTION', make_all_task_names_links( task_row['content'] ) ) \
+            .replace( 'SOFTWARE', software_row['name'] ) \
+            .replace( 'SOLUTION', solution )
+    proportion = num_solutions / len( tasks )
+    # if that proportion is not large enough, stop here
+    if proportion < min_proportion:
+        print( f'    Not generating PDF for: {title}   (only {proportion*100:0.1f}% solved)' )
+        return None
+    # fix all hyperlinks to be either within-the-PDF links or marked as external
+    def process_one_link ( match ):
+        text = match.group( 1 )
+        href = match.group( 2 )
+        if href[:3] == '../':
+            if href[3:] in tasks.permalink.to_list():
+                href = f'#{href[3:]}'
+            else:
+                href = f'{site_url}{href[3:]}'
+                text = f'{text} (on website)'
+        elif href[0] == '.':
+            print( '\tWarning: Bad external URL:', f'[{text}]({href})' )
+        return f'[{text}]({href})'
+    markdown = re.sub( '(?<!\\!)\\[([^]]*)\\]\\(([^)]*)\\)', process_one_link, markdown,
+        flags=re.IGNORECASE )
+    # write all that markdown to a file, run pandoc on it to create a PDF, then delete the .md
+    print( f'        Generating PDF for: {title}' )
+    tmp_md_doc = os.path.join( topics_folder, 'pandoc-temp-file.md' )
+    write_markdown( tmp_md_doc, markdown, for_jekyll=False )
+    command_to_run = 'pandoc --from=markdown --to=pdf --pdf-engine=xelatex' \
+                + ' -V geometry:margin=1in -V urlcolor:NavyBlue --standalone' \
+                + f' --include-in-header="{os.path.join(main_folder,"pandoc-latex-header.tex")}"' \
+                + f' --lua-filter="{os.path.join(main_folder,"pandoc-pdf-tweaks.lua")}"' \
+                + f' --output="{outfile}" "{tmp_md_doc}"'
+    ensure_shell_command_succeeds( command_to_run, f'rm "{tmp_md_doc}"' )
+    return title + '.pdf'

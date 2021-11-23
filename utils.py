@@ -32,9 +32,11 @@ def write_text_file ( file, text ):
         f.write( text )
 # When writing Markdown, be aware that Jekyll messes with \{ and \},
 # which screws up our math, so fix them.
-def write_markdown ( file, markdown ):
-    write_text_file( file, markdown.replace( '\\{', '\\\\{' )
-                                   .replace( '\\}', '\\\\}' ) )
+def write_markdown ( file, markdown, for_jekyll=True ):
+    if for_jekyll:
+        markdown = markdown.replace( '\\{', '\\\\{' ) \
+                           .replace( '\\}', '\\\\}' )
+    write_text_file( file, markdown )
 
 # Prepend text to a file
 def prepend_text_to_file ( file, preamble ):

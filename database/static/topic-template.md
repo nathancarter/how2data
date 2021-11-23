@@ -10,3 +10,7 @@ nav_exclude: true
 CONTENT
 
 CONTRIBUTORS
+
+### Downloads
+
+DOWNLOADS
