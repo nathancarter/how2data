@@ -369,7 +369,23 @@ Most of the parameters below are self-explanatory, except that <code class="lang
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>SpherResults(spher=True, W=0.06210054956238558, chi2=7.565056754547507, dof=5, pval=0.20708214225927316)
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/outdated/utils.py:14: OutdatedPackageWarning: The package pingouin is out of date. Your version is 0.4.0, the latest is 0.5.0.
+Set the environment variable OUTDATED_IGNORE=1 to disable these warnings.
+  return warn(
+
+
+
+
+
+SpherResults(spher=True, W=0.06210054956238558, chi2=7.565056754547507, dof=5, pval=0.20708214225927316)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Since the $p$ value of <code class="language-plaintext highlighter-rouge">skin_treatment</code> is about $0.2071$, we fail to reject the sphericity assumption at a 5% significance level and use the univariate approach to conduct the repeated measures ANOVA.</p>
@@ -426,7 +442,7 @@ Most of the parameters below are self-explanatory, except that <code class="lang
 
 <p>Note: If there is more than 1 repeated measures factor, you can add a list of them to the <code class="language-plaintext highlighter-rouge">within</code> parameter and conduct the test.</p>
 
-<p>Content last modified on 13 October 2021.</p>
+<p>Content last modified on 24 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to conduct a repeated measures ANOVA/Python, using pandas and pingouin.ipynb">edit the source</a>.</p>
       <h2 id="using-rstatix-and-tidyr-and-car-in-r">
@@ -724,7 +740,7 @@ rfactor 0.858156 0.02319302
 
 <p>(We also see that Mauchly’s test was performed, which is not significant, and is the reason this data actually demands a univariate approach.)</p>
 
-<p>Content last modified on 14 October 2021.</p>
+<p>Content last modified on 24 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to conduct a repeated measures ANOVA/R, using rstatix and tidyr and car.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
