@@ -7,7 +7,7 @@ For those expressions that need the Python math package, use the code
 you can write `from math import *` and thus drop the `math` prefixes in
 the table below.
 
-| Rathematical notation | R code |
+| Mathematical notation | R code |
 |--|--|
 | $x+y$ | `x+y` |
 | $x-y$ | `x-y` |
