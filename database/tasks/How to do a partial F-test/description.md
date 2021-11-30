@@ -8,4 +8,4 @@ How do we do so using a partial F-test?
 
 Related tasks:
 
- * How to comapre two nested linear models
+ * How to compare two nested linear models
