@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to do a Wilcoxon rank-sum test (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-do-a-wilcoxon-rank-sum-test-in-r/","headline":"How to do a Wilcoxon rank-sum test (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-a-wilcoxon-rank-sum-test-in-r/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a Wilcoxon rank-sum test (in R)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -253,12 +253,13 @@
       </h2>
     
 
-<p>Assume we have two independent samples of data, $x_1, x_2, x_3, \ldots x_k$ and
-$x’_1, x’_2, x’_3, \ldots x’_k$, each from a different population.
+<p>Assume we have two independent samples of data, $x_1, x_2, x_3, \ldots x_n$ and
+$x’_1, x’_2, x’_3, \ldots x’_m$, each from a different population.
 Also assume that the sample sizes are small or the populations are not normally
-distributed.  How can we test whether there is a significant difference
+distributed, but that the two population distributions are approximately
+the same shape.  How can we test whether there is a significant difference
 between the two medians (or if one is significantly greater than or less than
-the other)? One method is the Wilcoxon Rank-Sum Test.</p>
+the other)?  One method is the Wilcoxon Rank-Sum Test.</p>
 
 <p>Related tasks:</p>
 
@@ -287,8 +288,8 @@ and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$
 2
 3
 </pre></td><td class="rouge-code"><pre><span class="c1"># Replace sample1 and sample2 with your data</span><span class="w">
-</span><span class="n">sample1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">190</span><span class="p">,</span><span class="w"> </span><span class="m">176</span><span class="p">,</span><span class="w"> </span><span class="m">119</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">140</span><span class="p">,</span><span class="w"> </span><span class="m">152</span><span class="p">,</span><span class="w"> </span><span class="m">167</span><span class="p">,</span><span class="w"> </span><span class="m">180</span><span class="p">)</span><span class="w">
-</span><span class="n">sample2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">78</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">39</span><span class="p">,</span><span class="w"> </span><span class="m">48</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">)</span><span class="w">
+</span><span class="n">sample1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">190</span><span class="p">,</span><span class="w"> </span><span class="m">176</span><span class="p">,</span><span class="w"> </span><span class="m">119</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">140</span><span class="p">,</span><span class="w"> </span><span class="m">152</span><span class="p">,</span><span class="w"> </span><span class="m">167</span><span class="p">)</span><span class="w">
+</span><span class="n">sample2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">78</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">39</span><span class="p">,</span><span class="w"> </span><span class="m">48</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">,</span><span class="w"> </span><span class="m">85</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>We choose a value, $0 \le \alpha \le 1$, as the Type I Error Rate. We’ll let $\alpha$ be 0.05.</p>
@@ -315,13 +316,15 @@ and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$
 </pre></td><td class="rouge-code"><pre>	Wilcoxon rank sum exact test
 
 data:  sample1 and sample2
-W = 81, p-value = 0.01854
+W = 77, p-value = 0.03813
 alternative hypothesis: true location shift is not equal to 0
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.01854, is less than $\alpha=0.05$, so we have sufficient evidence
+<p>Our p-value, $0.03813$, is less than $\alpha=0.05$, so we have sufficient evidence
 to reject the null hypothesis. The population medians are significantly different
 from each other.</p>
+
+<p>(The output above is slightly different than the output you would get by running this test in Python, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
       <h3 id="right-tailed-test">
         
         
@@ -345,13 +348,15 @@ from each other.</p>
 </pre></td><td class="rouge-code"><pre>	Wilcoxon rank sum exact test
 
 data:  sample1 and sample2
-W = 81, p-value = 0.009272
+W = 77, p-value = 0.01906
 alternative hypothesis: true location shift is greater than 0
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.009272, is less than $\alpha=0.05$, so we have sufficient evidence
+<p>Our p-value, $0.01906$, is less than $\alpha=0.05$, so we have sufficient evidence
 to reject the null hypothesis. The first population medians is significantly greater
 second.</p>
+
+<p>(The output above is slightly different from the output you would get by running this test in Python, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
       <h3 id="left-tailed-test">
         
         
@@ -375,17 +380,19 @@ second.</p>
 </pre></td><td class="rouge-code"><pre>	Wilcoxon rank sum exact test
 
 data:  sample1 and sample2
-W = 81, p-value = 0.9927
+W = 77, p-value = 0.9845
 alternative hypothesis: true location shift is less than 0
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.9927, is greater than $\alpha$, so we do not have sufficient
+<p>Our p-value, $0.9845$, is greater than $\alpha$, so we do not have sufficient
 evidence to reject the null hypothesis. The first population median is not
 significantly smaller than the second population median.</p>
 
+<p>(The output above is slightly different from the output you would get by running this test in Python, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
+
 <p>NOTE: If there are ties in the data and there are fewer than 50 observations in each sample, then R will compute a $p$-value using the normal approximation, and there will be an error message indicating that the exact $p$-value cannot be calculated.</p>
 
-<p>Content last modified on 24 October 2021.</p>
+<p>Content last modified on 30 November 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a Wilcoxon rank-sum test/R.md">edit the source</a>.</p>
 

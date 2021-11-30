@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute a confidence interval for a sample mean (in R) - How to Data</title>
+    <title>How to compute Fisher's confidence intervals (in R) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute a confidence interval for a sample mean (in R) | How to Data</title>
+<title>How to compute Fisher’s confidence intervals (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute a confidence interval for a sample mean (in R)" />
+<meta property="og:title" content="How to compute Fisher’s confidence intervals (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-sample-mean-in-r/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-sample-mean-in-r/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-fisher-s-confidence-intervals-in-r/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-fisher-s-confidence-intervals-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute a confidence interval for a sample mean (in R)" />
+<meta property="twitter:title" content="How to compute Fisher’s confidence intervals (in R)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-sample-mean-in-r/","headline":"How to compute a confidence interval for a sample mean (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-fisher-s-confidence-intervals-in-r/","headline":"How to compute Fisher’s confidence intervals (in R)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,16 +234,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-a-confidence-interval-for-a-sample-mean-in-r">
+          <h1 id="how-to-compute-fishers-confidence-intervals-in-r">
         
         
-          <a href="#how-to-compute-a-confidence-interval-for-a-sample-mean-in-r" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-sample-mean-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a sample mean (in R)
+          <a href="#how-to-compute-fishers-confidence-intervals-in-r" class="anchor-heading" aria-labelledby="how-to-compute-fishers-confidence-intervals-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute Fisher’s confidence intervals (in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-compute-a-confidence-interval-for-a-sample-mean">See all solutions.</a></p>
+<p><a href="../how-to-compute-fisher-s-confidence-intervals">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -253,25 +253,11 @@
       </h2>
     
 
-<p>If we have a set of data that seems normally distributed, how can we compute a
-confidence interval for the mean?  Assume we have some confidence level
-already chosen, such as $\alpha=0.95$.</p>
-
-<p>Related tasks:</p>
-
-<ul>
-  <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean">How to do a two-sided hypothesis test for a sample mean</a></li>
-  <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs">How to compute a confidence interval for a mean difference (matched pairs)</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-a-regression-coefficient">How to compute a confidence interval for a regression coefficient</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-a-single-population-variance">How to compute a confidence interval for a single population variance</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-the-difference-between-two-means-when-both-population-variances-are-known">How to compute a confidence interval for the difference between two means when both population variances are known</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-the-difference-between-two-means-when-population-variances-are-unknown">How to compute a confidence interval for the difference between two means when population variances are unknown</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-the-difference-between-two-proportions">How to compute a confidence interval for the difference between two proportions</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable">How to compute a confidence interval for the expected value of a response variable</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-the-population-proportion">How to compute a confidence interval for the population proportion</a></li>
-  <li><a href="../how-to-compute-a-confidence-interval-for-the-ratio-of-two-population-variances">How to compute a confidence interval for the ratio of two population variances</a></li>
-</ul>
+<p>If we run a one-way ANOVA test and find that there is a significant difference
+between population means, we might want to know which means are actually
+different from each other. One way to do so is with Fisher’s Least Significant
+Difference Confidence Intervals, which forms a confidence interval for each
+pair of samples. How do we go about making these confidence intervals?</p>
       <h2 id="solution">
         
         
@@ -283,31 +269,60 @@ already chosen, such as $\alpha=0.95$.</p>
 
 <!-- beginning of wrapper -->
 
-<p>When applying this technique, you would have a series of data values for which
-you needed to compute a confidence interval for the mean.  But in order to
-provide code that runs independently, we create some fake data below.  When
-using this code, replace our fake data with your real data.</p>
+<p>We will use some fake data for the purposes of an example, but you can replace
+it with your real data in the code below.  Consider an ice cream shop’s sales
+data over several weekends.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">num.transactions</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">91</span><span class="p">,</span><span class="w"> </span><span class="m">134</span><span class="p">,</span><span class="w"> </span><span class="m">98</span><span class="p">,</span><span class="w"> </span><span class="m">105</span><span class="p">,</span><span class="w"> </span><span class="m">93</span><span class="p">,</span><span class="w"> </span><span class="m">89</span><span class="p">,</span><span class="w"> </span><span class="m">145</span><span class="p">,</span><span class="w"> </span><span class="m">132</span><span class="p">,</span><span class="w"> </span><span class="m">109</span><span class="p">,</span><span class="w">
+                      </span><span class="m">94</span><span class="p">,</span><span class="w"> </span><span class="m">105</span><span class="p">,</span><span class="w"> </span><span class="m">99</span><span class="p">,</span><span class="w"> </span><span class="m">84</span><span class="p">,</span><span class="w"> </span><span class="m">128</span><span class="p">,</span><span class="w"> </span><span class="m">120</span><span class="p">,</span><span class="w"> </span><span class="m">115</span><span class="p">,</span><span class="w"> </span><span class="m">118</span><span class="p">)</span><span class="w">
+</span><span class="n">days</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Fri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sun"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sun"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Fri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Fri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sun"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sun"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"Fri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Fri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sun"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Fri"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sun"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Let’s assume that you have already performed an ANOVA on this data, as shown
+below. (If you’re not familiar with ANOVA, see how to do a one-way ANOVA test.)
+Let’s assume that we chose $\alpha$ to be 0.05.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aov</span><span class="p">(</span><span class="n">num.transactions</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">days</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+days         2   1965   982.7   4.348  0.034 *
+Residuals   14   3164   226.0                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>From the $p$-value in the <code class="language-plaintext highlighter-rouge">Pr(&gt;F)</code> column, we can see that, at the 5%
+significance level, there are significant differences between the mean number
+of transactions at the ice cream shop across these weekend days.</p>
+
+<p>We’ll use the <code class="language-plaintext highlighter-rouge">LSD.test</code> function (Least Significant Difference) from R’s
+<code class="language-plaintext highlighter-rouge">agricolae</code> package to get the confidence intervals for each pair of days.
+Let’s use $\alpha=0.05$ again so that we get 95% confidence intervals.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-6
-7
-8
-9
-10
-</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">       </span><span class="c1"># replace with your chosen alpha (here, a 95% confidence level)</span><span class="w">
-</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">435</span><span class="p">,</span><span class="m">542</span><span class="p">,</span><span class="m">435</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">54</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">543</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">432</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">36</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">876</span><span class="p">,</span><span class="m">65</span><span class="p">,</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># fake</span><span class="w">
+</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages("agricolae") # if you have not already done so</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">agricolae</span><span class="p">)</span><span class="w">
 
-</span><span class="c1"># If you need the two values stored in variables for later use, do:</span><span class="w">
-</span><span class="n">answer</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="n">lower_bound</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">answer</span><span class="o">$</span><span class="n">conf.int</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
-</span><span class="n">upper_bound</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">answer</span><span class="o">$</span><span class="n">conf.int</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">
-
-</span><span class="c1"># If you just need to see the results in a report, do this alone:</span><span class="w">
-</span><span class="n">t.test</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">conf.level</span><span class="o">=</span><span class="m">1</span><span class="o">-</span><span class="n">alpha</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">LSD.test</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="m">0.05</span><span class="p">,</span><span class="w"> </span><span class="s2">"days"</span><span class="p">)</span><span class="w">
+</span><span class="n">test</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -320,25 +335,68 @@ using this code, replace our fake data with your real data.</p>
 8
 9
 10
-</pre></td><td class="rouge-code"><pre>	One Sample t-test
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="rouge-code"><pre>$statistics
+   MSerror Df     Mean       CV
+  226.0333 14 109.3529 13.74851
 
-data:  data
-t = 3.1853, df = 16, p-value = 0.005753
-alternative hypothesis: true mean is not equal to 0
-95 percent confidence interval:
-  70.29848 350.05446
-sample estimates:
-mean of x 
- 210.1765 
+$parameters
+        test p.ajusted name.t ntr alpha
+  Fisher-LSD      none   days   3  0.05
+
+$means
+    num.transactions      std r       LCL      UCL Min Max    Q25 Q50    Q75
+Fri         95.16667 12.67149 6  82.00246 108.3309  84 120  89.50  92  93.75
+Sat        113.80000 18.36301 5  99.37933 128.2207  99 145 105.00 105 115.00
+Sun        119.83333 14.23259 6 106.66913 132.9975  98 134 111.25 123 131.00
+
+$comparison
+NULL
+
+$groups
+    num.transactions groups
+Sun        119.83333      a
+Sat        113.80000     ab
+Fri         95.16667      b
+
+attr(,"class")
+[1] "group"
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 09 September 2021.</p>
+<p>The portion of this lengthy output on which to focus is the <code class="language-plaintext highlighter-rouge">$groups</code> section.
+If the categories share a letter in the “groups” column, then their means are
+not significantly different from each other. Therefore:</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a sample mean/R.md">edit the source</a>.</p>
+<ul>
+  <li>Sunday and Saturday share the letter “a,” so we know that the number of
+transactions on these two days are not significantly different from each
+other.</li>
+  <li>The same goes for Saturday and Friday, which share the letter “b.”</li>
+  <li>But Sunday and Friday do not share a letter, so the number of transactions
+on these two days is significantly different.</li>
+</ul>
+
+<p>Content last modified on 30 November 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute Fisher's confidence intervals/R.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
-<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+<p>Contributed by Krtin Juneja (KJUNEJA@falcon.bentley.edu)</p>
 
         
 

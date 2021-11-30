@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute a confidence interval for a sample mean (in Python, using SciPy) - How to Data</title>
+    <title>How to compute a confidence interval for a population mean using z-scores - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute a confidence interval for a sample mean (in Python, using SciPy) | How to Data</title>
+<title>How to compute a confidence interval for a population mean using z-scores | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute a confidence interval for a sample mean (in Python, using SciPy)" />
+<meta property="og:title" content="How to compute a confidence interval for a population mean using z-scores" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute a confidence interval for a sample mean (in Python, using SciPy)" />
+<meta property="twitter:title" content="How to compute a confidence interval for a population mean using z-scores" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy/","headline":"How to compute a confidence interval for a sample mean (in Python, using SciPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute a confidence interval for a population mean using z-scores","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,20 +234,18 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy">
+          <h1 id="how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores">
         
         
-          <a href="#how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-sample-mean-in-python-using-scipy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a sample mean (in Python, using SciPy)
+          <a href="#how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a population mean using z-scores
         
         
       </h1>
     
-
-<p><a href="../how-to-compute-a-confidence-interval-for-a-sample-mean">See all solutions.</a></p>
-      <h2 id="task">
+      <h2 id="description">
         
         
-          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
         
         
       </h2>
@@ -255,12 +253,19 @@
 
 <p>If we have a set of data that seems normally distributed, how can we compute a
 confidence interval for the mean?  Assume we have some confidence level
-already chosen, such as $\alpha=0.95$.</p>
+already chosen, such as $\alpha=0.05$.</p>
+
+<p>We will use the normal distribution, which assumes either that we know
+the population standard deviation, or we have a large enough sample size
+(typically at least 30).  If neither of these is true in your case,
+then you can use $t$-scores instead;
+see <a href="../how-to-compute-a-confidence-interval-for-a-population-mean">how to compute a confidence interval for a population mean</a>.</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean">How to do a two-sided hypothesis test for a sample mean</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-a-population-mean">How to compute a confidence interval for a population mean</a></li>
+  <li>How to do a two-sided hypothesis test for a population mean</li>
   <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs">How to compute a confidence interval for a mean difference (matched pairs)</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-a-regression-coefficient">How to compute a confidence interval for a regression coefficient</a></li>
@@ -272,16 +277,16 @@ already chosen, such as $\alpha=0.95$.</p>
   <li><a href="../how-to-compute-a-confidence-interval-for-the-population-proportion">How to compute a confidence interval for the population proportion</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-the-ratio-of-two-population-variances">How to compute a confidence interval for the ratio of two population variances</a></li>
 </ul>
-      <h2 id="solution">
+      <h2 id="using-scipy-in-python">
         
         
-          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+          <a href="#using-scipy-in-python" class="anchor-heading" aria-labelledby="using-scipy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SciPy, in Python
         
         
       </h2>
     
 
-<!-- beginning of wrapper -->
+<p><a href="../how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy">View this solution alone.</a></p>
 
 <p>This solution uses a 95% confidence level, but you can change that in the
 first line of code, by specifing a different <code class="language-plaintext highlighter-rouge">alpha</code>.</p>
@@ -290,6 +295,10 @@ first line of code, by specifing a different <code class="language-plaintext hig
 you needed to compute a confidence interval for the mean.  But in order to
 provide code that runs independently, we create some fake data below.  When
 using this code, replace our fake data with your real data.</p>
+
+<p>We include the population standard deviation below, assuming it is known.
+See the notes at the end for what to do if you do not know the population
+standard deviation in your situation.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -308,8 +317,8 @@ using this code, replace our fake data with your real data.</p>
 15
 16
 17
-18
 </pre></td><td class="rouge-code"><pre><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>       <span class="c1"># replace with your chosen alpha (here, a 95% confidence level)
+</span><span class="n">pop_std</span> <span class="o">=</span> <span class="mi">250</span>      <span class="c1"># replace with your population standard devation, if known
 </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">435</span><span class="p">,</span><span class="mi">542</span><span class="p">,</span><span class="mi">435</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">543</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">432</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">876</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">5</span> <span class="p">]</span> <span class="c1"># fake
 </span>
 <span class="c1"># We will use NumPy and SciPy to compute some of the statistics below.
@@ -319,27 +328,134 @@ using this code, replace our fake data with your real data.</p>
 <span class="c1"># Compute the sample mean, as an estimate for the population mean.
 </span><span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
 
-<span class="c1"># Compute the Standard Error for the sample Mean (SEM).
-</span><span class="n">sem</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">sem</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
-
 <span class="c1"># The margin of error then has the following formula.
-</span><span class="n">moe</span> <span class="o">=</span> <span class="n">sem</span> <span class="o">*</span> <span class="n">stats</span><span class="p">.</span><span class="n">t</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">alpha</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span>
+</span><span class="n">z_score</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span> <span class="p">)</span>
+<span class="n">moe</span> <span class="o">=</span> <span class="n">pop_std</span> <span class="o">*</span> <span class="n">z_score</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span> <span class="p">)</span>
 
 <span class="c1"># The confidence interval is centered on the mean with moe as its radius:
 </span><span class="p">(</span> <span class="n">sample_mean</span> <span class="o">-</span> <span class="n">moe</span><span class="p">,</span> <span class="n">sample_mean</span> <span class="o">+</span> <span class="n">moe</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>(205.97350096227404, 214.37944021419656)
+</pre></td><td class="rouge-code"><pre>(91.33619807845439, 329.0167430980162)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 09 September 2021.</p>
+<p>Notes:</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a sample mean/Python, using SciPy.md">edit the source</a>.</p>
+<ol>
+  <li>If you do not have the population standard deviation, but your sample is
+large enough (typically at least 30), you can approximate the population
+standard deviation with the sample standard deviation, using the code
+<code class="language-plaintext highlighter-rouge">std = stats.tstd( data )</code>.  If your sample is not that large, then
+consider using a different technique instead; see
+<a href="../how-to-compute-a-confidence-interval-for-a-population-mean">how to compute a confidence interval for a population mean</a>.</li>
+  <li>The solution above assumes that the population is normally distributed,
+which is a common assumption in introductory statistics courses, but we
+have not verified that assumption here.</li>
+</ol>
 
-<!-- ending of wrapper -->
+<p>Content last modified on 30 November 2021.</p>
 
-<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a population mean using z-scores/Python, using SciPy.md">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-r">View this solution alone.</a></p>
+
+<p>When applying this technique, you would have a series of data values for which
+you needed to compute a confidence interval for the mean.  But in order to
+provide code that runs independently, we create some fake data below.  When
+using this code, replace our fake data with your real data.</p>
+
+<p>We include the population standard deviation below, assuming it is known.
+See the notes at the end for what to do if you do not know the population
+standard deviation in your situation.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">       </span><span class="c1"># replace with your chosen alpha (here, a 95% confidence level)</span><span class="w">
+</span><span class="n">pop.std</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">250</span><span class="w">      </span><span class="c1"># replace with your population standard devation, if known</span><span class="w">
+</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="m">435</span><span class="p">,</span><span class="m">542</span><span class="p">,</span><span class="m">435</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">54</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">543</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">432</span><span class="p">,</span><span class="m">43</span><span class="p">,</span><span class="m">36</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">876</span><span class="p">,</span><span class="m">65</span><span class="p">,</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># fake</span><span class="w">
+
+</span><span class="c1"># Compute the sample mean, as an estimate for the population mean.</span><span class="w">
+</span><span class="n">sample.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># The margin of error then has the following formula.</span><span class="w">
+</span><span class="n">z.score</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">qnorm</span><span class="p">(</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lower.tail</span><span class="o">=</span><span class="kc">FALSE</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">moe</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pop.std</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">z.score</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># The confidence interval is centered on the mean with moe as its radius:</span><span class="w">
+</span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="n">sample.mean</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">moe</span><span class="p">,</span><span class="w"> </span><span class="n">sample.mean</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">moe</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1]  91.3362 329.0167
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Notes:</p>
+
+<ol>
+  <li>If you do not have the population standard deviation, but your sample is
+large enough (typically at least 30), you can approximate the population
+standard deviation with the sample standard deviation, using the code
+<code class="language-plaintext highlighter-rouge">pop.std &lt;- sd( data )</code>.  If your sample is not that large, then
+consider using a different technique instead; see
+<a href="../how-to-compute-a-confidence-interval-for-a-population-mean">how to compute a confidence interval for a population mean</a>.</li>
+  <li>The solution above assumes that the population is normally distributed,
+which is a common assumption in introductory statistics courses, but we
+have not verified that assumption here.</li>
+</ol>
+
+<p>Content last modified on 30 November 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a population mean using z-scores/R.md">edit the source</a>.</p>
+      <h2 id="topics-that-include-this-task">
+        
+        
+          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
+        
+        
+      </h2>
+    
+
+<ul>
+  <li><a href="../bentley-university-ma214">Bentley University MA214</a></li>
+</ul>
+      <h2 id="opportunities">
+        
+        
+          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
+        
+        
+      </h2>
+    
+
+<p>This website does not yet contain a solution for this task in any of the following
+software packages.</p>
+
+<ul>
+  <li>Excel</li>
+</ul>
+
+<p>If you can contribute a solution using any of these pieces of software,
+see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

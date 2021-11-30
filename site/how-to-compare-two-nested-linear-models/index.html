@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compare two nested linear models" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-nested-linear-models/","headline":"How to compare two nested linear models","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compare-two-nested-linear-models/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compare two nested linear models","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -251,9 +251,14 @@
       </h2>
     
 
-<p>Model $A$ is said to be “nested” in model $B$ if the predictors included in $A$ are a subset of those included in $B$.  In such a situation, how can we determine if the larger model (in this case $B$) is significantly better than the smaller (reduced) model?</p>
+<p>Model $A$ is said to be “nested” in model $B$ if the predictors included in $A$ are a subset of those included in $B$.  In such a situation, how can we determine if the larger model (in this case $B$) is significantly better than the smaller (reduced) model?  We can use an Extra Sums of Squares test, also called a partial $F$-test, to compare two nested linear.</p>
 
-<p>Or we might ask, how do we perform an Extra Sums of Squares test to compare nested linear models?</p>
+<p>This technique will also help us with another question.  If we have a multiple linear regression model,</p>
+
+\[\hat{y}=\beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k,\]
+
+<p>how can we test the influence of only some of the coefficients?  If we remove some of the coefficients,
+we have a smaller model nested in the larger one, so the question is the same.</p>
 
 <p>Related tasks:</p>
 
@@ -275,6 +280,9 @@
 <p><a href="../how-to-compare-two-nested-linear-models-in-python-using-statsmodels">View this solution alone.</a></p>
 
 <p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<p>We will create two models, one nested inside the other, in a natural way in this example.
+But this is not the only way to create nested models; it is just an example.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -350,7 +358,7 @@
 </table></div>
 </div>
 
-<p>In the final column of output we see that all numbers are below $0.05$, which suggests that both predictors are significant.  But do the two predictors have an interaction effect?  Let’s create a model containing the interaction term.</p>
+<p>In the final column of output we see that all numbers are below $0.05$, which suggests that both predictors are significant.  A natural question to ask is whether the two predictors have an interaction effect.  Let’s create a model containing the interaction term.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -420,7 +428,10 @@
 </table></div>
 </div>
 
-<p>As seen in the final column of output, there is a significant interaction between the two predictors (bottom number being below $0.05$). To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
+<p>As seen in the final column of output, there is a significant interaction between the two predictors (bottom number being below $0.05$).</p>
+
+<p>We now have one model (<code class="language-plaintext highlighter-rouge">add_model</code>) nested inside a larger model (<code class="language-plaintext highlighter-rouge">int_model</code>).
+To check which model is better, we can conduct an ANOVA comparing the two models. We use the <code class="language-plaintext highlighter-rouge">anova_lm</code> function from <code class="language-plaintext highlighter-rouge">statsmodels</code>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -479,15 +490,18 @@
 
 <p>We have just performed this hypothesis test:</p>
 
-<p>$H_0 =$ the two models are equally as useful for predicting the outcome</p>
+<p>$H_0 =$ the two models are equally useful for predicting the outcome</p>
 
 <p>$H_a =$ the larger model is significantly better than the smaller model</p>
 
-<p>The one number in the final column is our test statistic.  Since is below our chosen threshold of $0.05$, it is best to use the second model.</p>
+<p>In the final column of the output, called <strong>Pr(&gt;F)</strong>,
+the only number in that column is our test statistic, $0.019882$.
+Since is below our chosen threshold of $0.05$, we reject the null hypothesis,
+and prefer to use the second model.</p>
 
 <p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
 
-<p>Content last modified on 31 August 2021.</p>
+<p>Content last modified on 30 November 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -502,6 +516,9 @@
 <p><a href="../how-to-compare-two-nested-linear-models-in-r">View this solution alone.</a></p>
 
 <p>The solution below uses an example dataset about car design and fuel consumption from a 1974 Motor Trend magazine. (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<p>We will create two models, one nested inside the other, in a natural way in this example.
+But this is not the only way to create nested models; it is just an example.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -535,7 +552,7 @@ wt         1 117.1623 117.162269  17.77303 2.220200e-04
 Residuals 29 191.1720   6.592137        NA           NA
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The final column of output suggests that both predictors are significant. But do the two predictors have an interaction effect? Let’s create a model containing the interaction term.</p>
+<p>The final column of output suggests that both predictors are significant. A natural question to ask is whether the two predictors have an interaction effect. Let’s create a model containing the interaction term.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -559,7 +576,10 @@ cyl:wt     1  34.19577  34.195767   6.099533 1.988242e-02
 Residuals 28 156.97620   5.606293         NA           NA
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>As seen in the final column of output, there is a significant interaction between the two predictors. To check which model is better, we can conduct an ANOVA comparing the two models.</p>
+<p>As seen in the final column of output, there is a significant interaction between the two predictors.</p>
+
+<p>We now have one model (<code class="language-plaintext highlighter-rouge">add_model</code>) nested inside a larger model (<code class="language-plaintext highlighter-rouge">int_model</code>).
+To check which model is better, we can conduct an ANOVA comparing the two models.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -577,15 +597,19 @@ Residuals 28 156.97620   5.606293         NA           NA
 
 <p>We have just performed this hypothesis test:</p>
 
-<p>$H_0 =$ the two models are equally as useful for predicting the outcome</p>
+<p>$H_0 =$ the two models are equally useful for predicting the outcome</p>
 
 <p>$H_a =$ the larger model is significantly better than the smaller model</p>
 
-<p>The one number in the final column is our test statistic.  Since is below our chosen threshold of $0.05$, it is best to use the second model.</p>
+<p>In the final column of the output, called <code class="language-plaintext highlighter-rouge">Pr(&gt;F)</code>,
+the only number in that column is our test statistic, $0.01988$.
+Since is below our chosen threshold of $0.05$, we reject the null hypothesis,
+and prefer to use the second model.</p>
 
-<p>This method can be used to check if covariates should be included in the model, or if additional variables should be added as well.</p>
+<p>This method can be used to check if covariates should be included in the model,
+or if additional variables should be added as well.</p>
 
-<p>Content last modified on 07 September 2021.</p>
+<p>Content last modified on 30 November 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compare two nested linear models/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -617,7 +641,7 @@ software packages.</p>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

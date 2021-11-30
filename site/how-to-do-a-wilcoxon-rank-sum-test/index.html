@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to do a Wilcoxon rank-sum test" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-do-a-wilcoxon-rank-sum-test/","headline":"How to do a Wilcoxon rank-sum test","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-do-a-wilcoxon-rank-sum-test/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a Wilcoxon rank-sum test","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -251,12 +251,13 @@
       </h2>
     
 
-<p>Assume we have two independent samples of data, $x_1, x_2, x_3, \ldots x_k$ and
-$x’_1, x’_2, x’_3, \ldots x’_k$, each from a different population.
+<p>Assume we have two independent samples of data, $x_1, x_2, x_3, \ldots x_n$ and
+$x’_1, x’_2, x’_3, \ldots x’_m$, each from a different population.
 Also assume that the sample sizes are small or the populations are not normally
-distributed.  How can we test whether there is a significant difference
+distributed, but that the two population distributions are approximately
+the same shape.  How can we test whether there is a significant difference
 between the two medians (or if one is significantly greater than or less than
-the other)? One method is the Wilcoxon Rank-Sum Test.</p>
+the other)?  One method is the Wilcoxon Rank-Sum Test.</p>
 
 <p>Related tasks:</p>
 
@@ -278,8 +279,8 @@ the other)? One method is the Wilcoxon Rank-Sum Test.</p>
 
 <p>We’re going to use fake data for illustrative purposes,
 but you can replace our fake data with your real data.
-Say our first sample, $x_1, x_2, x_3, \ldots x_k$, has median $m_1$,
-and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$.</p>
+Say our first sample, $x_1, x_2, x_3, \ldots x_n$, has median $m_1$,
+and our second sample, $x’_1, x’_2, x’_3, \ldots x’_m$, has median $m_2$.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -287,8 +288,8 @@ and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$
 4
 </pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="c1"># Replace sample1 and sample2 with your data
-</span><span class="n">sample1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">56</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">167</span><span class="p">,</span> <span class="mi">180</span><span class="p">])</span>
-<span class="n">sample2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">45</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">70</span><span class="p">])</span>
+</span><span class="n">sample1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">56</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">167</span><span class="p">])</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">45</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">85</span><span class="p">])</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>We choose a value, $0 \le \alpha \le 1$, as the Type I Error Rate. We’ll let $\alpha$ be 0.05.</p>
@@ -312,12 +313,14 @@ and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>RanksumsResult(statistic=2.343379732657209, pvalue=0.019109922206844435)
+</pre></td><td class="rouge-code"><pre>RanksumsResult(statistic=2.0892772350933626, pvalue=0.03668277440246522)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.0191, is less than $\alpha=0.05$, so we have sufficient evidence
+<p>Our p-value, $0.03668$, is less than $\alpha=0.05$, so we have sufficient evidence
 to reject the null hypothesis. The population medians are significantly different
 from each other.</p>
+
+<p>(The output above is slightly different from the output you would get by running this test in R, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
       <h3 id="right-tailed-test">
         
         
@@ -334,12 +337,14 @@ from each other.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>RanksumsResult(statistic=2.343379732657209, pvalue=0.009554961103422218)
+</pre></td><td class="rouge-code"><pre>RanksumsResult(statistic=2.0892772350933626, pvalue=0.01834138720123261)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.00955, is less than $\alpha=0.05$, so we have sufficient evidence
+<p>Our p-value, $0.01834$, is less than $\alpha=0.05$, so we have sufficient evidence
 to reject the null hypothesis. The first population medians is significantly greater
 second.</p>
+
+<p>(The output above is slightly different from the output you would get by running this test in R, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
       <h3 id="left-tailed-test">
         
         
@@ -356,14 +361,16 @@ second.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>RanksumsResult(statistic=2.343379732657209, pvalue=0.9904450388965778)
+</pre></td><td class="rouge-code"><pre>RanksumsResult(statistic=2.0892772350933626, pvalue=0.9816586127987674)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.9904, is greater than $\alpha$, so we do not have sufficient
+<p>Our p-value, $0.98165$, is greater than $\alpha$, so we do not have sufficient
 evidence to reject the null hypothesis. The first population median is not
 significantly smaller than the second population median.</p>
 
-<p>Content last modified on 24 October 2021.</p>
+<p>(The output above is slightly different from the output you would get by running this test in R, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
+
+<p>Content last modified on 30 November 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a Wilcoxon rank-sum test/Python, using SciPy.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -386,8 +393,8 @@ and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$
 2
 3
 </pre></td><td class="rouge-code"><pre><span class="c1"># Replace sample1 and sample2 with your data</span><span class="w">
-</span><span class="n">sample1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">190</span><span class="p">,</span><span class="w"> </span><span class="m">176</span><span class="p">,</span><span class="w"> </span><span class="m">119</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">140</span><span class="p">,</span><span class="w"> </span><span class="m">152</span><span class="p">,</span><span class="w"> </span><span class="m">167</span><span class="p">,</span><span class="w"> </span><span class="m">180</span><span class="p">)</span><span class="w">
-</span><span class="n">sample2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">78</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">39</span><span class="p">,</span><span class="w"> </span><span class="m">48</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">)</span><span class="w">
+</span><span class="n">sample1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">56</span><span class="p">,</span><span class="w"> </span><span class="m">31</span><span class="p">,</span><span class="w"> </span><span class="m">190</span><span class="p">,</span><span class="w"> </span><span class="m">176</span><span class="p">,</span><span class="w"> </span><span class="m">119</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">,</span><span class="w"> </span><span class="m">140</span><span class="p">,</span><span class="w"> </span><span class="m">152</span><span class="p">,</span><span class="w"> </span><span class="m">167</span><span class="p">)</span><span class="w">
+</span><span class="n">sample2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">36</span><span class="p">,</span><span class="w"> </span><span class="m">78</span><span class="p">,</span><span class="w"> </span><span class="m">54</span><span class="p">,</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">39</span><span class="p">,</span><span class="w"> </span><span class="m">48</span><span class="p">,</span><span class="w"> </span><span class="m">52</span><span class="p">,</span><span class="w"> </span><span class="m">70</span><span class="p">,</span><span class="w"> </span><span class="m">85</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>We choose a value, $0 \le \alpha \le 1$, as the Type I Error Rate. We’ll let $\alpha$ be 0.05.</p>
@@ -414,13 +421,15 @@ and our second sample, $x’_1, x’_2, x’_3, \ldots x’_k$, has median $m_2$
 </pre></td><td class="rouge-code"><pre>	Wilcoxon rank sum exact test
 
 data:  sample1 and sample2
-W = 81, p-value = 0.01854
+W = 77, p-value = 0.03813
 alternative hypothesis: true location shift is not equal to 0
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.01854, is less than $\alpha=0.05$, so we have sufficient evidence
+<p>Our p-value, $0.03813$, is less than $\alpha=0.05$, so we have sufficient evidence
 to reject the null hypothesis. The population medians are significantly different
 from each other.</p>
+
+<p>(The output above is slightly different than the output you would get by running this test in Python, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
       <h3 id="right-tailed-test-1">
         
         
@@ -444,13 +453,15 @@ from each other.</p>
 </pre></td><td class="rouge-code"><pre>	Wilcoxon rank sum exact test
 
 data:  sample1 and sample2
-W = 81, p-value = 0.009272
+W = 77, p-value = 0.01906
 alternative hypothesis: true location shift is greater than 0
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.009272, is less than $\alpha=0.05$, so we have sufficient evidence
+<p>Our p-value, $0.01906$, is less than $\alpha=0.05$, so we have sufficient evidence
 to reject the null hypothesis. The first population medians is significantly greater
 second.</p>
+
+<p>(The output above is slightly different from the output you would get by running this test in Python, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
       <h3 id="left-tailed-test-1">
         
         
@@ -474,17 +485,19 @@ second.</p>
 </pre></td><td class="rouge-code"><pre>	Wilcoxon rank sum exact test
 
 data:  sample1 and sample2
-W = 81, p-value = 0.9927
+W = 77, p-value = 0.9845
 alternative hypothesis: true location shift is less than 0
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Our p-value, 0.9927, is greater than $\alpha$, so we do not have sufficient
+<p>Our p-value, $0.9845$, is greater than $\alpha$, so we do not have sufficient
 evidence to reject the null hypothesis. The first population median is not
 significantly smaller than the second population median.</p>
 
+<p>(The output above is slightly different from the output you would get by running this test in Python, because SciPy uses a normal distribution internally, but R uses a Wilcoxon distribution.)</p>
+
 <p>NOTE: If there are ties in the data and there are fewer than 50 observations in each sample, then R will compute a $p$-value using the normal approximation, and there will be an error message indicating that the exact $p$-value cannot be calculated.</p>
 
-<p>Content last modified on 24 October 2021.</p>
+<p>Content last modified on 30 November 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a Wilcoxon rank-sum test/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -496,7 +509,9 @@ significantly smaller than the second population median.</p>
       </h2>
     
 
-<p><em>None</em></p>
+<ul>
+  <li><a href="../bentley-university-ma214">Bentley University MA214</a></li>
+</ul>
       <h2 id="opportunities">
         
         
@@ -514,7 +529,7 @@ software packages.</p>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

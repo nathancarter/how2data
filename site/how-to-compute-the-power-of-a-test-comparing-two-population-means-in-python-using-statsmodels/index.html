@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute the power of a test (in Python, using statsmodels) - How to Data</title>
+    <title>How to compute the power of a test comparing two population means (in Python, using statsmodels) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute the power of a test (in Python, using statsmodels) | How to Data</title>
+<title>How to compute the power of a test comparing two population means (in Python, using statsmodels) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute the power of a test (in Python, using statsmodels)" />
+<meta property="og:title" content="How to compute the power of a test comparing two population means (in Python, using statsmodels)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-the-power-of-a-test-in-python-using-statsmodels/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-the-power-of-a-test-in-python-using-statsmodels/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute the power of a test (in Python, using statsmodels)" />
+<meta property="twitter:title" content="How to compute the power of a test comparing two population means (in Python, using statsmodels)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-power-of-a-test-in-python-using-statsmodels/","headline":"How to compute the power of a test (in Python, using statsmodels)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels/","headline":"How to compute the power of a test comparing two population means (in Python, using statsmodels)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,16 +234,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-the-power-of-a-test-in-python-using-statsmodels">
+          <h1 id="how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels">
         
         
-          <a href="#how-to-compute-the-power-of-a-test-in-python-using-statsmodels" class="anchor-heading" aria-labelledby="how-to-compute-the-power-of-a-test-in-python-using-statsmodels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the power of a test (in Python, using statsmodels)
+          <a href="#how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels" class="anchor-heading" aria-labelledby="how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the power of a test comparing two population means (in Python, using statsmodels)
         
         
       </h1>
     
 
-<p><a href="../how-to-compute-the-power-of-a-test">See all solutions.</a></p>
+<p><a href="../how-to-compute-the-power-of-a-test-comparing-two-population-means">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -253,7 +253,13 @@
       </h2>
     
 
-<p>When creating a factorial design, it is important that it has adequate power to detect significant main effects and interaction effects of interest. How can we calculate the power of a test?</p>
+<p>When creating a factorial design, it is important that it has adequate power to detect significant main effects and interaction effects of interest. How can we calculate the power of a two-sample $t$ test that we aim to perform in such a situation?</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-choose-the-sample-size-in-a-study-with-two-population-means">How to choose the sample size in a study with two population means</a></li>
+</ul>
       <h2 id="solution">
         
         
@@ -265,7 +271,7 @@
 
 <!-- beginning of wrapper -->
 
-<p>From <code class="language-plaintext highlighter-rouge">statsmodels</code>, we use the <code class="language-plaintext highlighter-rouge">solve_power</code> function in the <code class="language-plaintext highlighter-rouge">TTestIndPower</code> class.  That function  embodies a relationship among five variables; you provide any four of them and it will compute the fifth to satisfy the relationship.  Let’s get started by importing the package and create a <code class="language-plaintext highlighter-rouge">TTestIndPower</code> object.</p>
+<p>From <code class="language-plaintext highlighter-rouge">statsmodels</code>, we use the <code class="language-plaintext highlighter-rouge">solve_power</code> function in the <code class="language-plaintext highlighter-rouge">TTestIndPower</code> class.  That function  embodies a relationship among five variables; you provide any four of them and it will compute the fifth to be consistent with the first four, regarding the two-sample $t$-test you plan to perform.  Let’s get started by importing the package and create a <code class="language-plaintext highlighter-rouge">TTestIndPower</code> object.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -292,23 +298,23 @@
 6
 7
 </pre></td><td class="rouge-code"><pre><span class="n">obs</span> <span class="o">=</span> <span class="mi">32</span>       <span class="c1"># number of subjects (or observations)
-</span><span class="n">effect</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c1"># alpha, the effect size 
+</span><span class="n">effect</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c1"># effect size 
 </span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>   <span class="c1"># significance level
-</span><span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1"># the ratio of the number of observations in one sample to the other
+</span><span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1"># ratio of the number of observations in one sample to the other
 </span>
 <span class="c1"># We leave power unspecified, so that solve_power will compute it for us:
-</span><span class="n">analysis</span><span class="p">.</span><span class="n">solve_power</span><span class="p">(</span> <span class="n">effect</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nobs1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span> <span class="p">)</span>
+</span><span class="n">analysis</span><span class="p">.</span><span class="n">solve_power</span><span class="p">(</span> <span class="n">effect_size</span><span class="o">=</span><span class="n">effect</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nobs1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.15266275254949752
+</pre></td><td class="rouge-code"><pre>0.1662985260871502
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The power is 0.15 which means that the probability of rejecting the null hypothesis when in fact it is false OR the probability of avoiding a Type II error is 0.15.</p>
+<p>The power is 0.1663, which means that the probability of rejecting the null hypothesis when in fact it is false OR the probability of avoiding a Type II error is 0.1663.</p>
 
-<p>Content last modified on 26 July 2021.</p>
+<p>Content last modified on 30 November 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the power of a test/Python, using statsmodels.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the power of a test comparing two population means/Python, using statsmodels.ipynb">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 

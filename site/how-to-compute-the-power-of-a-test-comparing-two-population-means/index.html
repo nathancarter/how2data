@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to compute the power of a test - How to Data</title>
+    <title>How to compute the power of a test comparing two population means - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to compute the power of a test | How to Data</title>
+<title>How to compute the power of a test comparing two population means | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to compute the power of a test" />
+<meta property="og:title" content="How to compute the power of a test comparing two population means" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-the-power-of-a-test/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-the-power-of-a-test/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-the-power-of-a-test-comparing-two-population-means/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-the-power-of-a-test-comparing-two-population-means/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to compute the power of a test" />
+<meta property="twitter:title" content="How to compute the power of a test comparing two population means" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-power-of-a-test/","headline":"How to compute the power of a test","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-the-power-of-a-test-comparing-two-population-means/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute the power of a test comparing two population means","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,10 +234,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-compute-the-power-of-a-test">
+          <h1 id="how-to-compute-the-power-of-a-test-comparing-two-population-means">
         
         
-          <a href="#how-to-compute-the-power-of-a-test" class="anchor-heading" aria-labelledby="how-to-compute-the-power-of-a-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the power of a test
+          <a href="#how-to-compute-the-power-of-a-test-comparing-two-population-means" class="anchor-heading" aria-labelledby="how-to-compute-the-power-of-a-test-comparing-two-population-means"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute the power of a test comparing two population means
         
         
       </h1>
@@ -251,7 +251,13 @@
       </h2>
     
 
-<p>When creating a factorial design, it is important that it has adequate power to detect significant main effects and interaction effects of interest. How can we calculate the power of a test?</p>
+<p>When creating a factorial design, it is important that it has adequate power to detect significant main effects and interaction effects of interest. How can we calculate the power of a two-sample $t$ test that we aim to perform in such a situation?</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-choose-the-sample-size-in-a-study-with-two-population-means">How to choose the sample size in a study with two population means</a></li>
+</ul>
       <h2 id="using-statsmodels-in-python">
         
         
@@ -261,9 +267,9 @@
       </h2>
     
 
-<p><a href="../how-to-compute-the-power-of-a-test-in-python-using-statsmodels">View this solution alone.</a></p>
+<p><a href="../how-to-compute-the-power-of-a-test-comparing-two-population-means-in-python-using-statsmodels">View this solution alone.</a></p>
 
-<p>From <code class="language-plaintext highlighter-rouge">statsmodels</code>, we use the <code class="language-plaintext highlighter-rouge">solve_power</code> function in the <code class="language-plaintext highlighter-rouge">TTestIndPower</code> class.  That function  embodies a relationship among five variables; you provide any four of them and it will compute the fifth to satisfy the relationship.  Let’s get started by importing the package and create a <code class="language-plaintext highlighter-rouge">TTestIndPower</code> object.</p>
+<p>From <code class="language-plaintext highlighter-rouge">statsmodels</code>, we use the <code class="language-plaintext highlighter-rouge">solve_power</code> function in the <code class="language-plaintext highlighter-rouge">TTestIndPower</code> class.  That function  embodies a relationship among five variables; you provide any four of them and it will compute the fifth to be consistent with the first four, regarding the two-sample $t$-test you plan to perform.  Let’s get started by importing the package and create a <code class="language-plaintext highlighter-rouge">TTestIndPower</code> object.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -290,23 +296,94 @@
 6
 7
 </pre></td><td class="rouge-code"><pre><span class="n">obs</span> <span class="o">=</span> <span class="mi">32</span>       <span class="c1"># number of subjects (or observations)
-</span><span class="n">effect</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c1"># alpha, the effect size 
+</span><span class="n">effect</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c1"># effect size 
 </span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>   <span class="c1"># significance level
-</span><span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1"># the ratio of the number of observations in one sample to the other
+</span><span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1"># ratio of the number of observations in one sample to the other
 </span>
 <span class="c1"># We leave power unspecified, so that solve_power will compute it for us:
-</span><span class="n">analysis</span><span class="p">.</span><span class="n">solve_power</span><span class="p">(</span> <span class="n">effect</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nobs1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span> <span class="p">)</span>
+</span><span class="n">analysis</span><span class="p">.</span><span class="n">solve_power</span><span class="p">(</span> <span class="n">effect_size</span><span class="o">=</span><span class="n">effect</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nobs1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.15266275254949752
+</pre></td><td class="rouge-code"><pre>0.1662985260871502
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The power is 0.15 which means that the probability of rejecting the null hypothesis when in fact it is false OR the probability of avoiding a Type II error is 0.15.</p>
+<p>The power is 0.1663, which means that the probability of rejecting the null hypothesis when in fact it is false OR the probability of avoiding a Type II error is 0.1663.</p>
 
-<p>Content last modified on 26 July 2021.</p>
+<p>Content last modified on 30 November 2021.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the power of a test/Python, using statsmodels.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the power of a test comparing two population means/Python, using statsmodels.ipynb">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-the-power-of-a-test-comparing-two-population-means-in-r">View this solution alone.</a></p>
+
+<p>We use the <code class="language-plaintext highlighter-rouge">power.t.test</code> function in R.  It embodies a relationship among
+five variables; you provide any four of them and it will compute the fifth to
+be consistent with the first four, regarding the two-sample $t$-test you plan</p>
+
+<p>For this example, let’s say that:</p>
+
+<ul>
+  <li>You plan to create a balanced $4\times2$ factorial experiment with 32 subjects.</li>
+  <li>You wish to be able to detect a difference</li>
+  <li>You want to know the expected power for the test of a main effect of factor A.</li>
+  <li>Your significance level is $\alpha=0.05$.</li>
+</ul>
+
+<p>We proceed as follows.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c1"># install.packages('pwr') # if you have not already installed it</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">pwr</span><span class="p">)</span><span class="w">
+
+</span><span class="n">obs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">32</span><span class="w">       </span><span class="c1"># number of subjects (or observations)</span><span class="w">
+</span><span class="n">effect</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.25</span><span class="w">  </span><span class="c1"># effect size </span><span class="w">
+</span><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.05</span><span class="w">   </span><span class="c1"># significance level</span><span class="w">
+</span><span class="n">ratio</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w">      </span><span class="c1"># ratio of the number of observations in one sample to the other</span><span class="w">
+
+</span><span class="c1"># We leave power unspecified, so that power.t2n.test will compute it for us:</span><span class="w">
+</span><span class="n">pwr.t2n.test</span><span class="p">(</span><span class="n">n1</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span><span class="w"> </span><span class="n">n2</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="o">=</span><span class="n">effect</span><span class="p">,</span><span class="w"> </span><span class="n">sig.level</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">power</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>     t test power calculation 
+
+             n1 = 32
+             n2 = 32
+              d = 0.25
+      sig.level = 0.05
+          power = 0.1662985
+    alternative = two.sided
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The power is 0.1663, which means that the probability of rejecting the null hypothesis when in fact it is false OR the probability of avoiding a Type II error is 0.1663.</p>
+
+<p>Content last modified on 30 November 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the power of a test comparing two population means/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -332,12 +409,11 @@
 software packages.</p>
 
 <ul>
-  <li>R</li>
   <li>Excel</li>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,
-see <a href="contributing">our Contributing page</a> for how to help extend this website.</p>
+see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 

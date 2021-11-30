@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to test data for normality with D'Agostino and Pearson's test (in Python, using SciPy) - How to Data</title>
+    <title>How to compute a confidence interval for a population mean using z-scores (in Python, using SciPy) - How to Data</title>
 
     
   
@@ -27,19 +27,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>How to test data for normality with D’Agostino and Pearson’s test (in Python, using SciPy) | How to Data</title>
+<title>How to compute a confidence interval for a population mean using z-scores (in Python, using SciPy) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="How to test data for normality with D’Agostino and Pearson’s test (in Python, using SciPy)" />
+<meta property="og:title" content="How to compute a confidence interval for a population mean using z-scores (in Python, using SciPy)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-test-data-for-normality-with-d-agostino-and-pearson-s-test-in-python-using-scipy/" />
-<meta property="og:url" content="/how2data/site/how-to-test-data-for-normality-with-d-agostino-and-pearson-s-test-in-python-using-scipy/" />
+<link rel="canonical" href="/how2data/site/how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy/" />
+<meta property="og:url" content="/how2data/site/how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy/" />
 <meta property="og:site_name" content="How to Data" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to test data for normality with D’Agostino and Pearson’s test (in Python, using SciPy)" />
+<meta property="twitter:title" content="How to compute a confidence interval for a population mean using z-scores (in Python, using SciPy)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-test-data-for-normality-with-d-agostino-and-pearson-s-test-in-python-using-scipy/","headline":"How to test data for normality with D’Agostino and Pearson’s test (in Python, using SciPy)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute a confidence interval for a population mean using z-scores (in Python, using SciPy)","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -234,16 +234,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-test-data-for-normality-with-dagostino-and-pearsons-test-in-python-using-scipy">
+          <h1 id="how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy">
         
         
-          <a href="#how-to-test-data-for-normality-with-dagostino-and-pearsons-test-in-python-using-scipy" class="anchor-heading" aria-labelledby="how-to-test-data-for-normality-with-dagostino-and-pearsons-test-in-python-using-scipy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to test data for normality with D’Agostino and Pearson’s test (in Python, using SciPy)
+          <a href="#how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy" class="anchor-heading" aria-labelledby="how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores-in-python-using-scipy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute a confidence interval for a population mean using z-scores (in Python, using SciPy)
         
         
       </h1>
     
 
-<p><a href="../how-to-test-data-for-normality-with-d-agostino-and-pearson-s-test">See all solutions.</a></p>
+<p><a href="../how-to-compute-a-confidence-interval-for-a-population-mean-using-z-scores">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -253,18 +253,31 @@
       </h2>
     
 
-<p>We often want to know whether a set of data is normally distributed,
-so that we can deduce what inference tests are appropriate to conduct.
-If we have a set of data and want to figure out if it comes from a population
-that follows a normal distribution, one tool that can help is
-D’Agostino and Pearson’s test.  How do we perform it?</p>
+<p>If we have a set of data that seems normally distributed, how can we compute a
+confidence interval for the mean?  Assume we have some confidence level
+already chosen, such as $\alpha=0.05$.</p>
+
+<p>We will use the normal distribution, which assumes either that we know
+the population standard deviation, or we have a large enough sample size
+(typically at least 30).  If neither of these is true in your case,
+then you can use $t$-scores instead;
+see <a href="../how-to-compute-a-confidence-interval-for-a-population-mean">how to compute a confidence interval for a population mean</a>.</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li><a href="../how-to-create-a-qq-plot">How to create a QQ-plot</a></li>
-  <li><a href="../how-to-test-data-for-normality-with-pearson-s-chi-squared-test">How to test data for normality with Pearson’s chi-squared test</a></li>
-  <li><a href="../how-to-test-data-for-normality-with-the-jarque-bera-test">How to test data for normality with the Jarque-Bera test</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-a-population-mean">How to compute a confidence interval for a population mean</a></li>
+  <li>How to do a two-sided hypothesis test for a population mean</li>
+  <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-two-sample-means">How to do a two-sided hypothesis test for two sample means</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-a-mean-difference-matched-pairs">How to compute a confidence interval for a mean difference (matched pairs)</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-a-regression-coefficient">How to compute a confidence interval for a regression coefficient</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-a-single-population-variance">How to compute a confidence interval for a single population variance</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-the-difference-between-two-means-when-both-population-variances-are-known">How to compute a confidence interval for the difference between two means when both population variances are known</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-the-difference-between-two-means-when-population-variances-are-unknown">How to compute a confidence interval for the difference between two means when population variances are unknown</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-the-difference-between-two-proportions">How to compute a confidence interval for the difference between two proportions</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable">How to compute a confidence interval for the expected value of a response variable</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-the-population-proportion">How to compute a confidence interval for the population proportion</a></li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-the-ratio-of-two-population-variances">How to compute a confidence interval for the ratio of two population variances</a></li>
 </ul>
       <h2 id="solution">
         
@@ -277,10 +290,17 @@ D’Agostino and Pearson’s test.  How do we perform it?</p>
 
 <!-- beginning of wrapper -->
 
-<p>We’re going to use some fake restaurant data,
-but you can replace our fake data with your real data in the code below.
-The values in our fake data represent the amount of money that customers spent
-on a Sunday morning at the restaurant.</p>
+<p>This solution uses a 95% confidence level, but you can change that in the
+first line of code, by specifing a different <code class="language-plaintext highlighter-rouge">alpha</code>.</p>
+
+<p>When applying this technique, you would have a series of data values for which
+you needed to compute a confidence interval for the mean.  But in order to
+provide code that runs independently, we create some fake data below.  When
+using this code, replace our fake data with your real data.</p>
+
+<p>We include the population standard deviation below, assuming it is known.
+See the notes at the end for what to do if you do not know the population
+standard deviation in your situation.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -289,46 +309,60 @@ on a Sunday morning at the restaurant.</p>
 5
 6
 7
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>       <span class="c1"># replace with your chosen alpha (here, a 95% confidence level)
+</span><span class="n">pop_std</span> <span class="o">=</span> <span class="mi">250</span>      <span class="c1"># replace with your population standard devation, if known
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">435</span><span class="p">,</span><span class="mi">542</span><span class="p">,</span><span class="mi">435</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">543</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">432</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">876</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">5</span> <span class="p">]</span> <span class="c1"># fake
+</span>
+<span class="c1"># We will use NumPy and SciPy to compute some of the statistics below.
+</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
 
-<span class="c1"># Replace your data here
-</span><span class="n">spending</span> <span class="o">=</span> <span class="p">[</span><span class="mi">34</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
-            <span class="mi">16</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">37</span><span class="p">]</span>
+<span class="c1"># Compute the sample mean, as an estimate for the population mean.
+</span><span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
 
-<span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">spending</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">spending</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># The margin of error then has the following formula.
+</span><span class="n">z_score</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">norm</span><span class="p">.</span><span class="n">ppf</span><span class="p">(</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">/</span> <span class="mi">2</span> <span class="p">)</span>
+<span class="n">moe</span> <span class="o">=</span> <span class="n">pop_std</span> <span class="o">*</span> <span class="n">z_score</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span> <span class="p">)</span>
+
+<span class="c1"># The confidence interval is centered on the mean with moe as its radius:
+</span><span class="p">(</span> <span class="n">sample_mean</span> <span class="o">-</span> <span class="n">moe</span><span class="p">,</span> <span class="n">sample_mean</span> <span class="o">+</span> <span class="n">moe</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>(36.52, 15.772127313713899)
+</pre></td><td class="rouge-code"><pre>(91.33619807845439, 329.0167430980162)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We will now conduct a test of the following null hypothesis:
-The data comes from a population that is normally distributed with mean 36.52 and standard deviation 15.77.</p>
+<p>Notes:</p>
 
-<p>We will use a value $\alpha=0.05$ as our Type I error rate.
-The <code class="language-plaintext highlighter-rouge">normaltest()</code> function in SciPy’s <code class="language-plaintext highlighter-rouge">stats</code> package can perform D’Agostino and Pearson’s test for normality,
-which uses the skew and kurtosis of the data.</p>
+<ol>
+  <li>If you do not have the population standard deviation, but your sample is
+large enough (typically at least 30), you can approximate the population
+standard deviation with the sample standard deviation, using the code
+<code class="language-plaintext highlighter-rouge">std = stats.tstd( data )</code>.  If your sample is not that large, then
+consider using a different technique instead; see
+<a href="../how-to-compute-a-confidence-interval-for-a-population-mean">how to compute a confidence interval for a population mean</a>.</li>
+  <li>The solution above assumes that the population is normally distributed,
+which is a common assumption in introductory statistics courses, but we
+have not verified that assumption here.</li>
+</ol>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="n">stats</span><span class="p">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">spending</span><span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<p>Content last modified on 30 November 2021.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>NormaltestResult(statistic=3.0866213696851097, pvalue=0.21367252674488552)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>The p-value is apprximately 0.21367, which is greater than $\alpha=0.05$, so we fail to reject our null hypothesis.
-We would continue to operate under our original assumption that the data come from a normally distributed population.</p>
-
-<p>Content last modified on 23 September 2021.</p>
-
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to test data for normality with D'Agostino and Pearson's test/Python, using SciPy.ipynb">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a population mean using z-scores/Python, using SciPy.md">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
-<p>Contributed by Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</p>
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
 
         
 
