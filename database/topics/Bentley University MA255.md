@@ -25,7 +25,7 @@ this topic page is under construction.*
 ## Experiments with one treatment factor
 
  * How to check the assumptions of a linear model
- * How to compute the power of a test
+ * How to compute the power of a test comparing two population means
  * How to perform an analysis of covariance (ANCOVA)
  * How to perform pairwise comparisons
  * How to perform post-hoc analysis with Tukey's HSD test
