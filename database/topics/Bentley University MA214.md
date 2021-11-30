@@ -13,4 +13,4 @@ and contingency tables.
 *The sequence of topics below is not necessarily the final version;
 this topic page is under construction.*
 
- * How to choose the sample size in a study
+ * How to choose the sample size in a study with two population means

@@ -6,10 +6,12 @@ Example:  Let's say we're designing a study to assess the effectiveness of a new
 four-week exercise program for weight loss.  Assume that weight loss in four-week
 exercise programs is normally distributed with a standard deviation of around 5 pounds.
 The goal is that the new exercise program will have a 4-pound higher weight loss
-than the average program.
+than the average program.  (Notice that we will be comparing the means of two
+populations, the weight loss in each of two programs.)
 
 We choose a value $0 \le \alpha \le 1$ as the probability of a Type I error
-(false positive, finding we should reject $H_0$ when it’s actually true).
+in our test that compares the two means.  (Recall, Type I error is for a
+false positive, finding we should reject $H_0$ when it’s actually true).
 Let's set $\alpha$ to be 0.05 here.
 
 We choose a value $0 \le \beta \le 1$ as the probability of a Type II error
