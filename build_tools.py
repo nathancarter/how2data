@@ -252,18 +252,17 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
                 '\n'.join( [ f' * {author}' for author in contributors ] )
         except TypeError:
             contributors = ''
-    write_markdown( output_file,
-        files_df[files_df['filename'] == 'solution-template.md']['raw content'].iloc[0]
-        .replace( 'TITLE', solution_row['solution title'] )
-        .replace( 'PERMALINK', solution_row['permalink'] )
-        .replace( 'TASK_PAGE_LINK', f'[See all solutions.](../{task_row["permalink"]})' )
-        .replace( 'DESCRIPTION',
+    write_markdown( output_file, fill_template( 'solution',
+        TITLE = solution_row['solution title'],
+        PERMALINK = solution_row['permalink'],
+        TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
+        DESCRIPTION =
             adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
-                make_all_task_names_links( task_row['content'] ) ) )
-        .replace( 'MARKDOWN_CONTENT', wrap_in_html_comments( run_markdown(
-            content, in_folder, solution_row['software'] ) ) )
-        .replace( 'CONTRIBUTORS', contributors )
-    )
+                make_all_task_names_links( task_row['content'] ) ),
+        MARKDOWN_CONTENT = wrap_in_html_comments( run_markdown(
+            content, in_folder, solution_row['software'] ) ),
+        CONTRIBUTORS = contributors
+    ) )
     print( f'Built solution for: {solution_row["task name"]}' )
     print( f'          Software: {solution_row["software"]}' )
     print( f'     Solution name: {solution_row["solution name"]}' )
@@ -291,24 +290,20 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
     for index, solution_row in software_for_this_task.iterrows():
         solution_name = without_extension( solution_row['solution name'] )
         solution_name = solution_name[0].upper() + solution_name[1:]
-        all_solutions += f'''
-
-## {solution_name}, in {solution_row["software"]}
-
-[View this solution alone.](../{solution_row["permalink"]})
-
-{get_generated_solution_body( solution_row, out_folder )}
-
-'''
+        all_solutions += fill_template( 'solution-in-software',
+            NAME = solution_name,
+            SOFTWARE = solution_row['software'],
+            PERMALINK = solution_row['permalink'],
+            BODY = get_generated_solution_body( solution_row, out_folder )
+        )
     if all_solutions == '':
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
     opportunities = list( software_df['name'][
         ~software_df['name'].isin(software_for_this_task['software'])] )
     if len( opportunities ) > 0:
         opportunities = "\n".join( [ f" * {software}" for software in opportunities ] )
-        opportunities = \
-            files_df[files_df['filename'] == 'opportunities-template.md']['raw content'].iloc[0] \
-                .replace( 'OPPORTUNITIES_LIST', opportunities )
+        opportunities = fill_template( 'opportunities',
+            OPPORTUNITIES_LIST = opportunities )
     else:
         opportunities = ''
     related_topics = topics_df[topics_df['content'].str.contains( row['task name'] )]
@@ -316,17 +311,16 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
         related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
     else:
         related_topics = '*None*'
-    write_markdown( output_file,
-        files_df[files_df['filename'] == 'task-template.md']['raw content'].iloc[0]
-        .replace( 'TITLE', row['task name'] )
-        .replace( 'PERMALINK', row['permalink'] )
-        .replace( 'DESCRIPTION',
+    write_markdown( output_file, fill_template( 'task',
+        TITLE = row['task name'],
+        PERMALINK = row['permalink'],
+        DESCRIPTION =
             adjust_image_filenames( adjust_image_for_task( row['task name'] ),
-                make_all_task_names_links( row['content'] ) ) )
-        .replace( 'SOLUTIONS', all_solutions )
-        .replace( 'TOPICS', related_topics )
-        .replace( 'OPPORTUNITIES', opportunities )
-    )
+                make_all_task_names_links( row['content'] ) ),
+        SOLUTIONS = all_solutions,
+        TOPICS = related_topics,
+        OPPORTUNITIES = opportunities
+    ) )
     mark_as_regenerated( out_filename )
     return output_file
 
@@ -361,16 +355,15 @@ def build_software_page ( row ):
         table2 = table2.to_markdown( index=False )
     else:
         table2 = f'*None---all tasks have solutions in {row["name"]}!*'
-    write_markdown( output_file,
-        files_df[files_df['filename'] == 'software-template.md']['raw content'].iloc[0]
-        .replace( 'TITLE', row['title'] )
-        .replace( 'SOFTWARE_NAME', row['name'] )
-        .replace( 'PERMALINK', row['permalink'] )
-        .replace( 'SOFTWARE_ICON', row['large icon markdown'] )
-        .replace( 'NUMBER_OF_SOLUTIONS', str( row['num solutions'] ) )
-        .replace( 'SOFTWARE_TASK_TABLE', table1 )
-        .replace( 'OPPORTUNITIES', table2 )
-    )
+    write_markdown( output_file, fill_template( 'software',
+        TITLE = row['title'],
+        SOFTWARE_NAME = row['name'],
+        PERMALINK = row['permalink'],
+        SOFTWARE_ICON = row['large icon markdown'],
+        NUMBER_OF_SOLUTIONS = str( row['num solutions'] ),
+        SOFTWARE_TASK_TABLE = table1,
+        OPPORTUNITIES = table2
+    ) )
     mark_as_regenerated( out_filename )
 
 # Generate a page for a given topic, from a row in the topics_df DataFrame.
@@ -386,15 +379,14 @@ def build_topic_page ( row ):
         pdf_downloads = 'No PDF downloads available for this topic yet.'
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    write_markdown( output_file,
-        files_df[files_df['filename'] == 'topic-template.md']['raw content'].iloc[0]
-        .replace( 'TITLE', row['topic name'] )
-        .replace( 'PERMALINK', row['permalink'] )
-        .replace( 'CONTENT', make_all_task_names_links( row['content'] ) )
-        .replace( 'CONTRIBUTORS',
-            f'Contributed by {row["author"]}' if row["author"] != np.nan else '' )
-        .replace( 'DOWNLOADS', pdf_downloads )
-    )
+    write_markdown( output_file, fill_template( 'topic',
+        TITLE = row['topic name'],
+        PERMALINK = row['permalink'],
+        CONTENT = make_all_task_names_links( row['content'] ),
+        CONTRIBUTORS =
+            f'Contributed by {row["author"]}' if row["author"] != np.nan else '',
+        DOWNLOADS = pdf_downloads
+    ) )
     mark_as_regenerated( out_filename )
 
 # Convert all HTML-style tables/etc. within markdown text to LaTeX instead
@@ -444,11 +436,12 @@ def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
     else:
         must_build = True
     # create the structure of the Markdown input to pandoc
-    markdown = files_df[files_df['filename'] == 'topic-pdf-template.md']['raw content'].iloc[0] \
-        .replace( 'TITLE', title ) \
-        .replace( 'SITE_URL', site_url ) \
-        .replace( 'DATE', datetime.now().strftime("%d %B %Y") ) \
-        .replace( 'DESCRIPTION', description_and_toc )
+    markdown = fill_template( 'topic-pdf',
+        TITLE = title,
+        SITE_URL = site_url,
+        DATE = datetime.now().strftime("%d %B %Y"),
+        DESCRIPTION = description_and_toc
+    )
     # now add all tasks, one at a time
     solutions_in_sw = solutions_df[solutions_df['software'] == software_row['name']]
     num_solutions = 0
@@ -462,11 +455,12 @@ def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \
                      + software_row['name'] + '.'
-        markdown += files_df[files_df['filename'] == 'topic-pdf-solution-template.md']['raw content'].iloc[0] \
-            .replace( 'TASK', task_row['task name'] ) \
-            .replace( 'DESCRIPTION', make_all_task_names_links( task_row['content'] ) ) \
-            .replace( 'SOFTWARE', software_row['name'] ) \
-            .replace( 'SOLUTION', solution )
+        markdown += fill_template( 'topic-pdf-solution',
+            TASK = task_row['task name'],
+            DESCRIPTION = make_all_task_names_links( task_row['content'] ),
+            SOFTWARE = software_row['name'],
+            SOLUTION = solution
+        )
     proportion = num_solutions / len( tasks )
     # if that proportion is not large enough, stop here
     if proportion < min_proportion:

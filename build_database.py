@@ -58,6 +58,11 @@ for filename in just_docs( os.listdir( static_folder ) ):
         'raw content' : read_text_file( full_filename )
     } )
 files_df = pd.DataFrame( json )
+def fill_template ( name, **kwargs ):
+    text = files_df[files_df['filename'] == name+'-template.md']['raw content'].iloc[0]
+    for key, value in kwargs.items():
+        text = text.replace( key, value )
+    return text
 
 ###
 ###  READ TASK LIST FROM DISK
