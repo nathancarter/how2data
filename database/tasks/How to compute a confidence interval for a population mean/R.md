@@ -19,3 +19,7 @@ upper_bound <- answer$conf.int[2]
 # If you just need to see the results in a report, do this alone:
 t.test( data, conf.level=1-alpha )
 ```
+
+*Note:* The solution above assumes that the population is normally distributed,
+which is a common assumption in introductory statistics courses,
+but we have not verified that assumption here.

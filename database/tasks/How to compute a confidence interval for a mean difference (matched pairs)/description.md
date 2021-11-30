@@ -9,7 +9,7 @@ Related tasks:
 
  * How to do a hypothesis test for a mean difference (matched pairs)
  * How to compute a confidence interval for a regression coefficient
- * How to compute a confidence interval for a sample mean
+ * How to compute a confidence interval for a population mean
  * How to compute a confidence interval for a single population variance
  * How to compute a confidence interval for the difference between two means when both population variances are known
  * How to compute a confidence interval for the difference between two means when population variances are unknown

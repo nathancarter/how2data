@@ -6,7 +6,7 @@ from the population at large, that is, is $\mu=\bar x$?
 
 Related tasks:
 
- * How to compute a confidence interval for a sample mean
+ * How to compute a confidence interval for a population mean
  * How to do a two-sided hypothesis test for two sample means
  * How to do a one-sided hypothesis test for two sample means
  * How to do a hypothesis test for a mean difference (matched pairs)

@@ -27,7 +27,7 @@ and optionally ANOVA and/or $\chi^2$ tests, time permitting.
 
 ## Confidence intervals and hypothesis testing
 
- * How to compute a confidence interval for a sample mean
+ * How to compute a confidence interval for a population mean
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a two-sided hypothesis test for two sample means
 

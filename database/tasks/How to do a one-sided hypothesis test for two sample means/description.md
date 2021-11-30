@@ -6,7 +6,7 @@ Or more precisely, is their difference significantly less than zero?
 
 Related tasks:
 
- * How to compute a confidence interval for a sample mean
+ * How to compute a confidence interval for a population mean
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a two-sided hypothesis test for two sample means
  * How to do a one-way analysis of variance (ANOVA)

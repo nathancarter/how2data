@@ -6,7 +6,7 @@ explanatory variables in the model?
 Related tasks:
 
  * How to compute a confidence interval for a mean difference (matched pairs)
- * How to compute a confidence interval for a sample mean
+ * How to compute a confidence interval for a population mean
  * How to compute a confidence interval for a single population variance
  * How to compute a confidence interval for the difference between two means when both population variances are known
  * How to compute a confidence interval for the difference between two means when population variances are unknown

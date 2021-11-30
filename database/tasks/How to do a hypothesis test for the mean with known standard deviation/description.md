@@ -8,7 +8,7 @@ population mean.  How do we formulate an appropriate hypothesis test?
 
 Related tasks:
 
- * How to compute a confidence interval for a sample mean
+ * How to compute a confidence interval for a population mean
  * How to do a hypothesis test for a mean difference (matched pairs)
  * How to do a hypothesis test for a population proportion
  * How to do a hypothesis test for population variance
