@@ -306,17 +306,9 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
         ~software_df['name'].isin(software_for_this_task['software'])] )
     if len( opportunities ) > 0:
         opportunities = "\n".join( [ f" * {software}" for software in opportunities ] )
-        opportunities = f'''
-## Opportunities
-
-This website does not yet contain a solution for this task in any of the following
-software packages.
-
-{opportunities}
-
-If you can contribute a solution using any of these pieces of software,
-see [our Contributing page](contributing) for how to help extend this website.
-'''
+        opportunities = \
+            files_df[files_df['filename'] == 'opportunities-template.md']['raw content'].iloc[0] \
+                .replace( 'OPPORTUNITIES_LIST', opportunities )
     else:
         opportunities = ''
     related_topics = topics_df[topics_df['content'].str.contains( row['task name'] )]
