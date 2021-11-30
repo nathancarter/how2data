@@ -8,5 +8,5 @@ How do we make and interpret one?
 Related tasks:
 
  * How to test data for normality with Pearson's chi-squared test
- * How to test data for normality with D'Agostino and Pearson's test
+ * How to test data for normality with the D'Agostino-Pearson test
  * How to test data for normality with the Jarque-Bera test

@@ -8,5 +8,5 @@ the Jarque-Bera test for normality.  How do we perform it?
 Related tasks:
 
  * How to create a QQ-plot
- * How to test data for normality with D'Agostino and Pearson's test
+ * How to test data for normality with the D'Agostino-Pearson test
  * How to test data for normality with Pearson's chi-squared test
