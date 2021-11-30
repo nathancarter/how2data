@@ -24,6 +24,7 @@ RUN R -e 'install.packages("rstatix",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("ggpubr",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("perm",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("pwr",repos="http://cran.us.r-project.org")'
+RUN R -e 'install.packages("gmodels",repos="http://cran.us.r-project.org")'
 
 # And installing mosaic in this context requires special care:
 RUN conda install -c conda-forge r-terra

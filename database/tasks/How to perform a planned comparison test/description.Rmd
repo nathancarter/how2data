@@ -1,0 +1,5 @@
+
+Suppose that ANOVA reveals a significant difference between treatment levels,
+and you wish to explore further through post hoc analysis by comparing two
+specific treatment levels.  How can we perform perform planned comparisons,
+also called a contrast test?

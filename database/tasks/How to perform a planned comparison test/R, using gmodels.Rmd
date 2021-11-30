@@ -1,0 +1,47 @@
+---
+authors:
+ - Krtin Juneja (kjuneja@falcon.bentley.edu)
+ - Nathan Carter (ncarter@bentley.edu)
+---
+
+Usually, you have data you wish to compare, but we will use example data here.
+We load the "oats" dataset from R's `MASS` package, about the yield of oats
+from a split-plot field trial using three varieties (V) and four levels of
+manurial treatment (N). The experiment was laid out in 6 blocks (B) of 3 main
+plots, each split into 4 sub-plots. The varieties were applied to the main plots
+and the manurial treatments to the sub-plots.
+
+```{r}
+# install.package('MASS')  # if you have not already done so, and want this data
+library(MASS)
+df <- oats
+```
+
+Before we perform the contrast test, let's verify that the yield of oats `Y`
+depends on the nitrogen manurial treatment given to it `N`.
+
+```{r}
+aov1 <- aov(Y ~ N, data = df)
+summary(aov1)
+```
+
+The $p$-value in the `Pr(>F)` column is below $\alpha=0.05$.
+So at the 5% significance level, the yield differs according to the
+nitrogen manurial treatment. We assume that the model assumptions are met but
+do not verify them here.
+
+We now want to perform a planned comparison test (or contrast test) on the data
+to see whether there is a difference between the $N<0.5$ levels and the
+$N>0.5$ levels. We will use the `fit.contrast` function in the `gmodels` package.
+Since the order of the levels is 0, 0.2, 0.4 and 0.6, the
+contrast coefficients will be $-0.5$, $-0.5$, $0.5$, $0.5$, respectively.
+
+```{r}
+# install.package('gmodels')  # if you have not already done so
+library(gmodels)
+fit.contrast(aov1, "N", coeff=c(-1/2,-1/2,1/2,1/2))
+```
+
+The $p$-value in the `Pr(>|t|)` column is below $\alpha=0.05$.
+This tells us that there is a significant difference between the average yields
+of the $N<0.5$ and $N>0.5$ levels.
