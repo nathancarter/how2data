@@ -3,7 +3,7 @@ author: Nathan Carter (ncarter@bentley.edu)
 ---
 
 You can import many different random variables from SciPy's `stats` module.
-The full list of them is online [here](https://docs.scipy.org/doc/scipy/reference/stats.html#discrete-distributions).
+The full list of them is online [here](https://docs.scipy.org/doc/scipy/reference/stats.html#continuous-distributions).
 
 The challenge with plotting a random variable is knowing the appropriate
 sample space, because some random variables have sample spaces of infinite
