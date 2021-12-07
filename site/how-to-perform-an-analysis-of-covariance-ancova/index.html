@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to perform an analysis of covariance (ANCOVA)" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"How to perform an analysis of covariance (ANCOVA)","url":"/how2data/site/how-to-perform-an-analysis-of-covariance-ancova/","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"/how2data/site/how-to-perform-an-analysis-of-covariance-ancova/","headline":"How to perform an analysis of covariance (ANCOVA)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -346,6 +346,14 @@
 </table></div>
 </div>
 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/outdated/utils.py:14: OutdatedPackageWarning: The package pingouin is out of date. Your version is 0.4.0, the latest is 0.5.0.
+Set the environment variable OUTDATED_IGNORE=1 to disable these warnings.
+  return warn(
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
 <p>The $p$-value for each variable is in the <code class="language-plaintext highlighter-rouge">p-unc</code> column.</p>
 
 <p>The $p$-value for the <code class="language-plaintext highlighter-rouge">wt</code> variable tests the null hypothesis, “The quantities <code class="language-plaintext highlighter-rouge">wt</code> and <code class="language-plaintext highlighter-rouge">mpg</code> are not related.”  Since it is below 0.05, we reject the null hypothesis, and conclude that <code class="language-plaintext highlighter-rouge">wt</code> is significant in predicting <code class="language-plaintext highlighter-rouge">mpg</code>.</p>
@@ -354,7 +362,7 @@
 
 <p>Note: Unfortunately, a two-factor ANCOVA is not possible in pingouin. However, a model with more than one covariate is possible, as you can provide a list as the <code class="language-plaintext highlighter-rouge">covar</code> parameter when calling <code class="language-plaintext highlighter-rouge">ancova</code>.</p>
 
-<p>Content last modified on 09 September 2021.</p>
+<p>Content last modified on 07 December 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform an analysis of covariance (ANCOVA)/Python, using pingouin.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -422,7 +430,7 @@ Residuals 28 216.315728   7.725562         NA           NA
 
 <p>The $p$-values are again in the final column of output.  They show that at the 5% significance level, we would conclude that engine type (<code class="language-plaintext highlighter-rouge">vs</code>) significantly impacts the Miles/gallon per car while accounting for the weight of the car (<code class="language-plaintext highlighter-rouge">wt</code>) but the transmission type (<code class="language-plaintext highlighter-rouge">am</code>) does not.</p>
 
-<p>Content last modified on 24 October 2021.</p>
+<p>Content last modified on 07 December 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform an analysis of covariance (ANCOVA)/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -434,7 +442,10 @@ Residuals 28 216.315728   7.725562         NA           NA
       </h2>
     
 
-<p><em>None</em></p>
+<ul>
+  <li><a href="../bentley-university-ma214">Bentley University MA214</a></li>
+  <li><a href="../bentley-university-ma255">Bentley University MA255</a></li>
+</ul>
       <h2 id="opportunities">
         
         
