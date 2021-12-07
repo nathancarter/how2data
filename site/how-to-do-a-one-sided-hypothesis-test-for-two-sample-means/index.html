@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to do a one-sided hypothesis test for two sample means" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-do-a-one-sided-hypothesis-test-for-two-sample-means/","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a one-sided hypothesis test for two sample means","@context":"https://schema.org"}</script>
+{"@type":"WebPage","headline":"How to do a one-sided hypothesis test for two sample means","url":"/how2data/site/how-to-do-a-one-sided-hypothesis-test-for-two-sample-means/","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -281,7 +281,8 @@ Or more precisely, is their difference significantly less than zero?</p>
 second sample $\bar x_2$, then this is a two-sided test
 with the null hypothesis $H_0: \bar x_1 - \bar x_2 \ge 0$.
 We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
-(false positive, finding we should reject $H_0$ when it’s actually true).</p>
+(false positive, finding we should reject $H_0$ when it’s actually true).
+Let’s use $\alpha=0.10$ as an example.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -292,37 +293,30 @@ We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
 7
 8
 9
-10
-11
-12
-13
 </pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 
 <span class="c1"># Replace these first three lines with the values from your situation.
-</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.10</span>
-<span class="n">sample1</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
+</span><span class="n">sample1</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
 <span class="n">sample2</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
 
 <span class="c1"># Run a one-sample t-test and print out alpha, the p value,
 # and whether the comparison says to reject the null hypothesis.
-</span><span class="n">t_statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="p">.</span><span class="n">ttest_ind</span><span class="p">(</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span>
-    <span class="n">equal_var</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">"less"</span> <span class="p">)</span>
-<span class="n">reject_H0</span> <span class="o">=</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span>
-<span class="n">alpha</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">reject_H0</span>
+</span><span class="n">stats</span><span class="p">.</span><span class="n">ttest_ind</span><span class="p">(</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">"less"</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>(0.1, 0.025486418709238467, True)
+</pre></td><td class="rouge-code"><pre>Ttest_indResult(statistic=-2.4616581720814326, pvalue=0.025486418709238467)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>In this case, the samples give us enough evidence to reject the null hypothesis
-at the $\alpha=0.10$ level.  The data suggest that $\bar x_1 &lt; \bar x_2$.</p>
+<p>The output says that the $p$-value is about $0.0255$, which is less than $\alpha=0.10$.
+Therefore the samples give us enough evidence to reject the null hypothesis
+at the $\alpha=0.10$ level.  That is, the data suggest that $\bar x_1 &lt; \bar x_2$.</p>
 
 <p>The <code class="language-plaintext highlighter-rouge">equal_var</code> parameter tells SciPy <em>not</em> to assume that the two samples
 have equal variances.  If in your case they do, you can omit that parameter,
 and it will revert to its default value of <code class="language-plaintext highlighter-rouge">True</code>.</p>
 
-<p>Content last modified on 05 October 2021.</p>
+<p>Content last modified on 07 December 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a one-sided hypothesis test for two sample means/Python, using SciPy.md">edit the source</a>.</p>
       <h2 id="solution-in-r">
