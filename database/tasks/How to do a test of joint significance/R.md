@@ -2,11 +2,11 @@
 author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
 ---
 
-Let's assume that you already made your multiple regression model, similar to the one shown below. You can visit this task, , to see how to construct a multiple linear regression model.
+Let's assume that you already made your multiple regression model, similar to the one shown below. You can visit this task, , to see how to construct a multivariate linear model.
 
 Let's assume that you already made your multivariate linear model,
 similar to the one shown below. If you still need to create one, first see
-how to fit a multiple linear regression model.
+how to fit a multivariate linear model.
 
 We use example data here, but you would use your own data instead.
 

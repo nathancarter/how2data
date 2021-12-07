@@ -7,7 +7,7 @@ that focuses on model building using regression.
 The description from the course catalog can be found
 [here](https://catalog.bentley.edu/undergraduate/courses/ma/).
 
-It covers simple linear regression, multiple linear regression,
+It covers simple linear regression, multivariate linear regression,
 logistic linear regression, model building, transformations, and
 interactions.
 
@@ -18,9 +18,9 @@ interactions.
  * How to compute R-squared for a simple linear model
  * How to predict the response variable in a linear model
 
-## Multiple Linear Regression
+## Multivariate Linear Regression
 
- * How to fit a multiple linear regression model
+ * How to fit a multivariate linear model
  * How to compute a confidence interval for a regression coefficient
  * How to compute adjusted R-squared
  * How to do a test of joint significance

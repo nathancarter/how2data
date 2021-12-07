@@ -24,4 +24,4 @@ summary(model)
 
 The coefficients and intercept appear on the left hand side of the output, about half way down, under the heading "Estimate."
 
-Thus the multiple linear regression model from the example data is $\hat y = 77.244 - 2.701x_1  +  7.299x_2  - 4.861x_3$.
+Thus the multivariate linear model from the example data is $\hat y = 77.244 - 2.701x_1  +  7.299x_2  - 4.861x_3$.

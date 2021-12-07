@@ -5,7 +5,7 @@ author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
 Let's assume that you've already built a linear model.
 We do an example below with fake data, but you can use your own actual data.
 For more information on the following code, see
-how to fit a multiple linear regression linear model.
+how to fit a multivariate linear model.
 
 ```R
 x1 <- c( 2,  7,  4,  3, 11, 18,   6, 15,   9,  12)

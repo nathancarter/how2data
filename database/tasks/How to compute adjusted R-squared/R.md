@@ -2,8 +2,8 @@
 author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
 ---
 
-We assume you have already fit a multiple linear regression model to the data, as in the code below.
-(If you're unfamiliar with how to do so, see how to fit a multiple linear regression model.)
+We assume you have already fit a multivariate linear model to the data, as in the code below.
+(If you're unfamiliar with how to do so, see how to fit a multivariate linear model.)
 The data shown below is fake, and we assume you will replace it with your own real data if you use this code.
 
 ```R
