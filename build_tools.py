@@ -306,7 +306,7 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
             OPPORTUNITIES_LIST = opportunities )
     else:
         opportunities = ''
-    related_topics = topics_df[topics_df['content'].str.contains( row['task name'] )]
+    related_topics = topics_df[topics_df['content'].str.contains( row['task name'], regex=False )]
     if len( related_topics ) > 0:
         related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
     else:
