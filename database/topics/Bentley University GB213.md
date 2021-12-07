@@ -16,6 +16,7 @@ and optionally ANOVA and/or $\chi^2$ tests, time permitting.
 ## Basics
 
  * How to do basic mathematical computations
+ * How to quickly load some sample data
  * How to compute summary statistics
 
 ## Random variables and probability distributions
@@ -27,6 +28,8 @@ and optionally ANOVA and/or $\chi^2$ tests, time permitting.
 
 ## Confidence intervals and hypothesis testing
 
+ * How to find critical values and p-values from the t-distribution
+ * How to find critical values and p-values from the normal distribution
  * How to compute a confidence interval for a population mean
  * How to do a two-sided hypothesis test for a sample mean
  * How to do a two-sided hypothesis test for two sample means

@@ -21,15 +21,18 @@ interactions.
 ## Multivariate Linear Regression
 
  * How to fit a multivariate linear model
+ * How to add an interaction term to a model
+ * How to add a polynomial term to a model
+ * How to add a transformed term to a model
  * How to compute a confidence interval for a regression coefficient
  * How to compute adjusted R-squared
- * How to do a test of joint significance
 
 ## Model Building
 
  * How to compute covariance and correlation coefficients
  * How to compute the standard error of the estimate for a model
  * How to do a hypothesis test of a coefficient's significance
+ * How to do a test of joint significance
  * How to do a Spearman rank correlation test
 
 ## Residual Analysis

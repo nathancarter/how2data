@@ -38,3 +38,4 @@ this topic page is under construction.*
  * How to compare two nested linear models
  * How to conduct a mixed designs ANOVA
  * How to conduct a repeated measures ANOVA
+ * How to perform a planned comparison test

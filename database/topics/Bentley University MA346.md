@@ -22,11 +22,13 @@ code and computational notebooks, and data visualization.
 ## Basics
 
  * How to do basic mathematical computations
+ * How to quickly load some sample data
  * How to compute summary statistics
 
 ## Data manipulation
 
  * How to convert a text column into dates
+ * How to create a data frame from scratch
 
 ## Statistics in Python
 
@@ -39,5 +41,6 @@ code and computational notebooks, and data visualization.
  * How to change axes, ticks, and scale in a plot
  * How to create a histogram
  * How to create a box (and whisker) plot
+ * How to create a QQ-plot
 
 *This page is not yet complete.  More content will be added here over time.*

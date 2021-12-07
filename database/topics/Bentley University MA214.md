@@ -44,6 +44,7 @@ and contingency tables.
 ## Chi-squares tests
 
  * How to perform a chi-squared test on a contingency table
+ * How to do a goodness of fit test for a multinomial experiment
 
 ## ANOVA
 
@@ -53,6 +54,7 @@ and contingency tables.
  * How to compute Fisher's confidence intervals
  * How to perform an analysis of covariance (ANCOVA)
  * How to perform post-hoc analysis with Tukey's HSD test
+ * How to use Bonferroni's Correction method
 
 ## Regression
 
@@ -63,6 +65,7 @@ and contingency tables.
 
 ## Nonparametric tests
 
+ * How to create a QQ-plot
  * How to test data for normality with Pearson's chi-squared test
  * How to test data for normality with the D'Agostino-Pearson test
  * How to test data for normality with the Jarque-Bera test
