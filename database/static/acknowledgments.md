@@ -25,6 +25,7 @@ on website structure or content.
 
  * Nathan Carter
  * Reagan Mozer
+ * Gregory Vaughan
 
 ## Supporters
 
