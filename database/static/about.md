@@ -27,15 +27,14 @@ We aim for this resource to be as broadly useful as possible.
 We aim for the site to cover all the tasks useful to students in the
 data-related courses of study at Bentley (e.g., the Data Analytics major), and
 show how to accomplish those tasks in several common software packages and
-programming languages.  But we are just beginning, and are not near yet to
-accomplishing that goal.
+programming languages.  But the site is just beginning, and does not yet cover
+every data-related course at Bentley.
 
 ## History
 
 The website was begun in Summer 2021 by Nathan Carter (a faculty member in
-Bentley's Mathematical Sciences Department), with help from two Bentley
-students.  (If my students would like their names here, just let me know and
-I'm glad to post them, but won't do so without permission.)
+Bentley's Mathematical Sciences Department), with help from some [other faculty
+and students](../acknowledgments).
 
 ## Aren't there websites like this already?
 
