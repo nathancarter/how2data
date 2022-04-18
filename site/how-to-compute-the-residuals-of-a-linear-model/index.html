@@ -254,6 +254,52 @@
 <p>If a model has been fit to a dataset, the <em>residuals</em> are the differences
 between the actual data points and the results the model would predict.
 Given a linear model and a dataset, how can we compute those residuals?</p>
+      <h2 id="using-statsmodels-in-python">
+        
+        
+          <a href="#using-statsmodels-in-python" class="anchor-heading" aria-labelledby="using-statsmodels-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using statsmodels, in Python
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-the-residuals-of-a-linear-model-in-python-using-statsmodels">View this solution alone.</a></p>
+
+<p>Let’s assume that you’ve already built a linear model similar to the one below. This one uses a small amount of fake data, but it’s just an example.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">393</span><span class="p">,</span> <span class="mi">453</span><span class="p">,</span> <span class="mi">553</span><span class="p">,</span> <span class="mi">679</span><span class="p">,</span> <span class="mi">729</span><span class="p">,</span> <span class="mi">748</span><span class="p">,</span> <span class="mi">817</span> <span class="p">]</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">24</span><span class="p">,</span>  <span class="mi">25</span><span class="p">,</span>  <span class="mi">27</span><span class="p">,</span>  <span class="mi">36</span><span class="p">,</span>  <span class="mi">55</span><span class="p">,</span>  <span class="mi">68</span><span class="p">,</span>  <span class="mi">84</span> <span class="p">]</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">add_constant</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">OLS</span><span class="p">(</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xs</span> <span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We can extract the residuals of the model by calling the model’s <code class="language-plaintext highlighter-rouge">resid</code> attribute.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">reg</span><span class="p">.</span><span class="n">resid</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>array([  9.16263041,   2.19945659,  -9.07249979, -16.79516483,
+        -4.43114302,   6.04718527,  12.88953537])
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The result is an array of the residuals for every value in the data set.</p>
+
+<p>Content last modified on 18 April 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the residuals of a linear model/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -331,7 +377,6 @@ See also <a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fi
 software packages.</p>
 
 <ul>
-  <li>Python</li>
   <li>Excel</li>
 </ul>
 
