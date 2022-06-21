@@ -26,20 +26,21 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Begin Jekyll SEO tag v2.7.1 -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to compute the derivative of a function | How to Data</title>
-<meta name="generator" content="Jekyll v4.2.0" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="How to compute the derivative of a function" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-compute-the-derivative-of-a-function/" />
-<meta property="og:url" content="/how2data/site/how-to-compute-the-derivative-of-a-function/" />
+<link rel="canonical" href="http://localhost:4000/how2data/site/how-to-compute-the-derivative-of-a-function/" />
+<meta property="og:url" content="http://localhost:4000/how2data/site/how-to-compute-the-derivative-of-a-function/" />
 <meta property="og:site_name" content="How to Data" />
+<meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute the derivative of a function" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"How to compute the derivative of a function","url":"/how2data/site/how-to-compute-the-derivative-of-a-function/","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute the derivative of a function","url":"http://localhost:4000/how2data/site/how-to-compute-the-derivative-of-a-function/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -196,7 +197,7 @@
 
   <div class="side-bar">
     <div class="site-header">
-      <a href="/how2data/site/" class="site-title lh-tight">
+      <a href="http://localhost:4000/how2data/site/" class="site-title lh-tight">
   How to Data
 
 </a>
@@ -206,7 +207,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
 
       
     </nav>
@@ -327,6 +328,73 @@ use multiple variables.</p>
 <p>Content last modified on 01 June 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the derivative of a function/Python, using SymPy.ipynb">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-the-derivative-of-a-function-in-r">View this solution alone.</a></p>
+
+<p>Let’s consider the function $f(x)=10x^2-16x+1$.
+We focus not on the whole function, but just the expression on the right-hand side, $10x^2-16x+1$.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">formula</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expression</span><span class="p">(</span><span class="w"> </span><span class="m">10</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">16</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We can compute its derivative using the <code class="language-plaintext highlighter-rouge">D</code> function.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">D</span><span class="p">(</span><span class="w"> </span><span class="n">formula</span><span class="p">,</span><span class="w"> </span><span class="s2">"x"</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="c1"># derivative with respect to x</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>10 * (2 * x) - 16
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>R does not simplify the output, but if we do so ourselves, we find that $f’(x)=20x-16$.</p>
+
+<p>If it had been a multi-variable function, we would need to specify
+the variable with respect to which we wanted to compute a derivative.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">formula2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expression</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">2</span><span class="o">-</span><span class="n">y</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="c1"># consider the formula x^2 - y^2</span><span class="w">
+</span><span class="n">D</span><span class="p">(</span><span class="w"> </span><span class="n">formula2</span><span class="p">,</span><span class="w"> </span><span class="s2">"y"</span><span class="w"> </span><span class="p">)</span><span class="w">                 </span><span class="c1"># differentiate with respect to y</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>-(2 * y)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>That output says that $\frac{\partial}{\partial y}(x^2-y^2)=-2y$.</p>
+
+<p>We can compute the second derivative by using the <code class="language-plaintext highlighter-rouge">D</code> function twice
+and specifying the variables with respect to which we are computing the derivative.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">D</span><span class="p">(</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="w"> </span><span class="n">formula2</span><span class="p">,</span><span class="w"> </span><span class="s2">"x"</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s2">"x"</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="c1"># second derivative with respect to x</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 2
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">D</span><span class="p">(</span><span class="w"> </span><span class="n">D</span><span class="p">(</span><span class="w"> </span><span class="n">formula2</span><span class="p">,</span><span class="w"> </span><span class="s2">"x"</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="s2">"y"</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="c1"># mixed partial derivative</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 21 June 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the derivative of a function/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -352,7 +420,6 @@ use multiple variables.</p>
 software packages.</p>
 
 <ul>
-  <li>R</li>
   <li>Excel</li>
 </ul>
 

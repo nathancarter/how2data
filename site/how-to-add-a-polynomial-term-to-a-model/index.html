@@ -26,20 +26,21 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Begin Jekyll SEO tag v2.7.1 -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to add a polynomial term to a model | How to Data</title>
-<meta name="generator" content="Jekyll v4.2.0" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="How to add a polynomial term to a model" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="/how2data/site/how-to-add-a-polynomial-term-to-a-model/" />
-<meta property="og:url" content="/how2data/site/how-to-add-a-polynomial-term-to-a-model/" />
+<link rel="canonical" href="http://localhost:4000/how2data/site/how-to-add-a-polynomial-term-to-a-model/" />
+<meta property="og:url" content="http://localhost:4000/how2data/site/how-to-add-a-polynomial-term-to-a-model/" />
 <meta property="og:site_name" content="How to Data" />
+<meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to add a polynomial term to a model" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"How to add a polynomial term to a model","url":"/how2data/site/how-to-add-a-polynomial-term-to-a-model/","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to add a polynomial term to a model","url":"http://localhost:4000/how2data/site/how-to-add-a-polynomial-term-to-a-model/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -196,7 +197,7 @@
 
   <div class="side-bar">
     <div class="site-header">
-      <a href="/how2data/site/" class="site-title lh-tight">
+      <a href="http://localhost:4000/how2data/site/" class="site-title lh-tight">
   How to Data
 
 </a>
@@ -206,7 +207,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
 
       
     </nav>
@@ -261,6 +262,75 @@ the square or cube of one of the predictors?</p>
   <li><a href="../how-to-add-a-transformed-term-to-a-model">How to add a transformed term to a model</a></li>
   <li><a href="../how-to-add-an-interaction-term-to-a-model">How to add an interaction term to a model</a></li>
 </ul>
+      <h2 id="using-sklearn-in-python">
+        
+        
+          <a href="#using-sklearn-in-python" class="anchor-heading" aria-labelledby="using-sklearn-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using sklearn, in Python
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-add-a-polynomial-term-to-a-model-in-python-using-sklearn">View this solution alone.</a></p>
+
+<p>We begin with a fabricated dataset of 20 points.
+You can replace the code below with your own, real, data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>                                                  <span class="c1"># List of integers from 0 to 19
+</span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">91</span><span class="p">,</span><span class="mi">101</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">135</span><span class="p">,</span><span class="mi">160</span><span class="p">,</span><span class="mi">179</span><span class="p">,</span><span class="mi">181</span><span class="p">,</span><span class="mi">190</span><span class="p">,</span><span class="mi">193</span><span class="p">]</span> <span class="c1"># List of 20 integers
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We extend our dataset with a new column (or “feature”), containing $x^2$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+<span class="n">x_matrix</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>                   <span class="c1"># make x a matrix so that we can add columns
+</span><span class="n">poly_features</span> <span class="o">=</span> <span class="n">poly</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span> <span class="n">x_matrix</span> <span class="p">)</span>  <span class="c1"># add a second column, so we now have x and x^2
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Next, fit a regression model to the new features, which are $x$ and $x^2$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="n">poly_reg_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>     <span class="c1"># Our model will be linear in the features x and x^2
+</span><span class="n">poly_reg_model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span> <span class="n">poly_features</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span>  <span class="c1"># Use regression to create the model
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>LinearRegression()
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Finally, get the coefficients and intercept of the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">poly_reg_model</span><span class="p">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">poly_reg_model</span><span class="p">.</span><span class="n">coef_</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(-8.384415584415635, array([6.28628389, 0.27420825]))
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Thus the equation for our model of degree two is $\widehat{y} = -8.38 + 6.28x + 0.27x^2$</p>
+
+<p>Content last modified on 21 June 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to add a polynomial term to a model/Python, using sklearn.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -371,7 +441,6 @@ pressure squared, and pressure cubed.</p>
 software packages.</p>
 
 <ul>
-  <li>Python</li>
   <li>Excel</li>
 </ul>
 
