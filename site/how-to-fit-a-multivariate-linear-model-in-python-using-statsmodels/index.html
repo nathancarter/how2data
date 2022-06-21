@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to fit a multivariate linear model (in Python, using statsmodels)" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-fit-a-multivariate-linear-model-in-python-using-statsmodels/","headline":"How to fit a multivariate linear model (in Python, using statsmodels)","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","headline":"How to fit a multivariate linear model (in Python, using statsmodels)","url":"/how2data/site/how-to-fit-a-multivariate-linear-model-in-python-using-statsmodels/","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -332,7 +332,11 @@ the best linear model $\hat{y}=\beta_0 + \beta_1x + \beta_2x + \cdots + \beta_kx
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/scipy/stats/stats.py:1541: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
+3
+4
+</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/statsmodels/tsa/tsatools.py:142: FutureWarning: In a future version of pandas all arguments of concat except for the argument 'objs' will be keyword-only
+  x = pd.concat(x[::order], 1)
+/opt/conda/lib/python3.9/site-packages/scipy/stats/stats.py:1541: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
   warnings.warn("kurtosistest only valid for n&gt;=20 ... continuing "
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
@@ -348,10 +352,10 @@ the best linear model $\hat{y}=\beta_0 + \beta_1x + \beta_2x + \cdots + \beta_kx
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   2.921</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Thu, 06 Jan 2022</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
+  <th>Date:</th>             <td>Tue, 07 Dec 2021</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>17:56:45</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
+  <th>Time:</th>                 <td>15:07:00</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    10</td>      <th>  AIC:               </th> <td>   99.38</td>
@@ -403,7 +407,7 @@ the best linear model $\hat{y}=\beta_0 + \beta_1x + \beta_2x + \cdots + \beta_kx
 
 <p>Thus the multivariate linear model from the example data is $\hat y = 77.2443 - 2.7009x_1  +  7.2989x_2  - 4.8607x_3$.</p>
 
-<p>Content last modified on 06 January 2022.</p>
+<p>Content last modified on 07 December 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to fit a multivariate linear model/Python, using statsmodels.ipynb">edit the source</a>.</p>
 

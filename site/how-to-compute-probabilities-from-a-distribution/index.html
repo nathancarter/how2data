@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute probabilities from a distribution" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"/how2data/site/how-to-compute-probabilities-from-a-distribution/","headline":"How to compute probabilities from a distribution","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
+{"@type":"WebPage","headline":"How to compute probabilities from a distribution","url":"/how2data/site/how-to-compute-probabilities-from-a-distribution/","description":"Reference site for common computing tasks in statistics and data science","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -262,6 +262,61 @@ software, to compute the probability of a value/values occurring?</p>
   <li><a href="../how-to-plot-continuous-probability-distributions">How to plot continuous probability distributions</a></li>
   <li><a href="../how-to-plot-discrete-probability-distributions">How to plot discrete probability distributions</a></li>
 </ul>
+      <h2 id="solution-in-excel">
+        
+        
+          <a href="#solution-in-excel" class="anchor-heading" aria-labelledby="solution-in-excel"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Excel
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-probabilities-from-a-distribution-in-excel">View this solution alone.</a></p>
+
+<p>If the probability distribution is a common <em>discrete</em> distribution, you
+can simply use a built-in function from Excel’s set of statistical
+functions to compute any probability from it.</p>
+
+<p>For example, to find the probability that a binomial random variable
+with p=0.25 yields 3 successes in 5 trials, you can use
+=BINOM.DIST(3,5,0.25,FALSE). The final parameter, FALSE, tells Excel you
+are asking only about 3 successes, not the cumulative probability of <em>up
+to 3</em> successes.</p>
+
+<p><img src="data:image/png;base64, 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 " style="width:2.33366in;height:0.69801in" alt="Table Description automatically generated" /></p>
+
+<p>For other discrete random variables, see the Excel help on POISSON.DIST
+and HYPGEOM.DIST.</p>
+
+<p>If the probability distribution is a common <em>continuous</em> distribution,
+you must ask about the probability of a random value falling in a
+certain range. You do so by subtracting two outputs of the cumulative
+distribution function (CDF).</p>
+
+<p>For example, to find the probability that a normal random variable with
+mean 5 and standard deviation 2 falls in the interval [6,7], you can
+use =NORM.DIST(7,5,2,TRUE)-NORM.DIST(6,5,2,TRUE). Notice:</p>
+
+<ul>
+  <li>
+    <p>It is important to subtract the lower end of the interval from the
+higher end, not the other way around. (If your probability comes out
+negative, you have it backwards.)</p>
+  </li>
+  <li>
+    <p>The final parameter, TRUE, tells Excel you are using the CDF of the
+distribution. If you use FALSE instead, you will get a wrong answer.</p>
+  </li>
+</ul>
+
+<p><img src="data:image/png;base64, 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 " style="width:3.63592in;height:0.71885in" alt="Table Description automatically generated" /></p>
+
+<p>For other continuous random variables, see the Excel help on BETA.DIST,
+CHISQ.DIST, F.DIST, GAMMA.DIST, LOGNORM.DIST, and T.DIST.</p>
+
+<p>Content last modified on 09 December 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/Excel.docx">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -298,7 +353,7 @@ variable, then use its Probability Mass Function, <code class="language-plaintex
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>0.11718750000000014
+</pre></td><td class="rouge-code"><pre>0.1171875
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>To compute a probability from a <strong>continuous</strong> distribution, create a random
@@ -326,7 +381,7 @@ not the probability that it will equal a specific value.</p>
 </pre></td><td class="rouge-code"><pre>0.07032514063960227
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 02 June 2021.</p>
+<p>Content last modified on 27 May 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/Python, using SciPy.md">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -416,7 +471,7 @@ not the probability that it will equal a specific value.</p>
 [1] 0.2742531
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 13 September 2021.</p>
+<p>Content last modified on 14 September 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -432,24 +487,6 @@ not the probability that it will equal a specific value.</p>
   <li><a href="../bentley-university-gb213">Bentley University GB213</a></li>
   <li><a href="../bentley-university-gr521">Bentley University GR521</a></li>
 </ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
-
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
-
-<ul>
-  <li>Excel</li>
-</ul>
-
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
 
         
 
