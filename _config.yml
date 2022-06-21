@@ -29,10 +29,10 @@ github_username:  nathancarter
 
 # Build settings
 theme: just-the-docs
-plugins:
-  - jekyll-feed
 source: jekyll-input
 destination: site
+# plugins:
+#   - jekyll-feed
 
 # Appearance
 compress_html:
