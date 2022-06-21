@@ -1,0 +1,26 @@
+---
+author: Debayan Sen (DSEN@bentley.edu)
+---
+
+We will create some fake data using R vectors, for simplicity.
+But everything we show below works also if your data is in columns of a data frame, such as `df$age`.
+
+```{r}
+patient_height <- c(  60,  64,  64,  65,  66,  66,  70,  72,  72,  76 )
+patient_weight <- c( 141, 182, 169, 204, 138, 198, 180, 175, 244, 196 )
+```
+
+The following code creates a plot with many details added,
+but each is independent of the others, so you can take just the bit of code that you need.
+
+```{r}
+plot( patient_height, patient_weight,
+      main="This is the title.",
+      xlab="This is the x axis label.",
+      ylab="This is the y axis label." )   # Scatter plot with labels
+grid()                                     # Turns on gridlines
+text( 70, 200, "Text at (70,200)" )        # Add text
+text( 65, 225, "Point 1", pos=2 )          # Text to the left of a point
+text( 72, 244, "Point 2", pos=4 )          # Text to the right of a point
+arrows( 65, 225, 72, 244, col='red' )      # Arrow from (65,225) to (72,244)
+```

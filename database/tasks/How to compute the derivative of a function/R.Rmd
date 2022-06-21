@@ -1,0 +1,40 @@
+---
+author: Debayan Sen (DSEN@bentley.edu)
+---
+
+Let's consider the function $f(x)=10x^2-16x+1$.
+We focus not on the whole function, but just the expression on the right-hand side, $10x^2-16x+1$.
+
+
+```{r}
+formula <- expression( 10*x^2 - 16*x + 1 )
+```
+
+We can compute its derivative using the `D` function.
+
+```{r}
+D( formula, "x" )   # derivative with respect to x
+```
+
+R does not simplify the output, but if we do so ourselves, we find that $f'(x)=20x-16$.
+
+If it had been a multi-variable function, we would need to specify
+the variable with respect to which we wanted to compute a derivative.
+
+```{r}
+formula2 <- expression( x^2-y^2 )  # consider the formula x^2 - y^2
+D( formula2, "y" )                 # differentiate with respect to y
+```
+
+That output says that $\frac{\partial}{\partial y}(x^2-y^2)=-2y$.
+ 
+We can compute the second derivative by using the `D` function twice
+and specifying the variables with respect to which we are computing the derivative.
+
+```{r}
+D( D( formula2, "x" ), "x" )  # second derivative with respect to x
+```
+
+```{r}
+D( D( formula2, "x" ), "y" )  # mixed partial derivative
+```
