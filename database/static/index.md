@@ -8,18 +8,26 @@ nav_order: 1
 
 # Welcome to *How to Data!*
 
-## Our goals
+### A reference for data science students
 
-This is a how-to website for students of data science.  It will contain
-answers to a wide variety of [how-to questions](../tasks) about data-related
-[software and programming languages](../software).  It is organized around
-[student coursework](../topics).
+## What's on the site?
 
-It began at [Bentley University](http://www.bentley.edu), but accepts
+ * [***Tasks:***](../tasks)
+   Data-related how-tos using software like Python, R, and Excel.
+   Examples:
+    * [How to compare two nested linear models](../tasks/how-to-compare-two-nested-linear-models)
+    * [How to create basic plots](../tasks/how-to-create-basic-plots)
+ * [***Topics:***](../topics)
+   Groups of tasks organized by course of study.
+   Examples:
+    * [Intro statistics at Bentley University](../topics/bentley-university-gb213)
+    * [Data Science at Bentley University](../topics/bentley-university-ma346)
+
+## How much is here?
+
+This site began at [Bentley University](http://www.bentley.edu), but accepts
 contributions from any school or business, and is happy to work with you to
-add content that would be useful to your students or employees.  See the
+let you add content that would be useful to your students or employees.  See the
 [Contributing page](../contributing) for details.
-
-## Our work so far
 
 OVERALL_STATS
