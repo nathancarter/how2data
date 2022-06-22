@@ -33,14 +33,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how2data/site/how-to-fit-a-multivariate-linear-model/" />
-<meta property="og:url" content="http://localhost:4000/how2data/site/how-to-fit-a-multivariate-linear-model/" />
+<link rel="canonical" href="/how2data/site/how-to-fit-a-multivariate-linear-model/" />
+<meta property="og:url" content="/how2data/site/how-to-fit-a-multivariate-linear-model/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to fit a multivariate linear model" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to fit a multivariate linear model","url":"http://localhost:4000/how2data/site/how-to-fit-a-multivariate-linear-model/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to fit a multivariate linear model","url":"/how2data/site/how-to-fit-a-multivariate-linear-model/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -197,7 +197,7 @@
 
   <div class="side-bar">
     <div class="site-header">
-      <a href="http://localhost:4000/how2data/site/" class="site-title lh-tight">
+      <a href="/how2data/site/" class="site-title lh-tight">
   How to Data
 
 </a>
@@ -207,7 +207,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
 
       
     </nav>
@@ -331,11 +331,7 @@ the best linear model $\hat{y}=\beta_0 + \beta_1x + \beta_2x + \cdots + \beta_kx
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-4
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/statsmodels/tsa/tsatools.py:142: FutureWarning: In a future version of pandas all arguments of concat except for the argument 'objs' will be keyword-only
-  x = pd.concat(x[::order], 1)
-/opt/conda/lib/python3.9/site-packages/scipy/stats/stats.py:1541: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
+</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/scipy/stats/stats.py:1541: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
   warnings.warn("kurtosistest only valid for n&gt;=20 ... continuing "
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
@@ -351,10 +347,10 @@ the best linear model $\hat{y}=\beta_0 + \beta_1x + \beta_2x + \cdots + \beta_kx
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   2.921</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Tue, 07 Dec 2021</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
+  <th>Date:</th>             <td>Thu, 06 Jan 2022</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>15:07:00</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
+  <th>Time:</th>                 <td>17:56:45</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    10</td>      <th>  AIC:               </th> <td>   99.38</td>
@@ -406,7 +402,7 @@ the best linear model $\hat{y}=\beta_0 + \beta_1x + \beta_2x + \cdots + \beta_kx
 
 <p>Thus the multivariate linear model from the example data is $\hat y = 77.2443 - 2.7009x_1  +  7.2989x_2  - 4.8607x_3$.</p>
 
-<p>Content last modified on 07 December 2021.</p>
+<p>Content last modified on 06 January 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to fit a multivariate linear model/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -498,7 +494,7 @@ F-statistic: 2.921 on 3 and 6 DF,  p-value: 0.1222
 
 <p>Thus the multivariate linear model from the example data is $\hat y = 77.244 - 2.701x_1  +  7.299x_2  - 4.861x_3$.</p>
 
-<p>Content last modified on 07 December 2021.</p>
+<p>Content last modified on 06 January 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to fit a multivariate linear model/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
