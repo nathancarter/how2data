@@ -1,8 +1,0 @@
-
-Frequently, prior to or in parallel with sophisticated modelling, graphing helps enormously to summarise data that exude autocorrelation tendencies. Overall movements (trends), repetitive patterns (seasonalities), structural breaks (change-points) and a lot more become vivid. The fundamental idea, though simple - creating a line diagram, where on the horizontal axis we record the time stamps and along the vertical, the values at those stamps - presents complications especially if comparisons are needed. Through this piece, we are going to learn how to:
-
-i) construct one time series fit for graphing purposes.
-
-ii) compare two or three time series graphically, on the same axes. Comparing a lot of time series (say 50 or 500) this way is not wise. Unsupervised clustering may help in such settings. There'll be a different "How to.." on that.
-
-iii) deal with cases where the values are measured in different scales or when the time series start at different origins.
