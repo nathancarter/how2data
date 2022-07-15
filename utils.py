@@ -216,12 +216,15 @@ def modification_text ( filename ):
 def ensure_shell_command_succeeds ( command, cleanup = None ):
     code = os.system( command )
     if code != 0:
-        print( f'Above errors yielded error code {code}.' )
+        print( f'How2Data build process received this error code: {code}' )
+        print( f'From running this shell command: {command}' )
     cleanup_code = 0
     if cleanup != None:
         cleanup_code = os.system( cleanup )
         if cleanup_code != 0:
-            print( f'When attempting to clean up, got error code {cleanup_code}!' )
+            print( f'How2Data build process received this error code: {cleanup_code}' )
+            print( f'From runnin this cleanup command: {cleanup_code}' )
+            print( f'Right after this shell code: {command}' )
     if code != 0 or cleanup_code != 0:
         print( f'How2Data build exiting with error code 1.' )
         sys.exit( 1 )
@@ -229,5 +232,6 @@ def ensure_shell_command_succeeds ( command, cleanup = None ):
 def run_shell_command_ignoring_errors ( command ):
     code = os.system( command )
     if code != 0:
-        print( f'Above errors yielded error code {code}.' )
+        print( f'How2Data build process received this error code: {code}' )
+        print( f'From running this shell command: {command}' )
         print( f'How2Data build ignoring them and continuing anyway...' )
