@@ -28,19 +28,19 @@
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin) | How to Data</title>
-<meta name="generator" content="Jekyll v4.2.2" />
+<meta name="generator" content="Jekyll v4.1.0" />
 <meta property="og:title" content="How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
-<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin/" />
-<meta property="og:url" content="http://localhost:4000/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin/" />
+<meta name="description" content="How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)" />
+<meta property="og:description" content="How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)" />
+<link rel="canonical" href="/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin/" />
+<meta property="og:url" content="/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)","url":"http://localhost:4000/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)","headline":"How to perform an analysis of covariance (ANCOVA) (in Python, using pingouin)","url":"/how2data/site/how-to-perform-an-analysis-of-covariance-ancova-in-python-using-pingouin/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -197,7 +197,7 @@
 
   <div class="side-bar">
     <div class="site-header">
-      <a href="http://localhost:4000/how2data/site/" class="site-title lh-tight">
+      <a href="/how2data/site/" class="site-title lh-tight">
   How to Data
 
 </a>
@@ -207,7 +207,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
 
       
     </nav>
@@ -349,14 +349,6 @@
 </table></div>
 </div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/outdated/utils.py:14: OutdatedPackageWarning: The package pingouin is out of date. Your version is 0.4.0, the latest is 0.5.0.
-Set the environment variable OUTDATED_IGNORE=1 to disable these warnings.
-  return warn(
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
 <p>The $p$-value for each variable is in the <code class="language-plaintext highlighter-rouge">p-unc</code> column.</p>
 
 <p>The $p$-value for the <code class="language-plaintext highlighter-rouge">wt</code> variable tests the null hypothesis, “The quantities <code class="language-plaintext highlighter-rouge">wt</code> and <code class="language-plaintext highlighter-rouge">mpg</code> are not related.”  Since it is below 0.05, we reject the null hypothesis, and conclude that <code class="language-plaintext highlighter-rouge">wt</code> is significant in predicting <code class="language-plaintext highlighter-rouge">mpg</code>.</p>
@@ -365,7 +357,7 @@ Set the environment variable OUTDATED_IGNORE=1 to disable these warnings.
 
 <p>Note: Unfortunately, a two-factor ANCOVA is not possible in pingouin. However, a model with more than one covariate is possible, as you can provide a list as the <code class="language-plaintext highlighter-rouge">covar</code> parameter when calling <code class="language-plaintext highlighter-rouge">ancova</code>.</p>
 
-<p>Content last modified on 07 December 2021.</p>
+<p>Content last modified on 06 January 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform an analysis of covariance (ANCOVA)/Python, using pingouin.ipynb">edit the source</a>.</p>
 
@@ -378,6 +370,16 @@ Set the environment variable OUTDATED_IGNORE=1 to disable these warnings.
         
 
         
+        
+          <hr>
+          <footer>
+            
+
+            
+
+
+            
+          </footer>
         
 
       </div>

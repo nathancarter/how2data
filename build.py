@@ -69,7 +69,7 @@ else:
 
 # Run Jekyll on newly copied files
 section_heading( 'Running Jekyll build process' )
-ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental' )
+ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental --profile' )
 
 # State completion
 section_heading( 'Build completed successfully.' )

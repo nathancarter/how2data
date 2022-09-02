@@ -28,19 +28,19 @@
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to conduct a repeated measures ANOVA | How to Data</title>
-<meta name="generator" content="Jekyll v4.2.2" />
+<meta name="generator" content="Jekyll v4.1.0" />
 <meta property="og:title" content="How to conduct a repeated measures ANOVA" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
-<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how2data/site/how-to-conduct-a-repeated-measures-anova/" />
-<meta property="og:url" content="http://localhost:4000/how2data/site/how-to-conduct-a-repeated-measures-anova/" />
+<meta name="description" content="How to conduct a repeated measures ANOVA" />
+<meta property="og:description" content="How to conduct a repeated measures ANOVA" />
+<link rel="canonical" href="/how2data/site/how-to-conduct-a-repeated-measures-anova/" />
+<meta property="og:url" content="/how2data/site/how-to-conduct-a-repeated-measures-anova/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to conduct a repeated measures ANOVA" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to conduct a repeated measures ANOVA","url":"http://localhost:4000/how2data/site/how-to-conduct-a-repeated-measures-anova/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"How to conduct a repeated measures ANOVA","headline":"How to conduct a repeated measures ANOVA","url":"/how2data/site/how-to-conduct-a-repeated-measures-anova/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -197,7 +197,7 @@
 
   <div class="side-bar">
     <div class="site-header">
-      <a href="http://localhost:4000/how2data/site/" class="site-title lh-tight">
+      <a href="/how2data/site/" class="site-title lh-tight">
   How to Data
 
 </a>
@@ -207,7 +207,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="http://localhost:4000/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
 
       
     </nav>
@@ -370,23 +370,7 @@ Most of the parameters below are self-explanatory, except that <code class="lang
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/outdated/utils.py:14: OutdatedPackageWarning: The package pingouin is out of date. Your version is 0.4.0, the latest is 0.5.0.
-Set the environment variable OUTDATED_IGNORE=1 to disable these warnings.
-  return warn(
-
-
-
-
-
-SpherResults(spher=True, W=0.06210054956238558, chi2=7.565056754547507, dof=5, pval=0.20708214225927316)
+</pre></td><td class="rouge-code"><pre>SpherResults(spher=True, W=0.06210054956238558, chi2=7.565056754547507, dof=5, pval=0.20708214225927316)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Since the $p$ value of <code class="language-plaintext highlighter-rouge">skin_treatment</code> is about $0.2071$, we fail to reject the sphericity assumption at a 5% significance level and use the univariate approach to conduct the repeated measures ANOVA.</p>
@@ -443,7 +427,7 @@ SpherResults(spher=True, W=0.06210054956238558, chi2=7.565056754547507, dof=5, p
 
 <p>Note: If there is more than 1 repeated measures factor, you can add a list of them to the <code class="language-plaintext highlighter-rouge">within</code> parameter and conduct the test.</p>
 
-<p>Content last modified on 24 October 2021.</p>
+<p>Content last modified on 13 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to conduct a repeated measures ANOVA/Python, using pandas and pingouin.ipynb">edit the source</a>.</p>
       <h2 id="using-rstatix-and-tidyr-and-car-in-r">
@@ -741,7 +725,7 @@ rfactor 0.858156 0.02319302
 
 <p>(We also see that Mauchly’s test was performed, which is not significant, and is the reason this data actually demands a univariate approach.)</p>
 
-<p>Content last modified on 24 October 2021.</p>
+<p>Content last modified on 14 October 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to conduct a repeated measures ANOVA/R, using rstatix and tidyr and car.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -780,6 +764,16 @@ see <a href="../contributing">our Contributing page</a> for how to help extend t
         
 
         
+        
+          <hr>
+          <footer>
+            
+
+            
+
+
+            
+          </footer>
         
 
       </div>
