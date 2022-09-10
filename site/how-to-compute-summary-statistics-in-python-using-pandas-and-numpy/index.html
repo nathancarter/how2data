@@ -15,6 +15,7 @@
 
   <link rel="shortcut icon" href="/how2data/site/favicon.ico" type="image/x-icon">
 
+
   <link rel="stylesheet" href="/how2data/site/assets/css/just-the-docs-default.css">
 
   
@@ -22,17 +23,20 @@
   
     <script type="text/javascript" src="/how2data/site/assets/js/vendor/lunr.min.js"></script>
   
+
+  
+
   <script type="text/javascript" src="/how2data/site/assets/js/just-the-docs.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to compute summary statistics (in Python, using pandas and NumPy) | How to Data</title>
-<meta name="generator" content="Jekyll v4.1.0" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="How to compute summary statistics (in Python, using pandas and NumPy)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="How to compute summary statistics (in Python, using pandas and NumPy)" />
-<meta property="og:description" content="How to compute summary statistics (in Python, using pandas and NumPy)" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
 <link rel="canonical" href="/how2data/site/how-to-compute-summary-statistics-in-python-using-pandas-and-numpy/" />
 <meta property="og:url" content="/how2data/site/how-to-compute-summary-statistics-in-python-using-pandas-and-numpy/" />
 <meta property="og:site_name" content="How to Data" />
@@ -40,7 +44,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute summary statistics (in Python, using pandas and NumPy)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"How to compute summary statistics (in Python, using pandas and NumPy)","headline":"How to compute summary statistics (in Python, using pandas and NumPy)","url":"/how2data/site/how-to-compute-summary-statistics-in-python-using-pandas-and-numpy/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute summary statistics (in Python, using pandas and NumPy)","url":"/how2data/site/how-to-compute-summary-statistics-in-python-using-pandas-and-numpy/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -193,6 +197,12 @@
         <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
       </svg>
     </symbol>
+    <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
   </svg>
 
   <div class="side-bar">
@@ -207,17 +217,24 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
+      
         <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
-
+      
       
     </nav>
-    <footer class="site-footer">
-      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
-    </footer>
+
+    
+    
+      
+
+    
   </div>
   <div class="main" id="top">
     <div id="main-header" class="main-header">
       
+
+        
+
         <div class="search">
           <div class="search-input-wrap">
             <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
@@ -331,19 +348,75 @@ memory usage: 6.0+ KB
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>  <span class="c1"># Default is 5, but you can do df.head(20) or any number.
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td><td class="rouge-code"><pre>   Sepal.Length  Sepal.Width  Petal.Length  Petal.Width Species
-0           5.1          3.5           1.4          0.2  setosa
-1           4.9          3.0           1.4          0.2  setosa
-2           4.7          3.2           1.3          0.2  setosa
-3           4.6          3.1           1.5          0.2  setosa
-4           5.0          3.6           1.4          0.2  setosa
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal.Length</th>
+      <th>Sepal.Width</th>
+      <th>Petal.Length</th>
+      <th>Petal.Width</th>
+      <th>Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>The easiest way to get summary statistics for a pandas DataFrame is with the <code class="language-plaintext highlighter-rouge">describe</code> function.</p>
 
@@ -351,25 +424,90 @@ memory usage: 6.0+ KB
 </pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre>       Sepal.Length  Sepal.Width  Petal.Length  Petal.Width
-count    150.000000   150.000000    150.000000   150.000000
-mean       5.843333     3.057333      3.758000     1.199333
-std        0.828066     0.435866      1.765298     0.762238
-min        4.300000     2.000000      1.000000     0.100000
-25%        5.100000     2.800000      1.600000     0.300000
-50%        5.800000     3.000000      4.350000     1.300000
-75%        6.400000     3.300000      5.100000     1.800000
-max        7.900000     4.400000      6.900000     2.500000
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sepal.Length</th>
+      <th>Sepal.Width</th>
+      <th>Petal.Length</th>
+      <th>Petal.Width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5.843333</td>
+      <td>3.057333</td>
+      <td>3.758000</td>
+      <td>1.199333</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.828066</td>
+      <td>0.435866</td>
+      <td>1.765298</td>
+      <td>0.762238</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>4.300000</td>
+      <td>2.000000</td>
+      <td>1.000000</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>5.100000</td>
+      <td>2.800000</td>
+      <td>1.600000</td>
+      <td>0.300000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>5.800000</td>
+      <td>3.000000</td>
+      <td>4.350000</td>
+      <td>1.300000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.400000</td>
+      <td>3.300000</td>
+      <td>5.100000</td>
+      <td>1.800000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>7.900000</td>
+      <td>4.400000</td>
+      <td>6.900000</td>
+      <td>2.500000</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
 
 <p>The individual statistics are the row headings, and the numeric columns from the original dataset are listed across the top.</p>
 
@@ -399,7 +537,7 @@ max        7.900000     4.400000      6.900000     2.500000
 </span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>            <span class="c1"># sum, or total
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 01 September 2021.</p>
+<p>Content last modified on 26 July 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/Python, using pandas and NumPy.ipynb">edit the source</a>.</p>
 
@@ -434,6 +572,7 @@ max        7.900000     4.400000      6.900000     2.500000
     
   </div>
 </body>
+
 </html>
 
 

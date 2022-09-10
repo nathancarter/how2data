@@ -15,6 +15,7 @@
 
   <link rel="shortcut icon" href="/how2data/site/favicon.ico" type="image/x-icon">
 
+
   <link rel="stylesheet" href="/how2data/site/assets/css/just-the-docs-default.css">
 
   
@@ -22,17 +23,20 @@
   
     <script type="text/javascript" src="/how2data/site/assets/js/vendor/lunr.min.js"></script>
   
+
+  
+
   <script type="text/javascript" src="/how2data/site/assets/js/just-the-docs.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to graph curves that are not functions | How to Data</title>
-<meta name="generator" content="Jekyll v4.1.0" />
+<meta name="generator" content="Jekyll v4.2.2" />
 <meta property="og:title" content="How to graph curves that are not functions" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="How to graph curves that are not functions" />
-<meta property="og:description" content="How to graph curves that are not functions" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
 <link rel="canonical" href="/how2data/site/how-to-graph-curves-that-are-not-functions/" />
 <meta property="og:url" content="/how2data/site/how-to-graph-curves-that-are-not-functions/" />
 <meta property="og:site_name" content="How to Data" />
@@ -40,7 +44,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to graph curves that are not functions" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"How to graph curves that are not functions","headline":"How to graph curves that are not functions","url":"/how2data/site/how-to-graph-curves-that-are-not-functions/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to graph curves that are not functions","url":"/how2data/site/how-to-graph-curves-that-are-not-functions/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -193,6 +197,12 @@
         <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
       </svg>
     </symbol>
+    <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
   </svg>
 
   <div class="side-bar">
@@ -207,17 +217,24 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
+      
         <ul class="nav-list"><li class="nav-list-item"><a href="/how2data/site/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/how2data/site/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/how2data/site/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/how2data/site/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/how2data/site/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/how2data/site/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/how2data/site/contributing/" class="nav-list-link">Contributing</a></li></ul>
-
+      
       
     </nav>
-    <footer class="site-footer">
-      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
-    </footer>
+
+    
+    
+      
+
+    
   </div>
   <div class="main" id="top">
     <div id="main-header" class="main-header">
       
+
+        
+
         <div class="search">
           <div class="search-input-wrap">
             <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
@@ -297,13 +314,13 @@ and we can plot it with SymPy’s <code class="language-plaintext highlighter-ro
 </span><span class="n">plot_implicit</span><span class="p">(</span> <span class="n">formula</span> <span class="p">)</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>&lt;sympy.plotting.plot.Plot at 0x7fe6ce9dce50&gt;
+</pre></td><td class="rouge-code"><pre>&lt;sympy.plotting.plot.Plot at 0x7f10dbd7d130&gt;
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Content last modified on 02 June 2021.</p>
+<p>Content last modified on 01 June 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to graph curves that are not functions/Python, using SymPy.ipynb">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -365,6 +382,7 @@ see <a href="../contributing">our Contributing page</a> for how to help extend t
     
   </div>
 </body>
+
 </html>
 
 
