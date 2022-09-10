@@ -12,22 +12,22 @@ nav_order: 1
 
 ## What's on the site?
 
- * [***Tasks:***](../tasks)
+ * [***Tasks:***](tasks)
    Data-related how-tos using software like Python, R, and Excel.
    Examples:
-    * [How to compare two nested linear models](../tasks/how-to-compare-two-nested-linear-models)
-    * [How to create basic plots](../tasks/how-to-create-basic-plots)
- * [***Topics:***](../topics)
+    * [How to compare two nested linear models](how-to-compare-two-nested-linear-models)
+    * [How to create basic plots](how-to-create-basic-plots)
+ * [***Topics:***](topics)
    Groups of tasks organized by course of study.
    Examples:
-    * [Intro statistics at Bentley University](../topics/bentley-university-gb213)
-    * [Data Science at Bentley University](../topics/bentley-university-ma346)
+    * [Intro statistics at Bentley University](bentley-university-gb213)
+    * [Data Science at Bentley University](bentley-university-ma346)
 
 ## How much is here?
 
 This site began at [Bentley University](http://www.bentley.edu), but accepts
 contributions from any school or business, and is happy to work with you to
 let you add content that would be useful to your students or employees.  See the
-[Contributing page](../contributing) for details.
+[Contributing page](contributing) for details.
 
 OVERALL_STATS
