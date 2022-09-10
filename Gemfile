@@ -7,7 +7,7 @@ source "https://rubygems.org"
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "4.1.0"
+gem "jekyll"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.5"
 gem "liquid-c"
@@ -20,4 +20,4 @@ gem "liquid-c"
 # end
 
 # Site theme
-gem "just-the-docs"
+gem "just-the-docs", "0.4.0.rc1"
