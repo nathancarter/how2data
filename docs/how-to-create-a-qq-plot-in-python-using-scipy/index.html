@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to create a QQ-plot (in Python, using SciPy) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to create a QQ-plot (in Python, using SciPy) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="How to create a QQ-plot (in Python, using SciPy)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="http://localhost:4000/how-to-create-a-qq-plot-in-python-using-scipy/" />
+<meta property="og:url" content="http://localhost:4000/how-to-create-a-qq-plot-in-python-using-scipy/" />
+<meta property="og:site_name" content="How to Data" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to create a QQ-plot (in Python, using SciPy)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to create a QQ-plot (in Python, using SciPy)","url":"http://localhost:4000/how-to-create-a-qq-plot-in-python-using-scipy/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+    .main-content table a {
+        white-space: unset;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .forEach( codeBlock => {
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+    <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/contributing/" class="nav-list-link">Contributing</a></li></ul>
+      
+      
+    </nav>
+
+    
+    
+      
+
+    
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+
+        
+
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-create-a-qq-plot-in-python-using-scipy">
+        
+        
+          <a href="#how-to-create-a-qq-plot-in-python-using-scipy" class="anchor-heading" aria-labelledby="how-to-create-a-qq-plot-in-python-using-scipy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to create a QQ-plot (in Python, using SciPy)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-create-a-qq-plot">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>We often want to know whether a set of data is normally distributed,
+so that we can deduce what inference tests are appropriate to conduct.
+If we have a set of data and want to figure out if it comes from a population
+that follows a normal distribution, one tool that can help is a QQ plot.
+How do we make and interpret one?</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-test-data-for-normality-with-pearson-s-chi-squared-test">How to test data for normality with Pearson’s chi-squared test</a></li>
+  <li><a href="../how-to-test-data-for-normality-with-the-d-agostino-pearson-test">How to test data for normality with the D’Agostino-Pearson test</a></li>
+  <li><a href="../how-to-test-data-for-normality-with-the-jarque-bera-test">How to test data for normality with the Jarque-Bera test</a></li>
+</ul>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>We’re going to use some fake data here by generating random numbers, but you can replace our fake data with your real data in the code below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c1"># Replace this with your data, such as a variable or column in a DataFrame
+</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># 50 random values
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>If the data is normally distributed, then we expect that the QQ plot will show the observed values (blue dots) falling very clsoe to the red line (the quantiles for the normal distribution).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">stats</span><span class="p">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="s">"norm"</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">plt</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>Our observed values fall pretty close to the reference line.  In this case, we expected that, because we created fake data that was normally distributed.  But for real data, it may not stay so close to the red line.</p>
+
+<p>Content last modified on 14 September 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to create a QQ-plot/Python, using SciPy.ipynb">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by:</p>
+
+<ul>
+  <li>Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)</li>
+  <li>Nathan Carter (ncarter@bentley.edu)</li>
+</ul>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            
+
+
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+
+</html>
+
+

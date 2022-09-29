@@ -1,0 +1,627 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to plot continuous probability distributions (in R) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to plot continuous probability distributions (in R) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="How to plot continuous probability distributions (in R)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="http://localhost:4000/how-to-plot-continuous-probability-distributions-in-r/" />
+<meta property="og:url" content="http://localhost:4000/how-to-plot-continuous-probability-distributions-in-r/" />
+<meta property="og:site_name" content="How to Data" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to plot continuous probability distributions (in R)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to plot continuous probability distributions (in R)","url":"http://localhost:4000/how-to-plot-continuous-probability-distributions-in-r/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+    .main-content table a {
+        white-space: unset;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .forEach( codeBlock => {
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+    <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/contributing/" class="nav-list-link">Contributing</a></li></ul>
+      
+      
+    </nav>
+
+    
+    
+      
+
+    
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+
+        
+
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-plot-continuous-probability-distributions-in-r">
+        
+        
+          <a href="#how-to-plot-continuous-probability-distributions-in-r" class="anchor-heading" aria-labelledby="how-to-plot-continuous-probability-distributions-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to plot continuous probability distributions (in R)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-plot-continuous-probability-distributions">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>There are many famous continuous probability distributions, such as the
+normal and exponential distributions.  How can we get access to them in
+software, to plot the distribution as a curve?</p>
+
+<p>Related tasks:</p>
+
+<ul>
+  <li><a href="../how-to-generate-random-values-from-a-distribution">How to generate random values from a distribution</a></li>
+  <li><a href="../how-to-compute-probabilities-from-a-distribution">How to compute probabilities from a distribution</a></li>
+  <li><a href="../how-to-plot-discrete-probability-distributions">How to plot discrete probability distributions</a></li>
+</ul>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>Because R is designed for use in statistics,
+it comes with many probability distributions built in.
+A list of them is online <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Probability-distributions">here</a>.</p>
+
+<p>The challenge with plotting a random variable is knowing the appropriate
+sample space, because some random variables have sample spaces of infinite
+width, which cannot be plotted.</p>
+
+<p>But we can just ask R to show us the central 99.98% of a continuous
+distribution, which is almost always indistinguishable
+to the human eye from the entire distribution.</p>
+
+<p>We will use a normal distribution with $\mu=10$ and $\sigma=5$,
+but if you wanted to use a different distribution,
+you could replace <code class="language-plaintext highlighter-rouge">qnorm</code> and <code class="language-plaintext highlighter-rouge">dnorm</code> with, for example,
+<code class="language-plaintext highlighter-rouge">qchisq</code> and <code class="language-plaintext highlighter-rouge">dchisq</code> (for the $\chi^2$ distribution),
+adjusting the named parameters as appropriate.
+(For a list of supported distributions, see the link above.)</p>
+
+<p>We style the plot below so that it is clear the sample space is continuous.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="n">xmin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">qnorm</span><span class="p">(</span><span class="w"> </span><span class="m">0.0001</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="c1"># compute min x as the 0.0001 quantile</span><span class="w">
+</span><span class="n">xmax</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">qnorm</span><span class="p">(</span><span class="w"> </span><span class="m">0.9999</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">  </span><span class="c1"># compute max x as the 0.9999 quantile</span><span class="w">
+</span><span class="n">xs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="o">=</span><span class="m">100</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c1"># create 100 values in that range</span><span class="w">
+</span><span class="n">ys</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dnorm</span><span class="p">(</span><span class="w"> </span><span class="n">xs</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="p">)</span><span class="w">        </span><span class="c1"># compute the shape of the distribution</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">xs</span><span class="p">,</span><span class="w"> </span><span class="n">ys</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s1">'l'</span><span class="w"> </span><span class="p">)</span><span class="w">                </span><span class="c1"># plot that shape as a smooth line</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAADAFBMVEUAAAABAQECAgIDAwME
+BAQFBQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8QEBARERESEhITExMUFBQVFRUW
+FhYXFxcYGBgZGRkaGhobGxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQlJSUmJiYnJyco
+KCgpKSkqKiorKyssLCwtLS0uLi4vLy8wMDAxMTEyMjIzMzM0NDQ1NTU2NjY3Nzc4ODg5OTk6
+Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBBQUFCQkJDQ0NERERFRUVGRkZHR0dISEhJSUlKSkpLS0tM
+TExNTU1OTk5PT09QUFBRUVFSUlJTU1NUVFRVVVVWVlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1e
+Xl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhpaWlqampra2tsbGxtbW1ubm5vb29w
+cHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+AgICBgYGC
+goKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKTk5OU
+lJSVlZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWm
+pqanp6eoqKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4
+uLi5ubm6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnK
+ysrLy8vMzMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc
+3Nzd3d3e3t7f39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u
+7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7////i
+sF19AAAACXBIWXMAABJ0AAASdAHeZh94AAAgAElEQVR4nO3dB3gURR8G8LlcLpWE3kJvgn4q
+CBaqlKBSBURQmkR6E0RQRJAgCmgoiopSVFQsiIKigmJEUEFRmoIgVREBpSVIS7/7cgmQEJLN
+ldn5z8y+v+f5wmH2dt4vyUtu93ZmmQsA/MaoAwDoAEUC4ABFAuAARQLgAEUC4ABFAuAARQLg
+AEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABF
+AuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLg
+AEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABF
+AuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLg
+AEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABF
+AuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuAARQLg
+AEUC4ABFAuAARQLgAEUC4ABFAuAARQLgAEUC4ABFAuBAQJF+2QyglF+8/yk3v0ibGIBiNnn9
+Y25+kTawFNPHAOAohW3w+jl+Fyn1t83JhhugSKAYsUVa06Jq242uL6MYi5xrtB2KBIoRWqQf
+AllkQPgPkZUe6F6cfWGwIYoEihFapI7lfnUdb1m57gWXK6FqG4MNUSRQjNAilXza5T4j96b7
+8TMlDDZEkUAxQosU+Hbmh6Nspfvx64EGG6JIoBihRSobm/lhHZvjfvxEWYMNUSRQjNAi3V/i
+m5TtN1xb+bDLtav4vQYbokigGKFF+j2CMVZiV5Wwlo0C7T8ZbIgigWLEvo+0o8dtMbtdO261
+seqfGG2HIoFiSK5scJ09bvx5FAkUI7pIzgPxy5evOVTIVigSKEZskRLGlMm+UrbylAtG26FI
+oBihRTpajdWKiY2Lm9gjitVNMNgQRQLFCC1Sf8fSi4/S59pGGWyIIoFihBapXL+cx/dVMtgQ
+RQLFCC2SY2rO48lBBhuiSKAYoUWq0j3ncaeqBhuiSKAYoUUaZZtxcWbsuUlsXN7P5lrw5A0U
+CdQitEiJ9VlEdMyI4X1bhLFmZ/N8cr8990oS530dA4CC2PeRUmbXy6qLo+GCdKPt5rG8NQMO
+fonP4sPCUVAY4ZcIJe3dsmVfYS/cUCQTrG8dUDxLQOv11Fn0Q3OtXWFQJO42dAjosDX74c4+
+9iZraNPoB0WyhFw1ckOVuKMq0v7oaIPPokh8PRHQfceV/2VH94AnaLJoiqpI25jRXlAkrsaF
+rLr6P64KueoNCPAdVZGSduww+CyKxNOE4M/y+8+rQ8eITqIxHCNpb3xofP6f+LbIaLFJdCbn
+xD4UiZ/HwwrokbtJDztFRtGZnBP7UCRenKPCvi74s98VGYIm8SHnxD4UiZex4euMPr0ufKyo
+JJqTc2IfisTJF/YCX9dli7cb3cwAPCbnxD4UiY/ESoX+whkTdUpEEu3JObEPReKj57WGh6Ju
+ydf3EpFEe3JO7EORuPgk8OfCN9p6+fU2+EGiiX25oEg8HM+6aUGhYkv9Y3IQK5BnYl9uKBIP
+XW9K9WSztFvuNjuJBWBin7YWBW/3bMNdoW+am8QKMLFPV4eLz/B007iif5mZxBJwrZ2mnG0a
+G/7Szy2jeTQucPATiqSpd8L2e77x/rB3zEtiDSiSnlJrjPdm88erYf0z/6BIeppX1KsLFhKL
+zzcriUWgSFpKqvS0d0+YElXoNRBgBEXS0sxSZ7x7wtkys8xJYhUoko7Olpnt7VNmeVs9uAKK
+pKOnvH+hllRpihlJLANF0lBC8QXeP2l+0ZP8k1gHiqShx2p6dJHdldJqY3kuP6BI+jka9q4v
+T3sn9DDvJBaCIuln+PUZvjwto+4I3kksBEXSzsHgT3x74sdBB/gmsRIUSTv9b/XxClTnrf35
+JrESFEk3x4JX+PrUFcHHeCaxFBRJN1Oqejx9Iq+MGl5eWASXoUiaSavo9UUNOWZF+XDeHNxQ
+JM28H+bHOnWJRZbwS2ItKJJmGg/z59lDm/DKYTUokl622ozuO1WoXbZNvJJYDIqkl753+Pf8
+1jF8clgOiqSV4yGf+reDFcH/8kliNSiSVp72/dx3tozqz/BJYjUokk7SKvo9z3UmzoD7BEXS
+iV/nvrPhDLhvUCSdNB7q/z6G4Ay4L1AkjWy1ebjat5GdOAPuCxRJI/6e+86GM+C+QJH0cSLE
+5+u+c1sRcoLHbiwGRdLHnIp+nvvOll5xDo/dWAyKpI8Gj/PZz7ib+ezHUlAkbexkfl1ml2MX
+rx1ZCYqkjcdu4bWnm7Ewl9dQJF1kVHyR167mRHE52LIUFEkXqx3Hee3qZNBXvHZlGSiSLnp3
+5revTn347csiUCRNnC2yjN/OPgrHrSm8hCJp4o0Syfx2llJyEb+dWQOKpImWfq3VkNfQVjz3
+ZgUokh7+CtjIc3c/2v7kuTsLQJH08EwtH9cpLkCdqVx3pz8USQ91OM8Qf5pzMbWHImnhR9sf
+fHd4kO9LRf2hSFoYxv3kQMvhvPeoNxRJBymlFvHeJdfT6RaAIulgWRj3N1DPFlnOe5daQ5F0
+cE8v/vvsdQ//fWoMRdLA+TA/11fNz4pQfA+8gCJpYElEEv+dJkd+wH+n+kKRNNCtpxl77dHd
+jL3qCkVS3/lwjhd+5/go7JwZu9UUiqS+Zeb8xJ8Px3k7z6FI6uvZzZz93mvCuUBtoUjKS440
+adn79804h6ErFEl5K0JMms56NtSEs+q6QpGU90AXs/bcua9Ze9YPiqS61OLvmLXrxcVSzNq1
+dlAk1a0KPm3Wrs+EfGHWrrWDIqmufwfz9t1+gHn71gyKpLi00ovM2/kbJdPM27leUCTFfeXw
++7axBUsMijdv53pBkRQ3uI2Ze79riJl71wmKpLaM8gvN3P2CslhO3zMoktrW2rktnZ+fE4Hr
+zNy9RlAktY2INnf/rR4yd//aQJGUlhH1irkDzC2XYe4AukCRlLYx4Ki5AxzF+naeQZGUNuE2
+s0e4daLZI+gBRVJa3afNHmFKPbNH0AOKpLJDtm1mD7GVHTR7CC2gSCqbW8H0pe6dFU0+naEJ
+FEllbYeaP8aQduaPoQEUSWHnQ1eaP8jnIVhMyAMoksI+CT1v/iAXwlaYP4j6UCSFDbhbxCgd
+B4oYRXUokrqcFRaIGGZ+edy8r3Aokrp+th0WMcwR2yYRwygORVLXpJvFjNMgVsw4SkOR1FV/
+sphxYhuIGUdpKJKyjtg2ixlok+1vMQOpDEVS1jxRJwGcFeaLGUhlKJKyOgwSNdLAjqJGUheK
+pKoLZtzvMn8rRLzxqzgUSVWfifvpvhD2uaihlIUiqWpwe3FjtcOqXIVBkRTlrPiquMFeicLF
+DYVAkRS1ReSEu0O2reIGUxOKpCixU8DrTRE5mopQJEU1Hi9ytPGNRY6mIhRJTYmB34ocbp3d
+xKX6tYAiqWlpRKrI4VKLfihyOAWhSGrq31nseJ1wyzFjKJKaKgs8+e32SkWx4ykHRVLSb+yA
+2AH/YDvFDqgaFElJs64RPWKt2aJHVAuKpKQ7hd9tZcRdokdUC4qkoguhwq8i/SwEV4AbQZFU
+9EWQ8K/PueAvRQ+pFBRJRQ+bfJ++/LQaLX5MhaBIKro2TvyYz10nfkyFoEgK+pttFz/or+wv
+8YOqA0VS0IJyBNODnFELxQ+qDhRJQV0fpBg15l6KUVWBIqknvfgSimHfL5ZGMawiUCT1rA84
+TjHsyQDvf1Ssg6JI6ds3HDLeAkUy8qTptzLP362TaMZVgtgibRie+WFxWcZYXcN5aSiSkVuI
+fqCfvJVmXCUILdLaoCJO14esSLdhdwQEGy1cjSIZIHuJRfSSUg1Ci9SizD6Xq1qVo5kPN4Ya
+LYOLIhl4j+qgP73E+zQDq0BokSLHulyn2ZysxwOLGWyIIhnoS3YaumsM1cjyE1qk8CddrmTb
+sqzHT4UYbIgiFcxZnuyN0YW4CWaBhBapSa3zLlfjse6HyXXrGmyIIhVsu8iVIa90kOLSJEUI
+LdJnrP7qtC3l3zqfurEVM7rnDopUsNm16Mau+Tzd2JITe/p7YTgLva4Ks9uZ7RGjVwkoUsHa
+D6Ube0gHurElJ/gN2X9n3FUlIrhkg5FbDDdDkQqUFvkR3eAfil1NTyW4REgx3wecoBv8VMB6
+usHlJrpIzgPxy5evKeQKIRSpYLE3U47eQNCN1NUjtkgJY8qwLJWnXDDaDkUqUNPHKUcf14xy
+dJkJLdLRaqxWTGxc3MQeUaxugsGGKFJBzjriKYf/KvAM5fASE1qk/o6lFx+lz7WNMtgQRSrI
+5yGGv8rNlhS6knJ4iQktUrl+OY/vq2SwIYpUkNEE6wfl1uoR2vGlJbRIjqk5jycHGWyIIhXk
+hmm040+9kXZ8aQktUpXuOY87VTXYEEUqwDHbz7QBfrL9QxtAVkKLNMo2Izn70blJbFyeTzq/
+jb9sFIqUv3eLpdMGSC/+Hm0AWQktUmJ9FhEdM2J43xZhrFneqhwIZrng5FC++t1DnaBLf+oE
+chL7PlLK7Hp2d00cDRcY/suKl3YFqDqXOsHLlakTyEn4JUJJe7ds2ZdSyEYoUv72sj3UEXaz
+fdQRpIRr7VTySgXqBC5XJcE33VQEiqQSmiVWr4QFV/NFVaT90UbvLKJI+coo9Q51BJdrcYkM
+6ggyoirSNma0FxQpX5tsR6kjuFz/2owWUrMsqiIl7dhh8FkUKV/Tr6dO4Pa/Z6kTyAjHSApp
+/TB1ArdRd1AnkBEm9qkjKfQz6ghun9JegC4pTOxTx9eB/1FHcDvjWEMdQUKY2KeOJ5pQJ8jW
+5AnqBBLCxD51NHySOkG2iY2oE0gIE/uUccbxDXWEbGvkeIkpF0zsU8ZKWQ7yk0JWUUeQDyb2
+KWNsS+oEl7R4lDqBfOSZ2JcbipSPBlOoE1zyFOnaenKSZ2JfbijS1RLt31NHuOQ7u9EpV2vC
+xD5VfBxW2CwuYVLCP6GOIB1M7FPFyDupE+S4w+i9C2vCtXaquGE6dYIc07AoV14okiJOBvxE
+HSHHRhvub54HiqSIpRFE9zLPT1rkh9QRZIMiKWKoVDfLaz+MOoFsUCRF1JlFnSC3mddSJ5AN
+iqSGo2wrdYTctrAj1BEkgyKp4V25lhzJKImVi6+EIqlhQBfqBFfqPJA6gWRQJDVUf5E6wZXm
+1KBOIBkUSQmH2G/UEa60gx2kjiAXFEkJi8o4qSNcyVn2TeoIckGRlPDAfdQJ8urelzqBXFAk
+JVSZR50gr1eNlgqwIBRJBfvob+eS1262nzqCVFAkFSyIok5wtQoLqRNIBUVSQY/e1Amu1qsn
+dQKpoEgqKP86dYKrvV6eOoFUUCQF/M4OUEe42n62mzqCTFAkBch5hqyydGcSKaFICrj/AeoE
++enTgzqBTFAkBURJeIjkcr2Gg6RcUCT57ZbxEMl9kCTdm1uEUCT5zZPyECnzIGk+dQKJoEjy
+6yHlIVLmQRLeScqBIslPzkMkHCRdAUWSnqSHSDhIugKKJD1ZD5FwkJQbiiS9Hn2oExSkNw6S
+LkORpBf1GnWCgizEQdJlKJLsJJ74I+E0KTIokuzmVaROUDAcJF2GIslO3kMkHCTlgiLJTt5D
+JBwk5YIiSW6PvIdI7oOkvdQRZIEiSW6+xIdImQdJC6gTyAJFklxPiQ+RMg+SelEnkAWKJLkK
+Eh8i4SApB4okN6kPkXCQlANFkpvch0guVyUcJGVDkeTWU8IV7XLrhYOkbCiS3GRfz3QBDpKy
+oUhS28P2UUcwthcHSdlQJKktlPwQyeWqKPmvTFFQJKnJfwgi+0GcKCiS1OS/ckD204qioEgy
+2y//EcgeWVeUEAxFkpkKd3yIeoM6gRRQJJk9oMDy2vf3pU4gBRRJZvLdOvZqr1amTiAFFEli
+f7LfqSMUbhc7SB1BBiiSxN4s46SOUDhn2beoI8gARZLYg92pE3iiWz/qBDJAkSRWbS51Ak+8
+XJ06gQxQJHn9zX6jjuCJHewv6ggSQJHk9XZpBQ6RMg+SyiymjiABFEle/btSJ/DMPQOoE0gA
+RZJXzRepE3hmTi3qBBJAkaR1lP1KHcEzv7Aj1BHooUjSerdEBnUEzzhLvkcdgR6KJK1BnakT
+eKrTYOoE9FAkadV+njqBp2bXoU5AD0WS1T+2bdQRPLUVB0kokrSWFE2njuCpjGIfUEcghyLJ
+aujd1Ak813EYdQJyKJKsrptFncBzM/9HnYAciiSp47bN1BE8t8l2jDoCNRRJUh9GKnOI5HKl
+F/2IOgI1FElSI9pTJ/BGu4eoE1BDkSR1w3PUCbzx3A3UCaihSHI6FfATdQRvbLSdoI5ADEWS
+07IiqdQRvJEWsZw6AjEUSU4j21An8M5do6gTEEOR5FR3OnUC70yrR52AGIokpVMBP1JH8M4P
+ASepI9BCkaT0iVqHSO6DpBXUEWihSFIafSd1Am/d8Qh1AlookpRumkqdwFvP1KdOQAtFktFp
++3rqCN763p5IHYEUiiSjT8NSqCN4KyXsM+oIpFAkGY1pTZ3Ae9FjqROQQpFk1OBp6gTem3Iz
+dQJSKJKE/rN/Rx3Be9/aT1NHoIQiSejzkCTqCN5LDl1JHYESiiShR1tRJ/BFy8eoE1BCkSR0
+61PUCXwx+TbqBJRQJPmcDVxHHcEXawPPUEcghCLJZ1XwBeoIvkgK+YI6AiEUST7jmlMn8M3t
+j1MnIIQiyadhLHUC30xqRJ2AEIoknbOOb6gj+GaNlQ+SUCTprA46Tx3BNxeCv6KOQAdFks4T
+zagT+KrpBOoEdFAk6TSeSJ3AVxOaUCeggyLJ5nxQPHUEX30VdI46AhkUSTbx6v40nlP33wC/
+oUiymdCYOoHvGlv3IAlFkk0ThX8Yn2hKnYAMiiQZhQ+RLH2QhCJJRumfRaX/FfAPiiQZtV8d
+qfy61D8okmTUfRfJzbrvJKFIcjkf9DV1BH/EOxR+YeoXFEkuyl5ol+28ZS+3Q5HkMl7ZC+2y
+NX2COgERFEkujZ6kTuCfiQq/newXmiL9N+53w89btkhnHWuoI/jna6vOSaIp0t/MeKFoyxbp
+S7UPkdxzklZTR6AhtEj9L+nB7uzf32BDyxbp8dupE/ir2XjqBDSEFoldwWBDyxap4STqBP56
+0qILNwgt0mh7vS8T3XayJYlGt9OxapGUXa4hh1UXbhB7jLSpnm2oe6l1HCPl7ws1V7TLLSnk
+S+oIJASfbEh7NjTqIxSpIKquaJebRVe3E37Wbn8063gIRcrfbbHUCfw3qSF1AhIEp78XlSgS
+iyLl56xjLXUE/31jzYMkiveRjt3PUKT8KLro95UsugS4/0VKz/xf8satTm/2sGrMLsPPW7RI
+j7WgTsBD83HUCSj4W6T0Yfe6XH9WZ6ypZz/6zgPxy5evOVTIVhYt0q2TqRPwEGvJ+yT5W6Tp
+7BGXq51t6LCA6R48M2FMmew3YytPMXwRY80inVHzvkh5rQ38jzoCAX+LdP09LtdhW3+Xq1+9
+wp94tBqrFRMbFzexRxSrm2CwoTWLtFLFW8deLTlkFXUEAv4Wqcg8l+t19rXLNbdY4U/s71h6
+8VH6XNsogw2tWaRHW1In4KOFFW8m62+RIjKL1CM8xeV6ObzwJ5brl/P4vkoGG1qzSLdocYjk
+ck2+hToBAb9f2vV0/VukS+aDgbULf6Jjas7jyUEGG1qySKft31JH4GOd3eg6Sk35W6RprFEU
+yzxGfivo0cKfWKV7zuNOVQ02tGSRVoQlU0fgIyX8U+oI4vlbpKSY0KIvZv5Z/gajkwcXjbLN
+uPizcm4Sy/tuQ8ZnSy8baMUiPXwndQJe7hhNnUA8Xlc2/JjmwRMT67OI6JgRw/u2CGPN8lbl
+jzLFLwtjFrzM5EZP3kBQwrS61AnE87dIDeed9ma02fXs7reRHA0XpBttZ8WXdicDNlJH4OVH
+23HqCML5W6RAFtrjqwwvnpy0d8uWfSmFbGTFIi2N8OSXuhLSIj+kjiCcv0U6OT/azipN2Mcv
+kZsVizS0I3UCfjoMo04gHIdjpOOvtgxgTV/jeVRjxSLVnk2dgJ9ZdagTCMfnZMPR5+uysCF7
+vNjH/uhog89asEhH2DbqCPxsZYepI4jGpUgXPuwayio7HJM9n0uxDasIXWlxSW+ONCWXUeod
+6giicSjS+gGRLLTXWtehrizW430k7dhh8FkLFqnfvdQJeOpqtGqhlvwt0qFnajF208tZ14Q4
+W5fhlMqCRao6lzoBTy9XoU4gmr9FCmBFh2y+9JeXbYU+FxP78neAGc8ZVsxO9gd1BMH8LVKz
+N3PN0Nu3vJBnYmJfQV4r79VcfelFvU6dQDChi59gYl+BevWiTsBXz97UCQQTu4g+JvYVpMJr
+1An4WlieOoFgQouEiX0F2cUOUEfgaz8zvgOWdoQWCRP7CjK3MnUC3qq+Qp1ALKFFwsS+gtz7
+IHUC3mK6UScQS2iRDCf25Wa1IjlLvU0dgbe3dLpSwwNCi2Q4sS83qxXpF/Y3dQTejrBfqSMI
+JXbtb0zsy99sD1aOUc01z1MnEEr4IvqY2JePjkOoE/A3+G7qBELR3NW8MBYrUnqxD6gj8Lek
+qOGLDt2gSBL4yXaMOgJ/x2w/UUcQCUWSgJ6r7tSdRp1AJBRJAq0eoU5ghtFGc6C1gyLRSwpZ
+SR3BDJ+HaHD/QY+hSPRWB2n5//Zc0FfUEQRCkeg9djt1AnM0s9I9MFEkevWfok5gjskNqBMI
+hCKROxng/bdACesDTlBHEAdFIvdBRCp1BHOkRS4tfCNdoEjkBml7LU3HwdQJxEGRyFWfQ53A
+LC/UoE4gDopE7SDbSR3BLL9ZaFEuFInagii9FuLKrcJC6gTCoEjU7utDncA8ve+nTiAMikTM
+WfpN6gjmWVTKMvPNUSRiW/WbZZ7jsE73qjGGIhGLu5Y6gZnqzKBOIAqKROyuh6gTmGlEG+oE
+oqBItFLCP6GOYKaPw5KpIwiCItH6xp5IHcFMpwPXUkcQBEWiNaERdQJzNZxInUAQFInWbU9S
+JzDXxIbUCQRBkUidtq+jjmCutXq/dM2BIpHS/mBc85MpOVAkUiPaUicwWxutT+/nQJFI1Z5J
+ncBsMzVc1jw/KBKlg2wHdQSzbbfIVAoUidL8CvpOobik4gLqBEKgSJTu0e5GfVeL6UqdQAgU
+iVB68SXUEcz3frE06ggioEiE1gccp45gPm1XG7sSikRo0q3UCUS4JZY6gQgoEqHbLHEh2gRL
+XCWEItFJsH9PHUGE7+ynqCMIgCLR+SBS0yVWr5RW1AoLrqJIdPp3oU4gRucB1AkEQJHoVH6V
+OoEYr1SkTiAAikRmJztAHUGMP9gu6gjmQ5HIzK5FnUCUms9TJzAfikSmzQjqBKIM136yCIpE
+JynsU+oIoqwI1f+2zCgSla+CzlBHEOVccDx1BNOhSFTGtKBOIE7zsdQJTIciUbl+OnUCcabd
+QJ3AdCgSkX9sW6kjiLPFdoQ6gtlQJCIWuuOJy+Uso/G9a7KhSETu70WdQKSePagTmA1FopFR
++m3qCCK9pf3vXxSJxs+2f6gjiPSP7WfqCCZDkWjE1qdOINZNk6kTmAxFonGLJSbH5pig+6x6
+FInE8YAfqCOItSHgX+oI5kKRSLxZIp06gljppd6ijmAuFIlE997UCUTrdR91AnOhSBTSir1H
+HUG0d4vqvUAFikRhnf0kdQTRTtm/pY5gKhSJwmNNqBOI13gcdQJToUgUrp9KnUC8Z/S+AhxF
+InCIbaOOIN5WdpA6gplQJAKvlNf/tkhXcVbQevUxFIlAx4HUCSgMuJs6gZlQJPGSi3xMHYHC
+8vAk6ggmQpHE+8I6y57kdjb4S+oIJkKRxHuoNXUCGtEjqROYCEUSr+Zs6gQ0ZlWnTmAiFEm4
+3Ww3dQQav7M91BHMgyIJp/U/zIZ0/lWMIgmn9aGCIZ0PDlEk0fQ+eWVI59OVKJJoer+dYkjn
+N9BQJNEGdqROQEfjSzpQJMEyys+njkBnfnltl7dDkQT7MeAodQQ6/wZspI5gFhRJsMcbUieg
+dNt46gRmQZEEu9ZCd3O52rTrqBOYBUUSa58V7vBdsJ3aXtyAIok1oyZ1AlrXzKROYBIUSaym
++t8E0tCYZtQJTIIiCXXS/j11BFrf2U9QRzAHiiTUopIWW6o4r/RSmt67D0USqnMMdQJqfbtQ
+JzAHiiTShXB9Lzbz0PKw89QRTIEiifRp6DnqCNTOh31GHcEUKJJI/S18weolHQZQJzAFiiRQ
+RrnXqCPQW1hGywtXUSSBNgRY6g7M+Tum580KUSSBHmtMnUAGjbS8LQWKJFDt56gTyODZOtQJ
+zIAiibOP/U4dQQa7tLxwFUUSJ87iF6xecs0M6gQmQJHEafIodQI5jG1KncAEKJIwx6x+weol
+39uPUUfgD0USZn45i1+wekl6OQ3Xf0GRhGk9jDqBLIbeQZ2APxRJlJOB31BHkMWawOPUEbhD
+kURZWDqNOoIs0svod6kUiiTKXUOoE8hjcBvqBNyhSIIkBn1NHUEe8Y5T1BF4Q5EEeaMUXtld
+ll56EXUE3lAkQdrpu368Dwa0p07AG4okRmLQauoIMvnSkUAdgTMUSYw3i6dQR5BJaom3qCNw
+hiKJ0aEfdQK5PKjbpHsUSYgzIauoI8hlZfBp6gh8kRUp4U+DT2pXpMXF8MruCqnF36GOwJfY
+Iv3arkrTudmXbo4z2ot2RerUlzqBbB7oTJ2AL6FFWh/MwhysedYJG0sV6Wyonou5+eHTkP+o
+I3AltEjtHR87k2c7bnGvkmipIr0Xadk7mRckuej71BG4ElqkSr3dH9cEtUu3WJHu6UOdQD69
+u1In4EpokRyTsv54m420VhP9ZgQAABM6SURBVJHOh6+gjiCfT8K0Wr5ZaJEq3p3953gWZ6ki
+fRCBV3ZXSY5cSh2BJ6FFGml7KdX9p7Mve/ghCxWpaw/qBDLqodVrO6FFOlmZtc564BzJmHWK
+9B/O2eXn05BE6ggciX0f6cSwhy8+WlbDOkV6vQTejc1Haqk3qCNwhEuEzNdqKHUCOQ2Jpk7A
+kegiOQ/EL1++5lAhW2lVpCP29dQR5PR9wGHqCPyILVLCmDIsS+UpF4y206pIM6s4qSPIyVlt
+FnUEfoQW6Wg1VismNi5uYo8oVtdoZpdWRbrpCeoEshpfnzoBP0KL1N9x6a2D9Lm2UQYb6lSk
+39kO6giy2sV+o47AjdAilcs1u+2+SgYb6lSkCfWoE8ir7kTqBNyIvURoas7jyUEGG2pUJGd1
+HW9iwkmcPoePQotUpXvO405VDTbUqEgbAv6mjiCvI3Zt7icrtEijbDOSsx+dm8Ty3kk07eOl
+lw3Up0jDWlInkFmL4dQJeBFapMT6LCI6ZsTwvi3CWLO8VTkYVfyyMG2KlFZmIXUEmS0onUod
+gROx7yOlzK5nd7+N5Gi4wPBeQfq8tPs8SLvFeXlKCF5JHYET4ZcIJe3dsmVfYdee6VOkHl2o
+E8itc0/qBJzgWjtTnSvyEXUEuX0Ypsl3GkUy1eJIw0uhIKmYJstyURVpf7TRpb/aFKkNFlgt
+xINtqRPwQVWkbZaY2Pdv4BrqCLJbE/gvdQQuqIqUtMPoCjRdihRXNYM6gux0ufIDx0hmuvYp
+6gTym1xbi8uEMLHPRBsCDlJHkN/felwmhIl9Jup3J3UCFdzRnzoBD5jYZ56zER9QR1DBkiJn
+qCNwgIl95nmtZDJ1BBWklHqdOgIHmNhnnsZG/1bAZSObUCfgABP7TLPbto06ghq2s13UEfyH
+iX2mGXszdQJVNHiUOoH/5JnYl5sORUor9yp1BFW8Ulb9WUnyTOzLTYciLQ/VaWlrU50O+5g6
+gt8wsc8sHXBzMY/17kidwG+Y2GeSfwLXUkdQxzeBR6gj+AvX2plkWjUtLiETw1lzOnUEf6FI
+JqkztfBt4JJnaqn+zw6KZI519sIuzIVcDtu/pY7gJxTJHL3bUydQS/ve1An8hCKZ4njwKuoI
+alkZpPhEWRTJFFNqYGqsV5zXPE0dwT8okhnSKs6mjqCaWVFqX92AIplhaRjWV/VSYviH1BH8
+giKZoflg6gTqGdSCOoFfUCQT/Gb7lTqCehT/oqFIJhjUnDqBim5X+tc4isRfYvjSwjeCvD5Q
++sASReJP9RNQRNQ+1Ykicaf8WyJUlH7zDUXiTvk36akofTkIisRdO9UvGyPTS+ELFFEk3vYH
+/EgdQVU/2PZQR/AZisTbIzdRJ1DXzWOoE/gMReLsbPE3qCOo643iyn7fUSTOZpVNoo6gruTy
+yp4BR5H4Sq38LHUElU2vWNi6OLJCkfhaFInV7PzwX9E3qSP4CEXiyvm/x6gjqO3ROoq+KYsi
+cfVJsPILtNH6J2QFdQTfoEhcNR5InUB1A26jTuAbFImn7wI0uEEJrT0B31NH8AmKxFP7rtQJ
+1HdPB+oEPkGRONqFq4P897NtB3UEX6BIHPVpSZ1ABy0eoE7gCxSJn0NBX1JH0MEXjoPUEXyA
+IvEz8kbVV4KXw00q3sQaReLmVJH3qCPo4d2wE9QRvIcicTOpWhp1BD2kVZtEHcF7KBIvJyNf
+p46gi9eKHKeO4DUUiZfHauEXEifptY1ueS8nFImTf8LepY6gj3dClbtkEUXiZOT/FL1sWUYZ
+dZU7cYci8XE4dDl1BJ0sC1btzqEoEh8DG+A9JI6ctw6ijuAlFImLP4O+oI6gl1WO/dQRvIMi
+cdG7CXUC3dzehzqBd1AkHnbbv6GOoJvv7DupI3gFReLh3tbUCfQT3Y06gVdQJA62Yx4Sfz8H
+bKWO4A0UiYP2ak7qlFwHpZbUR5H8F2//hTqCjn6xx1NH8AKK5Lf0G5S++am8Bl2n0J0PUSS/
+vRj5D3UEPR0v9hJ1BM+hSP5KKKnswu+ym1VcnRl+KJK/htdMpo6gq9TaI6gjeAxF8tPOwJXU
+EfT1uX07dQRPoUh+uvMO6gQ6a9uKOoGnUCT/LHfspo6gs31BH1NH8BCK5JeUWo9QR9Db6OqK
+3AARRfLLtNK4r5ip/is3nTqCZ1AkfxyNmEcdQXfzIo5SR/AIiuSP+25Kp46gu/Sb7qOO4BEU
+yQ+fBW6mjqC/XxxKrIaBIvnudIXx1BGs4PHyCdQRPIAi+a5fbUXOKKkt+br+1BE8gCL57Bu7
+mjdpVM6P9tXUEQqHIvnqfI2HqCNYxYiq8v84oEi+GlnlDHUEqzhXXf6FV1EkH2204/Z8wqyR
+/1U0iuSb5P89SB3BSmKkP6+DIvlmQjkVzslqI6HcBOoIhUCRfPJdoBLvEupjeeB31BGMoUi+
+SKgyhDqC1QyuKPe0cxTJB85O11+gzmA1SfXaSX2/DxTJB8+H76KOYD17I16gjmAERfLe5uBF
+1BGs6A3HRuoIBlAkr52trcaF/drpU+M/6ggFQ5G81qumxN9PnZ2t0506QsFQJG8tDN5CHcGq
+toe8Rh2hQCiSl3aEvUgdwbpeDNtBHaEgKJJ3jlXrJvVZWL05u1U7Rp2hACiSV1Ka1z9HncHK
+LtzWWNIFolEkbzj7RP1NncHa/qnUXc5XBCiSN6aE/kwdweq2FXmaOkK+UCQvfBSoygK6GlsZ
++B51hPygSJ7bEh5HHQFcrudCZbzCAUXy2JGKMdQRwG1QuUPUEa6GInnq1I3NU6gzgFtK8xtP
+UWe4CorkodMN6mFOrCQS6jU4TZ0hLxTJM+ea1f6XOgNccuL6hrIt4YQieeR8i1pq3BTBIo5d
+20SynxAUyRMpbSsfpM4AuR2u0VqudYVQJA+kdKj0B3UGuNKhqndKdbEQilS41C5R+6gzQF77
+orqkUmfIBUUq1Nm25X6nzgBX+71cW4l+SlCkwpxsVH0vdQbIzx+1b5bnTCqKVIgD19wi6xQY
+yzvVpNoe6gyXoEjGfi5zh2zvWMBl5zuU9P7H1xwokqGvImJkOqKFPNIHh39OnSEbimRkgSOW
+OgIYi3UsoI6QBUUq2IUHgxZSZ4DCLAx6UIb1o1GkAu2rW/EH6gxQuM3VrpVgBWkUqSArirWS
+5+QqGDjZNmIpdQYUqQBp4wLGZRBnAA85n7UPop4rhiLl648mZb6mTQDe+LpME+KrIVGkfGTM
+CW95mDIAeOtwy/A5pK8gUKSr7W8R+QJe1inG+VbxRpTnHFCkvNJeCGvzF9no4LOjnUNi6Y6U
+UKQ8ttQv8TbV2OCft0vUJ7tTCIp0hb/7BnTDSW9l/dstoC/RmtKii+Q8EL98+ZrC1iUjKtK5
+Z4s0WEsxMPDyY+PQcSQrDIktUsKYMixL5SmGl3WQFCltfrlK83GSQXHOpdVLPktwqCS0SEer
+sVoxsXFxE3tEsbpGq8QRFCn1rTrF4uRaTwN8khRXrM5bwq/ZF1qk/o5Ll3Kkz7WNMthQeJHO
+PV854tGTYscEs5x8NKLy84LvYyW0SOX65Ty+r5LBhoKLdCK2ZOlY+VbBBZ+deSEqcqTQlQiF
+FskxNefx5CCDDYUWadPgsBqv4kWdZpJerRE2eJO48YQWqUqu27t3qmqwobgiJbxU19ZiSbqg
+0UCg9CUtbHVfErVgu9AijbLNuLio37lJbJzBhoKKlL6mV0j58VizTlv7xpcP6bVGyD+TQouU
+WJ9FRMeMGN63RRhrZlQVEUVKXT24bGDHFWmmDwSE0lZ0DCw7eLX5J/HEvo+UMrue3f02kqPh
+AsN/Jkwv0oVP+5YIarvwhLmjgAxOLGwbVKLvpybPRxd+iVDS3i1b9hX2hpmpRcrYPD06JLTz
+4kTzhgC5JC7uHBoSPX2ziW+3W+wSofTt87qVZNc/vFLwuwxA7dzKh69nJbvN227SEZOFLhE6
+8fnE6EhW+YHFuNORRR1d/EBlFhk98XMTXtJb4hKhtJ1LxneowkKbjV1+hOd+QT1Hlo9tFsqq
+dBi/ZCfX80yaXyJ0fMOiJ7rXC2YlWjy0cDPWTIUsqZsXPtSiBAuu1/2JRRuO89mnnpcIpRxa
+/95zIzrWLcZslVoNnrmKaI4KyOzvVTMHt6pkY8Xqdhzx3HvrD/l3ybg+lwhdOPzr2o/mTR3d
+q+V1JTOPwsre3GXU7GXbZViEEyR2Yfuy2aO63Fw280em5HUte42eOu+jtb8e9v7HRsFLhFIS
+Eg4c2LY5/sul78yfMWXc4AfuiW5Qo3SQ+xxGyWsadRjw5EvL1u/DtXPglaR965e99OSADo2u
+cf8zzIJK12gQfc8Dg8dNmTH/naVfxm/eduBAQoLBLy15LhFKeXP+Zb0KLNLTDnZJWPHKNRs0
+b9Ot34gJcfOXrt64+4TT12AAOZwndm9cvXR+3IQR/bq1ad6gZuXiYZd/6BxPF/AkeS4ROlSn
++mVlWUG/W4/Gx/+8eeeBvxLO+xoCwHvnE/46sHPzz/HxBb13IuclQhsY9Qq0AF6R8xIhFAkU
+I+dyXCgSKAZFAuCAqkj7o6MNPosigWKoirSNGe0FRQLFUBUpaccOg8+iSKAYHCMBcCDnxD4U
+CRQj58Q+FAkUI+fEPhQJFCPnxD4UCRQj58Q+FAkUI+fEPhQJFCPnxD4UCRQjz8S+3FAkUIw8
+E/tyQ5FAMZjYB8ABJvYBcIBr7QA4QJEAOJCzSJsYgGK8v2Gt+UVy/VKr52Jl3NiBOoHnbr+d
+OoHnOtxIncBzPWv94v1PuYAiuRrMFDAIJ22N3hKTTEwMdQLPjWtLncBzMxv48CQU6UookjlQ
+JA5QJHOgSOZAkThAkcyBInGAIpkDRTIHisQBimQOFIkDFMkcKJI5UCQOUCRzoEgcoEjmQJHM
+gSJxgCKZA0XioNGLAgbhpNOT1Ak8N2gQdQLPPdmJOoHnXmzkw5NEFOmIQndTPub9LdjJJBgt
+JyiZs8eoE3gu6YgPTxJRJADtoUgAHKBIABygSAAcoEgAHKBIABygSAAcoEgAHKBIABygSAAc
+oEgAHKBIABygSAAcoEgAHKBIABygSAAcmF2k1McDLk7cTRxVxVG+/1GTx/OLAhGzKPRFTRhT
+Oahqpx/dD6XPemBg9aBSnX5yP/Q+q8lF2lU/4uL3PKU+6zq1n6OaxLM6FYiYRaEv6qmqrP2T
+vQJDtiuQdXfJoN6xvRyOH3zKam6R/gu9eV9w9vd8Nnsu8+MHbIypA/pFgYhuKn1Rh7OXMj8u
+Y+0UyHqH7dvMj8tZd5+ymlukU2NSXRe/5/Uikt1/1CzjNHVEfygQ0U2lL+rD0amZH52hVRTI
+OnG8+2O6o65PWc0/2ZD9PU+yR2f9LYYdMH1EHykQ8TJlvqhZkh1NlMl6mHX2KauoIu1l2Yuw
+xbJ400f0kQIRL1Pmi5plTuYLPDWynl97Y8Qmn7KKKtIWNjzrbzPYctNH9JECES9T5ovqti6o
+aZoaWYsy1vuAb19Xc4qUODjTjOzHl77nI7L+Fsc+NmVEDhSIeJkyX9RM7wXXP6VI1scHNQ5o
+esCnrOYU6W/3naGbZD/O/p7vY32z/jaRfW3KiBwoEPEyZb6oLuck1uaMS42sbmvDb8zwJauo
+l3YpgS2y/taD/WX6iD5SIOJlynxRnf3YQ+nuBwpkzdaT7fIlq6giuW4LO5/5MSOqkukD+kyB
+iJco80UdxaZdfCR71sM39sn68x62yZeswoq0gE3O/Pgqe8r0AX2mQMRLVPmiLmOjLj2UPmvF
+oI2ZH/cUKZLkS1Zzi7Ru3Lhx9nKZH0660puxTk/db7vhvKkD+kWBiG4qfVFrsIfGZUmQP+vH
+dsf9E2LC2cs+/SSYW6Tp7KJ9LtfZsVUcFYafMnU8PykQ0aXWF/VSVPan/FldGzuXthdr/an7
+ofdZMY0CgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJ
+gAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUCYAD
+FAmAAxQJgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUCYADFAmAAxQJgAMUSTnxth7uP9oG
+fO9KjrsxssgNcRnUkQBFUtAQFu9yfcRGu1wPsp6vzuvChlMnAhRJQWer1ko+V+maCy5XWCP3
+30d3TaeOBCiSgr6xxY4N+CHzQdGoY9RZIBuKpKJhwY5H3X/OYZF93jhMnQZcKJKatjC2I+vB
+ms7hzNbuIHEcQJGUlNGobMlmzuzHyfF9bTVTaPMAiqSkGWzJIvbC5b8OZT8RhoEsKJJ69oS2
+c7lahu11/Rj1lvvvw9lW6kiAIikno1F45kHRnuAmGWnXBw2c+0q/gKZO6kyAIilnJpvt/mMK
+m+U69XCNsKJ1p52ljgQoEgAPKBIABygSAAcoEgAHKBIABygSAAcoEgAHKBIABygSAAcoEgAH
+KBIABygSAAcoEgAHKBIABygSAAcoEgAHKBIABygSAAcoEgAHKBIABygSAAcoEgAHKBIABygS
+AAcoEgAHKBIABygSAAcoEgAHKBIABygSAAcoEgAH/wf4uImXXEZgtwAAAABJRU5ErkJggg==" alt="png" /></p>
+
+<p>Content last modified on 28 May 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to plot continuous probability distributions/R.md">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            
+
+
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+
+</html>
+
+

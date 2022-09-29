@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to create a box (and whisker) plot - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to create a box (and whisker) plot | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="How to create a box (and whisker) plot" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="http://localhost:4000/how-to-create-a-box-and-whisker-plot/" />
+<meta property="og:url" content="http://localhost:4000/how-to-create-a-box-and-whisker-plot/" />
+<meta property="og:site_name" content="How to Data" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to create a box (and whisker) plot" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to create a box (and whisker) plot","url":"http://localhost:4000/how-to-create-a-box-and-whisker-plot/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+    .main-content table a {
+        white-space: unset;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .forEach( codeBlock => {
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+    <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/contributing/" class="nav-list-link">Contributing</a></li></ul>
+      
+      
+    </nav>
+
+    
+    
+      
+
+    
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+
+        
+
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-create-a-box-and-whisker-plot">
+        
+        
+          <a href="#how-to-create-a-box-and-whisker-plot" class="anchor-heading" aria-labelledby="how-to-create-a-box-and-whisker-plot"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to create a box (and whisker) plot
+        
+        
+      </h1>
+    
+      <h2 id="description">
+        
+        
+          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+        
+        
+      </h2>
+    
+
+<p>A box plot, or a box and whisker plot, shows the quartiles of a single variable from a dataset (one of which is the median) and may also show the outliers.  It is a simplified way to see the distribution of a variable.  Sometimes multiple box plots (one for each of several variables) are shown side-by-side on a plot, to compare the variables.  How can we create such graphs?</p>
+
+<p>Related topics:</p>
+
+<ul>
+  <li><a href="../how-to-create-basic-plots">How to create basic plots</a></li>
+  <li><a href="../how-to-add-details-to-a-plot">How to add details to a plot</a></li>
+  <li><a href="../how-to-create-a-histogram">How to create a histogram</a></li>
+  <li><a href="../how-to-change-axes-ticks-and-scale-in-a-plot">How to change axes, ticks, and scale in a plot</a></li>
+  <li><a href="../how-to-create-bivariate-plots-to-compare-groups">How to create bivariate plots to compare groups</a></li>
+  <li><a href="../how-to-plot-interaction-effects-of-treatments">How to plot interaction effects of treatments</a></li>
+</ul>
+      <h2 id="using-matplotlib-in-python">
+        
+        
+          <a href="#using-matplotlib-in-python" class="anchor-heading" aria-labelledby="using-matplotlib-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using Matplotlib, in Python
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-create-a-box-and-whisker-plot-in-python-using-matplotlib">View this solution alone.</a></p>
+
+<p>We will create some fake data using Python lists, for simplicity.  But everything we show below works also if your data is in columns of a DataFrame, such as <code class="language-plaintext highlighter-rouge">df['age']</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">patient_id</span>     <span class="o">=</span> <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">3</span><span class="p">,</span>   <span class="mi">4</span><span class="p">,</span>   <span class="mi">5</span><span class="p">,</span>   <span class="mi">6</span><span class="p">,</span>   <span class="mi">7</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span>   <span class="mi">9</span> <span class="p">]</span>
+<span class="n">patient_height</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">60</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">65</span><span class="p">,</span>  <span class="mi">66</span><span class="p">,</span>  <span class="mi">66</span><span class="p">,</span>  <span class="mi">70</span><span class="p">,</span>  <span class="mi">72</span><span class="p">,</span>  <span class="mi">72</span><span class="p">,</span>  <span class="mi">76</span> <span class="p">]</span>
+<span class="n">patient_weight</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">141</span><span class="p">,</span> <span class="mi">182</span><span class="p">,</span> <span class="mi">169</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span> <span class="mi">198</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">244</span><span class="p">,</span> <span class="mi">196</span> <span class="p">]</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The conventional way to import matplotlib in Python is as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>To create a box-and-whisker plot, sometimes called just a box plot requires just one line of code, plus one to show the plot.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span> <span class="n">patient_height</span> <span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>You can show more than one variable’s box plot side-by-side by forming a list of the data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span> <span class="p">[</span> <span class="n">patient_height</span><span class="p">,</span> <span class="n">patient_weight</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>Content last modified on 07 December 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to create a box (and whisker) plot/Python, using Matplotlib.md">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-create-a-box-and-whisker-plot-in-r">View this solution alone.</a></p>
+
+<p>We will create some fake data using vectors, for simplicity. But everything we show below works also if your data is in columns of a DataFrame.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">patient_id</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w">   </span><span class="m">1</span><span class="p">,</span><span class="w">   </span><span class="m">2</span><span class="p">,</span><span class="w">   </span><span class="m">3</span><span class="p">,</span><span class="w">   </span><span class="m">4</span><span class="p">,</span><span class="w">   </span><span class="m">5</span><span class="p">,</span><span class="w">   </span><span class="m">6</span><span class="p">,</span><span class="w">   </span><span class="m">7</span><span class="p">,</span><span class="w">   </span><span class="m">8</span><span class="p">,</span><span class="w">   </span><span class="m">9</span><span class="p">)</span><span class="w">
+</span><span class="n">patient_height</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">60</span><span class="p">,</span><span class="w">  </span><span class="m">64</span><span class="p">,</span><span class="w">  </span><span class="m">64</span><span class="p">,</span><span class="w">  </span><span class="m">65</span><span class="p">,</span><span class="w">  </span><span class="m">66</span><span class="p">,</span><span class="w">  </span><span class="m">66</span><span class="p">,</span><span class="w">  </span><span class="m">70</span><span class="p">,</span><span class="w">  </span><span class="m">72</span><span class="p">,</span><span class="w">  </span><span class="m">72</span><span class="p">,</span><span class="w">  </span><span class="m">76</span><span class="p">)</span><span class="w">
+</span><span class="n">patient_weight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">141</span><span class="p">,</span><span class="w"> </span><span class="m">182</span><span class="p">,</span><span class="w"> </span><span class="m">169</span><span class="p">,</span><span class="w"> </span><span class="m">204</span><span class="p">,</span><span class="w"> </span><span class="m">138</span><span class="p">,</span><span class="w"> </span><span class="m">198</span><span class="p">,</span><span class="w"> </span><span class="m">180</span><span class="p">,</span><span class="w"> </span><span class="m">175</span><span class="p">,</span><span class="w"> </span><span class="m">244</span><span class="p">,</span><span class="w"> </span><span class="m">196</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We can use R’s boxplot() function to make the plot.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">boxplot</span><span class="p">(</span><span class="n">patient_weight</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAACdlBMVEUAAAABAQECAgIDAwME
+BAQFBQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8QEBARERESEhITExMVFRUWFhYX
+FxcYGBgZGRkaGhocHBwdHR0eHh4fHx8gICAhISEiIiIjIyMlJSUpKSkqKiosLCwtLS0vLy8w
+MDAxMTEyMjIzMzM0NDQ1NTU2NjY3Nzc4ODg5OTk6Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBBQUFC
+QkJDQ0NERERFRUVGRkZHR0dISEhJSUlKSkpLS0tNTU1OTk5PT09RUVFTU1NUVFRVVVVWVlZX
+V1dYWFhZWVlaWlpcXFxeXl5fX19gYGBiYmJjY2NlZWVmZmZpaWlqampra2tsbGxtbW1ubm5v
+b29wcHBxcXFycnJzc3N0dHR1dXV3d3d5eXl6enp8fHx9fX1+fn5/f3+AgICBgYGCgoKDg4OE
+hISFhYWHh4eIiIiKioqLi4uNjY2Ojo6RkZGTk5OVlZWYmJiZmZmampqbm5udnZ2fn5+goKCh
+oaGioqKjo6OoqKipqamqqqqrq6usrKytra2urq6vr6+wsLCzs7O0tLS1tbW2tra3t7e4uLi5
+ubm7u7u9vb2+vr6/v7/AwMDBwcHExMTFxcXGxsbHx8fIyMjJycnLy8vMzMzNzc3Q0NDR0dHS
+0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f39/i4uLj4+Pk5OTl5eXm
+5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4
++Pj5+fn6+vr7+/v8/Pz9/f3+/v7///9YNvAxAAAACXBIWXMAABJ0AAASdAHeZh94AAAYq0lE
+QVR4nO3d/5ddVXnA4TOESUwkKCimMV8oVJsA2tIqGovaNiJVwWgzRAVMsOBYmiAKBKNpabVU
+UWKp1hJrxSqMaEUlomBjVUxEIyQxzPxHZWaSzMhinSxu3nfv3HOe54e5e627vbkrbz6LmXO2
+d5op4KQ1td8AdIGQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIECBkL75AAyVbz7/f+X5Id3fwJC5/3n/M88P6b7m
+UPqfAYEONfc97/+NkOBZhAQBhAQBhAQBhAQBhAQBhAQBhAQBhAQBhAQBhAQBhAQBhAQBhAQB
+hAQBhAQBhNQnD46vXz/+YO130UlC6pFbF7zugx983YJba7+PLhJSf3x24a7ph10LP1f7nXSQ
+kPrjghtmH2+4sO776CQh9cavm/+eXXxt5EDdd9JFQuqNvc33Zxffa/bWfSddJKTeOPyCL8wu
+/u0Fh+u+ky4SUn+87c2T0w9Pv+lttd9JBwmpP773onf9ZGrqJ+960fdrv5MOElKPTLyyWb26
+eeVE7ffRRaVDmnzk3l27dj96gl1CyvH0xKc+9cDTtd9FJ5UNad/158x+4PjKm59s2yckhkzR
+kPae25w/tm379hs3LG/W7GvZKCSGTNGQNo3edXR1ZOfIlpaNQmLIFA1p2VVz6ytXtGwUEkOm
+aEijt8ytb1rYslFIDJmiIa26Ym59+eqWjUJiyBQNacvI7QdnVwe2NuMtG4XEkCka0v4Lm6WX
+jl17zcZ1S5pLft2yUUgMmbL3kQ7tWLtg+jbS6MV3HGnbJySGTPEjQk89PDGx50SZCIkhU+es
+3RPj3219XkgMmTohPdbc0/q8kBgyZU82HLOhefOmTS0bhcSQKRpS8ztaNgqJIVM0pA8sWPul
+/dO+03x6//6WjUJiyJT9Gen+tSPv++XUc/+M9Pi733HcJUJiuBS+2PDb2xYv/9xzh7T/2vce
+d0nTdrsWTjnFr9r94NLmskdPdNXu74XEcKlw+fuTZ5+xTUh0S437SD99ZyMkuqXODdkvXv9Q
+6/NCYshU+ziufT9qeVJIDJmyIT24ftVrd86e+x5vexUhMWSKhvTVRc2S0eb1M58fJCS6pGhI
+bxn9/OTBHaOvnv6tIkKiS4qGtOLd0193L1x/REh0S9lPEdo683Bns1lIdEvRkF7+1tnHDzXb
+hUSnFA1p88gnZn7F1eTG5rr3C4kOKRrS4yubN84sJje3//+RhMSQKXsf6edXX3d0dfd5QqJD
+Ts1fNCYkhoyQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQIICQ
+IICQIICQIICQIICQIICQIICQIEDpkCYfuXfXrt2PnmCXkBgyZUPad/05zYyVNz/Ztk9IDJmi
+Ie09tzl/bNv27TduWN6s2deyUUgMmaIhbRq96+jqyM6RLS0bhcSQKRrSsqvm1leuaNkoJIZM
+0ZBGb5lb37SwZaOQGDJFQ1p1xdz68tUtG4XEkCka0paR2w/Org5sbcZbNgqJIVM0pP0XNksv
+Hbv2mo3rljSXtKUiJIZM2ftIh3asXTB9G2n04juOtO0TEkOm+BGhpx6emNhz6ASbhMSQqXbW
+bt+PWp4UEkOmbEgPrl/12p2z39SNt72KkBgyRUP66qJmyWjz+pnDQUKiS4qG9JbRz08e3DH6
+6gNTQqJbioa04t3TX3cvXH/kOUL6zcduO+6vhMRwKXtEaOvMw53N5ucIae9rLzpuZfOrQf8M
+qKFoSC9/6+zjh5rtvrWjU4qGtHnkE4enHyc3Nte9X0h0SNGQHl/ZvHFmMbm5aYREh5S9j/Tz
+q687urr7PCHRIT5FCAI4IgQBHBGCAI4IQQBHhCDAqXNEaD4hMWROnSNC8wmJIeOIEARwRAgC
+OCIEARwRggCOCEEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEA
+IUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEA
+IUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEA
+IUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEAIUEA
+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
+VUsXveSizROt24SUxcmGJD5FqF9c/k5SLaTH97Q8KaQsQkpSLaTxtlcRUhYhJRFSvwgpiZD6
+xcmGJEVDumieZUKqwcmGJEVDOu20RcctEBIdUjSk8aVzl+p8a0eXFA3p8AWvOnxsLSS6pOzF
+hocW33BsKaQqnGxIUviq3RO/OLb6yq0t24SUxeXvJI4I9YuQkgipX4SUREj9IqQkQuoXJxuS
+CKlfnGxIIiQIICQIICQIIKR+cbIhiZD6xeXvJELqFyElEVK/CCmJkPpFSEmE1C9ONiQRUr84
+2ZBESBBASBBASBBASP3iZEMSIfWLy99JhNQvQkoipH4RUhIh9YuQkgipX5xsSCKkfnGyIYmQ
+IICQIICQIICQ+sXJhiRC6heXv5MIqV+ElERI/SKkJELqFyElEVK/ONmQREj94mRDEiFBACFB
+ACFBACH1i5MNSYTULy5/JxFSvwgpiZD6RUhJhNQvQkoipH5xsiGJkPrFyYYkQoIAQoIAQoIA
+QuoXJxuSCKlfXP5OIqR+EVISIfWLkJIIqV+ElERI/eJkQxIh9YuTDUmEBAGEBAGEBAGE1C9O
+NiQRUr+4/J1ESP0ipCRC6hchJRFSvwgpiZD6xcmGJELqFycbkggJAggJAggJAgipX5xsSCKk
+fnH5O4mQ+kVISYTUL0JKIqR+EVISIfWLkw1JhNQvTjYkERIEKB3S5CP37tq1+9ET7BISQ6Zs
+SPuuP6eZsfLmJ9v2CYkhUzSkvec2549t2779xg3LmzX7WjYKKYuTDUmKhrRp9K6jqyM7R7a0
+bBRSFpe/kxQNadlVc+srV7RsFFIWISUpGtLoLXPrmxa2bBRSFiElKRrSqivm1pevbtkopCxC
+SlI0pC0jtx+cXR3Y2oy3bBRSFicbkhQNaf+FzdJLx669ZuO6Jc0lbakIKYuTDUnK3kc6tGPt
+gunbSKMX33GkbZ+QGDLFjwg99fDExJ5DJ9gkJIZMnbN2T4x/t/V5ITFk6oT0WHNP6/NCyuJk
+Q5KyJxuO2dC8ufXykZCyuPydpGhIze9o2SikLEJKUjSkDyxY+6X9077TfHr//paNQsoipCRl
+f0a6f+3I+3459dw/I/3vay46bpWQkggpSeGLDb+9bfHyzz13SE9+7Lbj3tOc6AI5g3GyIUnx
+q3Y/uLS57NETXbW7T0hJnGxIUuHy9yfPPmObkOiWGveRfvrORkh0S50bsl+8/qHW54XEkKn2
+cVyP72l5UkhZnGxIUi2k8bZXEVIWl7+TCKlfhJRESP0ipCRFQ7ponmVCqkFISYqGdNppi45b
+IKRBfOSsk7No0Um+wEdq/w2cooqGNL507lKdb+0Gsvfek/OZz5zkCzgZ8dyKhnT4glcdPrYW
+El1S9mLDQ4tvOLYUEl1S+KrdE784tvrKrS3bhMSQOTV/0ZiQGDJCggBCggBCggBCggBCggBC
+ggBCggBCggBCggBCggBCggBCggBCggBCggBCggBCggBCggCnZkj3NzBk7n/e/8zzQ5r65gMw
+VL75/P+VFwgJuk9IEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBI
+EEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBI
+EEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBI
+EEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBI
+EEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBI
+EEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBI
+EEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEEBIEOD/AbewPbJ0
+bhTaAAAAAElFTkSuQmCC" alt="png" /></p>
+
+<p>You can show more than one variable’s box plot side-by-side by passing both variables into the boxplot() function.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">boxplot</span><span class="p">(</span><span class="n">patient_height</span><span class="p">,</span><span class="w"> </span><span class="n">patient_weight</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAACN1BMVEUAAAABAQECAgIDAwME
+BAQFBQUGBgYHBwcICAgJCQkKCgoLCwsNDQ0ODg4PDw8RERESEhITExMUFBQWFhYYGBgaGhob
+GxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQlJSUmJiYpKSksLCwvLy8wMDAxMTEyMjIz
+MzM0NDQ1NTU4ODg6Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBDQ0NERERFRUVGRkZISEhKSkpLS0tN
+TU1OTk5PT09QUFBRUVFTU1NUVFRVVVVWVlZXV1dZWVlaWlpbW1tcXFxfX19gYGBhYWFiYmJj
+Y2NlZWVmZmZnZ2dpaWlqampra2tsbGxtbW1ubm5vb29wcHBzc3N0dHR1dXV3d3d4eHh5eXl6
+enp8fHx9fX1+fn5/f3+AgICCgoKDg4OFhYWGhoaHh4eIiIiKioqLi4uOjo6Pj4+RkZGTk5OU
+lJSVlZWWlpaXl5eYmJiZmZmampqbm5ufn5+goKCioqKjo6OlpaWmpqapqamqqqqrq6usrKyt
+ra2urq6vr6+zs7O0tLS1tbW4uLi7u7u9vb2+vr7AwMDBwcHExMTFxcXGxsbHx8fKysrLy8vM
+zMzNzc3Pz8/Q0NDR0dHS0tLT09PW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f39/i4uLm
+5ubn5+fq6urr6+vs7Ozt7e3u7u7v7+/x8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7
++/v8/Pz9/f3+/v7////zt+WFAAAACXBIWXMAABJ0AAASdAHeZh94AAAVH0lEQVR4nO3d+5dd
+ZX3H8R3SSeTSoOUiSajGChIFBYOtqEEroGYIonIJ4IhIuJQGrEYtXiuFoJVAtQIRKioRJQoE
+BYWkIfPHNZlAZsNidibP+WTvs89+vX6Y2WvNM2ee+c55L87a8zCpZoGRVV1vACaBkCBASBAg
+JAgQEgQICQKEBAFCggAhQYCQIEBIECAkCBASBAgJAoQEAUKCACFBgJAgQEgQICQIEBIECAkC
+hAQBQoIAIUGAkCBASBAgJAgQEgQICQKEBAFCggAhQYCQIEBIECAkCBASBAgJAoQEAUKCACFB
+gJAgQEgQICQIEBIECAkChAQBQoIAIUGAkCBASBAgJAgQEgQICQKEBAFCggAhQYCQIEBIECAk
+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
+zkZ8mwAAAABJRU5ErkJggg==" alt="png" /></p>
+
+<p>Content last modified on 07 December 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to create a box (and whisker) plot/R.md">edit the source</a>.</p>
+      <h2 id="topics-that-include-this-task">
+        
+        
+          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
+        
+        
+      </h2>
+    
+
+<ul>
+  <li><a href="../bentley-university-ma346">Bentley University MA346</a></li>
+</ul>
+      <h2 id="opportunities">
+        
+        
+          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
+        
+        
+      </h2>
+    
+
+<p>This website does not yet contain a solution for this task in any of the following
+software packages.</p>
+
+<ul>
+  <li>Excel</li>
+</ul>
+
+<p>If you can contribute a solution using any of these pieces of software,
+see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            
+
+
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+
+</html>
+
+
