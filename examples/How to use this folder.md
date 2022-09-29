@@ -2,7 +2,7 @@
 # How to use this folder
 
 This folder is geared towards anyone who wants to contribute new tasks and/or
-solutions to the website [*How to Data*](https://nathancarter.github.io/how2data/site/).
+solutions to the website [*How to Data*](https://how-to-data.org).
 
 ## If you want to work in Python
 

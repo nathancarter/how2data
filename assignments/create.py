@@ -96,7 +96,7 @@ def sections ( markdown ):
 
 # Link to a page in the site online
 def online_link ( page_name ):
-    return f'https://nathancarter.github.io/how2data/site/{page_name}/'
+    return f'https://how-to-data.org/{page_name}/'
 
 # Extract from a solution section the link to view that solution alone
 def extract_view_link ( section_content ):
