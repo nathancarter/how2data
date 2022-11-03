@@ -411,7 +411,7 @@ def html_sections_to_latex ( markdown, folder=main_folder ):
 
 # Generate a PDF for a given topic, using a given software package.
 def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
-    site_url = 'https://nathancarter.github.io/how2data/site/'
+    site_url = 'https://how-to-data.org'
     # make first page with TOC that links to all later pages
     description_and_toc = make_all_task_names_links( topic_row['content'] )
     tasks = tasks_df[tasks_df.permalink.apply(

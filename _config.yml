@@ -22,15 +22,15 @@ title: How to Data
 email: ncarter@bentley.edu
 description: >- # this means to ignore newlines until "baseurl:"
   Reference site for common computing tasks in statistics and data science
-baseurl: "/how2data/site" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://how-to-data.org" # the base hostname & protocol for your site
 twitter_username: nathancarter5
 github_username:  nathancarter
 
 # Build settings
 theme: just-the-docs
 source: jekyll-input
-destination: site
+destination: docs
 # plugins:
 #   - jekyll-feed
 
@@ -61,7 +61,7 @@ exclude:
   - ./database/
   - .devcontainer/
   - ./build*.py
-  - ./site/
+  - ./docs/
   - ./resources/
   - ./examples/
   # - assets/

@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+    <title>How to create a histogram (in Python, using Matplotlib) - How to Data</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How to create a histogram (in Python, using Matplotlib) | How to Data</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="How to create a histogram (in Python, using Matplotlib)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference site for common computing tasks in statistics and data science" />
+<meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
+<link rel="canonical" href="https://how-to-data.org/how-to-create-a-histogram-in-python-using-matplotlib/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-create-a-histogram-in-python-using-matplotlib/" />
+<meta property="og:site_name" content="How to Data" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to create a histogram (in Python, using Matplotlib)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to create a histogram (in Python, using Matplotlib)","url":"https://how-to-data.org/how-to-create-a-histogram-in-python-using-matplotlib/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+<!--
+  --
+  --  Configure MathJax to permit $...$ for inline matht
+  --
+  -->
+
+<script type="text/javascript">
+    MathJax = {
+        tex: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    }
+</script>
+
+<!--
+  --
+  --  Import MathJax
+  --
+  -->
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript"
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<!--
+  --
+  --  Fix inconsistent gutter width for code cells
+  --  And let tables wrap rather than need to scroll.
+  --  (Otherwise it's not even obvious that there's content to scroll to.)
+  --
+  -->
+
+<style>
+    .rouge-gutter {
+        width: 3em;
+    }
+    .main-content table a {
+        white-space: unset;
+    }
+</style>
+
+<!--
+  --
+  --  Add copy buttons to all code input cells
+  --  and make those cells slightly visually distinctive
+  --
+  -->
+
+<script type="text/javascript">
+    function makeButton () {
+        const button = document.createElement( 'button' )
+        button.setAttribute( 'aria-label', 'Copy code to clipboard' )
+        button.innerText = 'Copy'
+        button.style.float = 'right'
+        button.classList.add( 'btn' )
+        return button
+    }
+    const isNotPlainText = element =>
+        !element.classList.contains( 'language-plaintext' ) &&
+        ( !( element.parentNode instanceof Element )
+            || isNotPlainText( element.parentNode ) )
+    window.addEventListener( 'load', () => {
+        Array.from( document.body.getElementsByClassName( 'rouge-code' ) )
+        .forEach( codeBlock => {
+            if ( isNotPlainText( codeBlock ) ) {
+                // If it's an input code block, do this:
+                // 1. Insert the "copy" button
+                const button = makeButton()
+                codeBlock.insertBefore( button, codeBlock.childNodes[0] )
+                button.addEventListener( 'click', () => {
+                    button.innerText = '' // don't copy the word "copy"
+                    window.navigator.clipboard.writeText( codeBlock.innerText )
+                    button.innerText = 'Copied!'
+                    setTimeout( () => button.innerText = 'Copy', 3000 )
+                } )
+                // 2. Adjust border style
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    surrounding.style.border = '1px solid #2869e6'
+            } else {
+                // But if it's an output code block, remove the line numbers.
+                const surrounding = codeBlock.closest( '.highlighter-rouge' )
+                if ( surrounding )
+                    Array.from( surrounding.querySelectorAll('.lineno') )
+                    .forEach( lineno => lineno.style.visibility = 'hidden' )
+            }
+        } )
+    } )
+</script>
+
+<!--
+  --
+  --  Add logo image above nav bar
+  --
+  -->
+
+<style>
+    .nav-list {
+        padding-top: 180px;
+        background-image: url(/assets/images/H2Dlogo2.svg);
+        background-repeat: no-repeat;
+        background-position: 24px -2px;
+        background-size: 153px 153px;
+    }
+</style>
+
+
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+    <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="/" class="site-title lh-tight">
+  How to Data
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="/" class="nav-list-link">Welcome</a></li><li class="nav-list-item"><a href="/about/" class="nav-list-link">About</a></li><li class="nav-list-item"><a href="/topics/" class="nav-list-link">Topics</a></li><li class="nav-list-item"><a href="/tasks/" class="nav-list-link">Tasks</a></li><li class="nav-list-item"><a href="/software/" class="nav-list-link">Software Packages</a></li><li class="nav-list-item"><a href="/acknowledgments/" class="nav-list-link">Acknowledgments</a></li><li class="nav-list-item"><a href="/contributing/" class="nav-list-link">Contributing</a></li></ul>
+      
+      
+    </nav>
+
+    
+    
+      
+
+    
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+
+        
+
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search How to Data" aria-label="Search How to Data" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <h1 id="how-to-create-a-histogram-in-python-using-matplotlib">
+        
+        
+          <a href="#how-to-create-a-histogram-in-python-using-matplotlib" class="anchor-heading" aria-labelledby="how-to-create-a-histogram-in-python-using-matplotlib"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to create a histogram (in Python, using Matplotlib)
+        
+        
+      </h1>
+    
+
+<p><a href="../how-to-create-a-histogram">See all solutions.</a></p>
+      <h2 id="task">
+        
+        
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
+        
+        
+      </h2>
+    
+
+<p>A histogram is a very common and useful data visualization.  It displays an approximation of the distribution in single series of data points (one variable) by grouping the data into bins, each bin draw as a vertical bar.  How can we create such a visualization?</p>
+
+<p>Related topics:</p>
+
+<ul>
+  <li><a href="../how-to-create-basic-plots">How to create basic plots</a></li>
+  <li><a href="../how-to-create-a-box-and-whisker-plot">How to create a box (and whisker) plot</a></li>
+  <li><a href="../how-to-add-details-to-a-plot">How to add details to a plot</a></li>
+  <li><a href="../how-to-create-bivariate-plots-to-compare-groups">How to create bivariate plots to compare groups</a></li>
+  <li><a href="../how-to-plot-interaction-effects-of-treatments">How to plot interaction effects of treatments</a></li>
+</ul>
+      <h2 id="solution">
+        
+        
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
+        
+        
+      </h2>
+    
+
+<!-- beginning of wrapper -->
+
+<p>We will create some random data using NumPy, but that’s just for demonstration purposes.  You can apply the answer below to any data, even if it’s stored just in plain Python lists.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The conventional way to import matplotlib in Python is as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>To create a histogram with 10 bins (the default):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>  <span class="c1"># or plt.hist( bins=20 ), or any number
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAD4CAYAAAAXUaZHAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjQuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/MnkTPAAAACXBIWXMAAAsTAAALEwEAmpwYAAAM3UlEQVR4nO3df6idhX3H8fen6tywHVOMkmrYlRFG49gshGzQMRx2NaujsX84ImMEJmQFZRY2aGxh7geBlDE3GHMsQ2kG/ljAikK6Tec6XP+wehXXGqNrqKmmBpPWlSoDR+J3f9wn611yk3tzzj2ee7++X3C55zznOef5PiR558lzn3OSqkKS1MsHpj2AJGn5GXdJasi4S1JDxl2SGjLuktTQ+dMeAODSSy+tmZmZaY8hSavKs88++72qWrPQYysi7jMzM8zOzk57DElaVZJ850yPeVpGkhoy7pLUkHGXpIaMuyQ1ZNwlqSHjLkkNGXdJasi4S1JDxl2SGloR71CVVrKZHfumst1Du26YynbVg0fuktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkNe565VYVrXmkurlUfuktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkPGXZIaMu6S1JBxl6SGjLskNWTcJakh4y5JDRl3SWrIuEtSQ8Zdkhoy7pLUkHGXpIaMuyQ1ZNwlqaFF455kXZKvJjmQZH+S24fllyR5PMm3hu8Xz3vOHUkOJnk5yfWT3AFJ0umWcuR+HPj9qvoI8EvArUk2ADuAJ6pqPfDEcJ/hsa3A1cBm4O4k501ieEnSwhaNe1UdqarnhttvAQeAK4AtwJ5htT3AjcPtLcCDVfVOVb0CHAQ2LfPckqSzOKdz7klmgI8CXwcur6ojMPcXAHDZsNoVwGvznnZ4WHbqa21PMptk9tixYyOMLkk6kyXHPckHgYeAz1bVD8+26gLL6rQFVburamNVbVyzZs1Sx5AkLcGS4p7kAubCfl9VfXlY/EaStcPja4Gjw/LDwLp5T78SeH15xpUkLcVSrpYJcA9woKrumvfQo8C24fY24JF5y7cmuTDJVcB64OnlG1mStJjzl7DOx4DfBr6Z5Plh2eeBXcDeJLcArwI3AVTV/iR7gReZu9Lm1qo6sdyDS5LObNG4V9XXWPg8OsB1Z3jOTmDnGHNJksbgO1QlqSHjLkkNGXdJasi4S1JDxl2SGjLuktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkNL+VRI6f/M7Ng37REkLYFH7pLUkHGXpIaMuyQ1ZNwlqSHjLkkNGXdJasi4S1JDxl2SGjLuktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkPGXZIaMu6S1JBxl6SGjLskNWTcJakh4y5JDRl3SWpo0bgnuTfJ0SQvzFv2R0m+m+T54euT8x67I8nBJC8nuX5Sg0uSzmwpR+5fAjYvsPwvquqa4esrAEk2AFuBq4fn3J3kvOUaVpK0NIvGvaqeBN5c4uttAR6sqneq6hXgILBpjPkkSSMY55z7bUm+MZy2uXhYdgXw2rx1Dg/LTpNke5LZJLPHjh0bYwxJ0qlGjfvfAD8DXAMcAf58WJ4F1q2FXqCqdlfVxqrauGbNmhHHkCQtZKS4V9UbVXWiqt4F/o4fnXo5DKybt+qVwOvjjShJOlfnj/KkJGur6shw99PAyStpHgXuT3IX8GFgPfD02FNK70MzO/ZNbduHdt0wtW1reSwa9yQPANcClyY5DNwJXJvkGuZOuRwCfhegqvYn2Qu8CBwHbq2qExOZXJJ0RovGvapuXmDxPWdZfyewc5yhJEnj8R2qktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkPGXZIaMu6S1JBxl6SGjLskNWTcJakh4y5JDRl3SWrIuEtSQ8Zdkhoy7pLUkHGXpIaMuyQ1ZNwlqSHjLkkNGXdJasi4S1JDxl2SGjLuktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkPGXZIaMu6S1JBxl6SGFo17knuTHE3ywrxllyR5PMm3hu8Xz3vsjiQHk7yc5PpJDS5JOrOlHLl/Cdh8yrIdwBNVtR54YrhPkg3AVuDq4Tl3Jzlv2aaVJC3JonGvqieBN09ZvAXYM9zeA9w4b/mDVfVOVb0CHAQ2Lc+okqSlGvWc++VVdQRg+H7ZsPwK4LV56x0elp0myfYks0lmjx07NuIYkqSFLPcPVLPAslpoxaraXVUbq2rjmjVrlnkMSXp/GzXubyRZCzB8PzosPwysm7felcDro48nSRrFqHF/FNg23N4GPDJv+dYkFya5ClgPPD3eiJKkc3X+YiskeQC4Frg0yWHgTmAXsDfJLcCrwE0AVbU/yV7gReA4cGtVnZjQ7JKkM1g07lV18xkeuu4M6+8Edo4zlCRpPL5DVZIaMu6S1JBxl6SGjLskNWTcJakh4y5JDRl3SWrIuEtSQ8Zdkhoy7pLUkHGXpIaMuyQ1ZNwlqSHjLkkNGXdJasi4S1JDxl2SGjLuktSQcZekhhb9P1S18szs2DftESStcB65S1JDxl2SGjLuktSQcZekhoy7JDXk1TKSTjOtK7IO7bphKtvtyCN3SWrIuEtSQ8Zdkhoy7pLUkHGXpIaMuyQ1ZNwlqSHjLkkNGXdJamisd6gmOQS8BZwAjlfVxiSXAP8AzACHgN+sqv8ab0xJ0rlYjiP3X62qa6pq43B/B/BEVa0HnhjuS5LeQ5M4LbMF2DPc3gPcOIFtSJLOYty4F/BYkmeTbB+WXV5VRwCG75ct9MQk25PMJpk9duzYmGNIkuYb91MhP1ZVrye5DHg8yUtLfWJV7QZ2A2zcuLHGnEOSNM9YR+5V9frw/SjwMLAJeCPJWoDh+9Fxh5QknZuR457koiQfOnkb+ATwAvAosG1YbRvwyLhDSpLOzTinZS4HHk5y8nXur6p/SvIMsDfJLcCrwE3jjylJOhcjx72qvg38wgLLvw9cN85Qq8W0/rcaSVqM71CVpIaMuyQ1ZNwlqSHjLkkNGXdJasi4S1JDxl2SGjLuktSQcZekhoy7JDVk3CWpIeMuSQ0Zd0lqyLhLUkPGXZIaMu6S1JBxl6SGjLskNWTcJakh4y5JDRl3SWrIuEtSQ8Zdkhoy7pLUkHGXpIaMuyQ1dP60B5Ckk2Z27JvKdg/tumEq250kj9wlqaEWR+7T+tteklYqj9wlqSHjLkkNGXdJasi4S1JDxl2SGmpxtYwkjWOaV9xN6hr7iR25J9mc5OUkB5PsmNR2JEmnm0jck5wH/DXw68AG4OYkGyaxLUnS6SZ15L4JOFhV366q/wEeBLZMaFuSpFNM6pz7FcBr8+4fBn5x/gpJtgPbh7tvJ3l5gde5FPjeRCacDvdn5eq0L9BrfzrtC5yyP/niWK/102d6YFJxzwLL6v/dqdoN7D7riySzVbVxOQebJvdn5eq0L9BrfzrtC7x3+zOp0zKHgXXz7l8JvD6hbUmSTjGpuD8DrE9yVZIfA7YCj05oW5KkU0zktExVHU9yG/DPwHnAvVW1f4SXOutpm1XI/Vm5Ou0L9NqfTvsC79H+pKoWX0uStKr48QOS1JBxl6SGVnzck/xpkm8keT7JY0k+PO2ZxpHkz5K8NOzTw0l+atozjSrJTUn2J3k3yaq9VK3TR2UkuTfJ0SQvTHuWcSVZl+SrSQ4Mv89un/ZMo0ry40meTvIfw7788cS3udLPuSf5yar64XD794ANVfWZKY81siSfAP51+KHzFwGq6nNTHmskST4CvAv8LfAHVTU75ZHO2fBRGf8J/Bpzl/A+A9xcVS9OdbARJfkV4G3g76vq56Y9zziSrAXWVtVzST4EPAvcuBp/bZIEuKiq3k5yAfA14PaqempS21zxR+4nwz64iFPeDLXaVNVjVXV8uPsUc+8BWJWq6kBVLfTO4tWk1UdlVNWTwJvTnmM5VNWRqnpuuP0WcIC5d7+vOjXn7eHuBcPXRFu24uMOkGRnkteA3wL+cNrzLKPfAf5x2kO8zy30URmrMiCdJZkBPgp8fcqjjCzJeUmeB44Cj1fVRPdlRcQ9yb8keWGBry0AVfWFqloH3AfcNt1pF7fY/gzrfAE4ztw+rVhL2ZdVbtGPytB0Jfkg8BDw2VP+Jb+qVNWJqrqGuX+tb0oy0dNmK+I/66iqjy9x1fuBfcCdExxnbIvtT5JtwG8A19UK/6HHOfzarFZ+VMYKNpyffgi4r6q+PO15lkNV/SDJvwGbgYn94HtFHLmfTZL18+5+CnhpWrMshySbgc8Bn6qq/572PPKjMlaq4YeQ9wAHququac8zjiRrTl4Zl+QngI8z4ZathqtlHgJ+lrmrMr4DfKaqvjvdqUaX5CBwIfD9YdFTq/XqnySfBv4KWAP8AHi+qq6f6lAjSPJJ4C/50Udl7JzuRKNL8gBwLXMfK/sGcGdV3TPVoUaU5JeBfwe+ydyff4DPV9VXpjfVaJL8PLCHud9jHwD2VtWfTHSbKz3ukqRzt+JPy0iSzp1xl6SGjLskNWTcJakh4y5JDRl3SWrIuEtSQ/8L8RMazPqj1bIAAAAASUVORK5CYII=" alt="png" /></p>
+
+<p>The $y$ axis in a histogram is frequency, or number of occurrences.  You can change it to probabilities instead.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span> <span class="n">data</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>You can also choose your own bin boundaries.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span> <span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+
+<p>Content last modified on 23 July 2021.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to create a histogram/Python, using Matplotlib.md">edit the source</a>.</p>
+
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            
+
+
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+
+</html>
+
+

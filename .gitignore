@@ -8,3 +8,5 @@ scratch/
 preview/
 **/.ipynb_checkpoints/*
 .DS_Store
+assignments/How*/*
+assignments/*.zip
