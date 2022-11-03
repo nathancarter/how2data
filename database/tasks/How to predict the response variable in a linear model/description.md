@@ -5,4 +5,4 @@ do we predict the corresponding value of the response variable?
 Related tasks:
 
  * How to fit a linear model to two columns of data
- * How to fit a multiple linear regression model
+ * How to fit a multivariate linear model
