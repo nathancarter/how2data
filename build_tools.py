@@ -192,6 +192,10 @@ def run_markdown ( markdown, folder, software ):
     # read it back into a string
     result = read_text_file( tmp_md_doc )
     ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
+    # workaround for buggy way that SVGs get embedded in markdown:
+    result = result \
+        .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="utf-8"?>', '' ) \
+        .replace( ' /></svg>\n)', ' /></svg>\n' )
     return result
 
 ###
