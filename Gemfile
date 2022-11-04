@@ -21,3 +21,5 @@ gem "liquid-c"
 
 # Site theme
 gem "just-the-docs", "0.4.0.rc1"
+
+gem "webrick", "~> 1.7"
