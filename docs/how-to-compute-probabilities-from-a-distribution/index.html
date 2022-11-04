@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how-to-compute-probabilities-from-a-distribution/" />
-<meta property="og:url" content="http://localhost:4000/how-to-compute-probabilities-from-a-distribution/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-compute-probabilities-from-a-distribution/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-compute-probabilities-from-a-distribution/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute probabilities from a distribution" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute probabilities from a distribution","url":"http://localhost:4000/how-to-compute-probabilities-from-a-distribution/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute probabilities from a distribution","url":"https://how-to-data.org/how-to-compute-probabilities-from-a-distribution/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -335,6 +335,78 @@ CHISQ.DIST, F.DIST, GAMMA.DIST, LOGNORM.DIST, and T.DIST.</p>
 <p>Content last modified on 09 December 2021.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/Excel.docx">edit the source</a>.</p>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-probabilities-from-a-distribution-in-julia">View this solution alone.</a></p>
+
+<p>You can import many different random variables from Julia’s <code class="language-plaintext highlighter-rouge">Distributions</code> package.
+The full list of them is online <a href="https://juliastats.org/Distributions.jl/stable/univariate/">here</a>.</p>
+
+<p>If you don’t have that package installed, first run <code class="language-plaintext highlighter-rouge">using Pkg</code> and then
+<code class="language-plaintext highlighter-rouge">Pkg.add( "Distributions" )</code> from within Julia.</p>
+
+<p>To compute a probability from a <strong>discrete</strong> distribution, create a random
+variable, then use the <code class="language-plaintext highlighter-rouge">pdf</code> function.  (This is a slight misnomer, because PDF
+stands for Probability Density Function, which is a concept related to continuous random
+variables, but it’s the function Julia uses.)</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="n">Distributions</span>
+
+<span class="c"># Create a binomial random variable with 10 trials</span>
+<span class="c"># and probability 0.5 of success on each trial</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">Binomial</span><span class="x">(</span> <span class="mi">10</span><span class="x">,</span> <span class="mf">0.5</span> <span class="x">)</span>
+
+<span class="c"># What is the probability of exactly 3 successes?</span>
+<span class="n">pdf</span><span class="x">(</span> <span class="n">X</span><span class="x">,</span> <span class="mi">3</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>0.1171875000000004
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>To compute a probability from a <strong>continuous</strong> distribution, create a random
+variable, then use its Cumulative Density Function, <code class="language-plaintext highlighter-rouge">cdf</code>.  You can only
+compute the probability that a random value will fall in an interval $[a,b]$,
+not the probability that it will equal a specific value.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="n">Distributions</span>
+
+<span class="c"># Create a normal random variable with mean μ=10 and standard deviation σ=5</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">Normal</span><span class="x">(</span> <span class="mi">10</span><span class="x">,</span> <span class="mi">5</span> <span class="x">)</span>
+
+<span class="c"># What is the probability of the value lying in the interval [12,13]?</span>
+<span class="n">cdf</span><span class="x">(</span> <span class="n">X</span><span class="x">,</span> <span class="mi">13</span> <span class="x">)</span> <span class="o">-</span> <span class="n">cdf</span><span class="x">(</span> <span class="n">X</span><span class="x">,</span> <span class="mi">12</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>0.07032514063960227
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 04 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute probabilities from a distribution/Julia.md">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         

@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how-to-compute-summary-statistics/" />
-<meta property="og:url" content="http://localhost:4000/how-to-compute-summary-statistics/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-compute-summary-statistics/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-compute-summary-statistics/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute summary statistics" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute summary statistics","url":"http://localhost:4000/how-to-compute-summary-statistics/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute summary statistics","url":"https://how-to-data.org/how-to-compute-summary-statistics/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -347,6 +347,86 @@ each variety.</p>
 <p>Content last modified on 21 June 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/Excel.docx">edit the source</a>.</p>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-summary-statistics-in-julia">View this solution alone.</a></p>
+
+<p>We first load a famous dataset, Fisher’s irises, just to have some example data to use in the code that follows.  (See <a href="../how-to-quickly-load-some-sample-data">how to quickly load some sample data</a>.)</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="n">RDatasets</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">dataset</span><span class="x">(</span> <span class="s">"datasets"</span><span class="x">,</span> <span class="s">"iris"</span> <span class="x">);</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>How big is the dataset?  The output shows number of rows then number of columns.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">size</span><span class="x">(</span> <span class="n">iris</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(150, 5)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>What are the columns and their data types?  The following command shows the first 5 rows,
+plus the column names and types.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">first</span><span class="x">(</span> <span class="n">iris</span><span class="x">,</span> <span class="mi">5</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div><div style="float: left;"><span>5×5 DataFrame</span></div><div style="clear: both;"></div></div>
+<div class="data-frame" style="overflow-x: scroll;"><div class="table-wrapper"><table class="data-frame" style="margin-bottom: 6px;"><thead><tr class="header"><th class="rowNumber" style="font-weight: bold; text-align: right;">Row</th><th style="text-align: left;">SepalLength</th><th style="text-align: left;">SepalWidth</th><th style="text-align: left;">PetalLength</th><th style="text-align: left;">PetalWidth</th><th style="text-align: left;">Species</th></tr><tr class="subheader headerLastRow"><th class="rowNumber" style="font-weight: bold; text-align: right;"></th><th title="Float64" style="text-align: left;">Float64</th><th title="Float64" style="text-align: left;">Float64</th><th title="Float64" style="text-align: left;">Float64</th><th title="Float64" style="text-align: left;">Float64</th><th title="CategoricalArrays.CategoricalValue{String, UInt8}" style="text-align: left;">Cat…</th></tr></thead><tbody><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">1</td><td style="text-align: right;">5.1</td><td style="text-align: right;">3.5</td><td style="text-align: right;">1.4</td><td style="text-align: right;">0.2</td><td style="text-align: left;">setosa</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">2</td><td style="text-align: right;">4.9</td><td style="text-align: right;">3.0</td><td style="text-align: right;">1.4</td><td style="text-align: right;">0.2</td><td style="text-align: left;">setosa</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">3</td><td style="text-align: right;">4.7</td><td style="text-align: right;">3.2</td><td style="text-align: right;">1.3</td><td style="text-align: right;">0.2</td><td style="text-align: left;">setosa</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">4</td><td style="text-align: right;">4.6</td><td style="text-align: right;">3.1</td><td style="text-align: right;">1.5</td><td style="text-align: right;">0.2</td><td style="text-align: left;">setosa</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">5</td><td style="text-align: right;">5.0</td><td style="text-align: right;">3.6</td><td style="text-align: right;">1.4</td><td style="text-align: right;">0.2</td><td style="text-align: left;">setosa</td></tr></tbody></table></div></div>
+
+<p>Are any values missing?  The following command answers that question, plus provides
+summary statistics, and the same data type information from above.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">describe</span><span class="x">(</span> <span class="n">iris</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div><div style="float: left;"><span>5×7 DataFrame</span></div><div style="clear: both;"></div></div>
+<div class="data-frame" style="overflow-x: scroll;"><div class="table-wrapper"><table class="data-frame" style="margin-bottom: 6px;"><thead><tr class="header"><th class="rowNumber" style="font-weight: bold; text-align: right;">Row</th><th style="text-align: left;">variable</th><th style="text-align: left;">mean</th><th style="text-align: left;">min</th><th style="text-align: left;">median</th><th style="text-align: left;">max</th><th style="text-align: left;">nmissing</th><th style="text-align: left;">eltype</th></tr><tr class="subheader headerLastRow"><th class="rowNumber" style="font-weight: bold; text-align: right;"></th><th title="Symbol" style="text-align: left;">Symbol</th><th title="Union{Nothing, Float64}" style="text-align: left;">Union…</th><th title="Any" style="text-align: left;">Any</th><th title="Union{Nothing, Float64}" style="text-align: left;">Union…</th><th title="Any" style="text-align: left;">Any</th><th title="Int64" style="text-align: left;">Int64</th><th title="DataType" style="text-align: left;">DataType</th></tr></thead><tbody><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">1</td><td style="text-align: left;">SepalLength</td><td style="text-align: left;">5.84333</td><td style="text-align: left;">4.3</td><td style="text-align: left;">5.8</td><td style="text-align: left;">7.9</td><td style="text-align: right;">0</td><td style="text-align: left;">Float64</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">2</td><td style="text-align: left;">SepalWidth</td><td style="text-align: left;">3.05733</td><td style="text-align: left;">2.0</td><td style="text-align: left;">3.0</td><td style="text-align: left;">4.4</td><td style="text-align: right;">0</td><td style="text-align: left;">Float64</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">3</td><td style="text-align: left;">PetalLength</td><td style="text-align: left;">3.758</td><td style="text-align: left;">1.0</td><td style="text-align: left;">4.35</td><td style="text-align: left;">6.9</td><td style="text-align: right;">0</td><td style="text-align: left;">Float64</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">4</td><td style="text-align: left;">PetalWidth</td><td style="text-align: left;">1.19933</td><td style="text-align: left;">0.1</td><td style="text-align: left;">1.3</td><td style="text-align: left;">2.5</td><td style="text-align: right;">0</td><td style="text-align: left;">Float64</td></tr><tr><td class="rowNumber" style="font-weight: bold; text-align: right;">5</td><td style="text-align: left;">Species</td><td style="font-style: italic; text-align: left;"></td><td style="text-align: left;">setosa</td><td style="font-style: italic; text-align: left;"></td><td style="text-align: left;">virginica</td><td style="text-align: right;">0</td><td style="text-align: left;">CategoricalValue{String, UInt8}</td></tr></tbody></table></div></div>
+
+<p>The individual statistics are the column headings, and the numeric columns from the original dataset are listed under the “Symbol” heading.</p>
+
+<p>We can also compute these statistics (and others) one at a time for any given set of data points.  Here, we let <code class="language-plaintext highlighter-rouge">xs</code> be one column from the above DataFrame, but you could use any array or DataFrame instead.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="n">xs</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="s">"SepalLength"</span>
+
+<span class="k">using</span> <span class="n">Statistics</span>
+
+<span class="n">mean</span><span class="x">(</span> <span class="n">xs</span> <span class="x">)</span>            <span class="c"># mean, or average, or center of mass</span>
+<span class="n">median</span><span class="x">(</span> <span class="n">xs</span> <span class="x">)</span>          <span class="c"># 50th percentile</span>
+<span class="n">quantile!</span><span class="x">(</span> <span class="n">xs</span><span class="x">,</span> <span class="mf">0.25</span> <span class="x">)</span> <span class="c"># compute any percentile, such as the 25th</span>
+<span class="n">var</span><span class="x">(</span> <span class="n">xs</span> <span class="x">)</span>             <span class="c"># variance</span>
+<span class="n">std</span><span class="x">(</span> <span class="n">xs</span> <span class="x">)</span>             <span class="c"># standard deviation, the square root of the variance</span>
+<span class="n">sort</span><span class="x">(</span> <span class="n">xs</span> <span class="x">)</span>            <span class="c"># data in increasing order</span>
+<span class="n">sum</span><span class="x">(</span> <span class="n">xs</span> <span class="x">)</span>             <span class="c"># sum, or total</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 04 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute summary statistics/Julia.md">edit the source</a>.</p>
       <h2 id="using-pandas-and-numpy-in-python">
         
         

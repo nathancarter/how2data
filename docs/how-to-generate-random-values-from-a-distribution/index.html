@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how-to-generate-random-values-from-a-distribution/" />
-<meta property="og:url" content="http://localhost:4000/how-to-generate-random-values-from-a-distribution/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-generate-random-values-from-a-distribution/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-generate-random-values-from-a-distribution/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to generate random values from a distribution" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to generate random values from a distribution","url":"http://localhost:4000/how-to-generate-random-values-from-a-distribution/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to generate random values from a distribution","url":"https://how-to-data.org/how-to-generate-random-values-from-a-distribution/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -353,6 +353,89 @@ leaving only their final results.</p>
 <p>Content last modified on 21 June 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to generate random values from a distribution/Excel.docx">edit the source</a>.</p>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-generate-random-values-from-a-distribution-in-julia">View this solution alone.</a></p>
+
+<p>You can import many different random variables from Julia’s <code class="language-plaintext highlighter-rouge">Distributions</code> package.
+The full list of them is online <a href="https://juliastats.org/Distributions.jl/stable/univariate/">here</a>.</p>
+
+<p>If you don’t have that package installed, first run <code class="language-plaintext highlighter-rouge">using Pkg</code> and then
+<code class="language-plaintext highlighter-rouge">Pkg.add( "Distributions" )</code> from within Julia.</p>
+
+<p>Regardless of whether the distribution is discrete or continuous,
+the appropriate function to call is <code class="language-plaintext highlighter-rouge">rand</code>.
+Here are two examples.</p>
+
+<p>Using a <strong>normal distribution:</strong></p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="n">Distributions</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">Normal</span><span class="x">(</span> <span class="mi">5</span><span class="x">,</span> <span class="mi">3</span> <span class="x">)</span>
+<span class="n">rand</span><span class="x">(</span> <span class="n">X</span><span class="x">,</span> <span class="mi">10</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>10-element Vector{Float64}:
+  3.2984814947222136
+  3.8868925858958496
+ 11.054518475291347
+  2.151820027715916
+  6.288103699884755
+  4.207026557133198
+  2.957553317891313
+  7.192469043513352
+  4.440336885361706
+  4.809597919062985
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Using a <strong>uniform distribution:</strong></p>
+
+<p>In this example, we generate the random values in one line of code,
+without giving the random variable a name.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="n">Distributions</span>
+<span class="n">rand</span><span class="x">(</span> <span class="n">Uniform</span><span class="x">(</span> <span class="mi">100</span><span class="x">,</span> <span class="mi">200</span> <span class="x">),</span> <span class="mi">5</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>5-element Vector{Float64}:
+ 147.77637653948742
+ 139.5897785099046
+ 154.48524776533654
+ 141.81989321071512
+ 116.27699388606632
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 04 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to generate random values from a distribution/Julia.md">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -385,10 +468,10 @@ Here are two examples.</p>
 2
 3
 4
-</pre></td><td class="rouge-code"><pre>array([13.1064664 , 10.91812199, 12.38577231,  7.56388524, 12.76801726,
-       15.78585088,  9.91561424, 13.5402871 , 11.99767642,  7.34415886,
-       11.74238554, 16.44509778,  9.19625154,  4.53029516, 14.62388518,
-        9.32034502, 13.212503  , 10.84916965,  8.68643229, 12.06198166])
+</pre></td><td class="rouge-code"><pre>array([ 1.13692807, -3.09919844, 13.79356131, 17.84684953,  7.34652953,
+        5.96476561,  6.23576219, 12.28853107, 10.27890569,  2.09501497,
+       17.00005655,  4.48580115, 13.15019787,  5.88702913,  0.69611227,
+        3.91977886,  7.94029598, 17.89184954,  5.30894695,  4.85143363])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Using a <strong>uniform distribution:</strong></p>
@@ -409,10 +492,10 @@ which is the width of the sample space—in this case 10.)</p>
 2
 3
 4
-</pre></td><td class="rouge-code"><pre>array([59.25472277, 52.6586181 , 50.90122306, 56.23730799, 58.86849267,
-       52.83377599, 55.42103998, 52.6689307 , 56.5773815 , 50.87022971,
-       58.01072153, 55.56971665, 58.54310671, 52.54336368, 57.76300137,
-       55.58967496, 50.20936319, 53.47493391, 52.96509439, 57.47859003])
+</pre></td><td class="rouge-code"><pre>array([55.91662278, 51.49011128, 52.01391463, 50.2982162 , 57.60499819,
+       53.57351348, 55.85305281, 51.26367314, 56.40196614, 52.4686033 ,
+       55.2603163 , 57.10813614, 54.95842753, 52.03184066, 50.18116328,
+       51.52196773, 55.10236943, 59.15484043, 56.90184757, 58.04909252])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Content last modified on 27 May 2021.</p>
@@ -448,9 +531,9 @@ Here are two examples.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre> [1] 12.834868 10.263235  7.319098  4.505638 13.341125  4.707107  1.326426
- [8] 14.601987  5.471431  9.473594 19.464538  6.449898 12.961158  8.912349
-[15] 20.832911 13.854628 10.340365 13.120180 11.649607  6.076106
+</pre></td><td class="rouge-code"><pre> [1] 10.900996 11.976357 10.050084 12.659541  9.213338 10.347917  7.532614
+ [8] 11.563255 15.942300 13.378527  8.029759  5.707103 16.132197 -1.686346
+[15]  5.930778  5.099380  8.945254 13.480151 18.683996  1.714144
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Using a <strong>uniform distribution:</strong></p>
@@ -464,9 +547,9 @@ Here are two examples.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre> [1] 58.53269 57.80936 52.86535 56.72409 57.54950 59.10527 54.18573 54.45018
- [9] 50.83745 52.57525 53.22530 51.38194 58.38474 56.65091 56.13401 59.22261
-[17] 55.29325 55.06911 53.83386 51.99634
+</pre></td><td class="rouge-code"><pre> [1] 57.95825 50.30892 59.89443 58.67946 59.24075 58.61541 52.79747 51.46903
+ [9] 54.59619 52.78599 54.41834 55.62009 51.94706 54.79693 55.33611 59.67543
+[17] 56.80342 50.73818 59.68497 58.63296
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Content last modified on 27 May 2021.</p>
