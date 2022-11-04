@@ -19,12 +19,13 @@ to the human eye from the entire distribution.
 We style the plot below so that it is clear the sample space is continuous.
 
 ```julia
-using Distributions, Plots
+using Distributions
 X = Normal( 10, 5 )                   # use a normal distribution with μ=10 and σ=5
 
 xmin = quantile( X, 0.0001 )          # compute min x as the 0.0001 quantile
 xmax = quantile( X, 0.9999 )          # compute max x as the 0.9999 quantile
 xs = range( xmin, xmax, length=100 )  # create 100 x values in that range
 
+using Plots
 plot( xs, pdf.( X, xs ) )             # plot the shape of the distribution
 ```
