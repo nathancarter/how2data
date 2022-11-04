@@ -4,9 +4,11 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 if [ $# -eq 0 ]
 then
-  echo "Usage: finish_preview.sh <new task name>"
+  echo "Usage: unite_preview.sh <existing task name>"
   echo "This script moves all source files from the preview folder into the folder "
-  echo "specified by the user as the new task name.  That parameter is required."
+  echo "specified by the user as the task name.  That parameter is required."
+  echo "Compare this to finish_preview.sh, which creates the task folder from scratch,"
+  echo "while this command assumes it exists and is just adding to it."
   exit 1
 fi
 
@@ -20,9 +22,11 @@ then
   exit 1
 fi
 
-echo ""
-echo "> Making folder \"$FOLDER\""
-mkdir "$FOLDER"
+if [ ! -e "$FOLDER" ]
+then
+  echo "No such folder: \"$FOLDER\""
+  exit 1
+fi
 
 echo ""
 echo "> Moving files below to \"$FOLDER\""

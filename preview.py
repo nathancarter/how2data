@@ -9,8 +9,8 @@
 # 
 #  The problem with that workflow is that rebuilding such a large site,
 #  despite the efficiencies provided by the tools in this repository, can be
-#  slow.  In particular, Jekyll's rebuilding of the site feed can take over 1
-#  minute on some hardware.
+#  slow.  In particular, Jekyll's rebuilding of the site feed can take over
+#  30 seconds on some hardware.
 #
 #  This script is meant to solve that problem.
 #
