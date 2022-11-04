@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-predict-the-response-variable-in-a-linear-model-in-python-using-statsmodels/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-predict-the-response-variable-in-a-linear-model-in-python-using-statsmodels/" />
+<link rel="canonical" href="http://localhost:4000/how-to-predict-the-response-variable-in-a-linear-model-in-python-using-statsmodels/" />
+<meta property="og:url" content="http://localhost:4000/how-to-predict-the-response-variable-in-a-linear-model-in-python-using-statsmodels/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to predict the response variable in a linear model (in Python, using statsmodels)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to predict the response variable in a linear model (in Python, using statsmodels)","url":"https://how-to-data.org/how-to-predict-the-response-variable-in-a-linear-model-in-python-using-statsmodels/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to predict the response variable in a linear model (in Python, using statsmodels)","url":"http://localhost:4000/how-to-predict-the-response-variable-in-a-linear-model-in-python-using-statsmodels/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -278,7 +278,7 @@ do we predict the corresponding value of the response variable?</p>
 
 <ul>
   <li><a href="../how-to-fit-a-linear-model-to-two-columns-of-data">How to fit a linear model to two columns of data</a></li>
-  <li>How to fit a multiple linear regression model</li>
+  <li><a href="../how-to-fit-a-multivariate-linear-model">How to fit a multivariate linear model</a></li>
 </ul>
       <h2 id="solution">
         
@@ -316,12 +316,6 @@ For more information on the following code, see
 
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">OLS</span><span class="p">(</span> <span class="n">df</span><span class="p">[</span><span class="s">'y'</span><span class="p">],</span> <span class="n">sm</span><span class="p">.</span><span class="n">add_constant</span><span class="p">(</span> <span class="n">df</span><span class="p">[[</span><span class="s">'x1'</span><span class="p">,</span><span class="s">'x2'</span><span class="p">,</span><span class="s">'x3'</span><span class="p">]]</span> <span class="p">)</span> <span class="p">).</span><span class="n">fit</span><span class="p">()</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/statsmodels/tsa/tsatools.py:142: FutureWarning: In a future version of pandas all arguments of concat except for the argument 'objs' will be keyword-only
-  x = pd.concat(x[::order], 1)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Let’s say we want to estimate $y$ given that  $x_1 = 5$, $x_2 = 12$, and $x_3=50$.

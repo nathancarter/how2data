@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy/" />
+<link rel="canonical" href="http://localhost:4000/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy/" />
+<meta property="og:url" content="http://localhost:4000/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to do a two-sided hypothesis test for two sample means (in Python, using SciPy)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a two-sided hypothesis test for two sample means (in Python, using SciPy)","url":"https://how-to-data.org/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a two-sided hypothesis test for two sample means (in Python, using SciPy)","url":"http://localhost:4000/how-to-do-a-two-sided-hypothesis-test-for-two-sample-means-in-python-using-scipy/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -279,7 +279,7 @@ difference statistically significant at a given level?</p>
 <p>Related tasks:</p>
 
 <ul>
-  <li>How to compute a confidence interval for a sample mean</li>
+  <li><a href="../how-to-compute-a-confidence-interval-for-a-population-mean">How to compute a confidence interval for a population mean</a></li>
   <li><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean">How to do a two-sided hypothesis test for a sample mean</a></li>
   <li><a href="../how-to-do-a-one-way-analysis-of-variance-anova">How to do a one-way analysis of variance (ANOVA)</a></li>
   <li><a href="../how-to-do-a-one-sided-hypothesis-test-for-two-sample-means">How to do a one-sided hypothesis test for two sample means</a></li>
@@ -327,7 +327,7 @@ Let’s use $\alpha=0.10$ as an example.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_indResult(statistic=-2.4616581720814326, pvalue=0.050972837418476934)
+</pre></td><td class="rouge-code"><pre>Ttest_indResult(statistic=-2.4616581720814326, pvalue=0.05097283741847698)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The output says that the $p$-value is about $0.05097$, which is less than $\alpha=0.10$.
