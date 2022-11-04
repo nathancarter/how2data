@@ -8,3 +8,6 @@ software:
   - name: Excel
     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg/512px-Microsoft_Office_Excel_%282019%E2%80%93present%29.svg.png
     website: https://www.microsoft.com/en-us/microsoft-365/excel
+  - name: Julia
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Julia_Programming_Language_Logo.svg/640px-Julia_Programming_Language_Logo.svg.png
+    website: https://julialang.org/
