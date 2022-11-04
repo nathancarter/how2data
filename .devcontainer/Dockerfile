@@ -5,7 +5,7 @@ FROM jupyter/datascience-notebook
 USER root
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
  && apt-get -y install --no-install-recommends \
-    ruby-full build-essential zlib1g-dev zip
+    ruby-full build-essential zlib1g-dev zip texlive-fonts-recommended lmodern
 
 # Install the following Python packages that aren't built in to the above Dockerfile:
 USER jovyan
