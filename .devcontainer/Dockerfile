@@ -7,13 +7,13 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
  && apt-get -y install --no-install-recommends \
     ruby-full build-essential zlib1g-dev zip texlive-fonts-recommended lmodern
 
-# Install the following Python packages that aren't built in to the above Dockerfile:
+# Install the following Python packages that aren't built in to the above image:
 USER jovyan
 RUN pip3 --disable-pip-version-check --no-cache-dir \
     install rdatasets pingouin scikit_posthocs tabulate jupytext \
  && rm -rf /tmp/pip-tmp
 
-# Install the following R packages that aren't built in to the above Dockerfile:
+# Install the following R packages that aren't built in to the above image:
 RUN R -e 'install.packages("agricolae",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("lattice",repos="http://cran.us.r-project.org")'
 RUN R -e 'install.packages("gplots",repos="http://cran.us.r-project.org")'
@@ -29,6 +29,15 @@ RUN R -e 'install.packages("gmodels",repos="http://cran.us.r-project.org")'
 # And installing mosaic in this context requires special care:
 RUN conda install -c conda-forge r-terra
 RUN R -e 'install.packages("mosaic",repos="http://cran.us.r-project.org")'
+
+# Install the following Julia packages that aren't built in to the above image:
+RUN julia -e 'using Pkg; Pkg.add("DataFrames")'
+RUN julia -e 'using Pkg; Pkg.add("Plots")'
+RUN julia -e 'using Pkg; Pkg.add("Statistics")'
+RUN julia -e 'using Pkg; Pkg.add("RDatasets")'
+RUN julia -e 'using Pkg; Pkg.add("Distributions")'
+RUN julia -e 'using Pkg; Pkg.add("HypothesisTests")'
+RUN julia -e 'using Pkg; Pkg.add("GLM")'
 
 # Install Jekyll for use in building the how2data website:
 USER jovyan
