@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-fit-a-linear-model-to-two-columns-of-data/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-fit-a-linear-model-to-two-columns-of-data/" />
+<link rel="canonical" href="http://localhost:4000/how-to-fit-a-linear-model-to-two-columns-of-data/" />
+<meta property="og:url" content="http://localhost:4000/how-to-fit-a-linear-model-to-two-columns-of-data/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to fit a linear model to two columns of data" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to fit a linear model to two columns of data","url":"https://how-to-data.org/how-to-fit-a-linear-model-to-two-columns-of-data/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to fit a linear model to two columns of data","url":"http://localhost:4000/how-to-fit-a-linear-model-to-two-columns-of-data/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -283,6 +283,73 @@ give me the best linear model $\hat y=\beta_0+\beta_1x$ based on my data?</p>
   <li><a href="../how-to-fit-a-multivariate-linear-model">How to fit a multivariate linear model</a></li>
   <li><a href="../how-to-predict-the-response-variable-in-a-linear-model">How to predict the response variable in a linear model</a></li>
 </ul>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-fit-a-linear-model-to-two-columns-of-data-in-julia">View this solution alone.</a></p>
+
+<p>This solution uses fake example data.
+When using this code, replace our fake data with your real data.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="c"># Here is the fake data you should replace with your real data.</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="x">[</span> <span class="mi">393</span><span class="x">,</span> <span class="mi">453</span><span class="x">,</span> <span class="mi">553</span><span class="x">,</span> <span class="mi">679</span><span class="x">,</span> <span class="mi">729</span><span class="x">,</span> <span class="mi">748</span><span class="x">,</span> <span class="mi">817</span> <span class="x">]</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="x">[</span>  <span class="mi">24</span><span class="x">,</span>  <span class="mi">25</span><span class="x">,</span>  <span class="mi">27</span><span class="x">,</span>  <span class="mi">36</span><span class="x">,</span>  <span class="mi">55</span><span class="x">,</span>  <span class="mi">68</span><span class="x">,</span>  <span class="mi">84</span> <span class="x">]</span>
+
+<span class="c"># Place the data into a DataFrame, because that's what Julia's modeling tools expect:</span>
+<span class="k">using</span> <span class="n">DataFrames</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="x">(</span> <span class="n">xs</span><span class="o">=</span><span class="n">xs</span><span class="x">,</span> <span class="n">ys</span><span class="o">=</span><span class="n">ys</span> <span class="x">)</span>  <span class="c"># Or you can name the columns whatever you like</span>
+
+<span class="c"># Create the linear model:</span>
+<span class="k">using</span> <span class="n">GLM</span>
+<span class="n">lm</span><span class="x">(</span> <span class="nd">@formula</span><span class="x">(</span> <span class="n">ys</span> <span class="o">~</span> <span class="n">xs</span> <span class="x">),</span> <span class="n">data</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre>StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+ys ~ 1 + xs
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────
+                 Coef.  Std. Error      t  Pr(&gt;|t|)    Lower 95%  Upper 95%
+───────────────────────────────────────────────────────────────────────────
+(Intercept)  -37.3214    18.9954    -1.96    0.1066  -86.1508      11.5079
+xs             0.13272    0.029589   4.49    0.0065    0.0566587    0.20878
+───────────────────────────────────────────────────────────────────────────
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The linear model in this example is approximately $y=0.13272x-37.3214$.</p>
+
+<p>Content last modified on 05 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to fit a linear model to two columns of data/Julia.md">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -427,7 +494,6 @@ software packages.</p>
 
 <ul>
   <li>Excel</li>
-  <li>Julia</li>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,

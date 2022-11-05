@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-perform-a-chi-squared-test-on-a-contingency-table/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-perform-a-chi-squared-test-on-a-contingency-table/" />
+<link rel="canonical" href="http://localhost:4000/how-to-perform-a-chi-squared-test-on-a-contingency-table/" />
+<meta property="og:url" content="http://localhost:4000/how-to-perform-a-chi-squared-test-on-a-contingency-table/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to perform a chi-squared test on a contingency table" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to perform a chi-squared test on a contingency table","url":"https://how-to-data.org/how-to-perform-a-chi-squared-test-on-a-contingency-table/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to perform a chi-squared test on a contingency table","url":"http://localhost:4000/how-to-perform-a-chi-squared-test-on-a-contingency-table/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -272,6 +272,116 @@
 <p>If we have a contingency table showing the frequencies observed in two
 categorical variables, how can we run a $\chi^2$ test to see if the two
 variables are independent?</p>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-perform-a-chi-squared-test-on-a-contingency-table-in-julia">View this solution alone.</a></p>
+
+<p>Here we will use a two-dimensional Julia array to store a contingency table of
+education vs. gender, taken from
+<a href="https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/chi-square-tests">Penn State University’s online stats review website</a>.
+You should use your own data.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="n">data</span> <span class="o">=</span> <span class="x">[</span>
+<span class="c">#   HS  BS  MS  Phd</span>
+    <span class="mi">60</span>  <span class="mi">54</span>  <span class="mi">46</span>  <span class="mi">41</span>    <span class="c"># females</span>
+    <span class="mi">40</span>  <span class="mi">44</span>  <span class="mi">53</span>  <span class="mi">57</span>    <span class="c"># males</span>
+<span class="x">]</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>2×4 Matrix{Int64}:
+ 60  54  46  41
+ 40  44  53  57
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The $\chi^2$ test’s null hypothesis is that the two variables are independent.
+We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
+(false positive, finding we should reject $H_0$ when it’s actually true).</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c"># or choose your own alpha here</span>
+
+<span class="k">using</span> <span class="n">HypothesisTests</span>
+<span class="n">p_value</span> <span class="o">=</span> <span class="n">pvalue</span><span class="x">(</span> <span class="n">ChisqTest</span><span class="x">(</span> <span class="n">data</span> <span class="x">)</span> <span class="x">)</span>
+<span class="n">reject_H0</span> <span class="o">=</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span>
+<span class="n">alpha</span><span class="x">,</span> <span class="n">p_value</span><span class="x">,</span> <span class="n">reject_H0</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(0.05, 0.04588650089174742, true)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>In this case, the samples give us enough evidence to reject the null hypothesis
+at the $\alpha=0.05$ level.  The data suggest that the two categorical variables
+are not independent.</p>
+
+<p>If you are using the most common $\alpha$ value of $0.05$, you can save a few lines
+of code and get more output by just writing the test itself:</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">ChisqTest</span><span class="x">(</span> <span class="n">data</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre>Pearson's Chi-square Test
+-------------------------
+Population details:
+    parameter of interest:   Multinomial Probabilities
+    value under h_0:         [0.128826, 0.124339, 0.126249, 0.121852, 0.127537, 0.123096, 0.126249, 0.121852]
+    point estimate:          [0.151899, 0.101266, 0.136709, 0.111392, 0.116456, 0.134177, 0.103797, 0.144304]
+    95% confidence interval: [(0.1089, 0.1978), (0.05823, 0.1472), (0.09367, 0.1826), (0.06835, 0.1573), (0.07342, 0.1624), (0.09114, 0.1801), (0.06076, 0.1497), (0.1013, 0.1902)]
+
+Test summary:
+    outcome with 95% confidence: reject h_0
+    one-sided p-value:           0.0459
+
+Details:
+    Sample size:        395
+    statistic:          8.006066246262527
+    degrees of freedom: 3
+    residuals:          [1.27763, -1.30048, 0.585074, -0.595536, -0.61671, 0.627737, -1.25583, 1.27828]
+    std. residuals:     [2.10956, -2.10956, 0.962783, -0.962783, -1.01656, 1.01656, -2.06656, 2.06656]
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 05 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to perform a chi-squared test on a contingency table/Julia.md">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -438,7 +548,6 @@ software packages.</p>
 
 <ul>
   <li>Excel</li>
-  <li>Julia</li>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,

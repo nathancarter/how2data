@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-compute-a-confidence-interval-for-a-population-mean/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-compute-a-confidence-interval-for-a-population-mean/" />
+<link rel="canonical" href="http://localhost:4000/how-to-compute-a-confidence-interval-for-a-population-mean/" />
+<meta property="og:url" content="http://localhost:4000/how-to-compute-a-confidence-interval-for-a-population-mean/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute a confidence interval for a population mean" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute a confidence interval for a population mean","url":"https://how-to-data.org/how-to-compute-a-confidence-interval-for-a-population-mean/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute a confidence interval for a population mean","url":"http://localhost:4000/how-to-compute-a-confidence-interval-for-a-population-mean/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -296,6 +296,47 @@ see <a href="../how-to-compute-a-confidence-interval-for-a-population-mean-using
   <li><a href="../how-to-compute-a-confidence-interval-for-the-population-proportion">How to compute a confidence interval for the population proportion</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-the-ratio-of-two-population-variances">How to compute a confidence interval for the ratio of two population variances</a></li>
 </ul>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-a-confidence-interval-for-a-population-mean-in-julia">View this solution alone.</a></p>
+
+<p>When applying this technique, you would have a series of data values for which
+you needed to compute a confidence interval for the mean.  But in order to
+provide code that runs independently, we create some fake data below.  When
+using this code, replace our fake data with your real data.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>       <span class="c"># replace with your chosen alpha (here, a 95% confidence level)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="x">[</span> <span class="mi">435</span><span class="x">,</span><span class="mi">542</span><span class="x">,</span><span class="mi">435</span><span class="x">,</span><span class="mi">4</span><span class="x">,</span><span class="mi">54</span><span class="x">,</span><span class="mi">43</span><span class="x">,</span><span class="mi">5</span><span class="x">,</span><span class="mi">43</span><span class="x">,</span><span class="mi">543</span><span class="x">,</span><span class="mi">5</span><span class="x">,</span><span class="mi">432</span><span class="x">,</span><span class="mi">43</span><span class="x">,</span><span class="mi">36</span><span class="x">,</span><span class="mi">7</span><span class="x">,</span><span class="mi">876</span><span class="x">,</span><span class="mi">65</span><span class="x">,</span><span class="mi">5</span> <span class="x">]</span> <span class="c"># fake</span>
+
+<span class="c"># Compute the confidence interval:</span>
+<span class="k">using</span> <span class="n">HypothesisTests</span>
+<span class="n">confint</span><span class="x">(</span> <span class="n">OneSampleTTest</span><span class="x">(</span> <span class="n">data</span> <span class="x">),</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="x">,</span> <span class="n">tail</span><span class="o">=:</span><span class="n">both</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(70.2984781107082, 350.05446306576243)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><em>Note:</em> The solution above assumes that the population is normally distributed,
+which is a common assumption in introductory statistics courses,
+but we have not verified that assumption here.</p>
+
+<p>Content last modified on 05 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for a population mean/Julia.md">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -459,7 +500,6 @@ software packages.</p>
 
 <ul>
   <li>Excel</li>
-  <li>Julia</li>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,

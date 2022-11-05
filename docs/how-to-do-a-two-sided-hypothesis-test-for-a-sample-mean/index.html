@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean/" />
+<link rel="canonical" href="http://localhost:4000/how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean/" />
+<meta property="og:url" content="http://localhost:4000/how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to do a two-sided hypothesis test for a sample mean" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a two-sided hypothesis test for a sample mean","url":"https://how-to-data.org/how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to do a two-sided hypothesis test for a sample mean","url":"http://localhost:4000/how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -283,6 +283,98 @@ from the population at large, that is, is $\mu=\bar x$?</p>
   <li><a href="../how-to-do-a-hypothesis-test-for-a-mean-difference-matched-pairs">How to do a hypothesis test for a mean difference (matched pairs)</a></li>
   <li><a href="../how-to-do-a-hypothesis-test-for-a-population-proportion">How to do a hypothesis test for a population proportion</a></li>
 </ul>
+      <h2 id="solution-in-julia">
+        
+        
+          <a href="#solution-in-julia" class="anchor-heading" aria-labelledby="solution-in-julia"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in Julia
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-do-a-two-sided-hypothesis-test-for-a-sample-mean-in-julia">View this solution alone.</a></p>
+
+<p>This is a two-sided test with the null hypothesis $H_0:\mu=\bar x$.
+We choose a value $0\leq\alpha\leq1$ as the probability of a Type I error
+(false positive, finding we should reject $H_0$ when it’s actually true).</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c"># Replace these first three lines with the values from your situation.</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">pop_mean</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="x">[</span> <span class="mi">9</span><span class="x">,</span> <span class="mi">12</span><span class="x">,</span> <span class="mi">14</span><span class="x">,</span> <span class="mi">8</span><span class="x">,</span> <span class="mi">13</span> <span class="x">]</span>
+
+<span class="c"># The following code runs the test for your chosen alpha:</span>
+<span class="k">using</span> <span class="n">HypothesisTests</span>
+<span class="n">p_value</span> <span class="o">=</span> <span class="n">pvalue</span><span class="x">(</span> <span class="n">OneSampleTTest</span><span class="x">(</span> <span class="n">sample</span><span class="x">,</span> <span class="n">pop_mean</span> <span class="x">)</span> <span class="x">)</span>
+<span class="n">reject_H0</span> <span class="o">=</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span>
+<span class="n">alpha</span><span class="x">,</span> <span class="n">p_value</span><span class="x">,</span> <span class="n">reject_H0</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>(0.05, 0.35845634462296455, false)
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>In this case, the $p$-value was larger than $\alpha$, so the sample does not give us
+enough information to reject the null hypothesis.
+We would continue to assume that the sample is like the population, $\mu=\bar x$.</p>
+
+<p>When you are using the most common value for $\alpha$, which is $0.05$ for the $95\%$
+confidence interval, you can simply print out the test itself and get a detailed
+printout with all the information you need, thus saving a few lines of code.</p>
+
+<div class="language-julia highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">OneSampleTTest</span><span class="x">(</span> <span class="n">sample</span><span class="x">,</span> <span class="n">pop_mean</span> <span class="x">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre>One sample t-test
+-----------------
+Population details:
+    parameter of interest:   Mean
+    value under h_0:         10
+    point estimate:          11.2
+    95% confidence interval: (7.986, 14.41)
+
+Test summary:
+    outcome with 95% confidence: fail to reject h_0
+    two-sided p-value:           0.3585
+
+Details:
+    number of observations:   5
+    t-statistic:              1.0366421106976316
+    degrees of freedom:       4
+    empirical standard error: 1.1575836902790224
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 05 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a two-sided hypothesis test for a sample mean/Julia.md">edit the source</a>.</p>
       <h2 id="using-scipy-in-python">
         
         
@@ -440,7 +532,6 @@ software packages.</p>
 
 <ul>
   <li>Excel</li>
-  <li>Julia</li>
 </ul>
 
 <p>If you can contribute a solution using any of these pieces of software,
