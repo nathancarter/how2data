@@ -26,4 +26,4 @@ beta1 = model.slope
 stats.linregress( xs, ys )
 ```
 
-The linear model in this example is approximately $y=0.133x-37.32$.
+The linear model in this example is approximately $\hat y=0.133x-37.32$.
