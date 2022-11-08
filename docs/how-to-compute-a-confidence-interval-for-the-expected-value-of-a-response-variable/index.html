@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable/" />
-<meta property="og:url" content="http://localhost:4000/how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute a confidence interval for the expected value of a response variable" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute a confidence interval for the expected value of a response variable","url":"http://localhost:4000/how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute a confidence interval for the expected value of a response variable","url":"https://how-to-data.org/how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -288,6 +288,97 @@ given a value for the predictor $x$?</p>
   <li><a href="../how-to-compute-a-confidence-interval-for-the-population-proportion">How to compute a confidence interval for the population proportion</a></li>
   <li><a href="../how-to-compute-a-confidence-interval-for-the-ratio-of-two-population-variances">How to compute a confidence interval for the ratio of two population variances</a></li>
 </ul>
+      <h2 id="using-statsmodels-and-sklearn-in-python">
+        
+        
+          <a href="#using-statsmodels-and-sklearn-in-python" class="anchor-heading" aria-labelledby="using-statsmodels-and-sklearn-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using statsmodels and sklearn, in Python
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-a-confidence-interval-for-the-expected-value-of-a-response-variable-in-python-using-statsmodels-and-sklearn">View this solution alone.</a></p>
+
+<p>Let’s assume that you already have a linear model.  We construct an example one here from some fabricated data.
+For a review of how this preparatory code works, see <a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+
+<span class="c1"># Replace the following fake data with your actual data:
+</span><span class="n">xs</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">34</span><span class="p">,</span>   <span class="mi">9</span><span class="p">,</span>  <span class="mi">78</span><span class="p">,</span>  <span class="mi">60</span><span class="p">,</span>  <span class="mi">22</span><span class="p">,</span>  <span class="mi">45</span><span class="p">,</span>  <span class="mi">83</span><span class="p">,</span>  <span class="mi">59</span><span class="p">,</span>  <span class="mi">25</span> <span class="p">]</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">347</span><span class="p">,</span> <span class="mi">298</span><span class="p">,</span> <span class="mi">309</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">187</span><span class="p">,</span> <span class="mi">266</span><span class="p">,</span> <span class="mi">385</span><span class="p">,</span> <span class="mi">400</span> <span class="p">]</span>
+
+<span class="c1"># Create and fit a linear model to the data:
+</span><span class="n">xs</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">add_constant</span><span class="p">(</span> <span class="n">xs</span> <span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">OLS</span><span class="p">(</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xs</span> <span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Ask the model to do a prediction of one particular input, in this example $x=40$,
+with a $95\%$ confidence interval included ($\alpha=0.05$).
+You can replce the $40$ with your chosen $x$ value, or an array of them,
+and you can replace the $0.05$ with your chosen value of $\alpha$.</p>
+
+<p>(The extra <code class="language-plaintext highlighter-rouge">1</code> in the input to <code class="language-plaintext highlighter-rouge">get_prediction</code> is a placeholder,
+required because the model has been expanded to include a constant term.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="p">.</span><span class="n">get_prediction</span><span class="p">(</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">40</span><span class="p">]</span> <span class="p">).</span><span class="n">summary_frame</span><span class="p">(</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<div class="table-wrapper"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean</th>
+      <th>mean_se</th>
+      <th>mean_ci_lower</th>
+      <th>mean_ci_upper</th>
+      <th>obs_ci_lower</th>
+      <th>obs_ci_upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>313.721744</td>
+      <td>36.823483</td>
+      <td>226.648043</td>
+      <td>400.795444</td>
+      <td>45.876725</td>
+      <td>581.566762</td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+
+<p>Our 95% confidence interval is $[226.648, 400.7954]$. We can be 95% confident that the true average value of $y$, given that $x$ is 40, is between 226.648 and 400.7954.</p>
+
+<p>Content last modified on 08 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute a confidence interval for the expected value of a response variable/Python, using statsmodels and sklearn.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -361,7 +452,6 @@ That data frame can then be passed to R’s <code class="language-plaintext high
 software packages.</p>
 
 <ul>
-  <li>Python</li>
   <li>Excel</li>
   <li>Julia</li>
 </ul>

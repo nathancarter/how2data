@@ -37,14 +37,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="http://localhost:4000/how-to-compute-the-standard-error-of-the-estimate-for-a-model/" />
-<meta property="og:url" content="http://localhost:4000/how-to-compute-the-standard-error-of-the-estimate-for-a-model/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-compute-the-standard-error-of-the-estimate-for-a-model/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-compute-the-standard-error-of-the-estimate-for-a-model/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="How to compute the standard error of the estimate for a model" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute the standard error of the estimate for a model","url":"http://localhost:4000/how-to-compute-the-standard-error-of-the-estimate-for-a-model/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute the standard error of the estimate for a model","url":"https://how-to-data.org/how-to-compute-the-standard-error-of-the-estimate-for-a-model/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -276,6 +276,134 @@ the definition of this quantity is as follows, for $n$ data points.</p>
 \[\sigma_{\text{est}} = \sqrt{ \frac{ \sum (y_i-\hat y_i)^2 }{ n } }\]
 
 <p>If we’ve fit a linear model, how do we compute the standard error of its estimates?</p>
+      <h2 id="using-statsmodels-in-python">
+        
+        
+          <a href="#using-statsmodels-in-python" class="anchor-heading" aria-labelledby="using-statsmodels-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using statsmodels, in Python
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-the-standard-error-of-the-estimate-for-a-model-in-python-using-statsmodels">View this solution alone.</a></p>
+
+<p>Let’s assume that you already fit the linear model, as shown in the code below.
+This one uses a small amount of fake data, but it’s just an example.
+See also <a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fit a linear model to two columns of data</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c1"># Below is the fake data as an example. You can replace with your real data.
+</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span>  <span class="mi">34</span><span class="p">,</span>   <span class="mi">9</span><span class="p">,</span>  <span class="mi">78</span><span class="p">,</span>  <span class="mi">60</span><span class="p">,</span>  <span class="mi">22</span><span class="p">,</span>  <span class="mi">45</span><span class="p">,</span>  <span class="mi">83</span><span class="p">,</span>  <span class="mi">59</span><span class="p">,</span>  <span class="mi">25</span> <span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">347</span><span class="p">,</span> <span class="mi">298</span><span class="p">,</span> <span class="mi">309</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">187</span><span class="p">,</span> <span class="mi">266</span><span class="p">,</span> <span class="mi">385</span><span class="p">,</span> <span class="mi">400</span> <span class="p">]</span>
+
+<span class="c1"># Use statsmodels to build a linear regression model
+</span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">add_constant</span><span class="p">(</span> <span class="n">x</span> <span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">OLS</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The standard error is shown as part of the model summary, reported by statsmodels’s
+built-in <code class="language-plaintext highlighter-rouge">summary</code> function.  See the column entitled “std err” in the output below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.10/site-packages/scipy/stats/_stats_py.py:1772: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=9
+  warnings.warn("kurtosistest only valid for n&gt;=20 ... continuing "
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="table-wrapper"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.063</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>  -0.071</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>  0.4693</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Tue, 08 Nov 2022</td> <th>  Prob (F-statistic):</th>  <td> 0.515</td> 
+</tr>
+<tr>
+  <th>Time:</th>                 <td>21:56:16</td>     <th>  Log-Likelihood:    </th> <td> -53.705</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>     9</td>      <th>  AIC:               </th> <td>   111.4</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>     7</td>      <th>  BIC:               </th> <td>   111.8</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table></div>
+<div class="table-wrapper"><table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th> <td>  354.0822</td> <td>   76.733</td> <td>    4.614</td> <td> 0.002</td> <td>  172.638</td> <td>  535.526</td>
+</tr>
+<tr>
+  <th>x1</th>    <td>   -1.0090</td> <td>    1.473</td> <td>   -0.685</td> <td> 0.515</td> <td>   -4.492</td> <td>    2.474</td>
+</tr>
+</table></div>
+<div class="table-wrapper"><table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 2.324</td> <th>  Durbin-Watson:     </th> <td>   1.618</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.313</td> <th>  Jarque-Bera (JB):  </th> <td>   1.079</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td>-0.832</td> <th>  Prob(JB):          </th> <td>   0.583</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 2.674</td> <th>  Cond. No.          </th> <td>    112.</td>
+</tr>
+</table></div>
+<p><br /><br />Notes:<br />[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</p>
+
+<p>If we need to extract just the estimates or their standard errors,
+we can use code like the following.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="p">.</span><span class="n">params</span> <span class="c1"># just the model coefficients
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>array([354.0822479 ,  -1.00901261])
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">model</span><span class="p">.</span><span class="n">bse</span> <span class="c1"># just the standard errors of those estimates
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>array([76.73277161,  1.47293931])
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The standard error of the estimate for the intercept is is 76.73277161 and
+the standard error of the estimate for the slope is 1.47293931.</p>
+
+<p>Content last modified on 08 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the standard error of the estimate for a model/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
         
         
@@ -299,8 +427,8 @@ See also <a href="../how-to-fit-a-linear-model-to-two-columns-of-data">how to fi
 </span><span class="n">model</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The standard error is shown as part of the model summary, reported by R’s
-built-in <code class="language-plaintext highlighter-rouge">summary</code> function; see the third line from the bottom.</p>
+<p>The standard error for each estimate is shown as part of the model summary, reported by R’s
+built-in <code class="language-plaintext highlighter-rouge">summary</code> function.  See the column entitled “Std. Error” in the output below.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="w">
@@ -342,19 +470,37 @@ Multiple R-squared:  0.06283,	Adjusted R-squared:  -0.07106
 F-statistic: 0.4693 on 1 and 7 DF,  p-value: 0.5154
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>We can also extract just that one value using the code shown below.</p>
+<p>If we need to extract just the model coefficients table, or even just the “Std. Error”
+column of it, we can use code like the following.</p>
 
 <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span><span class="w">
+2
+</pre></td><td class="rouge-code"><pre><span class="n">coef</span><span class="p">(</span><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="w">
+</span><span class="n">coef</span><span class="p">(</span><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">))[,</span><span class="m">2</span><span class="p">]</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>[1] 107.1191
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>            Estimate   Std. Error t value    Pr(&gt;|t|)   
+(Intercept) 354.082248 76.732772   4.6144853 0.002441995
+x            -1.009013  1.472939  -0.6850334 0.515358250
+
+
+
+(Intercept)           x 
+  76.732772    1.472939 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>The standard error of the estimate is 107.119.</p>
+<p>The standard error of the estimate for the intercept is is 76.733 and
+the standard error of the estimate for the slope is 1.473.</p>
 
-<p>Content last modified on 14 September 2021.</p>
+<p>Content last modified on 08 November 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute the standard error of the estimate for a model/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
@@ -382,7 +528,6 @@ F-statistic: 0.4693 on 1 and 7 DF,  p-value: 0.5154
 software packages.</p>
 
 <ul>
-  <li>Python</li>
   <li>Excel</li>
   <li>Julia</li>
 </ul>
