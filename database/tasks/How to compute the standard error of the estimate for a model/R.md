@@ -1,5 +1,7 @@
 ---
-author: Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
+author:
+ - Elizabeth Czarniak (CZARNIA_ELIZ@bentley.edu)
+ - Nathan Carter (ncarter@bentley.edu)
 ---
 
 Let's assume that you already fit the linear model, as shown in the code below.
@@ -12,17 +14,20 @@ y <- c(126, 347, 298, 309, 450, 187, 266, 385, 400)
 model <- lm(y ~ x)
 ```
 
-The standard error is shown as part of the model summary, reported by R's
-built-in `summary` function; see the third line from the bottom.
+The standard error for each estimate is shown as part of the model summary, reported by R's
+built-in `summary` function.  See the column entitled "Std. Error" in the output below.
 
 ```R
 summary(model)
 ```
 
-We can also extract just that one value using the code shown below.
+If we need to extract just the model coefficients table, or even just the "Std. Error"
+column of it, we can use code like the following.
 
 ```R
-summary(model)$sigma
+coef(summary(model))
+coef(summary(model))[,2]
 ```
 
-The standard error of the estimate is 107.119.
+The standard error of the estimate for the intercept is is 76.733 and
+the standard error of the estimate for the slope is 1.473.
