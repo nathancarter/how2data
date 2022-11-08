@@ -23,6 +23,7 @@ CONTRIBUTORS_LIST
 The following faculty members have proofread student work or given advice
 on website structure or content.
 
+ * Moinak Bhaduri
  * Nathan Carter
  * Reagan Mozer
  * Gregory Vaughan
