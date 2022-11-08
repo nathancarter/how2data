@@ -1,5 +1,5 @@
 ---
-authors:
+author:
  - Krtin Juneja (kjuneja@falcon.bentley.edu)
  - Nathan Carter (ncarter@bentley.edu)
 ---
