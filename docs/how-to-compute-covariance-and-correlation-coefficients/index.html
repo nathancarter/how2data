@@ -323,43 +323,43 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.263520</td>
-      <td>0.803570</td>
-      <td>0.514936</td>
-      <td>0.925995</td>
-      <td>0.678391</td>
+      <td>0.499459</td>
+      <td>0.544642</td>
+      <td>0.416081</td>
+      <td>0.770145</td>
+      <td>0.365638</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.554981</td>
-      <td>0.444687</td>
-      <td>0.742719</td>
-      <td>0.882195</td>
-      <td>0.719853</td>
+      <td>0.051560</td>
+      <td>0.094024</td>
+      <td>0.821636</td>
+      <td>0.307194</td>
+      <td>0.269724</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.272787</td>
-      <td>0.527744</td>
-      <td>0.299307</td>
-      <td>0.324882</td>
-      <td>0.446657</td>
+      <td>0.775610</td>
+      <td>0.411586</td>
+      <td>0.754904</td>
+      <td>0.174790</td>
+      <td>0.559466</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.421805</td>
-      <td>0.000464</td>
-      <td>0.769808</td>
-      <td>0.318595</td>
-      <td>0.383792</td>
+      <td>0.747098</td>
+      <td>0.783076</td>
+      <td>0.955363</td>
+      <td>0.944042</td>
+      <td>0.875185</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.005127</td>
-      <td>0.031319</td>
-      <td>0.233333</td>
-      <td>0.288079</td>
-      <td>0.273122</td>
+      <td>0.814148</td>
+      <td>0.943769</td>
+      <td>0.249496</td>
+      <td>0.577307</td>
+      <td>0.715827</td>
     </tr>
   </tbody>
 </table></div>
@@ -373,8 +373,8 @@
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[ 0.03876363, -0.01118424],
-       [-0.01118424,  0.10323356]])
+</pre></td><td class="rouge-code"><pre>array([[0.10369366, 0.08926178],
+       [0.08926178, 0.10982211]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>You can also compare all of a DataFrame’s columns among one another, each as a separate variable.</p>
@@ -411,43 +411,43 @@
   <tbody>
     <tr>
       <th>col1</th>
-      <td>0.038764</td>
-      <td>-0.011184</td>
-      <td>0.036492</td>
-      <td>0.010443</td>
-      <td>0.000424</td>
+      <td>0.103694</td>
+      <td>0.089262</td>
+      <td>-0.029498</td>
+      <td>-0.005259</td>
+      <td>0.056009</td>
     </tr>
     <tr>
       <th>col2</th>
-      <td>-0.011184</td>
-      <td>0.103234</td>
-      <td>-0.017756</td>
-      <td>0.023502</td>
-      <td>0.031411</td>
+      <td>0.089262</td>
+      <td>0.109822</td>
+      <td>-0.068362</td>
+      <td>0.014306</td>
+      <td>0.050707</td>
     </tr>
     <tr>
       <th>col3</th>
-      <td>0.036492</td>
-      <td>-0.017756</td>
-      <td>0.097690</td>
-      <td>0.005633</td>
-      <td>-0.010821</td>
+      <td>-0.029498</td>
+      <td>-0.068362</td>
+      <td>0.107503</td>
+      <td>0.003484</td>
+      <td>0.004916</td>
     </tr>
     <tr>
       <th>col4</th>
-      <td>0.010443</td>
-      <td>0.023502</td>
-      <td>0.005633</td>
-      <td>0.073091</td>
-      <td>0.056259</td>
+      <td>-0.005259</td>
+      <td>0.014306</td>
+      <td>0.003484</td>
+      <td>0.070548</td>
+      <td>-0.017955</td>
     </tr>
     <tr>
       <th>col5</th>
-      <td>0.000424</td>
-      <td>0.031411</td>
-      <td>-0.010821</td>
-      <td>0.056259</td>
-      <td>0.063866</td>
+      <td>0.056009</td>
+      <td>0.050707</td>
+      <td>0.004916</td>
+      <td>-0.017955</td>
+      <td>0.093274</td>
     </tr>
   </tbody>
 </table></div>
@@ -461,8 +461,8 @@
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[ 1.       , -0.1768007],
-       [-0.1768007,  1.       ]])
+</pre></td><td class="rouge-code"><pre>array([[1.        , 0.83645878],
+       [0.83645878, 1.        ]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>And pandas DataFrames have a built in method to do this for all numeric columns.</p>
@@ -500,50 +500,154 @@
     <tr>
       <th>col1</th>
       <td>1.000000</td>
-      <td>-0.176801</td>
-      <td>0.593003</td>
-      <td>0.196192</td>
-      <td>0.008517</td>
+      <td>0.836459</td>
+      <td>-0.279384</td>
+      <td>-0.061490</td>
+      <td>0.569506</td>
     </tr>
     <tr>
       <th>col2</th>
-      <td>-0.176801</td>
+      <td>0.836459</td>
       <td>1.000000</td>
-      <td>-0.176814</td>
-      <td>0.270565</td>
-      <td>0.386852</td>
+      <td>-0.629158</td>
+      <td>0.162532</td>
+      <td>0.501009</td>
     </tr>
     <tr>
       <th>col3</th>
-      <td>0.593003</td>
-      <td>-0.176814</td>
+      <td>-0.279384</td>
+      <td>-0.629158</td>
       <td>1.000000</td>
-      <td>0.066660</td>
-      <td>-0.136993</td>
+      <td>0.040002</td>
+      <td>0.049098</td>
     </tr>
     <tr>
       <th>col4</th>
-      <td>0.196192</td>
-      <td>0.270565</td>
-      <td>0.066660</td>
+      <td>-0.061490</td>
+      <td>0.162532</td>
+      <td>0.040002</td>
       <td>1.000000</td>
-      <td>0.823433</td>
+      <td>-0.221339</td>
     </tr>
     <tr>
       <th>col5</th>
-      <td>0.008517</td>
-      <td>0.386852</td>
-      <td>-0.136993</td>
-      <td>0.823433</td>
+      <td>0.569506</td>
+      <td>0.501009</td>
+      <td>0.049098</td>
+      <td>-0.221339</td>
       <td>1.000000</td>
     </tr>
   </tbody>
 </table></div>
 </div>
 
-<p>Content last modified on 23 July 2021.</p>
+<p>Content last modified on 10 November 2022.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute covariance and correlation coefficients/Python, using pandas and NumPy.md">edit the source</a>.</p>
+      <h2 id="solution-in-r">
+        
+        
+          <a href="#solution-in-r" class="anchor-heading" aria-labelledby="solution-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution, in R
+        
+        
+      </h2>
+    
+
+<p><a href="../how-to-compute-covariance-and-correlation-coefficients-in-r">View this solution alone.</a></p>
+
+<p>We will construct some random data here, but when applying this, you would use your own data, of course.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1"># Create a dataframe with random values between 0 and 1</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">matrix</span><span class="p">(</span><span class="n">runif</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="n">min</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">max</span><span class="o">=</span><span class="m">1</span><span class="p">),</span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">))</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'col1'</span><span class="p">,</span><span class="s1">'col2'</span><span class="p">,</span><span class="s1">'col3'</span><span class="p">,</span><span class="s1">'col4'</span><span class="p">,</span><span class="s1">'col5'</span><span class="p">)</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>  col1      col2      col3      col4      col5     
+1 0.2655087 0.2059746 0.9347052 0.4820801 0.8209463
+2 0.3721239 0.1765568 0.2121425 0.5995658 0.6470602
+3 0.5728534 0.6870228 0.6516738 0.4935413 0.7829328
+4 0.9082078 0.3841037 0.1255551 0.1862176 0.5530363
+5 0.2016819 0.7698414 0.2672207 0.8273733 0.5297196
+6 0.8983897 0.4976992 0.3861141 0.6684667 0.7893562
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>In R, we can use the <code class="language-plaintext highlighter-rouge">cov()</code> function to calculate the covariance between two variables. The default method is Pearson.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cov</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">col2</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.0004115864
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>You can also compare all of a DataFrame’s columns among one another, each as a separate variable.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cov</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>     col1          col2          col3          col4          col5        
+col1  0.0996382947  0.0004115864 -0.0287090091 -0.0052485522 -0.029944309
+col2  0.0004115864  0.0731549057 -0.0255386673 -0.0112688616 -0.026535785
+col3 -0.0287090091 -0.0255386673  0.0942522913  0.0009465216  0.050640298
+col4 -0.0052485522 -0.0112688616  0.0009465216  0.0593140088 -0.008714775
+col5 -0.0299443088 -0.0265357850  0.0506402980 -0.0087147752  0.055665077
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The Pearson correlation coefficient can be computed with <code class="language-plaintext highlighter-rouge">cor()</code> in place of <code class="language-plaintext highlighter-rouge">cov()</code>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cor</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">col1</span><span class="p">,</span><span class="n">df</span><span class="o">$</span><span class="n">col2</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.004820878
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>And you can compute correlation coefficients for all numeric columns in a DataFrame.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cor</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>     col1         col2         col3        col4        col5      
+col1  1.000000000  0.004820878 -0.29625051 -0.06827280 -0.4020775
+col2  0.004820878  1.000000000 -0.30756049 -0.17107229 -0.4158329
+col3 -0.296250506 -0.307560491  1.00000000  0.01265919  0.6991315
+col4 -0.068272803 -0.171072293  0.01265919  1.00000000 -0.1516653
+col5 -0.402077472 -0.415832858  0.69913152 -0.15166527  1.0000000
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Content last modified on 10 November 2022.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute covariance and correlation coefficients/R.Rmd">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
         
         
@@ -570,7 +674,6 @@
 software packages.</p>
 
 <ul>
-  <li>R</li>
   <li>Excel</li>
   <li>Julia</li>
 </ul>

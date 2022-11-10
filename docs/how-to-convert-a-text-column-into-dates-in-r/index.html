@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to convert a text column into dates (in Python, using pandas) - How to Data</title>
+    <title>How to convert a text column into dates (in R) - How to Data</title>
 
     
   
@@ -31,20 +31,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to convert a text column into dates (in Python, using pandas) | How to Data</title>
+<title>How to convert a text column into dates (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.2" />
-<meta property="og:title" content="How to convert a text column into dates (in Python, using pandas)" />
+<meta property="og:title" content="How to convert a text column into dates (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-python-using-pandas/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-python-using-pandas/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-r/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to convert a text column into dates (in Python, using pandas)" />
+<meta property="twitter:title" content="How to convert a text column into dates (in R)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to convert a text column into dates (in Python, using pandas)","url":"https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-python-using-pandas/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to convert a text column into dates (in R)","url":"https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-r/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -252,10 +252,10 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-convert-a-text-column-into-dates-in-python-using-pandas">
+          <h1 id="how-to-convert-a-text-column-into-dates-in-r">
         
         
-          <a href="#how-to-convert-a-text-column-into-dates-in-python-using-pandas" class="anchor-heading" aria-labelledby="how-to-convert-a-text-column-into-dates-in-python-using-pandas"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to convert a text column into dates (in Python, using pandas)
+          <a href="#how-to-convert-a-text-column-into-dates-in-r" class="anchor-heading" aria-labelledby="how-to-convert-a-text-column-into-dates-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to convert a text column into dates (in R)
         
         
       </h1>
@@ -287,147 +287,78 @@
 <a href="../how-to-create-a-data-frame-from-scratch">how to create a data frame from scratch</a>).
 Naturally, you would apply this solution to your own data instead.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">{</span> <span class="s">'Date'</span> <span class="p">:</span>  <span class="p">[</span> <span class="s">'5/7/19'</span><span class="p">,</span> <span class="s">'5/10/19'</span><span class="p">,</span>   <span class="s">'5/11/19'</span> <span class="p">],</span>
-                     <span class="s">'Event'</span> <span class="p">:</span> <span class="p">[</span>   <span class="s">'Work'</span><span class="p">,</span>   <span class="s">'Party'</span><span class="p">,</span> <span class="s">'More work'</span> <span class="p">]</span> <span class="p">}</span> <span class="p">)</span>
-<span class="n">df</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5/7/19</td>
-      <td>Work</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5/10/19</td>
-      <td>Party</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5/11/19</td>
-      <td>More work</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>If you’ve already got the data in a DataFrame column, and you wish to convert it to dates, use the <code class="language-plaintext highlighter-rouge">pd.to_datetime</code> function, which will do its best to read whatever format your dates are in:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span> <span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">]</span> <span class="p">)</span>
-<span class="n">df</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2019-05-07</td>
-      <td>Work</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2019-05-10</td>
-      <td>Party</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2019-05-11</td>
-      <td>More work</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>But if they aren’t in a standard format, you can specify just about any format as in the following example.  <a href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">See the Python documentation</a> for format details.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="c1"># If the dates had been, for example, 5-7-2019 10:15:00
-</span><span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span> <span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s">"%m-%d-%Y %H:%M:%S"</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>It’s often easier to handle date conversions while reading the data.  You can tell pandas to read dates in most of the common date formats using any of the following methods.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-6
-7
-8
-9
-10
-</pre></td><td class="rouge-code"><pre><span class="c1"># Any columns that look like dates, treat as dates:
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s">"example.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span>
-
-<span class="c1"># Convert the specific columns you name into dates:
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s">"example.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">'col1'</span><span class="p">,</span><span class="s">'col2'</span><span class="p">]</span> <span class="p">)</span>
-
-<span class="c1"># If the date is spread over multiple columns, do this:
-# (Let's say the year, month, and day are in columns, 4, 5, and 6.)
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s">"example.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="p">)</span>
-<span class="c1"># Note the double brackets, and indices start counting at zero.
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+    </span><span class="n">Date</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="s1">'5/7/19'</span><span class="p">,</span><span class="w"> </span><span class="s1">'5/10/19'</span><span class="p">,</span><span class="w">   </span><span class="s1">'5/11/19'</span><span class="w"> </span><span class="p">),</span><span class="w">
+    </span><span class="n">Event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">   </span><span class="s1">'Work'</span><span class="p">,</span><span class="w">   </span><span class="s1">'Party'</span><span class="p">,</span><span class="w"> </span><span class="s1">'More work'</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="n">df</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>  Date    Event    
+1 5/7/19  Work     
+2 5/10/19 Party    
+3 5/11/19 More work
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>We use the <code class="language-plaintext highlighter-rouge">as.Date()</code> function to convert a text column into dates.
+If the input dates are not in the standard format, we can use the <code class="language-plaintext highlighter-rouge">format=</code> argument to change the format.
+Note the difference between <code class="language-plaintext highlighter-rouge">%y</code> and <code class="language-plaintext highlighter-rouge">%Y</code>: The <code class="language-plaintext highlighter-rouge">%y</code> code means a 2-digit year, but the <code class="language-plaintext highlighter-rouge">%Y</code> code means a 4-digit year.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="o">$</span><span class="n">Date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.Date</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">Date</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="o">=</span><span class="s1">'%m/%d/%y'</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">df</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>  Date       Event    
+1 2019-05-07 Work     
+2 2019-05-10 Party    
+3 2019-05-11 More work
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>It’s often easier to handle date conversions while reading the data file.
+You can use the <code class="language-plaintext highlighter-rouge">read_csv()</code> function in the <code class="language-plaintext highlighter-rouge">readr</code> package,
+which will automatically recognize dates in some common formats.</p>
+
+<p>Additionaly, you can use the <code class="language-plaintext highlighter-rouge">anytime()</code> function in the <code class="language-plaintext highlighter-rouge">anytime</code> package
+to automatically parse strings as dates regardless of the format.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1"># Use anytime() to attempt to parse various formats:</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">anytime</span><span class="p">)</span><span class="w">
+</span><span class="n">examples</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w"> </span><span class="s2">"Nov 01 2022"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2022-11-01"</span><span class="p">,</span><span class="w"> </span><span class="s2">"22-11-01"</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">anytime</span><span class="p">(</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] "2022-11-01 UTC" "2022-11-01 UTC" NA              
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>Note that it succeeded in two cases, but not the third.</p>
 
 <p>Content last modified on 10 November 2022.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to convert a text column into dates/Python, using pandas.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to convert a text column into dates/R.Rmd">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
-<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+<p>Contributed by Ni Shi (shi_ni@bentley.edu)</p>
 
         
 

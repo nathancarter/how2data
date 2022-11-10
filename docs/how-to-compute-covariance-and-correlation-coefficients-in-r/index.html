@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to convert a text column into dates (in Python, using pandas) - How to Data</title>
+    <title>How to compute covariance and correlation coefficients (in R) - How to Data</title>
 
     
   
@@ -31,20 +31,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to convert a text column into dates (in Python, using pandas) | How to Data</title>
+<title>How to compute covariance and correlation coefficients (in R) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.2" />
-<meta property="og:title" content="How to convert a text column into dates (in Python, using pandas)" />
+<meta property="og:title" content="How to compute covariance and correlation coefficients (in R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-python-using-pandas/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-python-using-pandas/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-compute-covariance-and-correlation-coefficients-in-r/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-compute-covariance-and-correlation-coefficients-in-r/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to convert a text column into dates (in Python, using pandas)" />
+<meta property="twitter:title" content="How to compute covariance and correlation coefficients (in R)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to convert a text column into dates (in Python, using pandas)","url":"https://how-to-data.org/how-to-convert-a-text-column-into-dates-in-python-using-pandas/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to compute covariance and correlation coefficients (in R)","url":"https://how-to-data.org/how-to-compute-covariance-and-correlation-coefficients-in-r/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -252,16 +252,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-convert-a-text-column-into-dates-in-python-using-pandas">
+          <h1 id="how-to-compute-covariance-and-correlation-coefficients-in-r">
         
         
-          <a href="#how-to-convert-a-text-column-into-dates-in-python-using-pandas" class="anchor-heading" aria-labelledby="how-to-convert-a-text-column-into-dates-in-python-using-pandas"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to convert a text column into dates (in Python, using pandas)
+          <a href="#how-to-compute-covariance-and-correlation-coefficients-in-r" class="anchor-heading" aria-labelledby="how-to-compute-covariance-and-correlation-coefficients-in-r"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to compute covariance and correlation coefficients (in R)
         
         
       </h1>
     
 
-<p><a href="../how-to-convert-a-text-column-into-dates">See all solutions.</a></p>
+<p><a href="../how-to-compute-covariance-and-correlation-coefficients">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -271,7 +271,7 @@
       </h2>
     
 
-<p>When loading data, many software systems make intelligent guesses about the format and data type of each column, but sometimes that is not sufficient.  If you have a column of text that should be interpreted as dates, how can we ask the software to convert it?</p>
+<p>Covariance is a measure of how much two variables “change together.”  It is positive when the variables tend to increase or decrease together, and negative when they upward motion of one variable is correlated with downward motion of the other.  Correlation normalizes covariance to the interval $[-1,1]$.</p>
       <h2 id="solution">
         
         
@@ -283,151 +283,103 @@
 
 <!-- beginning of wrapper -->
 
-<p>Let’s create a small example DataFrame to use here (using the method from
-<a href="../how-to-create-a-data-frame-from-scratch">how to create a data frame from scratch</a>).
-Naturally, you would apply this solution to your own data instead.</p>
+<p>We will construct some random data here, but when applying this, you would use your own data, of course.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="p">{</span> <span class="s">'Date'</span> <span class="p">:</span>  <span class="p">[</span> <span class="s">'5/7/19'</span><span class="p">,</span> <span class="s">'5/10/19'</span><span class="p">,</span>   <span class="s">'5/11/19'</span> <span class="p">],</span>
-                     <span class="s">'Event'</span> <span class="p">:</span> <span class="p">[</span>   <span class="s">'Work'</span><span class="p">,</span>   <span class="s">'Party'</span><span class="p">,</span> <span class="s">'More work'</span> <span class="p">]</span> <span class="p">}</span> <span class="p">)</span>
-<span class="n">df</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+5
+</pre></td><td class="rouge-code"><pre><span class="c1"># Create a dataframe with random values between 0 and 1</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">matrix</span><span class="p">(</span><span class="n">runif</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="n">min</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="n">max</span><span class="o">=</span><span class="m">1</span><span class="p">),</span><span class="n">nrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">))</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'col1'</span><span class="p">,</span><span class="s1">'col2'</span><span class="p">,</span><span class="s1">'col3'</span><span class="p">,</span><span class="s1">'col4'</span><span class="p">,</span><span class="s1">'col5'</span><span class="p">)</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5/7/19</td>
-      <td>Work</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5/10/19</td>
-      <td>Party</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5/11/19</td>
-      <td>More work</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>If you’ve already got the data in a DataFrame column, and you wish to convert it to dates, use the <code class="language-plaintext highlighter-rouge">pd.to_datetime</code> function, which will do its best to read whatever format your dates are in:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span> <span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">]</span> <span class="p">)</span>
-<span class="n">df</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<div class="table-wrapper"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Event</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2019-05-07</td>
-      <td>Work</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2019-05-10</td>
-      <td>Party</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2019-05-11</td>
-      <td>More work</td>
-    </tr>
-  </tbody>
-</table></div>
-</div>
-
-<p>But if they aren’t in a standard format, you can specify just about any format as in the following example.  <a href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">See the Python documentation</a> for format details.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="c1"># If the dates had been, for example, 5-7-2019 10:15:00
-</span><span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span> <span class="n">df</span><span class="p">[</span><span class="s">'Date'</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s">"%m-%d-%Y %H:%M:%S"</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
-<p>It’s often easier to handle date conversions while reading the data.  You can tell pandas to read dates in most of the common date formats using any of the following methods.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
 6
 7
-8
-9
-10
-</pre></td><td class="rouge-code"><pre><span class="c1"># Any columns that look like dates, treat as dates:
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s">"example.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="bp">True</span> <span class="p">)</span>
+</pre></td><td class="rouge-code"><pre>  col1      col2      col3      col4      col5     
+1 0.2655087 0.2059746 0.9347052 0.4820801 0.8209463
+2 0.3721239 0.1765568 0.2121425 0.5995658 0.6470602
+3 0.5728534 0.6870228 0.6516738 0.4935413 0.7829328
+4 0.9082078 0.3841037 0.1255551 0.1862176 0.5530363
+5 0.2016819 0.7698414 0.2672207 0.8273733 0.5297196
+6 0.8983897 0.4976992 0.3861141 0.6684667 0.7893562
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<span class="c1"># Convert the specific columns you name into dates:
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s">"example.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">'col1'</span><span class="p">,</span><span class="s">'col2'</span><span class="p">]</span> <span class="p">)</span>
+<p>In R, we can use the <code class="language-plaintext highlighter-rouge">cov()</code> function to calculate the covariance between two variables. The default method is Pearson.</p>
 
-<span class="c1"># If the date is spread over multiple columns, do this:
-# (Let's say the year, month, and day are in columns, 4, 5, and 6.)
-</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s">"example.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span> <span class="p">)</span>
-<span class="c1"># Note the double brackets, and indices start counting at zero.
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cov</span><span class="p">(</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">col1</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="o">$</span><span class="n">col2</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.0004115864
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>You can also compare all of a DataFrame’s columns among one another, each as a separate variable.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cov</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>     col1          col2          col3          col4          col5        
+col1  0.0996382947  0.0004115864 -0.0287090091 -0.0052485522 -0.029944309
+col2  0.0004115864  0.0731549057 -0.0255386673 -0.0112688616 -0.026535785
+col3 -0.0287090091 -0.0255386673  0.0942522913  0.0009465216  0.050640298
+col4 -0.0052485522 -0.0112688616  0.0009465216  0.0593140088 -0.008714775
+col5 -0.0299443088 -0.0265357850  0.0506402980 -0.0087147752  0.055665077
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>The Pearson correlation coefficient can be computed with <code class="language-plaintext highlighter-rouge">cor()</code> in place of <code class="language-plaintext highlighter-rouge">cov()</code>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cor</span><span class="p">(</span><span class="n">df</span><span class="o">$</span><span class="n">col1</span><span class="p">,</span><span class="n">df</span><span class="o">$</span><span class="n">col2</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>[1] 0.004820878
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>And you can compute correlation coefficients for all numeric columns in a DataFrame.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">cor</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>     col1         col2         col3        col4        col5      
+col1  1.000000000  0.004820878 -0.29625051 -0.06827280 -0.4020775
+col2  0.004820878  1.000000000 -0.30756049 -0.17107229 -0.4158329
+col3 -0.296250506 -0.307560491  1.00000000  0.01265919  0.6991315
+col4 -0.068272803 -0.171072293  0.01265919  1.00000000 -0.1516653
+col5 -0.402077472 -0.415832858  0.69913152 -0.15166527  1.0000000
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Content last modified on 10 November 2022.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to convert a text column into dates/Python, using pandas.md">edit the source</a>.</p>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute covariance and correlation coefficients/R.Rmd">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 
-<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
+<p>Contributed by Ni Shi (shi_ni@bentley.edu)</p>
 
         
 
