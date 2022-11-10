@@ -8,8 +8,8 @@ Naturally, you would apply this solution to your own data instead.
 
 ```python
 import pandas as pd
-df = pd.DataFrame( { 'Date' : [ '5/7/19', '5/10/19', '5/11/19' ],
-                     'Event' : [ 'Work', 'Party', 'More work' ] } )
+df = pd.DataFrame( { 'Date' :  [ '5/7/19', '5/10/19',   '5/11/19' ],
+                     'Event' : [   'Work',   'Party', 'More work' ] } )
 df
 ```
 
