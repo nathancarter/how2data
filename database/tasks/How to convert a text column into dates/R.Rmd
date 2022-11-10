@@ -1,0 +1,40 @@
+---
+author: Ni Shi (shi_ni@bentley.edu)
+---
+
+Let's create a small example DataFrame to use here (using the method from
+how to create a data frame from scratch).
+Naturally, you would apply this solution to your own data instead.
+
+```{r}
+df <- data.frame(
+    Date  = c( '5/7/19', '5/10/19',   '5/11/19' ),
+    Event = c(   'Work',   'Party', 'More work' )
+)
+df
+```
+
+We use the `as.Date()` function to convert a text column into dates.
+If the input dates are not in the standard format, we can use the `format=` argument to change the format.
+Note the difference between `%y` and `%Y`: The `%y` code means a 2-digit year, but the `%Y` code means a 4-digit year.
+
+```{r}
+df$Date = as.Date( df$Date, format='%m/%d/%y' )
+df
+```
+
+It's often easier to handle date conversions while reading the data file.
+You can use the `read_csv()` function in the `readr` package,
+which will automatically recognize dates in some common formats.
+
+Additionaly, you can use the `anytime()` function in the `anytime` package
+to automatically parse strings as dates regardless of the format.
+
+```{r}
+# Use anytime() to attempt to parse various formats:
+library(anytime)
+examples <- c( "Nov 01 2022", "2022-11-01", "22-11-01" )
+anytime( examples )
+```
+
+Note that it succeeded in two cases, but not the third.

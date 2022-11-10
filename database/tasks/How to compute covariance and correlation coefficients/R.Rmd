@@ -1,0 +1,37 @@
+---
+author: Ni Shi (shi_ni@bentley.edu)
+---
+
+We will construct some random data here, but when applying this, you would use your own data, of course.
+
+```{r}
+# Create a dataframe with random values between 0 and 1
+set.seed(1)
+df <- as.data.frame(matrix(runif(n=50,min=0,max=1),nrow = 10))
+names(df) <- c('col1','col2','col3','col4','col5')
+head(df)
+```
+
+In R, we can use the `cov()` function to calculate the covariance between two variables. The default method is Pearson.
+
+```{r}
+cov( df$col1, df$col2 )
+```
+
+You can also compare all of a DataFrame's columns among one another, each as a separate variable.
+
+```{r}
+cov(df)
+```
+
+The Pearson correlation coefficient can be computed with `cor()` in place of `cov()`.
+
+```{r}
+cor(df$col1,df$col2)
+```
+
+And you can compute correlation coefficients for all numeric columns in a DataFrame.
+
+```{r}
+cor(df)
+```
