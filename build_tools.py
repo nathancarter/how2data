@@ -374,11 +374,18 @@ def build_software_page ( row ):
 def build_topic_page ( row ):
     pdf_downloads = ''
     for sindex, srow in software_df.iterrows():
-        pdf_filename = build_topic_pdf( row, srow )
-        if pdf_filename is not None:
-            pdf_filename = '../assets/downloads/' + pdf_filename
-            pdf_downloads += \
-                f' * [Solutions in {srow["name"]} (download PDF)]({pdf_filename})\n'
+        possible_packages = solutions_df[solutions_df['software'] == srow['name']]
+        possible_packages = possible_packages['solution name'].unique().tolist()
+        for package in possible_packages:
+            pdf_filename = build_topic_pdf( row, srow['name'], package )
+            if pdf_filename is not None:
+                pdf_filename = '../assets/downloads/' + pdf_filename
+                if package == 'solution':
+                    pdf_downloads += \
+                        f' * [Solutions in pure {srow["name"]} (download PDF)]({pdf_filename})\n'
+                else:
+                    pdf_downloads += \
+                        f' * [Solutions in {srow["name"]} {package} (download PDF)]({pdf_filename})\n'
     if pdf_downloads == '':
         pdf_downloads = 'No PDF downloads available for this topic yet.'
     out_filename = row['permalink'] + '.md'
@@ -414,7 +421,7 @@ def html_sections_to_latex ( markdown, folder=main_folder ):
     return html_sections_to_latex( markdown )
 
 # Generate a PDF for a given topic, using a given software package.
-def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
+def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_proportion=0.5 ):
     site_url = 'https://how-to-data.org/'
     # make first page with TOC that links to all later pages
     description_and_toc = make_all_task_names_links( topic_row['content'] )
@@ -424,7 +431,11 @@ def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
         lambda link: description_and_toc.index( link ) )
     tasks = tasks.sort_values( by='where appears' )
     # if none of those tasks were edited more recently than the last PDF we generated, stop
-    title = f'{topic_row["topic name"]} in {software_row["name"]}'
+    if solution_name == 'solution':
+        pair_of_names = f'pure {software_name}'
+    else:
+        pair_of_names = f'{software_name} {solution_name}'
+    title = f'{topic_row["topic name"]} in {pair_of_names}'
     outfile = os.path.join( jekyll_input_folder, 'assets', 'downloads', title + '.pdf' )
     must_build = False
     if os.path.exists( outfile ):
@@ -447,7 +458,8 @@ def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
         DESCRIPTION = description_and_toc
     )
     # now add all tasks, one at a time
-    solutions_in_sw = solutions_df[solutions_df['software'] == software_row['name']]
+    solutions_in_sw = solutions_df[(solutions_df['software'] == software_name) \
+                                 & (solutions_df['solution name'] == solution_name)]
     num_solutions = 0
     for index, task_row in tasks.iterrows():
         task_solutions = solutions_in_sw[solutions_in_sw['task name'] == task_row['task name']]
@@ -458,11 +470,11 @@ def build_topic_pdf ( topic_row, software_row, min_proportion=0.5 ):
             num_solutions += 1
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \
-                     + software_row['name'] + '.'
+                     + pair_of_names + '.'
         markdown += fill_template( 'topic-pdf-solution',
             TASK = task_row['task name'],
             DESCRIPTION = make_all_task_names_links( task_row['content'] ),
-            SOFTWARE = software_row['name'],
+            SOFTWARE = pair_of_names,
             SOLUTION = solution
         )
     proportion = num_solutions / len( tasks )
