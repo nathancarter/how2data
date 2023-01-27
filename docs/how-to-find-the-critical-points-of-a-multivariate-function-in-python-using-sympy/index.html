@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to find the critical numbers of a function (in Python, using SymPy) - How to Data</title>
+    <title>How to find the critical points of a multivariate function (in Python, using SymPy) - How to Data</title>
 
     
   
@@ -31,20 +31,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to find the critical numbers of a function (in Python, using SymPy) | How to Data</title>
+<title>How to find the critical points of a multivariate function (in Python, using SymPy) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.2" />
-<meta property="og:title" content="How to find the critical numbers of a function (in Python, using SymPy)" />
+<meta property="og:title" content="How to find the critical points of a multivariate function (in Python, using SymPy)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-find-the-critical-points-of-a-multivariate-function-in-python-using-sympy/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-find-the-critical-points-of-a-multivariate-function-in-python-using-sympy/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to find the critical numbers of a function (in Python, using SymPy)" />
+<meta property="twitter:title" content="How to find the critical points of a multivariate function (in Python, using SymPy)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to find the critical numbers of a function (in Python, using SymPy)","url":"https://how-to-data.org/how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to find the critical points of a multivariate function (in Python, using SymPy)","url":"https://how-to-data.org/how-to-find-the-critical-points-of-a-multivariate-function-in-python-using-sympy/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -252,16 +252,16 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy">
+          <h1 id="how-to-find-the-critical-points-of-a-multivariate-function-in-python-using-sympy">
         
         
-          <a href="#how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy" class="anchor-heading" aria-labelledby="how-to-find-the-critical-numbers-of-a-function-in-python-using-sympy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to find the critical numbers of a function (in Python, using SymPy)
+          <a href="#how-to-find-the-critical-points-of-a-multivariate-function-in-python-using-sympy" class="anchor-heading" aria-labelledby="how-to-find-the-critical-points-of-a-multivariate-function-in-python-using-sympy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to find the critical points of a multivariate function (in Python, using SymPy)
         
         
       </h1>
     
 
-<p><a href="../how-to-find-the-critical-numbers-of-a-function">See all solutions.</a></p>
+<p><a href="../how-to-find-the-critical-points-of-a-multivariate-function">See all solutions.</a></p>
       <h2 id="task">
         
         
@@ -271,16 +271,16 @@
       </h2>
     
 
-<p>When trying to find the maximum and minimum values of a function, one of the
-main techniques in calculus is to use the “critical numbers” of the function,
-which are the most important $x$ values to examine to find maxima and minima.
-Can we find critical numbers for a single-variable function using software?</p>
+<p>When trying to find the maximum and minimum values of a multivariate function,
+that is a function of multiple real-valued inputs, one of the
+main techniques in calculus is to use the “critical points” of the function,
+which are the most important inputs to examine to find maxima and minima.
+Can we find critical points for a multivariate function using software?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li><a href="../how-to-compute-the-domain-of-a-function">How to compute the domain of a function</a></li>
-  <li>How to find the critical points of a multivarite function</li>
+  <li><a href="../how-to-find-the-critical-numbers-of-a-function">How to find the critical numbers of a function</a> (single-variable version)</li>
 </ul>
       <h2 id="solution">
         
@@ -306,60 +306,104 @@ Can we find critical numbers for a single-variable function using software?</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x'</span> <span class="p">)</span>
-<span class="n">formula</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">-</span> <span class="n">x</span>
+</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x y'</span> <span class="p">)</span>
+<span class="n">formula</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">formula</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle - x + \sqrt{x - 1}$</p>
+<p>$\displaystyle x^{3} + x y - 3 y^{2}$</p>
 
-<p>Critical numbers come in two kinds.  First, where is the derivative zero?
-Second, where is the derivative undefined but the function is defined?</p>
+<p>Critical numbers come in two kinds.  First, where are all partial derivatives zero?
+Second, where is a derivative undefined but the function is defined?</p>
 
-<p>Let’s begin by finding where the derivative is zero.  We’ll use the same
-techniques introduced in <a href="../how-to-write-symbolic-equations">how to write symbolic equations</a> and
+<p>Let’s begin by finding where both partial derivatives are zero.
+Recall that a common notation for the partial derivatives is $f_x$ and $f_y$.
+We’ll use the same techniques introduced in <a href="../how-to-write-symbolic-equations">how to write symbolic equations</a> and
 <a href="../how-to-solve-symbolic-equations">how to solve symbolic equations</a>.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="n">derivative</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">formula</span> <span class="p">)</span>
-<span class="n">derivative</span>
+3
+</pre></td><td class="rouge-code"><pre><span class="n">f_x</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">x</span> <span class="p">)</span>
+<span class="n">f_y</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">f_x</span><span class="p">,</span> <span class="n">f_y</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle -1 + \frac{1}{2 \sqrt{x - 1}}$</p>
+<p>$\displaystyle \left( 3 x^{2} + y, \  x - 6 y\right)$</p>
+
+<p>We can set both equal to zero and solve those equations simultaneously as follows.
+In other words, SymPy will solve $3x^2+y=0$ and $x-6y=0$ simultaneously for us.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">solve</span><span class="p">(</span> <span class="n">Eq</span><span class="p">(</span> <span class="n">derivative</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">)</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
+</pre></td><td class="rouge-code"><pre><span class="n">solve</span><span class="p">(</span> <span class="p">[</span> <span class="n">f_x</span><span class="p">,</span> <span class="n">f_y</span> <span class="p">]</span> <span class="p">)</span>   <span class="c1"># that is, f_x=0 and f_y=0
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle \left[ \frac{5}{4}\right]$</p>
+<p>$\displaystyle \left[ \left\{ x : - \frac{1}{18}, \  y : - \frac{1}{108}\right\}, \  \left\{ x : 0, \  y : 0\right\}\right]$</p>
 
-<p>So one critical number, where the derivative is zero, is $x=\frac54$.</p>
+<p>That output indicates two critical numbers, one at $\left(-\frac{1}{18},-\frac{1}{108}\right)$
+and one at $(0,0)$.</p>
 
 <p>Now where is the derivative defined but the function undefined?
-We compute the domain of both functions and subtract them, using the techniques
-from <a href="../how-to-compute-the-domain-of-a-function">how to compute the domain of a function</a>.</p>
+Unfortunately, SymPy cannot help us compute the domain of multivariate functions.
+You will need to do that yourself.  (In this case, the function is defined for all real
+values of $x$ and $y$.)</p>
+
+<p>But SymPy can help us classify the two critical numbers above.  Are they maxima, minima, or
+saddle points?  We use the discriminant, built from the second partial derivatives,
+$D=f_{xx}f_{yy}-f_{xy}^2$.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sympy.calculus.util</span> <span class="kn">import</span> <span class="n">continuous_domain</span>
-<span class="n">f_domain</span> <span class="o">=</span> <span class="n">continuous_domain</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">Reals</span> <span class="p">)</span>
-<span class="n">deriv_domain</span> <span class="o">=</span> <span class="n">continuous_domain</span><span class="p">(</span> <span class="n">derivative</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">S</span><span class="p">.</span><span class="n">Reals</span> <span class="p">)</span>
-<span class="n">Complement</span><span class="p">(</span> <span class="n">f_domain</span><span class="p">,</span> <span class="n">deriv_domain</span> <span class="p">)</span>
+5
+</pre></td><td class="rouge-code"><pre><span class="n">f_xx</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="p">)</span>
+<span class="n">f_yy</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">f_xy</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">f_xx</span><span class="o">*</span><span class="n">f_yy</span> <span class="o">-</span> <span class="n">f_xy</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">D</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle \left\{1\right\}$</p>
+<p>$\displaystyle - 36 x - 1$</p>
 
-<p>So another critical number, where the function is defined but the derivative is not,
-is $x=1$.</p>
+<p>We can then evaluate the discriminant on our critical points.
+Recall the following rules from multivariate calculus:</p>
 
-<p>Thus the full set of critical numbers for this function is $\left{1,\frac54\right}$.</p>
+<ul>
+  <li>If $D&lt;0$ then the critical point is a saddle point.</li>
+  <li>If $D&gt;0$ and $f_xx&lt;0$ then the critical point is a maximum.</li>
+  <li>If $D&gt;0$ and $f_xx&gt;0$ then the critical point is a minimum.</li>
+</ul>
 
-<p>Content last modified on 13 July 2021.</p>
+<p>Let’s begin by checking $\left(-\frac{1}{18},-\frac{1}{108}\right)$.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to find the critical numbers of a function/Python, using SymPy.ipynb">edit the source</a>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">D</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">18</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">108</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle 1.0$</p>
+
+<p>Since $D&gt;0$ we must check $f_{xx}$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">f_xx</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">18</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">108</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle -0.333333333333333$</p>
+
+<p>Because $f_{xx}&lt;0$, the point $\left(-\frac{1}{18},-\frac{1}{108}\right)$ is a maximum.  Now we check $(0,0)$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">D</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle -1$</p>
+
+<p>Because $D&lt;0$, the point $(0,0)$ is a saddle point.</p>
+
+<p>Content last modified on 27 January 2023.</p>
+
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to find the critical points of a multivariate function/Python, using SymPy.ipynb">edit the source</a>.</p>
 
 <!-- ending of wrapper -->
 

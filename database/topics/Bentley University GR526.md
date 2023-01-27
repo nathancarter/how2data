@@ -47,6 +47,7 @@ required, such as Maxima or SymPy.
  * How to compute the error bounds on a Taylor approximation
  * How to do implicit differentiation
  * How to find the critical numbers of a function
+ * How to find the critical points of a multivariate function
 
 ## Antidifferentiation
 
