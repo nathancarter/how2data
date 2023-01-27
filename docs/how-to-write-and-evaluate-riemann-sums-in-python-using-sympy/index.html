@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
   
-    <title>How to write and evaluate definite integrals - How to Data</title>
+    <title>How to write and evaluate Riemann sums (in Python, using SymPy) - How to Data</title>
 
     
   
@@ -31,20 +31,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>How to write and evaluate definite integrals | How to Data</title>
+<title>How to write and evaluate Riemann sums (in Python, using SymPy) | How to Data</title>
 <meta name="generator" content="Jekyll v4.2.2" />
-<meta property="og:title" content="How to write and evaluate definite integrals" />
+<meta property="og:title" content="How to write and evaluate Riemann sums (in Python, using SymPy)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Reference site for common computing tasks in statistics and data science" />
 <meta property="og:description" content="Reference site for common computing tasks in statistics and data science" />
-<link rel="canonical" href="https://how-to-data.org/how-to-write-and-evaluate-definite-integrals/" />
-<meta property="og:url" content="https://how-to-data.org/how-to-write-and-evaluate-definite-integrals/" />
+<link rel="canonical" href="https://how-to-data.org/how-to-write-and-evaluate-riemann-sums-in-python-using-sympy/" />
+<meta property="og:url" content="https://how-to-data.org/how-to-write-and-evaluate-riemann-sums-in-python-using-sympy/" />
 <meta property="og:site_name" content="How to Data" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="How to write and evaluate definite integrals" />
+<meta property="twitter:title" content="How to write and evaluate Riemann sums (in Python, using SymPy)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to write and evaluate definite integrals","url":"https://how-to-data.org/how-to-write-and-evaluate-definite-integrals/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Reference site for common computing tasks in statistics and data science","headline":"How to write and evaluate Riemann sums (in Python, using SymPy)","url":"https://how-to-data.org/how-to-write-and-evaluate-riemann-sums-in-python-using-sympy/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -252,47 +252,45 @@
       
       <div id="main-content" class="main-content" role="main">
         
-          <h1 id="how-to-write-and-evaluate-definite-integrals">
+          <h1 id="how-to-write-and-evaluate-riemann-sums-in-python-using-sympy">
         
         
-          <a href="#how-to-write-and-evaluate-definite-integrals" class="anchor-heading" aria-labelledby="how-to-write-and-evaluate-definite-integrals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to write and evaluate definite integrals
+          <a href="#how-to-write-and-evaluate-riemann-sums-in-python-using-sympy" class="anchor-heading" aria-labelledby="how-to-write-and-evaluate-riemann-sums-in-python-using-sympy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How to write and evaluate Riemann sums (in Python, using SymPy)
         
         
       </h1>
     
-      <h2 id="description">
+
+<p><a href="../how-to-write-and-evaluate-riemann-sums">See all solutions.</a></p>
+      <h2 id="task">
         
         
-          <a href="#description" class="anchor-heading" aria-labelledby="description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Description
+          <a href="#task" class="anchor-heading" aria-labelledby="task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Task
         
         
       </h2>
     
 
-<p>The area under a curve can be computed using a definite integral.  To compute
-the area above the $x$ axis and under $f(x)$, from $x=a$ to $x=b$, we write</p>
-
-\[\int_a^b f(x)\;dx.\]
-
-<p>How can we write and evaluate definite integrals using software?</p>
+<p>In calculus, a definite integral $\int_a^b f(x)\;dx$ can be approximated by a
+“Reimann sum,” which adds the areas of $n$ rectangles that sit under the curve $f$.
+How can we write a Reimann sum using software?</p>
 
 <p>Related tasks:</p>
 
 <ul>
-  <li><a href="../how-to-compute-the-derivative-of-a-function">How to compute the derivative of a function</a></li>
+  <li><a href="../how-to-write-and-evaluate-definite-integrals">How to write and evaluate definite integrals</a></li>
   <li><a href="../how-to-write-and-evaluate-indefinite-integrals">How to write and evaluate indefinite integrals</a></li>
-  <li><a href="../how-to-write-and-evaluate-riemann-sums">How to write and evaluate Riemann sums</a></li>
 </ul>
-      <h2 id="using-sympy-in-python">
+      <h2 id="solution">
         
         
-          <a href="#using-sympy-in-python" class="anchor-heading" aria-labelledby="using-sympy-in-python"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using SymPy, in Python
+          <a href="#solution" class="anchor-heading" aria-labelledby="solution"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Solution
         
         
       </h2>
     
 
-<p><a href="../how-to-write-and-evaluate-definite-integrals-in-python-using-sympy">View this solution alone.</a></p>
+<!-- beginning of wrapper -->
 
 <p>This answer assumes you have imported SymPy as follows.</p>
 
@@ -302,65 +300,76 @@ the area above the $x$ axis and under $f(x)$, from $x=a$ to $x=b$, we write</p>
 </span><span class="n">init_printing</span><span class="p">(</span> <span class="n">use_latex</span><span class="o">=</span><span class="s">'mathjax'</span> <span class="p">)</span>  <span class="c1"># use pretty math output
 </span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>Let’s compute the area under $\sin x$ from $x=0$ to $x=\pi$.</p>
+<p>In mathematics, we would write a Riemann sum approximating $\int_a^b f(x)\;dx$ as follows.</p>
 
-<p>We use the same technique as in <a href="../how-to-write-and-evaluate-indefinite-integrals">how to write and evaluate indefinite integrals</a>,
-except that we add the lower and upper bounds together with $x$, as shown below.</p>
+\[\lim_{n\to\infty}\sum_{i=1}^n f(a+i\Delta x)\cdot\Delta x,\]
+
+<p>where $\Delta x$ is defined as $\frac{b-a}{n}$.</p>
+
+<p>This is easiest to understand if we break the Python code for it into several smaller parts.
+First, let’s choose a formula we will use as $f(x)$ and the interval $[a,b]$ in question.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x'</span> <span class="p">)</span>
-<span class="n">formula</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">Integral</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">pi</span><span class="p">)</span> <span class="p">)</span>
+4
+</pre></td><td class="rouge-code"><pre><span class="n">var</span><span class="p">(</span> <span class="s">'x a b i n'</span> <span class="p">)</span>     <span class="c1"># We need all these variables, as you can see above.
+</span><span class="n">formula</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>         <span class="c1"># Let's pick f(x)=x^2 as a simple example.
+</span><span class="n">delta_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>  <span class="c1"># Define delta x.
+</span><span class="n">delta_x</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle \int\limits_{0}^{\pi} \sin{\left(x \right)}\, dx$</p>
+<p>$\displaystyle \frac{a - b}{n}$</p>
 
-<p>The above code just displays the definite integral.
-To evaluate it, use the <code class="language-plaintext highlighter-rouge">integrate</code> command.</p>
+<p>The input $a+i\Delta x$ (which we will substitute into our formula $f(x)$)
+varies along the $x$ axis between $a$ and $b$ as $i$ counts from 1 to $n$.
+Each $f(a+i\Delta x)$ is the height of a rectangle whose right edge is at $a+i\Delta x$.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="n">integrate</span><span class="p">(</span> <span class="n">formula</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">pi</span><span class="p">)</span> <span class="p">)</span>
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="nb">input</span>  <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">delta_x</span>             <span class="c1"># Input i to substitute into f(x)
+</span><span class="n">height</span> <span class="o">=</span> <span class="n">formula</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="nb">input</span> <span class="p">)</span>  <span class="c1"># Height of rectangle i
+</span><span class="n">area</span>   <span class="o">=</span> <span class="n">delta_x</span> <span class="o">*</span> <span class="n">height</span>          <span class="c1"># Area of rectangle i
+</span><span class="n">total</span>  <span class="o">=</span> <span class="n">Sum</span><span class="p">(</span> <span class="n">area</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span> <span class="p">)</span>      <span class="c1"># Total area of all rectangles,
+</span><span class="n">total</span>                              <span class="c1"># which is the Reimann sum.
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>$\displaystyle \sum_{i=1}^{n} \frac{\left(a - b\right) \left(a + \frac{i \left(a - b\right)}{n}\right)^{2}}{n}$</p>
+
+<p>We can actually use that formula to estimate $\int_a^b f(x)\;dx$
+if we substitute in actual values for $a$, $b$, and $n$.
+Let’s estimate the area from $a=1$ to $b=3$ with $n=10$ rectangles.
+Recall techniques for evaluating summations discussed in
+<a href="../how-to-define-a-mathematical-series">how to define a mathematical series</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">total</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">a</span><span class="p">,</span> <span class="mi">1</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">b</span><span class="p">,</span> <span class="mi">3</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">n</span><span class="p">,</span> <span class="mi">10</span> <span class="p">).</span><span class="n">doit</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<p>$\displaystyle 2$</p>
+<p>$\displaystyle - \frac{17}{25}$</p>
 
-<p>Content last modified on 02 June 2021.</p>
+<p>We can also use a Riemann sum to get the exact area by taking a limit as $n\to\infty$.</p>
 
-<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to write and evaluate definite integrals/Python, using SymPy.ipynb">edit the source</a>.</p>
-      <h2 id="topics-that-include-this-task">
-        
-        
-          <a href="#topics-that-include-this-task" class="anchor-heading" aria-labelledby="topics-that-include-this-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Topics that include this task
-        
-        
-      </h2>
-    
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">Reimann_sum</span> <span class="o">=</span> <span class="n">total</span><span class="p">.</span><span class="n">subs</span><span class="p">(</span> <span class="n">a</span><span class="p">,</span> <span class="mi">1</span> <span class="p">).</span><span class="n">subs</span><span class="p">(</span> <span class="n">b</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span>   <span class="c1"># leave n as a variable
+</span><span class="n">Reimann_sum</span> <span class="o">=</span> <span class="n">Reimann_sum</span><span class="p">.</span><span class="n">doit</span><span class="p">()</span>                <span class="c1"># simplify the summation
+</span><span class="n">limit</span><span class="p">(</span> <span class="n">Reimann_sum</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">oo</span> <span class="p">)</span>                     <span class="c1"># take a limit as n -&gt; infinity
+</span></pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<ul>
-  <li><a href="../bentley-university-gr526">Bentley University GR526</a></li>
-</ul>
-      <h2 id="opportunities">
-        
-        
-          <a href="#opportunities" class="anchor-heading" aria-labelledby="opportunities"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Opportunities
-        
-        
-      </h2>
-    
+<p>$\displaystyle - \frac{2}{3}$</p>
 
-<p>This website does not yet contain a solution for this task in any of the following
-software packages.</p>
+<p>Content last modified on 27 January 2023.</p>
 
-<ul>
-  <li>R</li>
-  <li>Excel</li>
-  <li>Julia</li>
-</ul>
+<p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to write and evaluate Riemann sums/Python, using SymPy.ipynb">edit the source</a>.</p>
 
-<p>If you can contribute a solution using any of these pieces of software,
-see <a href="../contributing">our Contributing page</a> for how to help extend this website.</p>
+<!-- ending of wrapper -->
+
+<p>Contributed by Nathan Carter (ncarter@bentley.edu)</p>
 
         
 

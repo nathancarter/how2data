@@ -53,6 +53,7 @@ required, such as Maxima or SymPy.
 
  * How to write and evaluate indefinite integrals
  * How to write and evaluate definite integrals
+ * How to write and evaluate Riemann sums
 
 ## Differential Equations
 

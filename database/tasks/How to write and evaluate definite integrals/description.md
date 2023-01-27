@@ -10,3 +10,4 @@ Related tasks:
 
  * How to compute the derivative of a function
  * How to write and evaluate indefinite integrals
+ * How to write and evaluate Riemann sums
