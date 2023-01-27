@@ -298,7 +298,8 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
             NAME = solution_name,
             SOFTWARE = solution_row['software'],
             PERMALINK = solution_row['permalink'],
-            BODY = get_generated_solution_body( solution_row, out_folder )
+            BODY = unescape_for_jekyll( get_generated_solution_body(
+                solution_row, out_folder ) )
         )
     if all_solutions == '':
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
@@ -464,9 +465,10 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     for index, task_row in tasks.iterrows():
         task_solutions = solutions_in_sw[solutions_in_sw['task name'] == task_row['task name']]
         if len( task_solutions ) > 0:
-            solution = get_generated_solution_body( task_solutions.iloc[0,:] )
-            solution = solution.replace( '\\\\{', '\\{' ).replace( '\\\\}', '\\}' )
-            solution = html_sections_to_latex( solution )
+            solution = html_sections_to_latex(
+                unescape_for_jekyll(
+                    get_generated_solution_body(
+                        task_solutions.iloc[0,:] ) ) )
             num_solutions += 1
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \
@@ -500,7 +502,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     # write all that markdown to a file, run pandoc on it to create a PDF, then delete the .md
     print( f'        Generating PDF for: {title}' )
     tmp_md_doc = os.path.join( topics_folder, 'pandoc-temp-file.md' )
-    write_markdown( tmp_md_doc, markdown, for_jekyll=False )
+    write_markdown( tmp_md_doc, markdown, add_escapes=False )
     command_to_run = 'pandoc --from=markdown --to=pdf --pdf-engine=xelatex' \
                 + ' -V geometry:margin=1in -V urlcolor:NavyBlue --standalone' \
                 + f' --include-in-header="{os.path.join(main_folder,"pandoc-latex-header.tex")}"' \

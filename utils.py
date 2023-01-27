@@ -30,12 +30,34 @@ def read_text_file ( file ):
 def write_text_file ( file, text ):
     with open( file, 'w' ) as f:
         f.write( text )
-# When writing Markdown, be aware that Jekyll messes with \{ and \},
-# which screws up our math, so fix them.
-def write_markdown ( file, markdown, for_jekyll=True ):
-    if for_jekyll:
-        markdown = markdown.replace( '\\{', '\\\\{' ) \
-                           .replace( '\\}', '\\\\}' )
+# Jekyll messes with single-dollar-sign LaTeX expressions,
+# unescaping every backslash within them (by one level),
+# but it leaves double-dollar-sign ones alone.
+# So we do the following, to escape every backslash
+# EXCEPT those that are inside double-dollar-sign LaTeX expressions:
+def has_double_dollar_section ( text ):
+    return re.match( '\\s*\\$\\$.*\\$\\$\\s*', text )
+def has_single_dollar_section ( text ):
+    return re.match( '\\s*\\$.*\\$\\s*', text )
+def escape_for_jekyll ( markdown ):
+    def fix_line ( line ):
+        if has_single_dollar_section( line ) and not has_double_dollar_section( line ):
+            return line.replace( '\\', '\\\\' )
+        else:
+            return line
+    return '\n'.join( fix_line( line ) for line in markdown.split( '\n' ) )
+# Inverse of previous function
+def unescape_for_jekyll ( markdown ):
+    def fix_line ( line ):
+        if has_single_dollar_section( line ) and not has_double_dollar_section( line ):
+            return line.replace( '\\\\', '\\' )
+        else:
+            return line
+    return '\n'.join( fix_line( line ) for line in markdown.split( '\n' ) )
+# When writing Markdown, be aware that Jekyll messes with LaTex; see below.
+def write_markdown ( file, markdown, add_escapes=True ):
+    if add_escapes:
+        markdown = escape_for_jekyll( markdown )
     write_text_file( file, markdown )
 
 # Prepend text to a file
