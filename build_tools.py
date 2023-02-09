@@ -458,10 +458,18 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
         DATE = datetime.now().strftime("%d %B %Y"),
         DESCRIPTION = description_and_toc
     )
-    # now add all tasks, one at a time
+    # check to see if we have enough solutions to proceed, to save time
+    num_solutions = 0
     solutions_in_sw = solutions_df[(solutions_df['software'] == software_name) \
                                  & (solutions_df['solution name'] == solution_name)]
-    num_solutions = 0
+    for index, task_row in tasks.iterrows():
+        if sum( solutions_in_sw['task name'] == task_row['task name'] ) > 0:
+            num_solutions += 1
+    proportion = num_solutions / len( tasks )
+    if proportion < min_proportion:
+        print( f'    Not generating PDF for: {title}   (only {proportion*100:0.1f}% solved)' )
+        return None
+    # now add all tasks, one at a time
     for index, task_row in tasks.iterrows():
         task_solutions = solutions_in_sw[solutions_in_sw['task name'] == task_row['task name']]
         if len( task_solutions ) > 0:
@@ -469,7 +477,6 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
                 unescape_for_jekyll(
                     get_generated_solution_body(
                         task_solutions.iloc[0,:] ) ) )
-            num_solutions += 1
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \
                      + pair_of_names + '.'
@@ -479,11 +486,6 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
             SOFTWARE = pair_of_names,
             SOLUTION = solution
         )
-    proportion = num_solutions / len( tasks )
-    # if that proportion is not large enough, stop here
-    if proportion < min_proportion:
-        print( f'    Not generating PDF for: {title}   (only {proportion*100:0.1f}% solved)' )
-        return None
     # fix all hyperlinks to be either within-the-PDF links or marked as external
     def process_one_link ( match ):
         text = match.group( 1 )
