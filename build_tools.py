@@ -195,7 +195,8 @@ def run_markdown ( markdown, folder, software ):
     # workaround for buggy way that SVGs get embedded in markdown:
     result = result \
         .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="utf-8"?>', '' ) \
-        .replace( ' /></svg>\n)', ' /></svg>\n' )
+        .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="UTF-8"?>', '' ) \
+        .replace( '</svg>\n)', '</svg>\n' )
     return result
 
 ###
