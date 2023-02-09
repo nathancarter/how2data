@@ -474,12 +474,12 @@ difference is equal to 0 (or some other hypothesized value), $H_0: \mu_D = 0$.</
 
 data:  sample.1 and sample.2
 t = 2.8577, df = 5, p-value = 0.0355
-alternative hypothesis: true difference in means is not equal to 0
+alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
   0.7033862 13.2966138
 sample estimates:
-mean of the differences 
-                      7 
+mean difference 
+              7 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Our $p$-value, 0.0355, appears in the third line of the output.  It is smaller
@@ -521,12 +521,12 @@ zero, $H_0: \mu_D\le0$, we can use a right-tailed test, as follows.</p>
 
 data:  sample.1 and sample.2
 t = 2.8577, df = 5, p-value = 0.01775
-alternative hypothesis: true difference in means is greater than 0
+alternative hypothesis: true mean difference is greater than 0
 95 percent confidence interval:
  2.06416     Inf
 sample estimates:
-mean of the differences 
-                      7 
+mean difference 
+              7 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Our $p$-value, 0.01775, is smaller than $\alpha$, so we have sufficient evidence
@@ -566,12 +566,12 @@ zero, $H_0: \mu_D\ge0$, we can use a right-tailed test, as follows.</p>
 
 data:  sample.1 and sample.2
 t = 2.8577, df = 5, p-value = 0.9822
-alternative hypothesis: true difference in means is less than 0
+alternative hypothesis: true mean difference is less than 0
 95 percent confidence interval:
      -Inf 11.93584
 sample estimates:
-mean of the differences 
-                      7 
+mean difference 
+              7 
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Our $p$-value, 0.9822, is larger than $\alpha$, so we do not have sufficient evidence
@@ -580,7 +580,7 @@ between the two samples is greater than or equal to zero.</p>
 
 <p>Again, you can use another value $d\neq0$ in place of <code class="language-plaintext highlighter-rouge">mu = 0</code> in the code.</p>
 
-<p>Content last modified on 07 December 2021.</p>
+<p>Content last modified on 09 February 2023.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a hypothesis test for a mean difference (matched pairs)/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
