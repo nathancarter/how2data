@@ -7,7 +7,7 @@ USER root
 # Install additional OS packages (some of which are needed for R/Python packages below)
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
  && apt-get -y install --no-install-recommends \
-    ruby-full build-essential zlib1g-dev zip texlive-fonts-recommended lmodern
+    ruby-full build-essential zlib1g-dev zip texlive-fonts-recommended lmodern cmake
 
 # Do all other steps using the account the VS Code user will use
 USER jovyan
