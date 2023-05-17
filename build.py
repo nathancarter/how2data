@@ -29,28 +29,28 @@ replacements = {
     'SET_OF_SOFTWARE_PACKAGES': software_table.to_markdown( index=False ),
     'SET_OF_TASKS' : tasks_table_with_links.to_markdown( index=False ),
     'LIST_OF_TOPICS' : '\n'.join( [
-        f' * {link}' for link in topics_df['markdown link'] ] ),
+        f' * {link}' for link in topics_df()['markdown link'] ] ),
     'OVERALL_STATS' : stats_table.to_markdown( index=False ),
     'CONTRIBUTORS_LIST' : contributors_list_markdown
 }
-for filename in files_df[files_df['type'] == 'static page']['filename']:
+for filename in files_df()[files_df()['type'] == 'static page']['filename']:
     copy_static_file( filename, replacements )
-for index, row in files_df[files_df['type'] == 'task image'].iterrows():
+for index, row in files_df()[files_df()['type'] == 'task image'].iterrows():
     copy_task_image_file( row['full path'], row['filename'] )
 
 # Generate files from database
 section_heading( 'Generating files from database content' )
 # Note: solution building must go first so task pages can read the generated results
-for index, row in solutions_df.iterrows():
+for index, row in solutions_df().iterrows():
     build_solution_page( row, rerun_solutions )
 # Now task pages get built second, so they can read the generated solution pages
-for index, row in tasks_df.iterrows():
+for index, row in tasks_df().iterrows():
     build_task_page( row )
 # Create a page for each software package; the sequencing of this step is not important.
-for index, row in software_df.iterrows():
+for index, row in software_df().iterrows():
     build_software_page( row )
 # Create a page for each topic; the sequencing of this step is not important.
-for index, row in topics_df.iterrows():
+for index, row in topics_df().iterrows():
     build_topic_page( row )
 delete_ungenerated_markdown()
 

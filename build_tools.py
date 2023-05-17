@@ -24,23 +24,23 @@ from datetime import datetime
 ###
 
 # The software table to be inserted on the software packages page
-software_table = software_df[[
+software_table = software_df()[[
     'name as link', 'icon markdown', 'num solutions', 'website markdown']]
 software_table.columns = [
     'Software Package', 'Icon', 'Number of solutions', 'Website']
 
 # Generate the tasks table for the tasks page and render as markdown
-tasks_table = pd.DataFrame( { 'Task' : tasks_df['markdown link'] } )
+tasks_table = pd.DataFrame( { 'Task' : tasks_df()['markdown link'] } )
 def links_for_task_solutions_in_software ( task_name, software_name ):
-    return ', '.join( list( solutions_df[ \
-        (solutions_df['task name'] == task_name) & \
-        (solutions_df['software'] == software_name)]['markdown link'] ) )
-for index, software_row in software_df.iterrows():
+    return ', '.join( list( solutions_df()[ \
+        (solutions_df()['task name'] == task_name) & \
+        (solutions_df()['software'] == software_name)]['markdown link'] ) )
+for index, software_row in software_df().iterrows():
     tasks_table[f'Solutions in {software_row["name"]}'] = \
-        tasks_df['task name'].apply( lambda task_name:
+        tasks_df()['task name'].apply( lambda task_name:
             links_for_task_solutions_in_software( task_name, software_row['name'] ) )
 # Make a separate copy that unites all solution columns
-permalink_for_sw = dict( zip( software_df['name'], software_df['permalink'] ) )
+permalink_for_sw = dict( zip( software_df()['name'], software_df()['permalink'] ) )
 tasks_table_with_links = tasks_table.copy()
 tasks_table_with_links['Solutions'] = ''
 for index, row in tasks_table_with_links.iterrows():
@@ -60,16 +60,16 @@ stats_table = pd.DataFrame( {
         '[Software packages](software)'
     ],
     'Quantity' : [
-        len( topics_df ),
-        len( tasks_df ),
-        len( solutions_df ),
-        len( software_df )
+        len( topics_df() ),
+        len( tasks_df() ),
+        len( solutions_df() ),
+        len( software_df() )
     ]
 } )
 
 # The contributors list
 contributors_list = [ ]
-for entry in solutions_df['author']:
+for entry in solutions_df()['author']:
     if type(entry) == str:  # maybe it's a single-author solution
         contributors_list.append( entry )
     else:
@@ -211,7 +211,7 @@ new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
     return f'{github_url}/tree/main/{path_in_project( filename )}'
 def make_all_task_names_links ( markdown ):
-    longer_first = tasks_df.sort_values( 'task name', ascending=False )
+    longer_first = tasks_df().sort_values( 'task name', ascending=False )
     for index, task_row in longer_first.iterrows():
         markdown = re.sub( '(?<!\\[)(' + re.escape( task_row['task name'] ) + ')',
             lambda x: f'[{x.group(0)}](../{task_row["permalink"]})',
@@ -222,7 +222,7 @@ def make_all_task_names_links ( markdown ):
 ###  TOOLS THAT BUILD PAGES IN THE SITE
 ###
 
-# Main function to build a solution page.  1st parameter is any row from solutions_df.
+# Main function to build a solution page.  1st parameter is any row from solutions_df().
 def build_solution_page ( solution_row, force_rerun_solution=False,
                           in_folder=None, out_folder=jekyll_input_folder,
                           task_row=None ):
@@ -247,7 +247,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
     if task_row is None:
-        task_row = tasks_df[tasks_df['task name'] == solution_row['task name']].iloc[0]
+        task_row = tasks_df()[tasks_df()['task name'] == solution_row['task name']].iloc[0]
     contributors = solution_row["author"]
     if type( contributors ) == str:
         contributors = f'Contributed by {contributors}'
@@ -282,7 +282,7 @@ def get_generated_solution_body ( solution_row, folder=jekyll_input_folder ):
     all_content = read_text_file( os.path.join( folder, generated_file ) )
     return unwrap_from_html_comments( all_content )
 
-# How to build a task page; pass any row from tasks_df.
+# How to build a task page; pass any row from tasks_df().
 # IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
 # using the build_solution_page() function on any files that need their solutions
 # rebuilt/updated.  See that function defined above.
@@ -291,7 +291,7 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
     output_file = os.path.join( out_folder, out_filename )
     all_solutions = ''
     software_for_this_task = solution_rows if solution_rows is not None else \
-        solutions_df[solutions_df['task name'] == row['task name']]
+        solutions_df()[solutions_df()['task name'] == row['task name']]
     for index, solution_row in software_for_this_task.iterrows():
         solution_name = without_extension( solution_row['solution name'] )
         solution_name = solution_name[0].upper() + solution_name[1:]
@@ -304,15 +304,15 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
         )
     if all_solutions == '':
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
-    opportunities = list( software_df['name'][
-        ~software_df['name'].isin(software_for_this_task['software'])] )
+    opportunities = list( software_df()['name'][
+        ~software_df()['name'].isin(software_for_this_task['software'])] )
     if len( opportunities ) > 0:
         opportunities = "\n".join( [ f" * {software}" for software in opportunities ] )
         opportunities = fill_template( 'opportunities',
             OPPORTUNITIES_LIST = opportunities )
     else:
         opportunities = ''
-    related_topics = topics_df[topics_df['content'].str.contains( row['task name'], regex=False )]
+    related_topics = topics_df()[topics_df()['content'].str.contains( row['task name'], regex=False )]
     if len( related_topics ) > 0:
         related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
     else:
@@ -331,13 +331,13 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
     return output_file
 
 # Generate a page for a given software package,
-# from a row in the software_df DataFrame.
+# from a row in the software_df() DataFrame.
 def build_software_page ( row ):
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    sol_uses_this_sw = solutions_df['software'] == row['name']
+    sol_uses_this_sw = solutions_df()['software'] == row['name']
     def link_to_other_solutions ( task_row ):
-        sol_is_for_task = solutions_df['task name'] == task_row['task name']
+        sol_is_for_task = solutions_df()['task name'] == task_row['task name']
         num_not_in_this_sw = sum(sol_is_for_task) - \
             sum(sol_is_for_task & sol_uses_this_sw)
         if num_not_in_this_sw > 0:
@@ -346,7 +346,7 @@ def build_software_page ( row ):
             return 'None'
     my_tasks_table = tasks_table[['Task',f'Solutions in {row["name"]}']].copy()
     my_tasks_table['Solutions in other software packages'] = \
-        tasks_df.apply( link_to_other_solutions, axis=1 )
+        tasks_df().apply( link_to_other_solutions, axis=1 )
     solution_needed = my_tasks_table.iloc[:,1].isin([''])
     table1 = my_tasks_table[~solution_needed]
     if len( table1 ) > 0:
@@ -372,11 +372,11 @@ def build_software_page ( row ):
     ) )
     mark_as_regenerated( out_filename )
 
-# Generate a page for a given topic, from a row in the topics_df DataFrame.
+# Generate a page for a given topic, from a row in the topics_df() DataFrame.
 def build_topic_page ( row ):
     pdf_downloads = ''
-    for sindex, srow in software_df.iterrows():
-        possible_packages = solutions_df[solutions_df['software'] == srow['name']]
+    for sindex, srow in software_df().iterrows():
+        possible_packages = solutions_df()[solutions_df()['software'] == srow['name']]
         possible_packages = possible_packages['solution name'].unique().tolist()
         for package in possible_packages:
             pdf_filename = build_topic_pdf( row, srow['name'], package )
@@ -427,7 +427,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     site_url = 'https://how-to-data.org/'
     # make first page with TOC that links to all later pages
     description_and_toc = make_all_task_names_links( topic_row['content'] )
-    tasks = tasks_df[tasks_df.permalink.apply(
+    tasks = tasks_df()[tasks_df().permalink.apply(
         lambda link: link in description_and_toc )].copy()
     tasks['where appears'] = tasks.permalink.apply(
         lambda link: description_and_toc.index( link ) )
@@ -461,8 +461,8 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     )
     # check to see if we have enough solutions to proceed, to save time
     num_solutions = 0
-    solutions_in_sw = solutions_df[(solutions_df['software'] == software_name) \
-                                 & (solutions_df['solution name'] == solution_name)]
+    solutions_in_sw = solutions_df()[(solutions_df()['software'] == software_name) \
+                                 & (solutions_df()['solution name'] == solution_name)]
     for index, task_row in tasks.iterrows():
         if sum( solutions_in_sw['task name'] == task_row['task name'] ) > 0:
             num_solutions += 1

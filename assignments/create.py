@@ -45,12 +45,12 @@ create.py convert <X> <Y> [format] [text]
 ''' )
 
 # Compute binary information of which tasks have solutions in which software
-binary_info = solutions_df[['task name','software']].copy().drop_duplicates()
+binary_info = solutions_df()[['task name','software']].copy().drop_duplicates()
 binary_info['marker'] = 1
 binary_info = binary_info.pivot(
     index=['task name'], columns='software', values='marker' )
 binary_info = binary_info.fillna( 0 )
-for sw in software_df.name:
+for sw in software_df().name:
     binary_info[sw] = binary_info[sw].astype( bool )
 
 # Declarations of file formats supported, plus defaults
@@ -69,7 +69,7 @@ software_using_code = [ 'R', 'Python' ] # not Excel
 # List every possible ordered pair of distinct software packages
 def software_pairs ():
     return [
-        (a,b) for a in software_df.name for b in software_df.name if a != b
+        (a,b) for a in software_df().name for b in software_df().name if a != b
     ]
 
 # Compute the list of task names that need to be (or could be) converted from
@@ -346,7 +346,7 @@ def convert ( task_name, from_sw, to_sw, format ):
 if sys.argv[1:] == ['software']:
     print( 'Software # Solutions Default format' )
     print( '-------- ----------- --------------' )
-    for software in software_df.name:
+    for software in software_df().name:
         num_sols = sum( binary_info[software] )
         format = default_formats[software] \
             if software in default_formats else None
