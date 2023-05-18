@@ -43,7 +43,6 @@
 ##############
 
 import os, sys, glob
-from utils import *
 from build_tools import *
 import http.server
 import socketserver
@@ -52,6 +51,7 @@ import files
 import markdown
 import yaml
 import log
+import shell
 
 # Ensure preview folders exist
 log.heading( 'Ensuring preview folders exist' )
@@ -65,7 +65,7 @@ files.ensure_folder_exists( generated_folder )
 log.heading( 'Deleting old files from output folder' )
 to_delete = os.path.join( generated_folder, '*' )
 log.file_delete( to_delete )
-run_shell_command_ignoring_errors( f'rm {to_delete}' )
+shell.run_and_continue( f'rm {to_delete}' )
 
 # Generate a task DataFrame from just the one task in the preview folder
 log.heading( 'Gathering task description data' )
@@ -140,7 +140,7 @@ for index, row in solutions_df.iterrows():
         in_folder=preview_folder, out_folder=generated_folder,
         task_row=tasks_df.iloc[0] )
     generated_html = generated_md[:-3] + '.html'
-    ensure_shell_command_succeeds(
+    shell.run_or_halt(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
     files.prepend_text_to_file( generated_html, preamble )
     # print( f'Converted to {generated_html}\n' )
@@ -150,7 +150,7 @@ for index, row in tasks_df.iterrows():
     generated_md = build_task_page( row, out_folder=generated_folder,
                                     solution_rows=solutions_df )
     generated_html = generated_md[:-3] + '.html'
-    ensure_shell_command_succeeds(
+    shell.run_or_halt(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
     files.prepend_text_to_file( generated_html, preamble )
     # print( f'Converted to {generated_html}\n' )

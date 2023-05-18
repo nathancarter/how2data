@@ -4,8 +4,7 @@ import re
 import json
 import files
 import log
-
-from utils import ensure_shell_command_succeeds
+import shell
 
 # Jekyll messes with single-dollar-sign LaTeX expressions,
 # unescaping every backslash within them (by one level),
@@ -101,9 +100,9 @@ def read_doc ( filename ):
         return ipynb_to_markdown( filename )
     if extension in [ '.doc', '.docx' ]:
         tmp_file = os.path.join( *os.path.split( filename )[:-1], 'temp.ipynb' )
-        ensure_shell_command_succeeds( f'pandoc -o "{tmp_file}" "{filename}"' )
+        shell.run_or_halt( f'pandoc -o "{tmp_file}" "{filename}"' )
         result = ipynb_to_markdown( tmp_file )
-        ensure_shell_command_succeeds( f'rm "{tmp_file}"' )
+        shell.run_or_halt( f'rm "{tmp_file}"' )
         return result
     log.error( 'Unknown document type', Type=extension, File=filename )
 
@@ -131,11 +130,11 @@ def html_sections_to_latex ( markdown, folder ):
     tmp_html_file = os.path.join( folder, 'tmp.html' )
     tmp_tex_file = os.path.join( folder, 'tmp.tex' )
     files.write_text_file( tmp_html_file, section.group(0) )
-    ensure_shell_command_succeeds(
+    shell.run_or_halt(
         f'pandoc --from=html --to=latex --output="{tmp_tex_file}" "{tmp_html_file}"',
         f'rm "{tmp_html_file}"' )
     section_as_tex = files.read_text_file( tmp_tex_file )
-    ensure_shell_command_succeeds( f'rm "{tmp_tex_file}"' )
+    shell.run_or_halt( f'rm "{tmp_tex_file}"' )
     # replace the section with its TeX-ified version
     markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]
     # recur on the new markdown, with one less section to process

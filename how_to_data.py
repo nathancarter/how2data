@@ -9,6 +9,7 @@ import solutions
 import software
 import config
 import glob
+import shell
 
 # Build class; use instances of this to run builds
 class Build:
@@ -27,7 +28,7 @@ class Build:
             for ext in files.img_extensions
         ] )
         log.file_delete( to_delete )
-        run_shell_command_ignoring_errors( f'rm {to_delete}' )
+        shell.run_and_continue( f'rm {to_delete}' )
 
         # Copy files to Jekyll input folder
         log.heading( 'Copying files to Jekyll input folder' )
@@ -66,13 +67,13 @@ class Build:
         outfile = 'jekyll-input/assets/downloads/examples-for-contributing-to-how-to-data.zip'
         if any( files.must_rebuild( infile, outfile ) for infile in infiles ):
             howto = 'examples/How to use this folder'
-            ensure_shell_command_succeeds( f'pandoc --to=docx --output="{howto}.docx" "{howto}.md"' )
+            shell.run_or_halt( f'pandoc --to=docx --output="{howto}.docx" "{howto}.md"' )
             files.ensure_folder_exists(
                 os.path.join( jekyll_input_folder, 'assets', 'downloads' ) )
-            ensure_shell_command_succeeds( f'cd examples && zip -orv9 "../{outfile}" *' )
+            shell.run_or_halt( f'cd examples && zip -orv9 "../{outfile}" *' )
         else:
             log.not_built( 'Examples for contributors', *infiles )
 
     # Run a build from the Jekyll input folder to the site, using Jekyll
     def jekyll_to_site ( self ):
-        ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental --profile' )
+        shell.run_or_halt( 'bundle exec jekyll build --incremental --profile' )

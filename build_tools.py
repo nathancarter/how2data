@@ -2,15 +2,12 @@
 #######################
 #
 #  High-level build tools factored out of build.py to keep that file cleaner.
-#  Lower-level tools appear in utils.py; most are independent of this project,
-#  such as shortcuts for reading/writing text files.
 #  Declarations of constants specific to this project are in build_constants.py. 
 #
 #######################
 
 import config
 import how_to_data
-from utils import *
 import os
 import pandas as pd
 import numpy as np
@@ -26,6 +23,7 @@ import topics
 import solutions
 import software
 import static_files
+import shell
 
 ###
 ###  GENERATING TABLES
@@ -110,7 +108,7 @@ def mark_as_regenerated ( file ):
 def delete_ungenerated_markdown ():
     for file in os.listdir( config.jekyll_input_folder ):
         if files.is_doc( file ) and file not in files_generated:
-            ensure_shell_command_succeeds(
+            shell.run_or_halt(
                 f'rm {os.path.join( config.jekyll_input_folder, file )}' )
 
 ###
@@ -169,7 +167,7 @@ def run_markdown ( markdown, folder, software, config_folder=None ):
     # write markdown to temp file
     files.write_text_file( tmp_md_doc, markdown )
     # run it, creating a notebook containing the outputs
-    ensure_shell_command_succeeds( 'jupytext --to ipynb ' + \
+    shell.run_or_halt( 'jupytext --to ipynb ' + \
         f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
         f'rm "{tmp_md_doc}"' )
     # convert that to markdown again
@@ -181,10 +179,10 @@ def run_markdown ( markdown, folder, software, config_folder=None ):
     command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \
         config_param + " " + \
         f'--output="{tmp_md_doc}" "{ipynb_out}"'
-    ensure_shell_command_succeeds( command_to_run, f'rm "{ipynb_out}"' )
+    shell.run_or_halt( command_to_run, f'rm "{ipynb_out}"' )
     # read it back into a string
     result = files.read_text_file( tmp_md_doc )
-    ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
+    shell.run_or_halt( f'rm "{tmp_md_doc}"' )
     # workaround for buggy way that SVGs get embedded in markdown:
     result = result \
         .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="utf-8"?>', '' ) \
@@ -488,5 +486,5 @@ def build_topic_pdf (
                 + f' --include-in-header="{os.path.join(main_folder,"pandoc-latex-header.tex")}"' \
                 + f' --lua-filter="{os.path.join(main_folder,"pandoc-pdf-tweaks.lua")}"' \
                 + f' --output="{outfile}" "{tmp_md_doc}"'
-    ensure_shell_command_succeeds( command_to_run, f'rm "{tmp_md_doc}"' )
+    shell.run_or_halt( command_to_run, f'rm "{tmp_md_doc}"' )
     return title + '.pdf'

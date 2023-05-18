@@ -22,6 +22,7 @@ import files
 import log
 import solutions
 import software
+import shell
 
 #####
 #
@@ -197,11 +198,11 @@ def code_to_code_cell ( code ):
 def notebook_with_cells ( cells ):
     tmp_file = os.path.join( script_folder, 'tmp' )
     files.write_text_file( tmp_file+'.md', 'Dummy text' )
-    ensure_shell_command_succeeds(
+    shell.run_or_halt(
         f'pandoc "{tmp_file}.md" --output="{tmp_file}.ipynb"',
         f'rm "{tmp_file}.md"' )
     template = json.loads( files.read_text_file( tmp_file+'.ipynb' ) )
-    ensure_shell_command_succeeds( f'rm "{tmp_file}.ipynb"' )
+    shell.run_or_halt( f'rm "{tmp_file}.ipynb"' )
     flag = "REPLACE_THIS_WITH_ACTUAL_CELLS"
     template["cells"] = [ flag ]
     return json.dumps( template ).replace( '"'+flag+'"', ',\n'.join( cells ) )
@@ -249,7 +250,7 @@ def finalize_export ( filename, markdown, format ):
         log.info( 'Exporting file', Filename=f"{filename}.md" )
         files.write_text_file( filename+'.md', markdown )
         log.info( 'Converting file', **{ "New format" : f"{filename}.md" } )
-        ensure_shell_command_succeeds(
+        shell.run_or_halt(
             f'pandoc "{filename}.md" --output="{filename}.{format}"',
             f'rm "{filename}.md"' )
     elif format in ['Rmd','RMarkdown','Rmarkdown']:
@@ -257,7 +258,7 @@ def finalize_export ( filename, markdown, format ):
         files.write_text_file( filename+'.md',
             markdown.replace( '\n```R', '\n```{r}' ) )
         log.info( 'Converting file', **{ "New format" : f"{filename}.md" } )
-        ensure_shell_command_succeeds(
+        shell.run_or_halt(
             f'mv "{filename}.md" "{filename}.Rmd"' )
     else:
         raise Error( f'FORMAT {format} NOT YET IMPLEMENTED!' )

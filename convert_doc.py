@@ -52,7 +52,6 @@
 
 import sys
 import os
-from utils import *
 import files
 import markdown
 
