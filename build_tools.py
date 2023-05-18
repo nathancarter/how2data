@@ -26,71 +26,6 @@ import static_files
 import shell
 
 ###
-###  GENERATING TABLES
-###
-
-# The software table to be inserted on the software packages page
-software_table = software.all()[[
-    'name as link', 'icon markdown', 'num solutions', 'website markdown']]
-software_table.columns = [
-    'Software Package', 'Icon', 'Number of solutions', 'Website']
-
-# Generate the tasks table for the tasks page and render as markdown
-tasks_table = pd.DataFrame( { 'Task' : tasks.all()['markdown link'] } )
-def links_for_task_solutions_in_software ( task_name, software_name ):
-    return ', '.join( list( solutions.all()[ \
-        (solutions.all()['task name'] == task_name) & \
-        (solutions.all()['software'] == software_name)]['markdown link'] ) )
-for index, software_row in software.all().iterrows():
-    tasks_table[f'Solutions in {software_row["name"]}'] = \
-        tasks.all()['task name'].apply( lambda task_name:
-            links_for_task_solutions_in_software( task_name, software_row['name'] ) )
-# Make a separate copy that unites all solution columns
-permalink_for_sw = dict( zip( software.all()['name'], software.all()['permalink'] ) )
-tasks_table_with_links = tasks_table.copy()
-tasks_table_with_links['Solutions'] = ''
-for index, row in tasks_table_with_links.iterrows():
-    to_join = [ ]
-    for col in tasks_table.columns:
-        if col.startswith( 'Solutions in' ) and row[col] != '':
-            to_join.append( f'In {col[13:]}: {row[col]}' )
-    row['Solutions'] = '<br>'.join( to_join )
-tasks_table_with_links = tasks_table_with_links[['Task','Solutions']]
-
-# The summary stats table to be inserted on the main page
-stats_table = pd.DataFrame( {
-    'Content' : [
-        '[Topics](topics)',
-        '[Tasks](tasks)',
-        '[Solutions](tasks)',
-        '[Software packages](software)'
-    ],
-    'Quantity' : [
-        len( topics.all() ),
-        len( tasks.all() ),
-        len( solutions.all() ),
-        len( software.all() )
-    ]
-} )
-
-# The contributors list
-contributors_list = [ ]
-for entry in solutions.all()['author']:
-    if type(entry) == str:  # maybe it's a single-author solution
-        contributors_list.append( entry )
-    else:
-        try:  # maybe it's a multi-author solution, so add each one
-            for author in entry:
-                contributors_list.append( author )
-        except TypeError:  # probably author was NaN, so do nothing
-            pass
-contributors_list = pd.Series( contributors_list ).value_counts()
-contributors_list_markdown = pd.DataFrame( {
-    'Author' : contributors_list.index,
-    'Solutions contributed' : contributors_list
-} ).to_markdown( index=False )
-
-###
 ###  MOVING/TRACKING FILES
 ###
 
@@ -286,7 +221,7 @@ def build_software_page ( row ):
             return f'{num_not_in_this_sw} ([view](../{task_row["permalink"]}))'
         else:
             return 'None'
-    my_tasks_table = tasks_table[['Task',f'Solutions in {row["name"]}']].copy()
+    my_tasks_table = tasks.table()[['Task',f'Solutions in {row["name"]}']].copy()
     my_tasks_table['Solutions in other software packages'] = \
         tasks.all().apply( link_to_other_solutions, axis=1 )
     solution_needed = my_tasks_table.iloc[:,1].isin([''])

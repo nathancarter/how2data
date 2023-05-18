@@ -19,6 +19,41 @@ class Build:
         files.ensure_folder_exists( os.path.join( config.topics_folder, 'images' ) )
         files.ensure_folder_exists( config.jekyll_imgs_folder )
     
+    # Summary stats for whole database
+    def stats ():
+        return pd.DataFrame( {
+            'Content' : [
+                '[Topics](topics)',
+                '[Tasks](tasks)',
+                '[Solutions](tasks)',
+                '[Software packages](software)'
+            ],
+            'Quantity' : [
+                len( topics.all() ),
+                len( tasks.all() ),
+                len( solutions.all() ),
+                len( software.all() )
+            ]
+        } )
+
+    # Contributors list for whole database
+    def contributors ():
+        result = [ ]
+        for entry in solutions.all()['author']:
+            if type(entry) == str:  # maybe it's a single-author solution
+                result.append( entry )
+            else:
+                try:  # maybe it's a multi-author solution, so add each one
+                    for author in entry:
+                        result.append( author )
+                except TypeError:  # probably author was NaN, so do nothing
+                    pass
+        result = pd.Series( result ).value_counts()
+        return pd.DataFrame( {
+            'Author' : result.index,
+            'Solutions contributed' : result
+        } )
+    
     # Run a build of the database into the Jekyll input folder
     def database_to_jekyll ( self, force_rerun=False ):
         # Delete files generated in last build
@@ -33,12 +68,12 @@ class Build:
         # Copy files to Jekyll input folder
         log.heading( 'Copying files to Jekyll input folder' )
         replacements = {
-            'SET_OF_SOFTWARE_PACKAGES': software_table.to_markdown( index=False ),
-            'SET_OF_TASKS' : tasks_table_with_links.to_markdown( index=False ),
+            'SET_OF_SOFTWARE_PACKAGES': software.table().to_markdown( index=False ),
+            'SET_OF_TASKS' : tasks.table_with_links().to_markdown( index=False ),
             'LIST_OF_TOPICS' : '\n'.join( [
                 f' * {link}' for link in topics.all()['markdown link'] ] ),
-            'OVERALL_STATS' : stats_table.to_markdown( index=False ),
-            'CONTRIBUTORS_LIST' : contributors_list_markdown
+            'OVERALL_STATS' : Build.stats().to_markdown( index=False ),
+            'CONTRIBUTORS_LIST' : Build.contributors().to_markdown( index=False )
         }
         for filename in static_files.all()[static_files.all()['type'] == 'static page']['filename']:
             static_files.copy( filename, replacements )

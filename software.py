@@ -6,6 +6,7 @@ import pandas as pd
 import yaml
 
 df = None
+pretty_df = None
 
 # Function-building function used in all(), below
 def software_package_icon ( height, is_link ):
@@ -56,3 +57,11 @@ def check_consistency_with_solutions ():
                         Folder=os.path.join( config.tasks_folder,
                             task_row['task name'], task_row['software'] ),
                         Packages=', '.join( list( df['name'] ) ) )
+
+# Prettify a portion of the full df for use on the software packages page
+def table ():
+    global pretty_df
+    if pretty_df is None:
+        pretty_df = all()[['name as link', 'icon markdown', 'num solutions', 'website markdown']]
+        pretty_df.columns = [ 'Software Package', 'Icon', 'Number of solutions', 'Website' ]
+    return pretty_df
