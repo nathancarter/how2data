@@ -25,10 +25,3 @@ def path_in_project ( maybe_abs_path ):
     if maybe_abs_path.startswith( prefix ):
         return maybe_abs_path[len(prefix):]
     return maybe_abs_path
-
-# Which Jupyter kernels are supported for which languages
-kernel_for_software = {
-    'Python' : 'python3',
-    'Julia'  : 'julia-1.8',
-    'R'      : 'ir'
-}

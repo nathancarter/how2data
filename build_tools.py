@@ -165,10 +165,15 @@ def adjust_image_filenames ( func, markdown ):
 # You specify the markdown content as a string, the folder in which to run it
 # (using a temp file that will be deleted aftewards), and the name of the
 # software package.  If that software package has a kernel, according to the
-# kernel_for_software dictionary defined above, we will run it using that
+# kernel_for_software dictionary defined below, we will run it using that
 # kernel; otherwise this function will function as the identity function.
 # It returns another string of markdown content, this time with execution
 # outputs included (iff there is a relevant kernel).
+kernel_for_software = {
+    'Python' : 'python3',
+    'Julia'  : 'julia-1.8',
+    'R'      : 'ir'
+}
 def run_markdown ( markdown, folder, software ):
     if software in kernel_for_software:
         kernel = kernel_for_software[software]
