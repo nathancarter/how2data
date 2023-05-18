@@ -59,3 +59,13 @@ def modification_text ( filename ):
     mod_time = time.gmtime( os.path.getmtime( filename ) )
     return time.strftime(
         '\n\nContent last modified on %d %B %Y.', mod_time )
+
+# Must we rebuild an output file?  This function says yes if the output file
+# does not exist, or is older than the input file that would be used to build it.
+def must_rebuild ( input, output ):
+    if not os.path.exists( output ):
+        log.file_missing( output )
+        return True
+    input_modified = os.path.getmtime( input )
+    output_modified = os.path.getmtime( output )
+    return input_modified > output_modified

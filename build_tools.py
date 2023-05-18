@@ -8,8 +8,8 @@
 #
 #######################
 
-from build_constants import *
-from build_database import *
+import config
+import how_to_data
 from utils import *
 import os
 import pandas as pd
@@ -21,29 +21,34 @@ from datetime import datetime
 import files
 import markdown
 import log
+import tasks
+import topics
+import solutions
+import software
+import static_files
 
 ###
 ###  GENERATING TABLES
 ###
 
 # The software table to be inserted on the software packages page
-software_table = software_df()[[
+software_table = software.all()[[
     'name as link', 'icon markdown', 'num solutions', 'website markdown']]
 software_table.columns = [
     'Software Package', 'Icon', 'Number of solutions', 'Website']
 
 # Generate the tasks table for the tasks page and render as markdown
-tasks_table = pd.DataFrame( { 'Task' : tasks_df()['markdown link'] } )
+tasks_table = pd.DataFrame( { 'Task' : tasks.all()['markdown link'] } )
 def links_for_task_solutions_in_software ( task_name, software_name ):
-    return ', '.join( list( solutions_df()[ \
-        (solutions_df()['task name'] == task_name) & \
-        (solutions_df()['software'] == software_name)]['markdown link'] ) )
-for index, software_row in software_df().iterrows():
+    return ', '.join( list( solutions.all()[ \
+        (solutions.all()['task name'] == task_name) & \
+        (solutions.all()['software'] == software_name)]['markdown link'] ) )
+for index, software_row in software.all().iterrows():
     tasks_table[f'Solutions in {software_row["name"]}'] = \
-        tasks_df()['task name'].apply( lambda task_name:
+        tasks.all()['task name'].apply( lambda task_name:
             links_for_task_solutions_in_software( task_name, software_row['name'] ) )
 # Make a separate copy that unites all solution columns
-permalink_for_sw = dict( zip( software_df()['name'], software_df()['permalink'] ) )
+permalink_for_sw = dict( zip( software.all()['name'], software.all()['permalink'] ) )
 tasks_table_with_links = tasks_table.copy()
 tasks_table_with_links['Solutions'] = ''
 for index, row in tasks_table_with_links.iterrows():
@@ -63,16 +68,16 @@ stats_table = pd.DataFrame( {
         '[Software packages](software)'
     ],
     'Quantity' : [
-        len( topics_df() ),
-        len( tasks_df() ),
-        len( solutions_df() ),
-        len( software_df() )
+        len( topics.all() ),
+        len( tasks.all() ),
+        len( solutions.all() ),
+        len( software.all() )
     ]
 } )
 
 # The contributors list
 contributors_list = [ ]
-for entry in solutions_df()['author']:
+for entry in solutions.all()['author']:
     if type(entry) == str:  # maybe it's a single-author solution
         contributors_list.append( entry )
     else:
@@ -103,30 +108,10 @@ files_generated = [ ]
 def mark_as_regenerated ( file ):
     files_generated.append( file )
 def delete_ungenerated_markdown ():
-    for file in os.listdir( jekyll_input_folder ):
+    for file in os.listdir( config.jekyll_input_folder ):
         if files.is_doc( file ) and file not in files_generated:
             ensure_shell_command_succeeds(
-                f'rm {os.path.join( jekyll_input_folder, file )}' )
-
-# Function for copying a static file from the database folder to the
-# Jekyll input folder, optionally doing some text replacements en route
-def copy_static_file ( filename, replacements = dict() ):
-    source = os.path.join( static_folder, filename )
-    dest = os.path.join( jekyll_input_folder, filename )
-    content = files.read_text_file( source )
-    for original, replacement in replacements.items():
-        content = content.replace( original, replacement )
-    files.write_text_file( dest, content )
-    log.file_copy( source, dest, Replacements=len(replacements) )
-    mark_as_regenerated( filename )
-
-# Function for copying a task file from a task folder to the Jekyll
-# input folder.
-def copy_task_image_file ( full_path, filename ):
-    source = full_path
-    dest = os.path.join( jekyll_imgs_folder, filename )
-    shutil.copy2( source, dest )
-    log.file_copy( source, dest )
+                f'rm {os.path.join( config.jekyll_input_folder, file )}' )
 
 ###
 ###  PROCESSING MARKDOWN AND RUNNING CODE THEREIN
@@ -174,7 +159,7 @@ kernel_for_software = {
     'Julia'  : 'julia-1.8',
     'R'      : 'ir'
 }
-def run_markdown ( markdown, folder, software ):
+def run_markdown ( markdown, folder, software, config_folder=None ):
     if software in kernel_for_software:
         kernel = kernel_for_software[software]
     else:
@@ -188,10 +173,13 @@ def run_markdown ( markdown, folder, software ):
         f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
         f'rm "{tmp_md_doc}"' )
     # convert that to markdown again
-    jupyter_config_file = os.path.join( main_folder,
-        f'jupyter_nbconvert_config_{software}.py' )
+    config_param = ''
+    if config_folder is not None:
+        jupyter_config_file = os.path.join( config_folder,
+            f'jupyter_nbconvert_config_{software}.py' )
+        config_param = f"--JupyterApp.config_file='{jupyter_config_file}'"
     command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \
-        f"--JupyterApp.config_file='{jupyter_config_file}' " + \
+        config_param + " " + \
         f'--output="{tmp_md_doc}" "{ipynb_out}"'
     ensure_shell_command_succeeds( command_to_run, f'rm "{ipynb_out}"' )
     # read it back into a string
@@ -214,9 +202,9 @@ def adjust_image_for_task ( task ):
 github_url = 'https://github.com/nathancarter/how2data'
 new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
-    return f'{github_url}/tree/main/{path_in_project( filename )}'
+    return f'{github_url}/tree/main/{config.relativize_path( filename )}'
 def make_all_task_names_links ( markdown ):
-    longer_first = tasks_df().sort_values( 'task name', ascending=False )
+    longer_first = tasks.all().sort_values( 'task name', ascending=False )
     for index, task_row in longer_first.iterrows():
         markdown = re.sub( '(?<!\\[)(' + re.escape( task_row['task name'] ) + ')',
             lambda x: f'[{x.group(0)}](../{task_row["permalink"]})',
@@ -227,20 +215,20 @@ def make_all_task_names_links ( markdown ):
 ###  TOOLS THAT BUILD PAGES IN THE SITE
 ###
 
-# Main function to build a solution page.  1st parameter is any row from solutions_df().
+# Main function to build a solution page.  1st parameter is any row from solutions.all().
 def build_solution_page ( solution_row, force_rerun_solution=False,
-                          in_folder=None, out_folder=jekyll_input_folder,
-                          task_row=None ):
+                          in_folder=None, out_folder=config.jekyll_input_folder,
+                          task_row=None, config_folder=None ):
     out_filename = solution_row['permalink'] + '.md'
     if in_folder is None:
-        in_folder = os.path.join( tasks_folder, solution_row['task name'] )
+        in_folder = os.path.join( config.tasks_folder, solution_row['task name'] )
     input_file = os.path.join( in_folder, solution_row['solution filename'] )
     output_file = os.path.join( out_folder, out_filename )
     task_file = markdown.get_unique_doc( os.path.join(
         in_folder, 'description' ) )
     if not force_rerun_solution \
-    and not must_rebuild_file( input_file, output_file ) \
-    and not must_rebuild_file( task_file, output_file ):
+    and not files.must_rebuild( input_file, output_file ) \
+    and not files.must_rebuild( task_file, output_file ):
         log.not_built( output_file, input_file, task_file )
         mark_as_regenerated( out_filename )
         return
@@ -250,7 +238,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
     if task_row is None:
-        task_row = tasks_df()[tasks_df()['task name'] == solution_row['task name']].iloc[0]
+        task_row = tasks.all()[tasks.all()['task name'] == solution_row['task name']].iloc[0]
     contributors = solution_row["author"]
     if type( contributors ) == str:
         contributors = f'Contributed by {contributors}'
@@ -260,7 +248,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
                 '\n'.join( [ f' * {author}' for author in contributors ] )
         except TypeError:
             contributors = ''
-    markdown.write( output_file, fill_template( 'solution',
+    markdown.write( output_file, static_files.fill_template( 'solution',
         TITLE = solution_row['solution title'],
         PERMALINK = solution_row['permalink'],
         TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
@@ -268,7 +256,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
             adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
                 make_all_task_names_links( task_row['content'] ) ),
         MARKDOWN_CONTENT = markdown.wrap_in_html_comments( run_markdown(
-            content, in_folder, solution_row['software'] ) ),
+            content, in_folder, solution_row['software'], config_folder ) ),
         CONTRIBUTORS = contributors
     ) )
     log.built( 'solution for', solution_row["task name"],
@@ -278,26 +266,26 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
     return output_file
 
 # How to fetch a generated solution's body from within the generated markdown
-def get_generated_solution_body ( solution_row, folder=jekyll_input_folder ):
+def get_generated_solution_body ( solution_row, folder=config.jekyll_input_folder ):
     title = solution_row['solution title']
-    generated_file = blogify( title ) + '.md'
+    generated_file = config.blogify( title ) + '.md'
     all_content = files.read_text_file( os.path.join( folder, generated_file ) )
     return markdown.unwrap_from_html_comments( all_content )
 
-# How to build a task page; pass any row from tasks_df().
+# How to build a task page; pass any row from tasks.all().
 # IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
 # using the build_solution_page() function on any files that need their solutions
 # rebuilt/updated.  See that function defined above.
-def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
+def build_task_page ( row, out_folder=config.jekyll_input_folder, solution_rows=None ):
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( out_folder, out_filename )
     all_solutions = ''
     software_for_this_task = solution_rows if solution_rows is not None else \
-        solutions_df()[solutions_df()['task name'] == row['task name']]
+        solutions.all()[solutions.all()['task name'] == row['task name']]
     for index, solution_row in software_for_this_task.iterrows():
         solution_name = files.without_extension( solution_row['solution name'] )
         solution_name = solution_name[0].upper() + solution_name[1:]
-        all_solutions += fill_template( 'solution-in-software',
+        all_solutions += static_files.fill_template( 'solution-in-software',
             NAME = solution_name,
             SOFTWARE = solution_row['software'],
             PERMALINK = solution_row['permalink'],
@@ -306,20 +294,20 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
         )
     if all_solutions == '':
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
-    opportunities = list( software_df()['name'][
-        ~software_df()['name'].isin(software_for_this_task['software'])] )
+    opportunities = list( software.all()['name'][
+        ~software.all()['name'].isin(software_for_this_task['software'])] )
     if len( opportunities ) > 0:
         opportunities = "\n".join( [ f" * {software}" for software in opportunities ] )
-        opportunities = fill_template( 'opportunities',
+        opportunities = static_files.fill_template( 'opportunities',
             OPPORTUNITIES_LIST = opportunities )
     else:
         opportunities = ''
-    related_topics = topics_df()[topics_df()['content'].str.contains( row['task name'], regex=False )]
+    related_topics = topics.all()[topics.all()['content'].str.contains( row['task name'], regex=False )]
     if len( related_topics ) > 0:
         related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
     else:
         related_topics = '*None*'
-    markdown.write( output_file, fill_template( 'task',
+    markdown.write( output_file, static_files.fill_template( 'task',
         TITLE = row['task name'],
         PERMALINK = row['permalink'],
         DESCRIPTION =
@@ -333,13 +321,13 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
     return output_file
 
 # Generate a page for a given software package,
-# from a row in the software_df() DataFrame.
+# from a row in the software.all() DataFrame.
 def build_software_page ( row ):
     out_filename = row['permalink'] + '.md'
-    output_file = os.path.join( jekyll_input_folder, out_filename )
-    sol_uses_this_sw = solutions_df()['software'] == row['name']
+    output_file = os.path.join( config.jekyll_input_folder, out_filename )
+    sol_uses_this_sw = solutions.all()['software'] == row['name']
     def link_to_other_solutions ( task_row ):
-        sol_is_for_task = solutions_df()['task name'] == task_row['task name']
+        sol_is_for_task = solutions.all()['task name'] == task_row['task name']
         num_not_in_this_sw = sum(sol_is_for_task) - \
             sum(sol_is_for_task & sol_uses_this_sw)
         if num_not_in_this_sw > 0:
@@ -348,7 +336,7 @@ def build_software_page ( row ):
             return 'None'
     my_tasks_table = tasks_table[['Task',f'Solutions in {row["name"]}']].copy()
     my_tasks_table['Solutions in other software packages'] = \
-        tasks_df().apply( link_to_other_solutions, axis=1 )
+        tasks.all().apply( link_to_other_solutions, axis=1 )
     solution_needed = my_tasks_table.iloc[:,1].isin([''])
     table1 = my_tasks_table[~solution_needed]
     if len( table1 ) > 0:
@@ -363,7 +351,7 @@ def build_software_page ( row ):
         table2 = table2.to_markdown( index=False )
     else:
         table2 = f'*None---all tasks have solutions in {row["name"]}!*'
-    markdown.write( output_file, fill_template( 'software',
+    markdown.write( output_file, static_files.fill_template( 'software',
         TITLE = row['title'],
         SOFTWARE_NAME = row['name'],
         PERMALINK = row['permalink'],
@@ -374,14 +362,15 @@ def build_software_page ( row ):
     ) )
     mark_as_regenerated( out_filename )
 
-# Generate a page for a given topic, from a row in the topics_df() DataFrame.
-def build_topic_page ( row ):
+# Generate a page for a given topic, from a row in the topics.all() DataFrame.
+# The second argument is a folder in which to store temp files during the process.
+def build_topic_page ( row, temp_folder ):
     pdf_downloads = ''
-    for sindex, srow in software_df().iterrows():
-        possible_packages = solutions_df()[solutions_df()['software'] == srow['name']]
+    for sindex, srow in software.all().iterrows():
+        possible_packages = solutions.all()[solutions.all()['software'] == srow['name']]
         possible_packages = possible_packages['solution name'].unique().tolist()
         for package in possible_packages:
-            pdf_filename = build_topic_pdf( row, srow['name'], package )
+            pdf_filename = build_topic_pdf( row, srow['name'], package, temp_folder )
             if pdf_filename is not None:
                 pdf_filename = '../assets/downloads/' + pdf_filename
                 if package == 'solution':
@@ -393,8 +382,8 @@ def build_topic_page ( row ):
     if pdf_downloads == '':
         pdf_downloads = 'No PDF downloads available for this topic yet.'
     out_filename = row['permalink'] + '.md'
-    output_file = os.path.join( jekyll_input_folder, out_filename )
-    markdown.write( output_file, fill_template( 'topic',
+    output_file = os.path.join( config.jekyll_input_folder, out_filename )
+    markdown.write( output_file, static_files.fill_template( 'topic',
         TITLE = row['topic name'],
         PERMALINK = row['permalink'],
         CONTENT = make_all_task_names_links( row['content'] ),
@@ -404,47 +393,31 @@ def build_topic_page ( row ):
     ) )
     mark_as_regenerated( out_filename )
 
-# Convert all HTML-style tables/etc. within markdown text to LaTeX instead
-def html_sections_to_latex ( markdown, folder=main_folder ):
-    # are there any sections to process?  if not, just return the input
-    section = re.search( '\n<div(?:.|\n)*?<\\/div.*\n', markdown )
-    if section is None:
-        return markdown
-    # there is a section to process; use pandoc on a temporary HTML file
-    tmp_html_file = os.path.join( folder, 'tmp.html' )
-    tmp_tex_file = os.path.join( folder, 'tmp.tex' )
-    files.write_text_file( tmp_html_file, section.group(0) )
-    ensure_shell_command_succeeds(
-        f'pandoc --from=html --to=latex --output="{tmp_tex_file}" "{tmp_html_file}"',
-        f'rm "{tmp_html_file}"' )
-    section_as_tex = files.read_text_file( tmp_tex_file )
-    ensure_shell_command_succeeds( f'rm "{tmp_tex_file}"' )
-    # replace the section with its TeX-ified version
-    markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]
-    # recur on the new markdown, with one less section to process
-    return html_sections_to_latex( markdown )
-
 # Generate a PDF for a given topic, using a given software package.
-def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_proportion=0.5 ):
+# The third argument is the main repo folder, which will get cleaned up later.
+def build_topic_pdf (
+    topic_row, software_name, main_folder,
+    solution_name='solution', min_proportion=0.5
+):
     site_url = 'https://how-to-data.org/'
     # make first page with TOC that links to all later pages
     description_and_toc = make_all_task_names_links( topic_row['content'] )
-    tasks = tasks_df()[tasks_df().permalink.apply(
+    tasks_copy = tasks.all()[tasks.all().permalink.apply(
         lambda link: link in description_and_toc )].copy()
-    tasks['where appears'] = tasks.permalink.apply(
+    tasks_copy['where appears'] = tasks_copy.permalink.apply(
         lambda link: description_and_toc.index( link ) )
-    tasks = tasks.sort_values( by='where appears' )
+    tasks_copy = tasks_copy.sort_values( by='where appears' )
     # if none of those tasks were edited more recently than the last PDF we generated, stop
     if solution_name == 'solution':
         pair_of_names = f'pure {software_name}'
     else:
         pair_of_names = f'{software_name} {solution_name}'
     title = f'{topic_row["topic name"]} in {pair_of_names}'
-    outfile = os.path.join( jekyll_input_folder, 'assets', 'downloads', title + '.pdf' )
+    outfile = os.path.join( config.jekyll_input_folder, 'assets', 'downloads', title + '.pdf' )
     must_build = False
     if os.path.exists( outfile ):
         pdf_modified = os.path.getmtime( outfile )
-        for index, task_row in tasks.iterrows():
+        for index, task_row in tasks_copy.iterrows():
             task_modified = os.path.getmtime(
                 os.path.join( main_folder, task_row['task filename'] ) )
             if task_modified > pdf_modified:
@@ -455,7 +428,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     else:
         must_build = True
     # create the structure of the Markdown input to pandoc
-    markdown = fill_template( 'topic-pdf',
+    markdown = static_files.fill_template( 'topic-pdf',
         TITLE = title,
         SITE_URL = site_url,
         DATE = datetime.now().strftime("%d %B %Y"),
@@ -463,28 +436,29 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     )
     # check to see if we have enough solutions to proceed, to save time
     num_solutions = 0
-    solutions_in_sw = solutions_df()[(solutions_df()['software'] == software_name) \
-                                 & (solutions_df()['solution name'] == solution_name)]
-    for index, task_row in tasks.iterrows():
+    solutions_in_sw = solutions.all()[(solutions.all()['software'] == software_name) \
+                                 & (solutions.all()['solution name'] == solution_name)]
+    for index, task_row in tasks_copy.iterrows():
         if sum( solutions_in_sw['task name'] == task_row['task name'] ) > 0:
             num_solutions += 1
-    proportion = num_solutions / len( tasks )
+    proportion = num_solutions / len( tasks_copy )
     if proportion < min_proportion:
         log.not_built( f"PDF for {title}",
                        Reason=f"only {proportion*100:0.1f}% solved" )
         return None
     # now add all tasks, one at a time
-    for index, task_row in tasks.iterrows():
+    for index, task_row in tasks_copy.iterrows():
         task_solutions = solutions_in_sw[solutions_in_sw['task name'] == task_row['task name']]
         if len( task_solutions ) > 0:
-            solution = html_sections_to_latex(
+            solution = markdown.html_sections_to_latex(
                 markdown.unescape_for_jekyll(
                     get_generated_solution_body(
-                        task_solutions.iloc[0,:] ) ) )
+                        task_solutions.iloc[0,:] ) ),
+                main_folder )
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \
                      + pair_of_names + '.'
-        markdown += fill_template( 'topic-pdf-solution',
+        markdown += static_files.fill_template( 'topic-pdf-solution',
             TASK = task_row['task name'],
             DESCRIPTION = make_all_task_names_links( task_row['content'] ),
             SOFTWARE = pair_of_names,
@@ -495,7 +469,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
         text = match.group( 1 )
         href = match.group( 2 )
         if href[:3] == '../':
-            if href[3:] in tasks.permalink.to_list():
+            if href[3:] in tasks_copy.permalink.to_list():
                 href = f'#{href[3:]}'
             else:
                 href = f'{site_url}{href[3:]}'

@@ -14,20 +14,6 @@ import sys
 import files
 import log
 
-# How to blogify a title into a filename (with lower case and hyphens).
-def blogify ( title ):
-    return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
-
-# Must we rebuild an output file?  This function says yes if the output file
-# does not exist, or is older than the input file that would be used to build it.
-def must_rebuild_file ( input, output ):
-    if not os.path.exists( output ):
-        log.file_missing( output )
-        return True
-    input_modified = os.path.getmtime( input )
-    output_modified = os.path.getmtime( output )
-    return input_modified > output_modified
-
 # Run a shell command and stop the whole app if it gives an error.
 # However, if the cleanup command is given, run that one even if you abort.
 def ensure_shell_command_succeeds ( command, cleanup = None ):

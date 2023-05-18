@@ -118,3 +118,25 @@ def unwrap_from_html_comments ( text ):
     begin = text.index( start_comment )
     end = text.index( end_comment )
     return text[begin+len(start_comment):end]
+
+# Convert all HTML-style tables/etc. within markdown text to LaTeX instead
+# Parameter 1 is a string containing markdown.
+# Parameter 2 is the name of a folder in which to store temp files during the work.
+def html_sections_to_latex ( markdown, folder ):
+    # are there any sections to process?  if not, just return the input
+    section = re.search( '\n<div(?:.|\n)*?<\\/div.*\n', markdown )
+    if section is None:
+        return markdown
+    # there is a section to process; use pandoc on a temporary HTML file
+    tmp_html_file = os.path.join( folder, 'tmp.html' )
+    tmp_tex_file = os.path.join( folder, 'tmp.tex' )
+    files.write_text_file( tmp_html_file, section.group(0) )
+    ensure_shell_command_succeeds(
+        f'pandoc --from=html --to=latex --output="{tmp_tex_file}" "{tmp_html_file}"',
+        f'rm "{tmp_html_file}"' )
+    section_as_tex = files.read_text_file( tmp_tex_file )
+    ensure_shell_command_succeeds( f'rm "{tmp_tex_file}"' )
+    # replace the section with its TeX-ified version
+    markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]
+    # recur on the new markdown, with one less section to process
+    return html_sections_to_latex( markdown )
