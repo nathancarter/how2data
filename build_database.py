@@ -14,6 +14,8 @@ import numpy as np
 import sys
 import files
 import markdown
+import yaml
+import log
 
 ###
 ###  ENSURE KEY FOLDERS EXIST
@@ -54,7 +56,7 @@ def files_df ():
         ]
         for filename in files.just_docs( os.listdir( static_folder ) ):
             full_filename = os.path.join( static_folder, filename )
-            metadata, content = file_split_yaml_header( full_filename )
+            metadata, content = yaml.split_file( full_filename )
             json.append( {
                 'type' : 'template' if filename.endswith( '-template.md' ) else 'static page',
                 'filename' : filename,
@@ -109,7 +111,7 @@ def topics_df ():
                 continue
             full_filename = os.path.join( topics_folder, topic_file )
             markdown_content = markdown.read_doc( full_filename )
-            metadata, content = string_split_yaml_header( markdown_content )
+            metadata, content = yaml.split_string( markdown_content )
             content += files.modification_text( full_filename )
             next = {
                 'topic name' : files.without_extension( topic_file ),
@@ -157,7 +159,7 @@ def solutions_df ():
                         f'{task_name} (in {files.without_extension( solution_file )})'
                 }
                 markdown_content = markdown.read_doc( input_file )
-                metadata, content = string_split_yaml_header( markdown_content )
+                metadata, content = yaml.split_string( markdown_content )
                 next['content'] = content + files.modification_text( input_file )
                 for key, value in metadata.items():
                     next[key] = value
@@ -180,7 +182,7 @@ _software_df = None
 def software_df ():
     global _software_df
     if _software_df is None:
-        _software_df = pd.DataFrame( read_yaml_from_file( database_config_file )['software'] )
+        _software_df = pd.DataFrame( yaml.read_header( database_config_file )['software'] )
         _software_df['title'] = _software_df['name'].apply( lambda name: f'Software package: {name}' )
         _software_df['permalink'] = _software_df['title'].apply( blogify )
         # Add markdown code for each package's icon
@@ -218,8 +220,7 @@ def check_consistency ():
     if _solutions_df is not None and _software_df is not None:
         for index, task_row in solutions_df().iterrows():
             if task_row['software'] not in list( software_df()['name'] ):
-                print( 'Build error: Software folder not named after any existing package' )
-                print( '     Folder:', os.path.join(
-                    tasks_folder, task_row['task name'], task_row['software'] ) )
-                print( '   Packages:', ', '.join( list( software_df()['name'] ) ) )
-                sys.exit( 1 )
+                log.error( 'Software folder not named after any existing package',
+                           Folder=os.path.join( tasks_folder,
+                               task_row['task name'], task_row['software'] ),
+                           Packages=', '.join( list( software_df()['name'] ) ) )

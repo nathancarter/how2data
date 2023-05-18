@@ -17,6 +17,7 @@ from build_tools import *
 from collections import OrderedDict
 import json
 import files
+import log
 
 #####
 #
@@ -232,31 +233,31 @@ def md_to_ipynb ( markdown ):
 # pandoc as needed
 def finalize_export ( filename, markdown, format ):
     out_folder = os.path.dirname( filename )
-    print( f'Ensuring folder exists:', out_folder )
+    log.info( 'Ensuring folder exists', Folder=out_folder )
     files.ensure_folder_exists( out_folder )
     if format in ['md','markdown','Markdown']:
-        print( f'Exporting {filename}.md...' )
+        log.info( 'Exporting file', Filename=f"{filename}.md" )
         files.write_text_file( filename+'.md', markdown )
     elif format in ['ipynb']:
-        print( f'Exporting {filename}.ipynb...' )
+        log.info( 'Exporting file', Filename=f"{filename}.ipynb" )
         files.write_text_file( filename+'.ipynb', md_to_ipynb( markdown ) )
     elif format in ['doc','docx']:
-        print( f'Exporting {filename}.md...' )
+        log.info( 'Exporting file', Filename=f"{filename}.md" )
         files.write_text_file( filename+'.md', markdown )
-        print( f'Converting to {format}...' )
+        log.info( 'Converting file', **{ "New format" : f"{filename}.md" } )
         ensure_shell_command_succeeds(
             f'pandoc "{filename}.md" --output="{filename}.{format}"',
             f'rm "{filename}.md"' )
     elif format in ['Rmd','RMarkdown','Rmarkdown']:
-        print( f'Exporting {filename}.md...' )
+        log.info( 'Exporting file', Filename=f"{filename}.md" )
         files.write_text_file( filename+'.md',
             markdown.replace( '\n```R', '\n```{r}' ) )
-        print( f'Converting to {format}...' )
+        log.info( 'Converting file', **{ "New format" : f"{filename}.md" } )
         ensure_shell_command_succeeds(
             f'mv "{filename}.md" "{filename}.Rmd"' )
     else:
         raise Error( f'FORMAT {format} NOT YET IMPLEMENTED!' )
-    print( 'Done.' )
+    log.info( 'Done.' )
 
 # Convert the given task from software 1 to software 2, storing the result in
 # a file in the given format, stored in this folder (with this script).

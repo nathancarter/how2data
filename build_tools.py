@@ -20,6 +20,7 @@ import sys
 from datetime import datetime
 import files
 import markdown
+import log
 
 ###
 ###  GENERATING TABLES
@@ -116,9 +117,7 @@ def copy_static_file ( filename, replacements = dict() ):
     for original, replacement in replacements.items():
         content = content.replace( original, replacement )
     files.write_text_file( dest, content )
-    print( 'Copied: Source:      ', source )
-    print( '        Dest:        ', dest )
-    print( '        Replacements:', len(replacements) )
+    log.file_copy( source, dest, Replacements=len(replacements) )
     mark_as_regenerated( filename )
 
 # Function for copying a task file from a task folder to the Jekyll
@@ -127,8 +126,7 @@ def copy_task_image_file ( full_path, filename ):
     source = full_path
     dest = os.path.join( jekyll_imgs_folder, filename )
     shutil.copy2( source, dest )
-    print( 'Copied: Source:', source )
-    print( '        Dest:  ', dest )
+    log.file_copy( source, dest )
 
 ###
 ###  PROCESSING MARKDOWN AND RUNNING CODE THEREIN
@@ -238,9 +236,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
     if not force_rerun_solution \
     and not must_rebuild_file( input_file, output_file ) \
     and not must_rebuild_file( task_file, output_file ):
-        print( f'Not rebuilding this: {output_file}' )
-        print( f'   It is newer than: {input_file}' )
-        print( f'     and newer than: {task_file}' )
+        log.not_built( output_file, input_file, task_file )
         mark_as_regenerated( out_filename )
         return
     content = adjust_image_filenames(
@@ -270,10 +266,9 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
             content, in_folder, solution_row['software'] ) ),
         CONTRIBUTORS = contributors
     ) )
-    print( f'Built solution for: {solution_row["task name"]}' )
-    print( f'          Software: {solution_row["software"]}' )
-    print( f'     Solution name: {solution_row["solution name"]}' )
-    print()
+    log.built( 'solution for', solution_row["task name"],
+               Software=solution_row["software"],
+               Solution=solution_row["solution name"] )
     mark_as_regenerated( out_filename )
     return output_file
 
@@ -450,7 +445,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
             if task_modified > pdf_modified:
                 must_build = True
         if not must_build:
-            print( f'PDF already up-to-date for: {title}' )
+            log.not_built( f"PDF for {title}", Reason="Already up to date" )
             return title + '.pdf'
     else:
         must_build = True
@@ -470,7 +465,8 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
             num_solutions += 1
     proportion = num_solutions / len( tasks )
     if proportion < min_proportion:
-        print( f'    Not generating PDF for: {title}   (only {proportion*100:0.1f}% solved)' )
+        log.not_built( f"PDF for {title}",
+                       Reason=f"only {proportion*100:0.1f}% solved" )
         return None
     # now add all tasks, one at a time
     for index, task_row in tasks.iterrows():
@@ -500,12 +496,12 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
                 href = f'{site_url}{href[3:]}'
                 text = f'{text} (on website)'
         elif href[0] == '.':
-            print( '\tWarning: Bad external URL:', f'[{text}]({href})' )
+            log.warning( 'Bad external URL:', f'[{text}]({href})' )
         return f'[{text}]({href})'
     markdown = re.sub( '(?<!\\!)\\[([^]]*)\\]\\(([^)]*)\\)', process_one_link, markdown,
         flags=re.IGNORECASE )
     # write all that markdown to a file, run pandoc on it to create a PDF, then delete the .md
-    print( f'        Generating PDF for: {title}' )
+    log.built( f"PDF for {title}" )
     tmp_md_doc = os.path.join( topics_folder, 'pandoc-temp-file.md' )
     markdown.write( tmp_md_doc, markdown, add_escapes=False )
     command_to_run = 'pandoc --from=markdown --to=pdf --pdf-engine=xelatex' \

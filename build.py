@@ -11,6 +11,7 @@
 import os, sys, glob
 from build_tools import *
 import files
+import log
 
 # Command line parameters
 # -f/--force = rerun all solution code even if modification dates don't require it
@@ -18,15 +19,15 @@ rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
 skip_jekyll = '-j' in sys.argv or '--no-jekyll' in sys.argv
 
 # Delete files generated in last build
-section_heading( 'Deleting old files from Jekyll input folder' )
+log.heading( 'Deleting old files from Jekyll input folder' )
 to_delete = ' '.join( [
     os.path.join( jekyll_imgs_folder, f'*{ext}' ) for ext in files.img_extensions
 ] )
-print( f'Running: rm {to_delete}' )
+log.file_delete( to_delete )
 run_shell_command_ignoring_errors( f'rm {to_delete}' )
 
 # Copy files to Jekyll input folder
-section_heading( 'Copying files to Jekyll input folder' )
+log.heading( 'Copying files to Jekyll input folder' )
 replacements = {
     'SET_OF_SOFTWARE_PACKAGES': software_table.to_markdown( index=False ),
     'SET_OF_TASKS' : tasks_table_with_links.to_markdown( index=False ),
@@ -41,7 +42,7 @@ for index, row in files_df()[files_df()['type'] == 'task image'].iterrows():
     copy_task_image_file( row['full path'], row['filename'] )
 
 # Generate files from database
-section_heading( 'Generating files from database content' )
+log.heading( 'Generating files from database content' )
 # Note: solution building must go first so task pages can read the generated results
 for index, row in solutions_df().iterrows():
     build_solution_page( row, rerun_solutions )
@@ -57,7 +58,7 @@ for index, row in topics_df().iterrows():
 delete_ungenerated_markdown()
 
 # Zip up examples to reference from the Contributing page
-section_heading( 'Zipping examples for contributors' )
+log.heading( 'Zipping examples for contributors' )
 infiles = glob.iglob( 'examples/*', recursive=True )
 outfile = 'jekyll-input/assets/downloads/examples-for-contributing-to-how-to-data.zip'
 if any( ( must_rebuild_file( infile, outfile ) for infile in infiles ) ):
@@ -67,14 +68,14 @@ if any( ( must_rebuild_file( infile, outfile ) for infile in infiles ) ):
         os.path.join( jekyll_input_folder, 'assets', 'downloads' ) )
     ensure_shell_command_succeeds( f'cd examples && zip -orv9 "../{outfile}" *' )
 else:
-    print( 'No changes to source; no action needed.' )
+    log.not_built( 'Examples for contributors', infiles )
 
 # Run Jekyll on newly copied files
 if skip_jekyll:
-    section_heading( 'Skipping Jekyll build process' )
+    log.heading( 'Skipping Jekyll build process' )
 else:
-    section_heading( 'Running Jekyll build process' )
+    log.heading( 'Running Jekyll build process' )
     ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental --profile' )
 
 # State completion
-section_heading( 'Build completed successfully.' )
+log.heading( 'Build completed successfully.' )

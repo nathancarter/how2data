@@ -50,9 +50,11 @@ import socketserver
 import functools
 import files
 import markdown
+import yaml
+import log
 
 # Ensure preview folders exist
-section_heading( 'Ensuring preview folders exist' )
+log.heading( 'Ensuring preview folders exist' )
 preview_folder = os.path.join(
     os.path.dirname( os.path.realpath( __file__ ) ), 'preview' )
 files.ensure_folder_exists( preview_folder )
@@ -60,13 +62,13 @@ generated_folder = os.path.join( preview_folder, 'generated' )
 files.ensure_folder_exists( generated_folder )
 
 # Delete all content from generated files folder
-section_heading( 'Deleting old files from output folder' )
+log.heading( 'Deleting old files from output folder' )
 to_delete = os.path.join( generated_folder, '*' )
-print( f'Running: rm {to_delete}' )
+log.file_delete( to_delete )
 run_shell_command_ignoring_errors( f'rm {to_delete}' )
 
 # Generate a task DataFrame from just the one task in the preview folder
-section_heading( 'Gathering task description data' )
+log.heading( 'Gathering task description data' )
 task_desc_file = markdown.get_unique_doc(
     os.path.join( preview_folder, 'description' ) )
 tasks_df = pd.DataFrame( {
@@ -78,10 +80,10 @@ tasks_df = pd.DataFrame( {
 tasks_df['markdown link'] = tasks_df['task name'].apply(
     lambda name: f'[{name}](../{blogify(name)})' )
 # print( tasks_df )
-print( task_desc_file )
+log.info( f"Read file: {task_desc_file}" )
 
 # Generate a solutions DataFrame from just the solutions in the preview folder
-section_heading( 'Gathering solutions data' )
+log.heading( 'Gathering solutions data' )
 json = [ ]
 for solution_file in files.docs_inside( preview_folder ):
     if files.without_extension( solution_file ) == 'description':
@@ -102,7 +104,7 @@ for solution_file in files.docs_inside( preview_folder ):
         'solution title' : f'Preview (in {files.without_extension( solution_file )})'
     }
     markdown = markdown.read_doc( input_file )
-    metadata, content = string_split_yaml_header( markdown )
+    metadata, content = yaml.split_string( markdown )
     next['content'] = content + files.modification_text( input_file )
     for key, value in metadata.items():
         next[key] = value
@@ -115,7 +117,10 @@ def link_to_solution ( solution_row ):
     return f'[{solution_row["solution name"]}](../{blogify(solution_row["solution title"])})'
 solutions_df['markdown link'] = solutions_df.apply( link_to_solution, axis=1 )
 # print( solutions_df )
-print( '\n'.join( list( solutions_df['solution filename'] ) ) )
+log.info( 'Read solutions', **{
+    f"Solution {i+1}" : solutions_df['solution filename'].iloc[i]
+    for i in range(len(solutions_df))
+} )
 
 # Load custom styles and scripts for previews
 preamble = files.read_text_file( './jekyll-input/_includes/head_custom.html' ) + '''
@@ -129,7 +134,7 @@ preamble = files.read_text_file( './jekyll-input/_includes/head_custom.html' ) +
 '''
 
 # Build solutions and task
-section_heading( 'Compiling solutions' )
+log.heading( 'Compiling solutions' )
 for index, row in solutions_df.iterrows():
     generated_md = build_solution_page( row, True,
         in_folder=preview_folder, out_folder=generated_folder,
@@ -138,8 +143,9 @@ for index, row in solutions_df.iterrows():
     ensure_shell_command_succeeds(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
     files.prepend_text_to_file( generated_html, preamble )
-    print( f'Converted to {generated_html}\n' )
-section_heading( 'Compiling task page' )
+    # print( f'Converted to {generated_html}\n' )
+    log.built( f"HTML for {row['solution name']}", generated_html, generated_md )
+log.heading( 'Compiling task page' )
 for index, row in tasks_df.iterrows():
     generated_md = build_task_page( row, out_folder=generated_folder,
                                     solution_rows=solutions_df )
@@ -147,17 +153,22 @@ for index, row in tasks_df.iterrows():
     ensure_shell_command_succeeds(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
     files.prepend_text_to_file( generated_html, preamble )
-    print( f'Converted to {generated_html}\n' )
+    # print( f'Converted to {generated_html}\n' )
+    log.built( f"HTML for {row['task name']}", generated_html, generated_md )
 
 # Show it to the user via a simple HTTP server
-section_heading( 'Preview generated successfully -- view it here:' )
+log.heading( 'Preview generated successfully' )
 port = 8000
-print( generated_folder )
 Handler = functools.partial( http.server.SimpleHTTPRequestHandler,
                              directory=generated_folder )
 socketserver.TCPServer.allow_reuse_address = True
 with socketserver.TCPServer( ( '', port ), Handler ) as httpd:
-    print( f'Task Description: http://localhost:{port}/preview.html' )
-    for index, row in solutions_df.iterrows():
-        print( f'Solution:         http://localhost:{port}/{row["permalink"]}.html' )
+    log.info( 'View preview here', **{
+        "Folder" : generated_folder,
+        "Task Description" : f"http://localhost:{port}/preview.html"
+        **{
+            f"Solution {i+1}" : f"http://localhost:{port}/{row['permalink']}.html"
+            for i, row in solutions_df.iterrows()
+        }
+    } )
     httpd.serve_forever()

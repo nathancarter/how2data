@@ -8,42 +8,11 @@
 #
 #######################
 
-from ruamel.yaml import YAML
 import os
 import re
 import sys
 import files
-
-# Get all YAML from a YAML file into a Python dict
-def read_yaml_from_file ( file ):
-    return YAML().load( files.read_text_file( file ) )
-
-# Split out the YAML header and content of a markdown document given as
-# a text string, returning the YAML dictionary and the remaining text
-# content as a pair.
-def string_split_yaml_header ( text ):
-    lines = [ line+'\n' for line in text.split( '\n' ) ]
-    # if yaml header exists, find its end and return it and the content
-    if lines[0] == '---\n':
-        lines = lines[1:]
-        yaml_end = lines.index( '---\n' )
-        return (
-            YAML().load( ''.join( lines[:yaml_end] ) ),
-            ''.join( lines[yaml_end+1:] )
-        )
-    # otherwise return an empty yaml header and just the content
-    return {}, ''.join( lines )
-# Open a text file and run the above function on it
-def file_split_yaml_header ( filename ):
-    with open( filename, 'r' ) as f:
-        return string_split_yaml_header( f.read() )
-
-# Function for printing section headings in the console output
-def section_heading ( title ):
-    print()
-    print()
-    print( title )
-    print( '-' * len( title ) )
+import log
 
 # How to blogify a title into a filename (with lower case and hyphens).
 def blogify ( title ):
@@ -53,7 +22,7 @@ def blogify ( title ):
 # does not exist, or is older than the input file that would be used to build it.
 def must_rebuild_file ( input, output ):
     if not os.path.exists( output ):
-        print( f'Must rebuild because DNE: {output}' )
+        log.file_missing( output )
         return True
     input_modified = os.path.getmtime( input )
     output_modified = os.path.getmtime( output )
@@ -63,23 +32,29 @@ def must_rebuild_file ( input, output ):
 # However, if the cleanup command is given, run that one even if you abort.
 def ensure_shell_command_succeeds ( command, cleanup = None ):
     code = os.system( command )
+    errors = { }
     if code != 0:
-        print( f'How2Data build process received this error code: {code}' )
-        print( f'From running this shell command: {command}' )
+        errors = {
+            'Received error code' : code,
+            'From shell command' : command
+        }
     cleanup_code = 0
     if cleanup != None:
         cleanup_code = os.system( cleanup )
         if cleanup_code != 0:
-            print( f'How2Data build process received this error code: {cleanup_code}' )
-            print( f'From runnin this cleanup command: {cleanup_code}' )
-            print( f'Right after this shell code: {command}' )
+            errors.update( {
+                'Cleanup received error code' : cleanup_code,
+                'From cleanup command' : cleanup_code,
+                'After shell command' : command
+            } )
     if code != 0 or cleanup_code != 0:
-        print( f'How2Data build exiting with error code 1.' )
-        sys.exit( 1 )
+        log.error( 'Build process exiting with error code 1.', **errors )
+
 # Run a shell command and don't care whether it gives an error.
 def run_shell_command_ignoring_errors ( command ):
     code = os.system( command )
     if code != 0:
-        print( f'How2Data build process received this error code: {code}' )
-        print( f'From running this shell command: {command}' )
-        print( f'How2Data build ignoring them and continuing anyway...' )
+        log.warning( 'Suppressing shell error', **{
+            'Received error code' : code,
+            'From shell command' : command
+        } )

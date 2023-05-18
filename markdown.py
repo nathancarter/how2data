@@ -3,6 +3,7 @@ import os
 import re
 import json
 import files
+import log
 
 from utils import ensure_shell_command_succeeds
 
@@ -45,15 +46,15 @@ def get_unique_doc ( path_and_base_filename ):
         if os.path.exists( path_and_base_filename + extension ) and \
         os.path.isfile( path_and_base_filename + extension ) ]
     if len( which_exist ) == 0:
-        print( 'No document file found with this base:', path_and_base_filename )
-        print( '          and any of these extensions:', ' '.join( files.doc_extensions ) )
-        sys.exit( 1 )
+        log.error( "No document file found", **{
+            "Base of filename" : path_and_base_filename,
+            "Possible extensions" : ' '.join( files.doc_extensions )
+        } )
     if len( which_exist ) > 1:
-        print( 'Multiple documents found with this base:', path_and_base_filename )
-        for extension in files.doc_extensions:
-            print( '                                  Found:',
-                path_and_base_filename + extension )
-        sys.exit( 1 )
+        log.error( "Multiple documents found (must be unique)", **{
+            "Base of filename" : path_and_base_filename,
+            **{ f"Result {i+1}": which_exist[i] for i in range(len(which_exist)) }
+        } )
     return path_and_base_filename + which_exist[0]
 # Function that converts an .ipynb file into markdown text.
 # If that .ipynb file has markdown links to images stored as cell attachments,
@@ -82,9 +83,7 @@ def ipynb_to_markdown ( filename ):
         elif cell['cell_type'] == 'code':
             result += '\n```python\n' + ''.join( cell['source'] ) + '\n```\n'
         else:
-            print( 'Unknown cell type:', cell['cell_type'] )
-            print( '     In this file:', filename )
-            sys.exit( 1 )
+            log.error( 'Unknown cell type', Type=cell['cell_type'], Filename=filenme )
     while result[0] == '\n':
         result = result[1:]
     return result
@@ -106,9 +105,7 @@ def read_doc ( filename ):
         result = ipynb_to_markdown( tmp_file )
         ensure_shell_command_succeeds( f'rm "{tmp_file}"' )
         return result
-    print( 'Unknown document type:', extension )
-    print( '        For this file:', filename )
-    sys.exit( 1 )
+    log.error( 'Unknown document type', Type=extension, File=filename )
 
 # How to place some special content in an HTML or markdown file and
 # indicate that it's special by wrapping it in comment flags, so that you

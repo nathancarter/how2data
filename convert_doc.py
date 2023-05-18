@@ -61,23 +61,21 @@ import markdown
 ###
 
 if len( sys.argv ) != 2:
-    print( 'Usage: python convert_doc.py my-input-file.md' )
+    log.out( Usage='python convert_doc.py my-input-file.md' )
     sys.exit( 1 )
 input_file = sys.argv[1]
 if not os.path.isfile( input_file ):
-    print( 'No such file:', input_file )
-    sys.exit( 1 )
+    log.error( 'No such file', Filename=input_file )
 valid_types = [ '.md', '.markdown', '.ipynb', '.Rmd' ]
 if files.extension( input_file ) not in valid_types:
-    print( 'Invalid file type:', files.extension( input_file ) )
-    print( '  Expected one of:', ', '.join( valid_types ) )
-    sys.exit( 1 )
-print( 'Processing this input file:', input_file )
+    log.error( 'Invalid file type:',
+               Extension=files.extension( input_file ),
+               Expected=', '.join( valid_types ) )
+log.info( 'Processing input file' + input_file )
 output_folder = files.without_extension( input_file )
 if os.path.exists( output_folder ):
-    print( 'This file/folder exists already:', output_folder )
-    print( 'We cannot use it as the output folder.  Delete it first?' )
-    sys.exit( 1 )
+    log.error( 'Output folder already exists.  Delete it first?',
+               Folder=output_folder )
 
 ###
 ###  CONVERT NON-MARKDOWN FORMATS TO LINES OF MARKDOWN
@@ -85,7 +83,7 @@ if os.path.exists( output_folder ):
 
 markdown_content = markdown.read_doc( input_file )
 lines = markdown_content.split( '\n' )
-print( 'Successfully read input file in markdown form.' )
+log.info( 'Successfully read input file in markdown form.' )
 
 ###
 ###  PROCESS EACH LINE IN FILE
@@ -105,7 +103,7 @@ def add_solution ():
             'task name' : task_name,
             'task text' : task_text
         } )
-        print( '\tStored task named:', task_name )
+        log.info( 'Stored task named:', task_name )
         task_text = None
         return
     if solution_name is not None and solution_text is not None:
@@ -114,27 +112,27 @@ def add_solution ():
             'solution name' : solution_name,
             'solution text' : solution_text
         } )
-        print( '\tStored solution named:', solution_name )
+        log.info( 'Stored solution named:', solution_name )
         solution_name = None
         solution_text = None
         return
-    print( 'Error saving this stuff:' )
-    print( '\tTask name:', task_name )
-    print( '\tTask text:', task_text )
-    print( '\tSolution name:', solution_name )
-    print( '\tSolution text:', solution_text )
-    sys.exit( 1 )
+    log.error( 'Could not save the following data', **{
+        "Task name" : task_name,
+        "Task text" : task_text,
+        "Solution name" : solution_name,
+        "Solution text" : solution_text
+    } )
 for index, line in enumerate( lines ):
     if line.startswith( '# How to ' ):
         add_solution()
         task_name = line[2:]
         task_text = ''
-        print( f'\tLine {index+1} is a task heading: {task_name}' )
+        log.info( f'Line {index+1} is a task heading: {task_name}' )
     elif line.startswith( '## ' ):
         add_solution()
         solution_name = line[3:]
         solution_text = ''
-        print( f'\tLine {index+1} is a solution heading: {solution_name}' )
+        log.info( f'Line {index+1} is a solution heading: {solution_name}' )
     elif solution_text != None:
         solution_text += line + '\n'
     elif task_text != None:
@@ -142,9 +140,8 @@ for index, line in enumerate( lines ):
     elif line.strip() == '':
         continue
     else:
-        print( f'Unexpected content in line {index+1}:\n{line}' )
-        print( 'Content should only be inside tasks or solutions.' )
-        sys.exit( 1 )
+        log.error( f'Unexpected content in line {index+1}:\n{line}',
+                   Details='Content should be inside only tasks or solutions.' )
 add_solution()
 
 ###
@@ -154,7 +151,7 @@ add_solution()
 files.ensure_folder_exists( output_folder )
 def make_file ( name, text ):
     files.write_text_file( name, text )
-    print( 'Created file:', name )
+    log.built( name )
 for solution in solutions:
     task_folder = os.path.join( output_folder, solution['task name'] )
     if 'task text' in solution:
@@ -164,4 +161,4 @@ for solution in solutions:
     else:
         output_file = os.path.join( task_folder, solution['solution name']+'.md' )
         make_file( output_file, solution['solution text'] )
-print( 'Done.' )
+log.info( 'Done.' )

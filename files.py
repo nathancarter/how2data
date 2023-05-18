@@ -1,6 +1,7 @@
 
 import os
 import time
+import log
 
 # Get pieces of a filename/path
 def extension ( filename ):
@@ -47,9 +48,8 @@ def docs_inside ( folder ):
     result = [ x for x in os.listdir( folder ) if is_doc( x ) ]
     filenames = list( map( without_extension, result ) )
     if len( set( filenames ) ) < len( filenames ):
-        print( 'Documents with same name and different extensions!' )
-        print( 'In this folder:', folder )
-        sys.exit( 1 )
+        log.error( 'Documents with same name and different extensions',
+                   **{ "In this folder": folder } )
     return result
 def imgs_inside ( folder ):
     return [ x for x in os.listdir( folder ) if is_img( x ) ]
