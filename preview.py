@@ -73,12 +73,12 @@ task_desc_file = markdown.get_unique_doc(
     os.path.join( preview_folder, 'description' ) )
 tasks_df = pd.DataFrame( {
     'task name' : [ 'Preview' ],
-    'task filename' : [ path_in_project( task_desc_file ) ],
+    'task filename' : [ config.relativize_path( task_desc_file ) ],
     'content' : [ markdown.read_doc( task_desc_file ) ],
-    'permalink' : [ blogify( 'Preview' ) ]
+    'permalink' : [ config.blogify( 'Preview' ) ]
 } )
 tasks_df['markdown link'] = tasks_df['task name'].apply(
-    lambda name: f'[{name}](../{blogify(name)})' )
+    lambda name: f'[{name}](../{config.blogify(name)})' )
 # print( tasks_df )
 log.info( f"Read file: {task_desc_file}" )
 
@@ -100,21 +100,21 @@ for solution_file in files.docs_inside( preview_folder ):
         'software' : software_name,
         'solution name' : solution_name,
         'solution filename' : solution_file,
-        'solution path' : path_in_project( input_file ),
+        'solution path' : config.relativize_path( input_file ),
         'solution title' : f'Preview (in {files.without_extension( solution_file )})'
     }
-    markdown = markdown.read_doc( input_file )
-    metadata, content = yaml.split_string( markdown )
+    markdown_content = markdown.read_doc( input_file )
+    metadata, content = yaml.split_string( markdown_content )
     next['content'] = content + files.modification_text( input_file )
     for key, value in metadata.items():
         next[key] = value
-    next['raw content'] = markdown
-    next['permalink'] = blogify( next['solution title'] )
+    next['raw content'] = markdown_content
+    next['permalink'] = config.blogify( next['solution title'] )
     json.append( next )
 solutions_df = pd.DataFrame( json )
 # Add links to solution pages to each solution row
 def link_to_solution ( solution_row ):
-    return f'[{solution_row["solution name"]}](../{blogify(solution_row["solution title"])})'
+    return f'[{solution_row["solution name"]}](../{config.blogify(solution_row["solution title"])})'
 solutions_df['markdown link'] = solutions_df.apply( link_to_solution, axis=1 )
 # print( solutions_df )
 log.info( 'Read solutions', **{
@@ -159,10 +159,10 @@ for index, row in tasks_df.iterrows():
 # Show it to the user via a simple HTTP server
 log.heading( 'Preview generated successfully' )
 port = 8000
-Handler = functools.partial( http.server.SimpleHTTPRequestHandler,
+handler = functools.partial( http.server.SimpleHTTPRequestHandler,
                              directory=generated_folder )
 socketserver.TCPServer.allow_reuse_address = True
-with socketserver.TCPServer( ( '', port ), Handler ) as httpd:
+with socketserver.TCPServer( ( '', port ), handler ) as httpd:
     log.info( 'View preview here', **{
         "Folder" : generated_folder,
         "Task Description" : f"http://localhost:{port}/preview.html"

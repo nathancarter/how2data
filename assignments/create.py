@@ -9,6 +9,8 @@
 #
 #####
 
+import config
+import how_to_data
 import sys, os
 script_folder = os.path.dirname( os.path.realpath( __file__ ) )
 parent_folder = os.path.dirname( script_folder )
@@ -18,6 +20,8 @@ from collections import OrderedDict
 import json
 import files
 import log
+import solutions
+import software
 
 #####
 #
@@ -47,12 +51,12 @@ create.py convert <X> <Y> [format] [text]
 ''' )
 
 # Compute binary information of which tasks have solutions in which software
-binary_info = solutions_df()[['task name','software']].copy().drop_duplicates()
+binary_info = solutions.all()[['task name','software']].copy().drop_duplicates()
 binary_info['marker'] = 1
 binary_info = binary_info.pivot(
     index=['task name'], columns='software', values='marker' )
 binary_info = binary_info.fillna( 0 )
-for sw in software_df().name:
+for sw in software.all().name:
     binary_info[sw] = binary_info[sw].astype( bool )
 
 # Declarations of file formats supported, plus defaults
@@ -71,7 +75,7 @@ software_using_code = [ 'R', 'Python' ] # not Excel
 # List every possible ordered pair of distinct software packages
 def software_pairs ():
     return [
-        (a,b) for a in software_df().name for b in software_df().name if a != b
+        (a,b) for a in software.all().name for b in software.all().name if a != b
     ]
 
 # Compute the list of task names that need to be (or could be) converted from
@@ -264,7 +268,7 @@ def finalize_export ( filename, markdown, format ):
 def convert ( task_name, from_sw, to_sw, format ):
     # Get markdown content of software in which the task is already solved
     content = files.read_text_file(
-        os.path.join( jekyll_input_folder, blogify( task_name )+'.md' ) )
+        os.path.join( config.jekyll_input_folder, config.blogify( task_name )+'.md' ) )
     sections_dict = sections( content )
     # For each solution in the "from" software, create a file in the "to"
     # software that contains the old solution, plus instructions on how to
@@ -282,7 +286,7 @@ def convert ( task_name, from_sw, to_sw, format ):
 ## Getting started
 
  1. Read the full description of the "{task_name}" task.  You can find it
-    [on this page]({online_link(blogify(task_name))})
+    [on this page]({online_link(config.blogify(task_name))})
     of the How to Data website.
  2. Read the solution below, which was written using {from_sw}.  You can see
     that same solution displayed more nicely on the same page from the site,
@@ -348,7 +352,7 @@ def convert ( task_name, from_sw, to_sw, format ):
 if sys.argv[1:] == ['software']:
     print( 'Software # Solutions Default format' )
     print( '-------- ----------- --------------' )
-    for software in software_df().name:
+    for software in software.all().name:
         num_sols = sum( binary_info[software] )
         format = default_formats[software] \
             if software in default_formats else None
