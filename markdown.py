@@ -1,4 +1,5 @@
 
+import config
 import os
 import re
 import json
@@ -22,6 +23,7 @@ def escape_for_jekyll ( markdown ):
         else:
             return line
     return '\n'.join( fix_line( line ) for line in markdown.split( '\n' ) )
+
 # Inverse of previous function
 def unescape_for_jekyll ( markdown ):
     def fix_line ( line ):
@@ -30,6 +32,7 @@ def unescape_for_jekyll ( markdown ):
         else:
             return line
     return '\n'.join( fix_line( line ) for line in markdown.split( '\n' ) )
+
 # When writing Markdown, be aware that Jekyll messes with LaTex; see below.
 def write ( file, markdown, add_escapes=True ):
     if add_escapes:
@@ -55,6 +58,7 @@ def get_unique_doc ( path_and_base_filename ):
             **{ f"Result {i+1}": which_exist[i] for i in range(len(which_exist)) }
         } )
     return path_and_base_filename + which_exist[0]
+
 # Function that converts an .ipynb file into markdown text.
 # If that .ipynb file has markdown links to images stored as cell attachments,
 # they are converted into data URIs.
@@ -86,6 +90,7 @@ def ipynb_to_markdown ( filename ):
     while result[0] == '\n':
         result = result[1:]
     return result
+
 # To pair with get_unique_doc:  Read any document whose extension is in
 # files.doc_extensions into markdown text.  It can support markdown (no conversion
 # needed) or RMarkdown (tiny conversion needed) or Jupyter notebooks (more
@@ -139,3 +144,47 @@ def html_sections_to_latex ( markdown, folder ):
     markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]
     # recur on the new markdown, with one less section to process
     return html_sections_to_latex( markdown )
+
+# Function to run a given markdown document as if it were a Jupyter notebook.
+# You specify the markdown content as a string, the folder in which to run it
+# (using a temp file that will be deleted aftewards), and the name of the
+# software package.  If that software package has a kernel, according to the
+# kernel_for_software dictionary defined below, we will run it using that
+# kernel; otherwise this function will behave as the identity function.
+# It returns another string of markdown content, this time with execution
+# outputs included (iff there is a relevant kernel).
+kernel_for_software = {
+    'Python' : 'python3',
+    'Julia'  : 'julia-1.8',
+    'R'      : 'ir'
+}
+def run ( markdown, folder, software ):
+    if software in kernel_for_software:
+        kernel = kernel_for_software[software]
+    else:
+        return markdown
+    tmp_md_doc = os.path.join( folder, 'jupyter-temp-file.md' )
+    ipynb_out = tmp_md_doc[:-3] + '.ipynb'
+    # write markdown to temp file
+    files.write_text_file( tmp_md_doc, markdown )
+    # run it, creating a notebook containing the outputs
+    shell.run_or_halt( 'jupytext --to ipynb ' + \
+        f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
+        f'rm "{tmp_md_doc}"' )
+    # convert that to markdown again
+    config_param = ''
+    jupyter_config_file = os.path.join( config.main_folder,
+        f'jupyter_nbconvert_config_{software}.py' )
+    command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \
+        f"--JupyterApp.config_file='{jupyter_config_file}' " + \
+        f'--output="{tmp_md_doc}" "{ipynb_out}"'
+    shell.run_or_halt( command_to_run, f'rm "{ipynb_out}"' )
+    # read it back into a string
+    result = files.read_text_file( tmp_md_doc )
+    shell.run_or_halt( f'rm "{tmp_md_doc}"' )
+    # workaround for buggy way that SVGs get embedded in markdown:
+    result = result \
+        .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="utf-8"?>', '' ) \
+        .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="UTF-8"?>', '' ) \
+        .replace( '</svg>\n)', '</svg>\n' )
+    return result

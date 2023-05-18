@@ -144,52 +144,6 @@ def adjust_image_filenames ( func, markdown ):
         markdown
     )
 
-# Function to run a given markdown document as if it were a Jupyter notebook.
-# You specify the markdown content as a string, the folder in which to run it
-# (using a temp file that will be deleted aftewards), and the name of the
-# software package.  If that software package has a kernel, according to the
-# kernel_for_software dictionary defined below, we will run it using that
-# kernel; otherwise this function will function as the identity function.
-# It returns another string of markdown content, this time with execution
-# outputs included (iff there is a relevant kernel).
-kernel_for_software = {
-    'Python' : 'python3',
-    'Julia'  : 'julia-1.8',
-    'R'      : 'ir'
-}
-def run_markdown ( markdown, folder, software, config_folder=None ):
-    if software in kernel_for_software:
-        kernel = kernel_for_software[software]
-    else:
-        return markdown
-    tmp_md_doc = os.path.join( folder, 'jupyter-temp-file.md' )
-    ipynb_out = tmp_md_doc[:-3] + '.ipynb'
-    # write markdown to temp file
-    files.write_text_file( tmp_md_doc, markdown )
-    # run it, creating a notebook containing the outputs
-    shell.run_or_halt( 'jupytext --to ipynb ' + \
-        f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
-        f'rm "{tmp_md_doc}"' )
-    # convert that to markdown again
-    config_param = ''
-    if config_folder is not None:
-        jupyter_config_file = os.path.join( config_folder,
-            f'jupyter_nbconvert_config_{software}.py' )
-        config_param = f"--JupyterApp.config_file='{jupyter_config_file}'"
-    command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \
-        config_param + " " + \
-        f'--output="{tmp_md_doc}" "{ipynb_out}"'
-    shell.run_or_halt( command_to_run, f'rm "{ipynb_out}"' )
-    # read it back into a string
-    result = files.read_text_file( tmp_md_doc )
-    shell.run_or_halt( f'rm "{tmp_md_doc}"' )
-    # workaround for buggy way that SVGs get embedded in markdown:
-    result = result \
-        .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="utf-8"?>', '' ) \
-        .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="UTF-8"?>', '' ) \
-        .replace( '</svg>\n)', '</svg>\n' )
-    return result
-
 ###
 ###  BUILD TOOLS USED BELOW
 ###
@@ -253,8 +207,8 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
         DESCRIPTION =
             adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
                 make_all_task_names_links( task_row['content'] ) ),
-        MARKDOWN_CONTENT = markdown.wrap_in_html_comments( run_markdown(
-            content, in_folder, solution_row['software'], config_folder ) ),
+        MARKDOWN_CONTENT = markdown.wrap_in_html_comments( markdown.run(
+            content, in_folder, solution_row['software'] ) ),
         CONTRIBUTORS = contributors
     ) )
     log.built( 'solution for', solution_row["task name"],
