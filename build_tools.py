@@ -405,7 +405,7 @@ def build_topic_page ( row ):
 
 # Convert all HTML-style tables/etc. within markdown text to LaTeX instead
 def html_sections_to_latex ( markdown, folder=main_folder ):
-    # are there any sectionsn to process?  if not, just return the input
+    # are there any sections to process?  if not, just return the input
     section = re.search( '\n<div(?:.|\n)*?<\\/div.*\n', markdown )
     if section is None:
         return markdown
