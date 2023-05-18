@@ -19,6 +19,7 @@ import shutil
 import sys
 from datetime import datetime
 import files
+import markdown
 
 ###
 ###  GENERATING TABLES
@@ -232,7 +233,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
         in_folder = os.path.join( tasks_folder, solution_row['task name'] )
     input_file = os.path.join( in_folder, solution_row['solution filename'] )
     output_file = os.path.join( out_folder, out_filename )
-    task_file = get_unique_markdown_doc( os.path.join(
+    task_file = markdown.get_unique_doc( os.path.join(
         in_folder, 'description' ) )
     if not force_rerun_solution \
     and not must_rebuild_file( input_file, output_file ) \
@@ -258,7 +259,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
                 '\n'.join( [ f' * {author}' for author in contributors ] )
         except TypeError:
             contributors = ''
-    write_markdown( output_file, fill_template( 'solution',
+    markdown.write( output_file, fill_template( 'solution',
         TITLE = solution_row['solution title'],
         PERMALINK = solution_row['permalink'],
         TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
@@ -281,7 +282,7 @@ def get_generated_solution_body ( solution_row, folder=jekyll_input_folder ):
     title = solution_row['solution title']
     generated_file = blogify( title ) + '.md'
     all_content = files.read_text_file( os.path.join( folder, generated_file ) )
-    return unwrap_from_html_comments( all_content )
+    return markdown.unwrap_from_html_comments( all_content )
 
 # How to build a task page; pass any row from tasks_df().
 # IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
@@ -300,7 +301,7 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
             NAME = solution_name,
             SOFTWARE = solution_row['software'],
             PERMALINK = solution_row['permalink'],
-            BODY = unescape_for_jekyll( get_generated_solution_body(
+            BODY = markdown.unescape_for_jekyll( get_generated_solution_body(
                 solution_row, out_folder ) )
         )
     if all_solutions == '':
@@ -318,7 +319,7 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
         related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
     else:
         related_topics = '*None*'
-    write_markdown( output_file, fill_template( 'task',
+    markdown.write( output_file, fill_template( 'task',
         TITLE = row['task name'],
         PERMALINK = row['permalink'],
         DESCRIPTION =
@@ -362,7 +363,7 @@ def build_software_page ( row ):
         table2 = table2.to_markdown( index=False )
     else:
         table2 = f'*None---all tasks have solutions in {row["name"]}!*'
-    write_markdown( output_file, fill_template( 'software',
+    markdown.write( output_file, fill_template( 'software',
         TITLE = row['title'],
         SOFTWARE_NAME = row['name'],
         PERMALINK = row['permalink'],
@@ -393,7 +394,7 @@ def build_topic_page ( row ):
         pdf_downloads = 'No PDF downloads available for this topic yet.'
     out_filename = row['permalink'] + '.md'
     output_file = os.path.join( jekyll_input_folder, out_filename )
-    write_markdown( output_file, fill_template( 'topic',
+    markdown.write( output_file, fill_template( 'topic',
         TITLE = row['topic name'],
         PERMALINK = row['permalink'],
         CONTENT = make_all_task_names_links( row['content'] ),
@@ -476,7 +477,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
         task_solutions = solutions_in_sw[solutions_in_sw['task name'] == task_row['task name']]
         if len( task_solutions ) > 0:
             solution = html_sections_to_latex(
-                unescape_for_jekyll(
+                markdown.unescape_for_jekyll(
                     get_generated_solution_body(
                         task_solutions.iloc[0,:] ) ) )
         else:
@@ -506,7 +507,7 @@ def build_topic_pdf ( topic_row, software_name, solution_name='solution', min_pr
     # write all that markdown to a file, run pandoc on it to create a PDF, then delete the .md
     print( f'        Generating PDF for: {title}' )
     tmp_md_doc = os.path.join( topics_folder, 'pandoc-temp-file.md' )
-    write_markdown( tmp_md_doc, markdown, add_escapes=False )
+    markdown.write( tmp_md_doc, markdown, add_escapes=False )
     command_to_run = 'pandoc --from=markdown --to=pdf --pdf-engine=xelatex' \
                 + ' -V geometry:margin=1in -V urlcolor:NavyBlue --standalone' \
                 + f' --include-in-header="{os.path.join(main_folder,"pandoc-latex-header.tex")}"' \

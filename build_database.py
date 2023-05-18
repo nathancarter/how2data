@@ -13,6 +13,7 @@ import pandas as pd
 import numpy as np
 import sys
 import files
+import markdown
 
 ###
 ###  ENSURE KEY FOLDERS EXIST
@@ -80,12 +81,12 @@ def tasks_df ():
     if _tasks_df is None:
         rows = [ ]
         for task_folder in files.subfolders( tasks_folder ):
-            task_desc_file = get_unique_markdown_doc(
+            task_desc_file = markdown.get_unique_doc(
                 os.path.join( tasks_folder, task_folder, 'description' ) )
             rows.append( {
                 'task name' : task_folder,
                 'task filename' : path_in_project( task_desc_file ),
-                'content' : read_doc_to_markdown( task_desc_file ),
+                'content' : markdown.read_doc( task_desc_file ),
                 'permalink' : blogify( task_folder )
             } )
         _tasks_df = pd.DataFrame( rows )
@@ -107,15 +108,15 @@ def topics_df ():
             if topic_file == 'README.md':
                 continue
             full_filename = os.path.join( topics_folder, topic_file )
-            markdown = read_doc_to_markdown( full_filename )
-            metadata, content = string_split_yaml_header( markdown )
+            markdown_content = markdown.read_doc( full_filename )
+            metadata, content = string_split_yaml_header( markdown_content )
             content += files.modification_text( full_filename )
             next = {
                 'topic name' : files.without_extension( topic_file ),
                 'topic filename' : path_in_project( full_filename ),
                 'permalink' : blogify( files.without_extension( topic_file ) ),
                 'content' : content,
-                'raw content' : markdown
+                'raw content' : markdown_content
             }
             for key, value in metadata.items():
                 next[key] = value
@@ -155,12 +156,12 @@ def solutions_df ():
                     'solution title' :
                         f'{task_name} (in {files.without_extension( solution_file )})'
                 }
-                markdown = read_doc_to_markdown( input_file )
-                metadata, content = string_split_yaml_header( markdown )
+                markdown_content = markdown.read_doc( input_file )
+                metadata, content = string_split_yaml_header( markdown_content )
                 next['content'] = content + files.modification_text( input_file )
                 for key, value in metadata.items():
                     next[key] = value
-                next['raw content'] = markdown
+                next['raw content'] = markdown_content
                 next['permalink'] = blogify( next['solution title'] )
                 json.append( next )
         _solutions_df = pd.DataFrame( json )

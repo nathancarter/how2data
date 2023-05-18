@@ -54,6 +54,7 @@ import sys
 import os
 from utils import *
 import files
+import markdown
 
 ###
 ###  ENSURE WE GOT A VALID INPUT FILE AND CAN READ IT
@@ -82,8 +83,8 @@ if os.path.exists( output_folder ):
 ###  CONVERT NON-MARKDOWN FORMATS TO LINES OF MARKDOWN
 ###
 
-markdown = read_doc_to_markdown( input_file )
-lines = markdown.split( '\n' )
+markdown_content = markdown.read_doc( input_file )
+lines = markdown_content.split( '\n' )
 print( 'Successfully read input file in markdown form.' )
 
 ###

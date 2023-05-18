@@ -1,6 +1,10 @@
 
+import os
 import re
+import json
 import files
+
+from utils import ensure_shell_command_succeeds
 
 # Jekyll messes with single-dollar-sign LaTeX expressions,
 # unescaping every backslash within them (by one level),

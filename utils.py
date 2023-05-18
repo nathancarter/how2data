@@ -12,7 +12,6 @@ from ruamel.yaml import YAML
 import os
 import re
 import sys
-import json
 import files
 
 # Get all YAML from a YAML file into a Python dict
