@@ -12,13 +12,14 @@ from utils import *
 import pandas as pd
 import numpy as np
 import sys
+import files
 
 ###
 ###  ENSURE KEY FOLDERS EXIST
 ###
 
-ensure_folder_exists( os.path.join( topics_folder, 'images' ) )
-ensure_folder_exists( jekyll_imgs_folder )
+files.ensure_folder_exists( os.path.join( topics_folder, 'images' ) )
+files.ensure_folder_exists( jekyll_imgs_folder )
 
 ###
 ###  READ STATIC PAGES, TEMPLATES, AND OTHER MISC. FILES FROM DISK
@@ -37,7 +38,7 @@ def files_df ():
                 'content' : np.nan,
                 'raw content' : np.nan
             } \
-            for topic_image in just_imgs( os.listdir( os.path.join( topics_folder, 'images' ) ) )
+            for topic_image in files.just_imgs( os.listdir( os.path.join( topics_folder, 'images' ) ) )
         ] + [
             {
                 'type' : 'task image',
@@ -47,10 +48,10 @@ def files_df ():
                 'content' : np.nan,
                 'raw content' : np.nan
             } \
-            for task_folder in subfolders( tasks_folder ) \
-            for task_image in just_imgs( task_folder )
+            for task_folder in files.subfolders( tasks_folder ) \
+            for task_image in files.just_imgs( task_folder )
         ]
-        for filename in just_docs( os.listdir( static_folder ) ):
+        for filename in files.just_docs( os.listdir( static_folder ) ):
             full_filename = os.path.join( static_folder, filename )
             metadata, content = file_split_yaml_header( full_filename )
             json.append( {
@@ -59,7 +60,7 @@ def files_df ():
                 'full path' : path_in_project( full_filename ),
                 'metadata' : metadata,
                 'content' : content,
-                'raw content' : read_text_file( full_filename )
+                'raw content' : files.read_text_file( full_filename )
             } )
         _files_df = pd.DataFrame( json )
     return _files_df
@@ -78,7 +79,7 @@ def tasks_df ():
     global _tasks_df
     if _tasks_df is None:
         rows = [ ]
-        for task_folder in subfolders( tasks_folder ):
+        for task_folder in files.subfolders( tasks_folder ):
             task_desc_file = get_unique_markdown_doc(
                 os.path.join( tasks_folder, task_folder, 'description' ) )
             rows.append( {
@@ -102,17 +103,17 @@ def topics_df ():
     global _topics_df
     if _topics_df is None:
         json = [ ]
-        for topic_file in just_docs( os.listdir( topics_folder ) ):
+        for topic_file in files.just_docs( os.listdir( topics_folder ) ):
             if topic_file == 'README.md':
                 continue
             full_filename = os.path.join( topics_folder, topic_file )
             markdown = read_doc_to_markdown( full_filename )
             metadata, content = string_split_yaml_header( markdown )
-            content += modification_text( full_filename )
+            content += files.modification_text( full_filename )
             next = {
-                'topic name' : without_extension( topic_file ),
+                'topic name' : files.without_extension( topic_file ),
                 'topic filename' : path_in_project( full_filename ),
-                'permalink' : blogify( without_extension( topic_file ) ),
+                'permalink' : blogify( files.without_extension( topic_file ) ),
                 'content' : content,
                 'raw content' : markdown
             }
@@ -134,11 +135,11 @@ def solutions_df ():
     global _solutions_df
     if _solutions_df is None:
         json = [ ]
-        for task_name in subfolders( tasks_folder ):
-            for solution_file in docs_inside( os.path.join( tasks_folder, task_name ) ):
-                if without_extension( solution_file ) == 'description':
+        for task_name in files.subfolders( tasks_folder ):
+            for solution_file in files.docs_inside( os.path.join( tasks_folder, task_name ) ):
+                if files.without_extension( solution_file ) == 'description':
                     continue
-                bits = without_extension( solution_file ).split( ', ' )
+                bits = files.without_extension( solution_file ).split( ', ' )
                 software_name = bits[0]
                 if len( bits ) == 1:
                     solution_name = 'solution'
@@ -152,11 +153,11 @@ def solutions_df ():
                     'solution filename' : solution_file,
                     'solution path' : path_in_project( input_file ),
                     'solution title' :
-                        f'{task_name} (in {without_extension( solution_file )})'
+                        f'{task_name} (in {files.without_extension( solution_file )})'
                 }
                 markdown = read_doc_to_markdown( input_file )
                 metadata, content = string_split_yaml_header( markdown )
-                next['content'] = content + modification_text( input_file )
+                next['content'] = content + files.modification_text( input_file )
                 for key, value in metadata.items():
                     next[key] = value
                 next['raw content'] = markdown

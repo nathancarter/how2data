@@ -16,6 +16,7 @@ sys.path.append( parent_folder )
 from build_tools import *
 from collections import OrderedDict
 import json
+import files
 
 #####
 #
@@ -190,11 +191,11 @@ def code_to_code_cell ( code ):
   }}'''
 def notebook_with_cells ( cells ):
     tmp_file = os.path.join( script_folder, 'tmp' )
-    write_text_file( tmp_file+'.md', 'Dummy text' )
+    files.write_text_file( tmp_file+'.md', 'Dummy text' )
     ensure_shell_command_succeeds(
         f'pandoc "{tmp_file}.md" --output="{tmp_file}.ipynb"',
         f'rm "{tmp_file}.md"' )
-    template = json.loads( read_text_file( tmp_file+'.ipynb' ) )
+    template = json.loads( files.read_text_file( tmp_file+'.ipynb' ) )
     ensure_shell_command_succeeds( f'rm "{tmp_file}.ipynb"' )
     flag = "REPLACE_THIS_WITH_ACTUAL_CELLS"
     template["cells"] = [ flag ]
@@ -232,23 +233,23 @@ def md_to_ipynb ( markdown ):
 def finalize_export ( filename, markdown, format ):
     out_folder = os.path.dirname( filename )
     print( f'Ensuring folder exists:', out_folder )
-    ensure_folder_exists( out_folder )
+    files.ensure_folder_exists( out_folder )
     if format in ['md','markdown','Markdown']:
         print( f'Exporting {filename}.md...' )
-        write_text_file( filename+'.md', markdown )
+        files.write_text_file( filename+'.md', markdown )
     elif format in ['ipynb']:
         print( f'Exporting {filename}.ipynb...' )
-        write_text_file( filename+'.ipynb', md_to_ipynb( markdown ) )
+        files.write_text_file( filename+'.ipynb', md_to_ipynb( markdown ) )
     elif format in ['doc','docx']:
         print( f'Exporting {filename}.md...' )
-        write_text_file( filename+'.md', markdown )
+        files.write_text_file( filename+'.md', markdown )
         print( f'Converting to {format}...' )
         ensure_shell_command_succeeds(
             f'pandoc "{filename}.md" --output="{filename}.{format}"',
             f'rm "{filename}.md"' )
     elif format in ['Rmd','RMarkdown','Rmarkdown']:
         print( f'Exporting {filename}.md...' )
-        write_text_file( filename+'.md',
+        files.write_text_file( filename+'.md',
             markdown.replace( '\n```R', '\n```{r}' ) )
         print( f'Converting to {format}...' )
         ensure_shell_command_succeeds(
@@ -261,7 +262,7 @@ def finalize_export ( filename, markdown, format ):
 # a file in the given format, stored in this folder (with this script).
 def convert ( task_name, from_sw, to_sw, format ):
     # Get markdown content of software in which the task is already solved
-    content = read_text_file(
+    content = files.read_text_file(
         os.path.join( jekyll_input_folder, blogify( task_name )+'.md' ) )
     sections_dict = sections( content )
     # For each solution in the "from" software, create a file in the "to"

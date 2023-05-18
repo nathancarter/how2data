@@ -53,6 +53,7 @@
 import sys
 import os
 from utils import *
+import files
 
 ###
 ###  ENSURE WE GOT A VALID INPUT FILE AND CAN READ IT
@@ -66,12 +67,12 @@ if not os.path.isfile( input_file ):
     print( 'No such file:', input_file )
     sys.exit( 1 )
 valid_types = [ '.md', '.markdown', '.ipynb', '.Rmd' ]
-if file_extension( input_file ) not in valid_types:
-    print( 'Invalid file type:', file_extension( input_file ) )
+if files.extension( input_file ) not in valid_types:
+    print( 'Invalid file type:', files.extension( input_file ) )
     print( '  Expected one of:', ', '.join( valid_types ) )
     sys.exit( 1 )
 print( 'Processing this input file:', input_file )
-output_folder = without_extension( input_file )
+output_folder = files.without_extension( input_file )
 if os.path.exists( output_folder ):
     print( 'This file/folder exists already:', output_folder )
     print( 'We cannot use it as the output folder.  Delete it first?' )
@@ -149,14 +150,14 @@ add_solution()
 ###  WRITE OUTPUT FILES
 ###
 
-ensure_folder_exists( output_folder )
+files.ensure_folder_exists( output_folder )
 def make_file ( name, text ):
-    write_text_file( name, text )
+    files.write_text_file( name, text )
     print( 'Created file:', name )
 for solution in solutions:
     task_folder = os.path.join( output_folder, solution['task name'] )
     if 'task text' in solution:
-        ensure_folder_exists( task_folder )
+        files.ensure_folder_exists( task_folder )
         make_file( os.path.join( task_folder, 'description.md' ),
             solution['task text'] )
     else:

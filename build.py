@@ -10,6 +10,7 @@
 
 import os, sys, glob
 from build_tools import *
+import files
 
 # Command line parameters
 # -f/--force = rerun all solution code even if modification dates don't require it
@@ -18,7 +19,7 @@ rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
 # Delete files generated in last build
 section_heading( 'Deleting old files from Jekyll input folder' )
 to_delete = ' '.join( [
-    os.path.join( jekyll_imgs_folder, f'*{ext}' ) for ext in img_extensions
+    os.path.join( jekyll_imgs_folder, f'*{ext}' ) for ext in files.img_extensions
 ] )
 print( f'Running: rm {to_delete}' )
 run_shell_command_ignoring_errors( f'rm {to_delete}' )
@@ -61,7 +62,7 @@ outfile = 'jekyll-input/assets/downloads/examples-for-contributing-to-how-to-dat
 if any( ( must_rebuild_file( infile, outfile ) for infile in infiles ) ):
     howto = 'examples/How to use this folder'
     ensure_shell_command_succeeds( f'pandoc --to=docx --output="{howto}.docx" "{howto}.md"' )
-    ensure_folder_exists(
+    files.ensure_folder_exists(
         os.path.join( jekyll_input_folder, 'assets', 'downloads' ) )
     ensure_shell_command_succeeds( f'cd examples && zip -orv9 "../{outfile}" *' )
 else:

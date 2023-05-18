@@ -18,6 +18,7 @@ import re
 import shutil
 import sys
 from datetime import datetime
+import files
 
 ###
 ###  GENERATING TABLES
@@ -101,7 +102,7 @@ def mark_as_regenerated ( file ):
     files_generated.append( file )
 def delete_ungenerated_markdown ():
     for file in os.listdir( jekyll_input_folder ):
-        if is_doc( file ) and file not in files_generated:
+        if files.is_doc( file ) and file not in files_generated:
             ensure_shell_command_succeeds(
                 f'rm {os.path.join( jekyll_input_folder, file )}' )
 
@@ -110,10 +111,10 @@ def delete_ungenerated_markdown ():
 def copy_static_file ( filename, replacements = dict() ):
     source = os.path.join( static_folder, filename )
     dest = os.path.join( jekyll_input_folder, filename )
-    content = read_text_file( source )
+    content = files.read_text_file( source )
     for original, replacement in replacements.items():
         content = content.replace( original, replacement )
-    write_text_file( dest, content )
+    files.write_text_file( dest, content )
     print( 'Copied: Source:      ', source )
     print( '        Dest:        ', dest )
     print( '        Replacements:', len(replacements) )
@@ -177,7 +178,7 @@ def run_markdown ( markdown, folder, software ):
     tmp_md_doc = os.path.join( folder, 'jupyter-temp-file.md' )
     ipynb_out = tmp_md_doc[:-3] + '.ipynb'
     # write markdown to temp file
-    write_text_file( tmp_md_doc, markdown )
+    files.write_text_file( tmp_md_doc, markdown )
     # run it, creating a notebook containing the outputs
     ensure_shell_command_succeeds( 'jupytext --to ipynb ' + \
         f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
@@ -190,7 +191,7 @@ def run_markdown ( markdown, folder, software ):
         f'--output="{tmp_md_doc}" "{ipynb_out}"'
     ensure_shell_command_succeeds( command_to_run, f'rm "{ipynb_out}"' )
     # read it back into a string
-    result = read_text_file( tmp_md_doc )
+    result = files.read_text_file( tmp_md_doc )
     ensure_shell_command_succeeds( f'rm "{tmp_md_doc}"' )
     # workaround for buggy way that SVGs get embedded in markdown:
     result = result \
@@ -279,7 +280,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
 def get_generated_solution_body ( solution_row, folder=jekyll_input_folder ):
     title = solution_row['solution title']
     generated_file = blogify( title ) + '.md'
-    all_content = read_text_file( os.path.join( folder, generated_file ) )
+    all_content = files.read_text_file( os.path.join( folder, generated_file ) )
     return unwrap_from_html_comments( all_content )
 
 # How to build a task page; pass any row from tasks_df().
@@ -293,7 +294,7 @@ def build_task_page ( row, out_folder=jekyll_input_folder, solution_rows=None ):
     software_for_this_task = solution_rows if solution_rows is not None else \
         solutions_df()[solutions_df()['task name'] == row['task name']]
     for index, solution_row in software_for_this_task.iterrows():
-        solution_name = without_extension( solution_row['solution name'] )
+        solution_name = files.without_extension( solution_row['solution name'] )
         solution_name = solution_name[0].upper() + solution_name[1:]
         all_solutions += fill_template( 'solution-in-software',
             NAME = solution_name,
@@ -411,11 +412,11 @@ def html_sections_to_latex ( markdown, folder=main_folder ):
     # there is a section to process; use pandoc on a temporary HTML file
     tmp_html_file = os.path.join( folder, 'tmp.html' )
     tmp_tex_file = os.path.join( folder, 'tmp.tex' )
-    write_text_file( tmp_html_file, section.group(0) )
+    files.write_text_file( tmp_html_file, section.group(0) )
     ensure_shell_command_succeeds(
         f'pandoc --from=html --to=latex --output="{tmp_tex_file}" "{tmp_html_file}"',
         f'rm "{tmp_html_file}"' )
-    section_as_tex = read_text_file( tmp_tex_file )
+    section_as_tex = files.read_text_file( tmp_tex_file )
     ensure_shell_command_succeeds( f'rm "{tmp_tex_file}"' )
     # replace the section with its TeX-ified version
     markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]

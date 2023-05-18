@@ -11,25 +11,10 @@
 from ruamel.yaml import YAML
 import os
 import re
-import time
 import sys
 import json
+import files
 
-# Get pieces of a filename/path
-def file_extension ( filename ):
-    return os.path.splitext( filename )[1]
-def without_extension ( filename ):
-    return os.path.splitext( filename )[0]
-
-# Get all contents of a text file
-def read_text_file ( file ):
-    with open( file, 'r' ) as f:
-        return f.read()
-
-# Reverse of the previous
-def write_text_file ( file, text ):
-    with open( file, 'w' ) as f:
-        f.write( text )
 # Jekyll messes with single-dollar-sign LaTeX expressions,
 # unescaping every backslash within them (by one level),
 # but it leaves double-dollar-sign ones alone.
@@ -58,20 +43,11 @@ def unescape_for_jekyll ( markdown ):
 def write_markdown ( file, markdown, add_escapes=True ):
     if add_escapes:
         markdown = escape_for_jekyll( markdown )
-    write_text_file( file, markdown )
-
-# Prepend text to a file
-def prepend_text_to_file ( file, preamble ):
-    write_text_file( file, preamble + read_text_file( file ) )
-
-# Ensure that a folder exists, creating it if needed
-def ensure_folder_exists ( path ):
-    if not os.path.isdir( path ):
-        os.mkdir( path )
+    files.write_text_file( file, markdown )
 
 # Get all YAML from a YAML file into a Python dict
 def read_yaml_from_file ( file ):
-    return YAML().load( read_text_file( file ) )
+    return YAML().load( files.read_text_file( file ) )
 
 # Split out the YAML header and content of a markdown document given as
 # a text string, returning the YAML dictionary and the remaining text
@@ -93,48 +69,21 @@ def file_split_yaml_header ( filename ):
     with open( filename, 'r' ) as f:
         return string_split_yaml_header( f.read() )
 
-# Tools to easily filter for certain types of content within a folder
-doc_extensions = [ '.md', '.markdown', '.Rmd', '.ipynb', '.doc', '.docx' ]
-img_extensions = [ '.jpg', '.jpeg', '.png', '.gif' ]
-def has_any_extension ( filename, extensions ):
-    return any( ( filename.endswith( ext ) for ext in extensions ) )
-def is_doc ( filename ):
-    return has_any_extension( filename, doc_extensions )
-def is_img ( filename ):
-    return has_any_extension( filename, img_extensions )
-def just_docs ( filenames ):
-    return [ x for x in filenames if is_doc( x ) ]
-def just_imgs ( filenames ):
-    return [ x for x in filenames if is_img( x ) ]
-def subfolders ( folder ):
-    return [ x for x in os.listdir( folder ) \
-             if os.path.isdir( os.path.join( folder, x ) ) ]
-def docs_inside ( folder ):
-    result = [ x for x in os.listdir( folder ) if is_doc( x ) ]
-    filenames = list( map( without_extension, result ) )
-    if len( set( filenames ) ) < len( filenames ):
-        print( 'Documents with same name and different extensions!' )
-        print( 'In this folder:', folder )
-        sys.exit( 1 )
-    return result
-def imgs_inside ( folder ):
-    return [ x for x in os.listdir( folder ) if is_img( x ) ]
-
 # Crucial function:  This finds the unique file with the given filename and
-# path, but with any extension from doc_extensions, and reads it in,
+# path, but with any extension from files.doc_extensions, and reads it in,
 # converting to markdown if necessary.  If there is no such file, or are
 # multiple such files, it quits with an error.
 def get_unique_markdown_doc ( path_and_base_filename ):
-    which_exist = [ extension for extension in doc_extensions \
+    which_exist = [ extension for extension in files.doc_extensions \
         if os.path.exists( path_and_base_filename + extension ) and \
         os.path.isfile( path_and_base_filename + extension ) ]
     if len( which_exist ) == 0:
         print( 'No document file found with this base:', path_and_base_filename )
-        print( '          and any of these extensions:', ' '.join( doc_extensions ) )
+        print( '          and any of these extensions:', ' '.join( files.doc_extensions ) )
         sys.exit( 1 )
     if len( which_exist ) > 1:
         print( 'Multiple documents found with this base:', path_and_base_filename )
-        for extension in doc_extensions:
+        for extension in files.doc_extensions:
             print( '                                  Found:',
                 path_and_base_filename + extension )
         sys.exit( 1 )
@@ -173,15 +122,15 @@ def ipynb_to_markdown ( filename ):
         result = result[1:]
     return result
 # To pair with get_unique_markdown_doc:  Read any document whose extension is in
-# doc_extensions into markdown text.  It can support markdown (no conversion
+# files.doc_extensions into markdown text.  It can support markdown (no conversion
 # needed) or RMarkdown (tiny conversion needed) or Jupyter notebooks (more
 # conversion needed).
 def read_doc_to_markdown ( filename ):
-    extension = file_extension( filename )
+    extension = files.extension( filename )
     if extension in [ '.md', '.markdown' ]:
-        return read_text_file( filename )
+        return files.read_text_file( filename )
     if extension in [ '.Rmd' ]:
-        return read_text_file( filename ).replace( '```{r}', '```R' )
+        return files.read_text_file( filename ).replace( '```{r}', '```R' )
     if extension in [ '.ipynb' ]:
         return ipynb_to_markdown( filename )
     if extension in [ '.doc', '.docx' ]:
@@ -226,12 +175,6 @@ def unwrap_from_html_comments ( text ):
     begin = text.index( start_comment )
     end = text.index( end_comment )
     return text[begin+len(start_comment):end]
-
-# Create a brief sentence that describes the last modification time of a file
-def modification_text ( filename ):
-    mod_time = time.gmtime( os.path.getmtime( filename ) )
-    return time.strftime(
-        '\n\nContent last modified on %d %B %Y.', mod_time )
 
 # Run a shell command and stop the whole app if it gives an error.
 # However, if the cleanup command is given, run that one even if you abort.

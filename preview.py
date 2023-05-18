@@ -48,14 +48,15 @@ from build_tools import *
 import http.server
 import socketserver
 import functools
+import files
 
 # Ensure preview folders exist
 section_heading( 'Ensuring preview folders exist' )
 preview_folder = os.path.join(
     os.path.dirname( os.path.realpath( __file__ ) ), 'preview' )
-ensure_folder_exists( preview_folder )
+files.ensure_folder_exists( preview_folder )
 generated_folder = os.path.join( preview_folder, 'generated' )
-ensure_folder_exists( generated_folder )
+files.ensure_folder_exists( generated_folder )
 
 # Delete all content from generated files folder
 section_heading( 'Deleting old files from output folder' )
@@ -81,10 +82,10 @@ print( task_desc_file )
 # Generate a solutions DataFrame from just the solutions in the preview folder
 section_heading( 'Gathering solutions data' )
 json = [ ]
-for solution_file in docs_inside( preview_folder ):
-    if without_extension( solution_file ) == 'description':
+for solution_file in files.docs_inside( preview_folder ):
+    if files.without_extension( solution_file ) == 'description':
         continue
-    bits = without_extension( solution_file ).split( ', ' )
+    bits = files.without_extension( solution_file ).split( ', ' )
     software_name = bits[0]
     if len( bits ) == 1:
         solution_name = 'solution'
@@ -97,11 +98,11 @@ for solution_file in docs_inside( preview_folder ):
         'solution name' : solution_name,
         'solution filename' : solution_file,
         'solution path' : path_in_project( input_file ),
-        'solution title' : f'Preview (in {without_extension( solution_file )})'
+        'solution title' : f'Preview (in {files.without_extension( solution_file )})'
     }
     markdown = read_doc_to_markdown( input_file )
     metadata, content = string_split_yaml_header( markdown )
-    next['content'] = content + modification_text( input_file )
+    next['content'] = content + files.modification_text( input_file )
     for key, value in metadata.items():
         next[key] = value
     next['raw content'] = markdown
@@ -116,7 +117,7 @@ solutions_df['markdown link'] = solutions_df.apply( link_to_solution, axis=1 )
 print( '\n'.join( list( solutions_df['solution filename'] ) ) )
 
 # Load custom styles and scripts for previews
-preamble = read_text_file( './jekyll-input/_includes/head_custom.html' ) + '''
+preamble = files.read_text_file( './jekyll-input/_includes/head_custom.html' ) + '''
     <meta charset="utf-8" />
     <style>
         div.sourceCode {
@@ -135,7 +136,7 @@ for index, row in solutions_df.iterrows():
     generated_html = generated_md[:-3] + '.html'
     ensure_shell_command_succeeds(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
-    prepend_text_to_file( generated_html, preamble )
+    files.prepend_text_to_file( generated_html, preamble )
     print( f'Converted to {generated_html}\n' )
 section_heading( 'Compiling task page' )
 for index, row in tasks_df.iterrows():
@@ -144,7 +145,7 @@ for index, row in tasks_df.iterrows():
     generated_html = generated_md[:-3] + '.html'
     ensure_shell_command_succeeds(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
-    prepend_text_to_file( generated_html, preamble )
+    files.prepend_text_to_file( generated_html, preamble )
     print( f'Converted to {generated_html}\n' )
 
 # Show it to the user via a simple HTTP server
