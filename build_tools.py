@@ -262,7 +262,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
         DESCRIPTION =
             adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
                 make_all_task_names_links( task_row['content'] ) ),
-        MARKDOWN_CONTENT = wrap_in_html_comments( run_markdown(
+        MARKDOWN_CONTENT = markdown.wrap_in_html_comments( run_markdown(
             content, in_folder, solution_row['software'] ) ),
         CONTRIBUTORS = contributors
     ) )
