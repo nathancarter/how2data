@@ -49,6 +49,7 @@ import http.server
 import socketserver
 import functools
 import files
+import markdown
 
 # Ensure preview folders exist
 section_heading( 'Ensuring preview folders exist' )
@@ -66,12 +67,12 @@ run_shell_command_ignoring_errors( f'rm {to_delete}' )
 
 # Generate a task DataFrame from just the one task in the preview folder
 section_heading( 'Gathering task description data' )
-task_desc_file = get_unique_markdown_doc(
+task_desc_file = markdown.get_unique_doc(
     os.path.join( preview_folder, 'description' ) )
 tasks_df = pd.DataFrame( {
     'task name' : [ 'Preview' ],
     'task filename' : [ path_in_project( task_desc_file ) ],
-    'content' : [ read_doc_to_markdown( task_desc_file ) ],
+    'content' : [ markdown.read_doc( task_desc_file ) ],
     'permalink' : [ blogify( 'Preview' ) ]
 } )
 tasks_df['markdown link'] = tasks_df['task name'].apply(
@@ -100,7 +101,7 @@ for solution_file in files.docs_inside( preview_folder ):
         'solution path' : path_in_project( input_file ),
         'solution title' : f'Preview (in {files.without_extension( solution_file )})'
     }
-    markdown = read_doc_to_markdown( input_file )
+    markdown = markdown.read_doc( input_file )
     metadata, content = string_split_yaml_header( markdown )
     next['content'] = content + files.modification_text( input_file )
     for key, value in metadata.items():

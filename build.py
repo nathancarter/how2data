@@ -15,6 +15,7 @@ import files
 # Command line parameters
 # -f/--force = rerun all solution code even if modification dates don't require it
 rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
+skip_jekyll = '-j' in sys.argv or '--no-jekyll' in sys.argv
 
 # Delete files generated in last build
 section_heading( 'Deleting old files from Jekyll input folder' )
@@ -69,8 +70,11 @@ else:
     print( 'No changes to source; no action needed.' )
 
 # Run Jekyll on newly copied files
-section_heading( 'Running Jekyll build process' )
-ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental --profile' )
+if skip_jekyll:
+    section_heading( 'Skipping Jekyll build process' )
+else:
+    section_heading( 'Running Jekyll build process' )
+    ensure_shell_command_succeeds( 'bundle exec jekyll build --incremental --profile' )
 
 # State completion
 section_heading( 'Build completed successfully.' )
