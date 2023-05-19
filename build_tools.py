@@ -26,27 +26,14 @@ import static_files
 import shell
 
 ###
-###  BUILD TOOLS USED BELOW
+###  TOOLS THAT BUILD PAGES IN THE SITE
 ###
 
-def adjust_image_for_task ( task ):
-    def result ( filename ):
-        return os.path.join( '..', 'assets', 'dynamic-images', f'{task}-{filename}' )
+# Used in the build_solution_page function below
 github_url = 'https://github.com/nathancarter/how2data'
 new_github_issue_url = f'{github_url}/issues/new/choose'
 def edit_on_github_url ( filename ):
     return f'{github_url}/tree/main/{config.relativize_path( filename )}'
-def make_all_task_names_links ( markdown ):
-    longer_first = tasks.all().sort_values( 'task name', ascending=False )
-    for index, task_row in longer_first.iterrows():
-        markdown = re.sub( '(?<!\\[)(' + re.escape( task_row['task name'] ) + ')',
-            lambda x: f'[{x.group(0)}](../{task_row["permalink"]})',
-            markdown, flags=re.IGNORECASE )
-    return markdown
-
-###
-###  TOOLS THAT BUILD PAGES IN THE SITE
-###
 
 # Main function to build a solution page.  1st parameter is any row from solutions.all().
 def build_solution_page ( solution_row, force_rerun_solution=False,
@@ -66,8 +53,8 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
         files.mark_as_regenerated( out_filename )
         return
     content = markdown.adjust_image_filenames(
-        adjust_image_for_task( solution_row['task name'] ),
-        make_all_task_names_links( solution_row['content'] ) )
+        tasks.image_link_adjuster( solution_row['task name'] ),
+        tasks.make_links( solution_row['content'] ) )
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
         f'[edit the source]({edit_on_github_url(input_file)}).'
     if task_row is None:
@@ -86,8 +73,9 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
         PERMALINK = solution_row['permalink'],
         TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
         DESCRIPTION =
-            markdown.adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
-                make_all_task_names_links( task_row['content'] ) ),
+            markdown.adjust_image_filenames(
+                tasks.image_link_adjuster( solution_row['task name'] ),
+                tasks.make_links( task_row['content'] ) ),
         MARKDOWN_CONTENT = markdown.wrap_in_html_comments( markdown.run(
             content, in_folder, solution_row['software'] ) ),
         CONTRIBUTORS = contributors
@@ -144,8 +132,9 @@ def build_task_page ( row, out_folder=config.jekyll_input_folder, solution_rows=
         TITLE = row['task name'],
         PERMALINK = row['permalink'],
         DESCRIPTION =
-            markdown.adjust_image_filenames( adjust_image_for_task( row['task name'] ),
-                make_all_task_names_links( row['content'] ) ),
+            markdown.adjust_image_filenames(
+                tasks.image_link_adjuster( row['task name'] ),
+                tasks.make_links( row['content'] ) ),
         SOLUTIONS = all_solutions,
         TOPICS = related_topics,
         OPPORTUNITIES = opportunities
@@ -219,7 +208,7 @@ def build_topic_page ( row, temp_folder ):
     markdown.write( output_file, static_files.fill_template( 'topic',
         TITLE = row['topic name'],
         PERMALINK = row['permalink'],
-        CONTENT = make_all_task_names_links( row['content'] ),
+        CONTENT = tasks.make_links( row['content'] ),
         CONTRIBUTORS =
             f'Contributed by {row["author"]}' if row["author"] != np.nan else '',
         DOWNLOADS = pdf_downloads
@@ -234,7 +223,7 @@ def build_topic_pdf (
 ):
     site_url = 'https://how-to-data.org/'
     # make first page with TOC that links to all later pages
-    description_and_toc = make_all_task_names_links( topic_row['content'] )
+    description_and_toc = tasks.make_links( topic_row['content'] )
     tasks_copy = tasks.all()[tasks.all().permalink.apply(
         lambda link: link in description_and_toc )].copy()
     tasks_copy['where appears'] = tasks_copy.permalink.apply(
@@ -293,7 +282,7 @@ def build_topic_pdf (
                      + pair_of_names + '.'
         markdown += static_files.fill_template( 'topic-pdf-solution',
             TASK = task_row['task name'],
-            DESCRIPTION = make_all_task_names_links( task_row['content'] ),
+            DESCRIPTION = tasks.make_links( task_row['content'] ),
             SOFTWARE = pair_of_names,
             SOLUTION = solution
         )

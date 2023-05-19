@@ -5,6 +5,7 @@ import pandas as pd
 import files
 import markdown
 import os
+import re
 import software
 import solutions
 
@@ -39,6 +40,23 @@ def copy_image ( full_path_to_source, filename ):
     dest = os.path.join( config.jekyll_imgs_folder, filename )
     shutil.copy2( full_path_to_source, dest )
     log.file_copy( full_path_to_source, dest )
+
+# Function generator whose result is a function that renames image links
+# to point to the appropriate subfolder of the jekyll input folder
+# where images for tasks are stored.
+def image_link_adjuster ( task ):
+    def result ( filename ):
+        return os.path.join( '..', 'assets', 'dynamic-images', f'{task}-{filename}' )
+
+# Find all task names in the given markdown content
+# and convert each to a link to the corresponding task page.
+def make_links ( markdown ):
+    longer_first = all().sort_values( 'task name', ascending=False )
+    for index, task_row in longer_first.iterrows():
+        markdown = re.sub( '(?<!\\[)(' + re.escape( task_row['task name'] ) + ')',
+            lambda x: f'[{x.group(0)}](../{task_row["permalink"]})',
+            markdown, flags=re.IGNORECASE )
+    return markdown
 
 # Prettify a portion of the full df for use on the tasks page
 def table ():
