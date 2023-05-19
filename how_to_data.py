@@ -84,7 +84,7 @@ class Build:
         log.heading( 'Generating files from database content' )
         # Note: solution building must go first so task pages can read the generated results
         for index, row in solutions.all().iterrows():
-            build_solution_page( row, force_rerun, config_folder=config.main_folder )
+            solution = solutions.Solution( row ).build( force=force_rerun )
         # Now task pages get built second, so they can read the generated solution pages
         for index, row in tasks.all().iterrows():
             build_task_page( row )

@@ -29,70 +29,6 @@ import shell
 ###  TOOLS THAT BUILD PAGES IN THE SITE
 ###
 
-# Used in the build_solution_page function below
-github_url = 'https://github.com/nathancarter/how2data'
-new_github_issue_url = f'{github_url}/issues/new/choose'
-def edit_on_github_url ( filename ):
-    return f'{github_url}/tree/main/{config.relativize_path( filename )}'
-
-# Main function to build a solution page.  1st parameter is any row from solutions.all().
-def build_solution_page ( solution_row, force_rerun_solution=False,
-                          in_folder=None, out_folder=config.jekyll_input_folder,
-                          task_row=None, config_folder=None ):
-    out_filename = solution_row['permalink'] + '.md'
-    if in_folder is None:
-        in_folder = os.path.join( config.tasks_folder, solution_row['task name'] )
-    input_file = os.path.join( in_folder, solution_row['solution filename'] )
-    output_file = os.path.join( out_folder, out_filename )
-    task_file = markdown.get_unique_doc( os.path.join(
-        in_folder, 'description' ) )
-    if not force_rerun_solution \
-    and not files.must_rebuild( input_file, output_file ) \
-    and not files.must_rebuild( task_file, output_file ):
-        log.not_built( output_file, input_file, task_file )
-        files.mark_as_regenerated( out_filename )
-        return
-    content = markdown.adjust_image_filenames(
-        tasks.image_link_adjuster( solution_row['task name'] ),
-        tasks.make_links( solution_row['content'] ) )
-    content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
-        f'[edit the source]({edit_on_github_url(input_file)}).'
-    if task_row is None:
-        task_row = tasks.all()[tasks.all()['task name'] == solution_row['task name']].iloc[0]
-    contributors = solution_row["author"]
-    if type( contributors ) == str:
-        contributors = f'Contributed by {contributors}'
-    else:
-        try:
-            contributors = 'Contributed by:\n\n' + \
-                '\n'.join( [ f' * {author}' for author in contributors ] )
-        except TypeError:
-            contributors = ''
-    markdown.write( output_file, static_files.fill_template( 'solution',
-        TITLE = solution_row['solution title'],
-        PERMALINK = solution_row['permalink'],
-        TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
-        DESCRIPTION =
-            markdown.adjust_image_filenames(
-                tasks.image_link_adjuster( solution_row['task name'] ),
-                tasks.make_links( task_row['content'] ) ),
-        MARKDOWN_CONTENT = markdown.wrap_in_html_comments( markdown.run(
-            content, in_folder, solution_row['software'] ) ),
-        CONTRIBUTORS = contributors
-    ) )
-    log.built( 'solution for', solution_row["task name"],
-               Software=solution_row["software"],
-               Solution=solution_row["solution name"] )
-    files.mark_as_regenerated( out_filename )
-    return output_file
-
-# How to fetch a generated solution's body from within the generated markdown
-def get_generated_solution_body ( solution_row, folder=config.jekyll_input_folder ):
-    title = solution_row['solution title']
-    generated_file = config.blogify( title ) + '.md'
-    all_content = files.read_text_file( os.path.join( folder, generated_file ) )
-    return markdown.unwrap_from_html_comments( all_content )
-
 # How to build a task page; pass any row from tasks.all().
 # IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
 # using the build_solution_page() function on any files that need their solutions
@@ -110,8 +46,8 @@ def build_task_page ( row, out_folder=config.jekyll_input_folder, solution_rows=
             NAME = solution_name,
             SOFTWARE = solution_row['software'],
             PERMALINK = solution_row['permalink'],
-            BODY = markdown.unescape_for_jekyll( get_generated_solution_body(
-                solution_row, out_folder ) )
+            BODY = markdown.unescape_for_jekyll(
+                solutions.Solution( solution_row ).generated_body( out_folder ) )
         )
     if all_solutions == '':
         all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
@@ -259,7 +195,7 @@ def build_topic_pdf (
     # check to see if we have enough solutions to proceed, to save time
     num_solutions = 0
     solutions_in_sw = solutions.all()[(solutions.all()['software'] == software_name) \
-                                 & (solutions.all()['solution name'] == solution_name)]
+                                    & (solutions.all()['solution name'] == solution_name)]
     for index, task_row in tasks_copy.iterrows():
         if sum( solutions_in_sw['task name'] == task_row['task name'] ) > 0:
             num_solutions += 1
@@ -274,8 +210,7 @@ def build_topic_pdf (
         if len( task_solutions ) > 0:
             solution = markdown.html_sections_to_latex(
                 markdown.unescape_for_jekyll(
-                    get_generated_solution_body(
-                        task_solutions.iloc[0,:] ) ),
+                    solutions.Solution( task_solutions.iloc[0,:] ).generated_body() ),
                 main_folder )
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \

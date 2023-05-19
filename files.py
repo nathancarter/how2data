@@ -3,6 +3,7 @@ import os
 import time
 import log
 import config
+import shell
 
 # Get pieces of a filename/path
 def extension ( filename ):
