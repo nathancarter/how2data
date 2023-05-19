@@ -188,3 +188,33 @@ def run ( markdown, folder, software ):
         .replace( '![svg](data:image/svg;base64,<?xml version="1.0" encoding="UTF-8"?>', '' ) \
         .replace( '</svg>\n)', '</svg>\n' )
     return result
+
+# When processing a markdown file, we may want to manipulate its image
+# links.  The following function maps any given function over the set
+# of image links in a string containing markdown, producing a new string.
+# The function passed as input should take as input three parameters:
+# img_code = the full image code, such as "![alt-text here](filename.png)"
+# alt_text = just the alt text, what's in between the brackets above
+# filename = just the filename, what's in between parentheses above
+# It should return either a new image tag as a string OR an alt-text/filename
+# pair as a tuple, which will be formed into an image tag.
+def map_over_images ( func, markdown ):
+    result = ''
+    while True:
+        match = re.search( '!\\[([^]]*)\\]\\(([^)]*)\\)', markdown )
+        if match is None:
+            break
+        start, end = match.span()
+        changed = func( match.group( 0 ), match.group( 1 ), match.group( 2 ) )
+        if type( changed ) == tuple:
+            changed = f'![{changed[0]}]({changed[1]})'
+        result += markdown[:start] + changed
+        markdown = markdown[end:]
+    return result + markdown
+
+# More useful special case of previous function
+def adjust_image_filenames ( func, markdown ):
+    return map_over_images(
+        lambda code, alt_text, filename: ( alt_text, func( filename ) ),
+        markdown
+    )

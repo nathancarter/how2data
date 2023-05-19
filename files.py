@@ -2,6 +2,7 @@
 import os
 import time
 import log
+import config
 
 # Get pieces of a filename/path
 def extension ( filename ):
@@ -69,3 +70,20 @@ def must_rebuild ( input, output ):
     input_modified = os.path.getmtime( input )
     output_modified = os.path.getmtime( output )
     return input_modified > output_modified
+
+# We will generate a lot of markdown files in the Jekyll input folder.
+# But we don't want any old/stale files to stay there across builds, such as if we
+# were to rename a source file, thus generating a file of a different name, and
+# orphaning the original.
+# But if we just wipe the dest folder every time, we lose a big opportunity for
+# efficiency by not re-generating expensive files that aren't stale.
+# So we create the following functions to mark what's been regenerated and what
+# hasn't, and let us delete any no-longer-needed stuff.
+files_generated = [ ]
+def mark_as_regenerated ( file ):
+    files_generated.append( file )
+def delete_ungenerated_markdown ():
+    for file in os.listdir( config.jekyll_input_folder ):
+        if is_doc( file ) and file not in files_generated:
+            shell.run_or_halt(
+                f'rm {os.path.join( config.jekyll_input_folder, file )}' )

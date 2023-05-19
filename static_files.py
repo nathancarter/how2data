@@ -5,7 +5,6 @@ import pandas as pd
 import files
 import os
 import yaml
-import build_tools
 
 df = None
 
@@ -69,4 +68,4 @@ def copy ( filename, replacements = dict() ):
         content = content.replace( original, replacement )
     files.write_text_file( dest, content )
     log.file_copy( source, dest, Replacements=len(replacements) )
-    build_tools.mark_as_regenerated( filename )
+    files.mark_as_regenerated( filename )

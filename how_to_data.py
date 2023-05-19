@@ -94,7 +94,7 @@ class Build:
         # Create a page for each topic; the sequencing of this step is not important.
         for index, row in topics.all().iterrows():
             build_topic_page( row, config.main_folder )
-        delete_ungenerated_markdown()
+        files.delete_ungenerated_markdown()
 
         # Zip up examples to reference from the Contributing page
         log.heading( 'Zipping examples for contributors' )

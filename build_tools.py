@@ -26,60 +26,6 @@ import static_files
 import shell
 
 ###
-###  MOVING/TRACKING FILES
-###
-
-# We will generate a lot of markdown files in the Jekyll input folder.
-# But we don't want any old/stale files to stay there across builds, such as if we
-# were to rename a source file, thus generating a file of a different name, and
-# orphaning the original.
-# But if we just wipe the dest folder every time, we lose a big opportunity for
-# efficiency by not re-generating expensive files that aren't stale.
-# So we create the following functions to mark what's been regenerated and what
-# hasn't, and let us delete any no-longer-needed stuff.
-files_generated = [ ]
-def mark_as_regenerated ( file ):
-    files_generated.append( file )
-def delete_ungenerated_markdown ():
-    for file in os.listdir( config.jekyll_input_folder ):
-        if files.is_doc( file ) and file not in files_generated:
-            shell.run_or_halt(
-                f'rm {os.path.join( config.jekyll_input_folder, file )}' )
-
-###
-###  PROCESSING MARKDOWN AND RUNNING CODE THEREIN
-###
-
-# When processing a markdown file, we may want to manipulate its image
-# links.  The following function maps any given function over the set
-# of image links in a string containing markdown, producing a new string.
-# The function passed as input should take as input three parameters:
-# img_code = the full image code, such as "![alt-text here](filename.png)"
-# alt_text = just the alt text, what's in between the brackets above
-# filename = just the filename, what's in between parentheses above
-# It should return either a new image tag as a string OR an alt-text/filename
-# pair as a tuple, which will be formed into an image tag.
-def map_over_images ( func, markdown ):
-    result = ''
-    while True:
-        match = re.search( '!\\[([^]]*)\\]\\(([^)]*)\\)', markdown )
-        if match is None:
-            break
-        start, end = match.span()
-        changed = func( match.group( 0 ), match.group( 1 ), match.group( 2 ) )
-        if type( changed ) == tuple:
-            changed = f'![{changed[0]}]({changed[1]})'
-        result += markdown[:start] + changed
-        markdown = markdown[end:]
-    return result + markdown
-# More useful special case of previous function
-def adjust_image_filenames ( func, markdown ):
-    return map_over_images(
-        lambda code, alt_text, filename: ( alt_text, func( filename ) ),
-        markdown
-    )
-
-###
 ###  BUILD TOOLS USED BELOW
 ###
 
@@ -117,9 +63,9 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
     and not files.must_rebuild( input_file, output_file ) \
     and not files.must_rebuild( task_file, output_file ):
         log.not_built( output_file, input_file, task_file )
-        mark_as_regenerated( out_filename )
+        files.mark_as_regenerated( out_filename )
         return
-    content = adjust_image_filenames(
+    content = markdown.adjust_image_filenames(
         adjust_image_for_task( solution_row['task name'] ),
         make_all_task_names_links( solution_row['content'] ) )
     content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
@@ -140,7 +86,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
         PERMALINK = solution_row['permalink'],
         TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
         DESCRIPTION =
-            adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
+            markdown.adjust_image_filenames( adjust_image_for_task( solution_row['task name'] ),
                 make_all_task_names_links( task_row['content'] ) ),
         MARKDOWN_CONTENT = markdown.wrap_in_html_comments( markdown.run(
             content, in_folder, solution_row['software'] ) ),
@@ -149,7 +95,7 @@ def build_solution_page ( solution_row, force_rerun_solution=False,
     log.built( 'solution for', solution_row["task name"],
                Software=solution_row["software"],
                Solution=solution_row["solution name"] )
-    mark_as_regenerated( out_filename )
+    files.mark_as_regenerated( out_filename )
     return output_file
 
 # How to fetch a generated solution's body from within the generated markdown
@@ -198,13 +144,13 @@ def build_task_page ( row, out_folder=config.jekyll_input_folder, solution_rows=
         TITLE = row['task name'],
         PERMALINK = row['permalink'],
         DESCRIPTION =
-            adjust_image_filenames( adjust_image_for_task( row['task name'] ),
+            markdown.adjust_image_filenames( adjust_image_for_task( row['task name'] ),
                 make_all_task_names_links( row['content'] ) ),
         SOLUTIONS = all_solutions,
         TOPICS = related_topics,
         OPPORTUNITIES = opportunities
     ) )
-    mark_as_regenerated( out_filename )
+    files.mark_as_regenerated( out_filename )
     return output_file
 
 # Generate a page for a given software package,
@@ -247,7 +193,7 @@ def build_software_page ( row ):
         SOFTWARE_TASK_TABLE = table1,
         OPPORTUNITIES = table2
     ) )
-    mark_as_regenerated( out_filename )
+    files.mark_as_regenerated( out_filename )
 
 # Generate a page for a given topic, from a row in the topics.all() DataFrame.
 # The second argument is a folder in which to store temp files during the process.
@@ -278,7 +224,7 @@ def build_topic_page ( row, temp_folder ):
             f'Contributed by {row["author"]}' if row["author"] != np.nan else '',
         DOWNLOADS = pdf_downloads
     ) )
-    mark_as_regenerated( out_filename )
+    files.mark_as_regenerated( out_filename )
 
 # Generate a PDF for a given topic, using a given software package.
 # The third argument is the main repo folder, which will get cleaned up later.
