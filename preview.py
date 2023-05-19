@@ -137,7 +137,7 @@ preamble = files.read_text_file( './jekyll-input/_includes/head_custom.html' ) +
 log.heading( 'Compiling solutions' )
 for index, row in solutions_df.iterrows():
     solution = solutions.Solution( row )
-    solution.build_file( preview_folder, generated_folder, tasks_df.iloc[0] )
+    solution.build_file( preview_folder, generated_folder, tasks.Task( tasks_df.iloc[0] ) )
     generated_html = generated_md[:-3] + '.html'
     shell.run_or_halt(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )
@@ -146,8 +146,7 @@ for index, row in solutions_df.iterrows():
     log.built( f"HTML for {row['solution name']}", generated_html, generated_md )
 log.heading( 'Compiling task page' )
 for index, row in tasks_df.iterrows():
-    generated_md = build_task_page( row, out_folder=generated_folder,
-                                    solution_rows=solutions_df )
+    generated_md = tasks.Task( row ).build_file( generated_folder, solutions_df )
     generated_html = generated_md[:-3] + '.html'
     shell.run_or_halt(
         f'pandoc --to=html --mathjax --output="{generated_html}" "{generated_md}"' )

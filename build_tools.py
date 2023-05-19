@@ -29,55 +29,6 @@ import shell
 ###  TOOLS THAT BUILD PAGES IN THE SITE
 ###
 
-# How to build a task page; pass any row from tasks.all().
-# IMPORTANT NOTE:  This assumes that you've already processed all the solutions files
-# using the build_solution_page() function on any files that need their solutions
-# rebuilt/updated.  See that function defined above.
-def build_task_page ( row, out_folder=config.jekyll_input_folder, solution_rows=None ):
-    out_filename = row['permalink'] + '.md'
-    output_file = os.path.join( out_folder, out_filename )
-    all_solutions = ''
-    software_for_this_task = solution_rows if solution_rows is not None else \
-        solutions.all()[solutions.all()['task name'] == row['task name']]
-    for index, solution_row in software_for_this_task.iterrows():
-        solution_name = files.without_extension( solution_row['solution name'] )
-        solution_name = solution_name[0].upper() + solution_name[1:]
-        all_solutions += static_files.fill_template( 'solution-in-software',
-            NAME = solution_name,
-            SOFTWARE = solution_row['software'],
-            PERMALINK = solution_row['permalink'],
-            BODY = markdown.unescape_for_jekyll(
-                solutions.Solution( solution_row ).generated_body( out_folder ) )
-        )
-    if all_solutions == '':
-        all_solutions = '## Solutions\n\nNo solutions exist yet in the database for this task.'
-    opportunities = list( software.all()['name'][
-        ~software.all()['name'].isin(software_for_this_task['software'])] )
-    if len( opportunities ) > 0:
-        opportunities = "\n".join( [ f" * {software}" for software in opportunities ] )
-        opportunities = static_files.fill_template( 'opportunities',
-            OPPORTUNITIES_LIST = opportunities )
-    else:
-        opportunities = ''
-    related_topics = topics.all()[topics.all()['content'].str.contains( row['task name'], regex=False )]
-    if len( related_topics ) > 0:
-        related_topics = '\n'.join( list( ' * ' + related_topics['markdown link'] ) )
-    else:
-        related_topics = '*None*'
-    markdown.write( output_file, static_files.fill_template( 'task',
-        TITLE = row['task name'],
-        PERMALINK = row['permalink'],
-        DESCRIPTION =
-            markdown.adjust_image_filenames(
-                tasks.image_link_adjuster( row['task name'] ),
-                tasks.make_links( row['content'] ) ),
-        SOLUTIONS = all_solutions,
-        TOPICS = related_topics,
-        OPPORTUNITIES = opportunities
-    ) )
-    files.mark_as_regenerated( out_filename )
-    return output_file
-
 # Generate a page for a given software package,
 # from a row in the software.all() DataFrame.
 def build_software_page ( row ):

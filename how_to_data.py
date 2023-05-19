@@ -84,10 +84,10 @@ class Build:
         log.heading( 'Generating files from database content' )
         # Note: solution building must go first so task pages can read the generated results
         for index, row in solutions.all().iterrows():
-            solution = solutions.Solution( row ).build( force=force_rerun )
+            solutions.Solution( row ).build( force=force_rerun )
         # Now task pages get built second, so they can read the generated solution pages
         for index, row in tasks.all().iterrows():
-            build_task_page( row )
+            tasks.Task( row ).build()
         # Create a page for each software package; the sequencing of this step is not important.
         for index, row in software.all().iterrows():
             build_software_page( row )

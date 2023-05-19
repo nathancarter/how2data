@@ -100,6 +100,9 @@ class Solution:
     def content ( self ):
         return self._row['content']
     @property
+    def author ( self ):
+        return self._row['author']
+    @property
     def raw_content ( self ):
         return self._row['raw content']
     @property
@@ -108,9 +111,6 @@ class Solution:
     @property
     def markdown_link ( self ):
         return self._row['markdown link']
-    @property
-    def author ( self ):
-        return self._row['author']
 
     # And a getter for the whole row
     @property
@@ -143,6 +143,10 @@ class Solution:
             folder = os.path.join( config.tasks_folder, self.task_name )
         return markdown.get_unique_doc( os.path.join( folder, 'description' ) )
     
+    # Get the Task instance associated with this Solution.
+    def task ( self ):
+        return tasks.Task( tasks.all()[tasks.all()['task name'] == self.task_name].iloc[0] )
+
     # Must this solution be rebuilt?  Timestamps of relevant files are checked.
     # Parameters customize what folders are passed to input_file(), output_file(), and task_file().
     def must_build ( self, in_folder=None, out_folder=None ):
@@ -150,8 +154,9 @@ class Solution:
             or files.must_rebuild( self.task_file( in_folder ), self.output_file( out_folder ) )
     
     # Build the markdown content this solution generates but just return it as a string.
-    # Parameters customize what folders are passed to input_file().
-    def build_text ( self, folder=None, task_row=None ):
+    # Parameter 2 customizes what folder is passed to input_file().
+    # Parameter 3 can be used to provide a Task, so we don't have to look one up.
+    def build_text ( self, folder=None, task=None ):
         if folder is None:
             folder = os.path.join( config.tasks_folder, self.task_name )
         input_file = self.input_file( folder )
@@ -160,8 +165,8 @@ class Solution:
             tasks.make_links( self.content ) )
         content += f'\n\nSee a problem?  [Tell us]({new_github_issue_url}) or ' + \
             f'[edit the source]({edit_on_github_url(input_file)}).'
-        if task_row is None:
-            task_row = tasks.all()[tasks.all()['task name'] == self.task_name].iloc[0]
+        if task is None:
+            task = self.task()
         if type( self.author ) == str:
             contributors = f'Contributed by {self.author}'
         else:
@@ -173,20 +178,20 @@ class Solution:
         return static_files.fill_template( 'solution',
             TITLE = self.solution_title,
             PERMALINK = self.permalink,
-            TASK_PAGE_LINK = f'[See all solutions.](../{task_row["permalink"]})',
+            TASK_PAGE_LINK = f'[See all solutions.](../{task.permalink})',
             DESCRIPTION =
                 markdown.adjust_image_filenames(
                     tasks.image_link_adjuster( self.task_name ),
-                    tasks.make_links( task_row['content'] ) ),
+                    tasks.make_links( task.content ) ),
             MARKDOWN_CONTENT = markdown.wrap_in_html_comments( markdown.run(
                 content, folder, self.software ) ),
             CONTRIBUTORS = contributors
         )
 
     # Build the markdown content this solution generates and save it to disk.
-    # Parameters customize what folders are passed to input_file() and output_file().
-    def build_file ( self, in_folder=None, out_folder=None, task_row=None ):
-        markdown_content = self.build_text( in_folder, task_row )
+    # Parameters customize what folders are passed to input_file(), output_file(), and build_text().
+    def build_file ( self, in_folder=None, out_folder=None, task=None ):
+        markdown_content = self.build_text( in_folder, task )
         output_file = self.output_file( out_folder )
         markdown.write( output_file, markdown_content )
         log.built( 'solution for', self.task_name,
@@ -197,9 +202,9 @@ class Solution:
     
     # Run build_file() if needed.
     # Otherwise, log that it wasn't needed, but mark the file as up-to-date.
-    def build ( self, in_folder=None, out_folder=None, task_row=None, force=False ):
+    def build ( self, in_folder=None, out_folder=None, task=None, force=False ):
         if force or self.must_build( in_folder, out_folder ):
-            self.build_file( in_folder, out_folder, task_row )
+            self.build_file( in_folder, out_folder, task )
         else:
             log.not_built( self.output_file( out_folder ),
                            self.input_file( in_folder ),
