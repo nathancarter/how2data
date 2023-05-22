@@ -17,12 +17,13 @@ import log
 # -j/--no-jekyll = stop after building database into jekyll_input folder; don't run Jekyll
 rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
 skip_jekyll = '-j' in sys.argv or '--no-jekyll' in sys.argv
+quiet = '-v' not in sys.argv and '--verbose' not in sys.argv
 
 # Create build configuration and running object
 build = how_to_data.Build()
 
 # Build Jekyll input from database
-build.database_to_jekyll( rerun_solutions )
+build.database_to_jekyll( rerun_solutions, quiet )
 
 # Run Jekyll on newly copied files
 if skip_jekyll:
