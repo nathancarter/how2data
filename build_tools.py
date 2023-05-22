@@ -37,7 +37,7 @@ def build_topic_page ( row, temp_folder ):
         possible_packages = solutions.all()[solutions.all()['software'] == srow['name']]
         possible_packages = possible_packages['solution name'].unique().tolist()
         for package in possible_packages:
-            pdf_filename = build_topic_pdf( row, srow['name'], package, temp_folder )
+            pdf_filename = build_topic_pdf( row, srow['name'], package, temp_folder=temp_folder )
             if pdf_filename is not None:
                 pdf_filename = '../assets/downloads/' + pdf_filename
                 if package == 'solution':
@@ -63,8 +63,8 @@ def build_topic_page ( row, temp_folder ):
 # Generate a PDF for a given topic, using a given software package.
 # The third argument is the main repo folder, which will get cleaned up later.
 def build_topic_pdf (
-    topic_row, software_name, main_folder,
-    solution_name='solution', min_proportion=0.5
+    topic_row, software_name, solution_name='solution',
+    main_folder=config.main_folder, temp_folder=config.topics_folder, min_proportion=0.5
 ):
     site_url = 'https://how-to-data.org/'
     # make first page with TOC that links to all later pages
@@ -90,12 +90,12 @@ def build_topic_pdf (
             if task_modified > pdf_modified:
                 must_build = True
         if not must_build:
-            log.not_built( f"PDF for {title}", Reason="Already up to date" )
+            log.not_built( outfile, Reason="Already up to date" )
             return title + '.pdf'
     else:
         must_build = True
     # create the structure of the Markdown input to pandoc
-    markdown = static_files.fill_template( 'topic-pdf',
+    markdown_content = static_files.fill_template( 'topic-pdf',
         TITLE = title,
         SITE_URL = site_url,
         DATE = datetime.now().strftime("%d %B %Y"),
@@ -110,8 +110,7 @@ def build_topic_pdf (
             num_solutions += 1
     proportion = num_solutions / len( tasks_copy )
     if proportion < min_proportion:
-        log.not_built( f"PDF for {title}",
-                       Reason=f"only {proportion*100:0.1f}% solved" )
+        log.not_built( outfile, Reason=f"only {proportion*100:0.1f}% solved" )
         return None
     # now add all tasks, one at a time
     for index, task_row in tasks_copy.iterrows():
@@ -120,11 +119,11 @@ def build_topic_pdf (
             solution = markdown.html_sections_to_latex(
                 markdown.unescape_for_jekyll(
                     solutions.Solution( task_solutions.iloc[0,:] ).generated_body() ),
-                main_folder )
+                temp_folder )
         else:
             solution = 'How to Data does not yet contain a solution for this task in ' \
                      + pair_of_names + '.'
-        markdown += static_files.fill_template( 'topic-pdf-solution',
+        markdown_content += static_files.fill_template( 'topic-pdf-solution',
             TASK = task_row['task name'],
             DESCRIPTION = tasks.make_links( task_row['content'] ),
             SOFTWARE = pair_of_names,
@@ -143,16 +142,16 @@ def build_topic_pdf (
         elif href[0] == '.':
             log.warning( 'Bad external URL:', f'[{text}]({href})' )
         return f'[{text}]({href})'
-    markdown = re.sub( '(?<!\\!)\\[([^]]*)\\]\\(([^)]*)\\)', process_one_link, markdown,
-        flags=re.IGNORECASE )
+    markdown_content = re.sub( '(?<!\\!)\\[([^]]*)\\]\\(([^)]*)\\)', process_one_link,
+        markdown_content, flags=re.IGNORECASE )
     # write all that markdown to a file, run pandoc on it to create a PDF, then delete the .md
-    log.built( f"PDF for {title}" )
-    tmp_md_doc = os.path.join( topics_folder, 'pandoc-temp-file.md' )
-    markdown.write( tmp_md_doc, markdown, add_escapes=False )
+    tmp_md_doc = os.path.join( temp_folder, 'pandoc-temp-file.md' )
+    markdown.write( tmp_md_doc, markdown_content, add_escapes=False )
     command_to_run = 'pandoc --from=markdown --to=pdf --pdf-engine=xelatex' \
                 + ' -V geometry:margin=1in -V urlcolor:NavyBlue --standalone' \
                 + f' --include-in-header="{os.path.join(main_folder,"pandoc-latex-header.tex")}"' \
                 + f' --lua-filter="{os.path.join(main_folder,"pandoc-pdf-tweaks.lua")}"' \
                 + f' --output="{outfile}" "{tmp_md_doc}"'
     shell.run_or_halt( command_to_run, f'rm "{tmp_md_doc}"' )
+    log.built( "PDF", outfile )
     return title + '.pdf'
