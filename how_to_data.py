@@ -90,7 +90,7 @@ class Build:
             tasks.Task( row ).build()
         # Create a page for each software package; the sequencing of this step is not important.
         for index, row in software.all().iterrows():
-            build_software_page( row )
+            software.Software( row ).build()
         # Create a page for each topic; the sequencing of this step is not important.
         for index, row in topics.all().iterrows():
             build_topic_page( row, config.main_folder )

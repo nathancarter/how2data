@@ -147,6 +147,7 @@ class Task:
     # By default, it will use the list of solutions given by this object's solutions()
     # member, but if you have a different set of Solution objects or solution_df rows,
     # you can pass that as the second argument.
+    # The result is a list of strings, software package names.
     def opportunities ( self, existing_solutions=None ):
         if isinstance( existing_solutions, pd.DataFrame ):
             non_opportunities = existing_solutions['software']

@@ -29,48 +29,6 @@ import shell
 ###  TOOLS THAT BUILD PAGES IN THE SITE
 ###
 
-# Generate a page for a given software package,
-# from a row in the software.all() DataFrame.
-def build_software_page ( row ):
-    out_filename = row['permalink'] + '.md'
-    output_file = os.path.join( config.jekyll_input_folder, out_filename )
-    sol_uses_this_sw = solutions.all()['software'] == row['name']
-    def link_to_other_solutions ( task_row ):
-        sol_is_for_task = solutions.all()['task name'] == task_row['task name']
-        num_not_in_this_sw = sum(sol_is_for_task) - \
-            sum(sol_is_for_task & sol_uses_this_sw)
-        if num_not_in_this_sw > 0:
-            return f'{num_not_in_this_sw} ([view](../{task_row["permalink"]}))'
-        else:
-            return 'None'
-    my_tasks_table = tasks.table()[['Task',f'Solutions in {row["name"]}']].copy()
-    my_tasks_table['Solutions in other software packages'] = \
-        tasks.all().apply( link_to_other_solutions, axis=1 )
-    solution_needed = my_tasks_table.iloc[:,1].isin([''])
-    table1 = my_tasks_table[~solution_needed]
-    if len( table1 ) > 0:
-        table1 = table1.to_markdown( index=False )
-    else:
-        table1 = f'*No tasks have solutions in {row["name"]} yet.*  ' + \
-            'Consider [submitting one!](../contributing)'
-    table2 = my_tasks_table[solution_needed].copy()
-    table2[f'Solutions in {row["name"]}'] = \
-        f'none yet<br/>(Want to [submit one](../contributing)?)'
-    if len( table2 ) > 0:
-        table2 = table2.to_markdown( index=False )
-    else:
-        table2 = f'*None---all tasks have solutions in {row["name"]}!*'
-    markdown.write( output_file, static_files.fill_template( 'software',
-        TITLE = row['title'],
-        SOFTWARE_NAME = row['name'],
-        PERMALINK = row['permalink'],
-        SOFTWARE_ICON = row['large icon markdown'],
-        NUMBER_OF_SOLUTIONS = str( row['num solutions'] ),
-        SOFTWARE_TASK_TABLE = table1,
-        OPPORTUNITIES = table2
-    ) )
-    files.mark_as_regenerated( out_filename )
-
 # Generate a page for a given topic, from a row in the topics.all() DataFrame.
 # The second argument is a folder in which to store temp files during the process.
 def build_topic_page ( row, temp_folder ):
