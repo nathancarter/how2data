@@ -1,5 +1,4 @@
 
-from build_tools import *
 import files
 import log
 import static_files
@@ -10,6 +9,8 @@ import software
 import config
 import glob
 import shell
+import os
+import pandas as pd
 
 # Build class; use instances of this to run builds
 class Build:
@@ -93,7 +94,7 @@ class Build:
             software.Software( row ).build()
         # Create a page for each topic; the sequencing of this step is not important.
         for index, row in topics.all().iterrows():
-            build_topic_page( row, config.main_folder )
+            topics.Topic( row ).build()
         files.delete_ungenerated_markdown()
 
         # Zip up examples to reference from the Contributing page

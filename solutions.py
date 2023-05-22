@@ -55,6 +55,10 @@ def all ():
         software.check_consistency_with_solutions()
     return df
 
+# Get just those solutions for a specific software package and libraries
+def all_for ( software, libraries='solution' ):
+    return all()[( all()['software'] == software ) & ( all()['solution name'] == libraries )]
+
 # Private data and function used in class defined below
 github_url = 'https://github.com/nathancarter/how2data'
 new_github_issue_url = f'{github_url}/issues/new/choose'

@@ -143,7 +143,7 @@ def html_sections_to_latex ( markdown, folder ):
     # replace the section with its TeX-ified version
     markdown = markdown[:section.start()] + section_as_tex + markdown[section.end():]
     # recur on the new markdown, with one less section to process
-    return html_sections_to_latex( markdown )
+    return html_sections_to_latex( markdown, folder )
 
 # Function to run a given markdown document as if it were a Jupyter notebook.
 # You specify the markdown content as a string, the folder in which to run it

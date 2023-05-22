@@ -124,6 +124,11 @@ class Task:
     def markdown_link ( self ):
         return self._row['markdown link']
     
+    # And a getter for the whole row
+    @property
+    def row ( self ):
+        return self._row
+    
     # Get all solutions for this task, as Solution instances
     def solutions ( self ):
         rows = solutions.all()[solutions.all()['task name'] == self.task_name]

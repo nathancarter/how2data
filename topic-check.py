@@ -8,14 +8,15 @@
 #
 
 import pandas as pd
-from build_tools import *
+import tasks
+import topics
 
 # Start a new DataFrame containing just the names of all tasks:
-report_df = pd.DataFrame( { 'task name' : tasks_df()['task name'] } )
+report_df = pd.DataFrame( { 'task name' : tasks.all()['task name'] } )
 
 # For each task, compute the list of topics it appears in...
 report_df['topics'] = report_df['task name'].apply( lambda name: \
-    list( topics_df()[topics_df()['content'].str.contains( name, regex=False )]['topic name'] ) )
+    list( topics.all()[topics.all()['content'].str.contains( name, regex=False )]['topic name'] ) )
 # ...and how many such topics there were in each case:
 report_df['num topics'] = report_df['topics'].apply( len )
 
@@ -27,5 +28,5 @@ report_df = report_df.sort_values( by='num topics', ascending=False )
 pd.set_option( 'display.max_rows', None )
 pd.set_option( 'display.max_columns', None )
 pd.set_option( 'display.width', None )
-pd.set_option( 'display.max_colwidth', -1 )
+pd.set_option( 'display.max_colwidth', None )
 print( report_df )

@@ -15,7 +15,6 @@ import sys, os
 script_folder = os.path.dirname( os.path.realpath( __file__ ) )
 parent_folder = os.path.dirname( script_folder )
 sys.path.append( parent_folder )
-from build_tools import *
 from collections import OrderedDict
 import json
 import files

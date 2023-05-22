@@ -3,6 +3,7 @@ import how_to_data
 import config
 import solutions
 import pandas as pd
+import numpy as np
 import yaml
 import tasks
 import static_files
@@ -71,6 +72,16 @@ def table ():
         pretty_df.columns = [ 'Software Package', 'Icon', 'Number of solutions', 'Website' ]
     return pretty_df
 
+# We often care not just about the list of software packages (Python, R, Excel, etc.),
+# but also about the libraries used within them (e.g., "Python, using sklearn and matplotlib").
+# The following function fetches the list of all package-library pairs from the Solutions
+# database.  If the library is given as merely "solution" then it means no special libraries.
+# If it is given as anything else, it will begin with the phrase "using " and then be followed
+# by the libraries used.
+def names_with_libraries ():
+    df = solutions.all()[['software','solution name']].drop_duplicates()
+    return list( zip( df['software'], df['solution name'] ) )
+
 # Objects of the following class represent an individual row in the software packages df.
 class Software:
 
@@ -119,6 +130,11 @@ class Software:
     def num_solutions ( self ):
         return self._row['num solutions']
 
+    # And a getter for the whole row
+    @property
+    def row ( self ):
+        return self._row
+    
     # Utility function for use in a table of solutions for this software,
     # in the column for "other solutions."  This will either produce the text "None"
     # if there are none, or it will produce text of the form "3 (view)" if there are

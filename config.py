@@ -11,6 +11,7 @@ tasks_folder = os.path.join( main_folder, 'database', 'tasks' )
 topics_folder = os.path.join( main_folder, 'database', 'topics' )
 jekyll_input_folder = os.path.join( main_folder, 'jekyll-input' )
 jekyll_imgs_folder = os.path.join( jekyll_input_folder, 'assets', 'dynamic-images' )
+site_url = 'https://how-to-data.org/'
 
 # How to make an absolute path relative to this project
 # For example, if the project root is /example/path,
