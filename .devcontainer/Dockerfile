@@ -23,8 +23,8 @@ RUN gem install jekyll bundler
 
 # Install the following Python packages that aren't part of the Jupyter
 # datascience-notebook image
-RUN pip3 --disable-pip-version-check --no-cache-dir \
-    install rdatasets pingouin scikit_posthocs tabulate jupytext \
+RUN pip3 --disable-pip-version-check --no-cache-dir install \
+    rdatasets pingouin scikit_posthocs tabulate jupytext streamlit \
  && rm -rf /tmp/pip-tmp
 
 # Install the following Julia packages that aren't part of the Jupyter
