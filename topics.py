@@ -102,6 +102,10 @@ class Topic:
     @property
     def row ( self ):
         return self._row
+    # And for its online link in the live website
+    @property
+    def url ( self ):
+        return config.site_link( self.permalink )
     
     # Same as self.content, but with all task names converted to Markdown links
     def content_with_links ( self ):
@@ -197,7 +201,7 @@ class Topic:
                 if href[3:] in df.permalink.to_list():
                     href = f'#{href[3:]}'
                 else:
-                    href = f'{config.site_url}{href[3:]}'
+                    href = f'{config.site_link(href[3:])}'
                     text = f'{text} (on website)'
             elif href[0] == '.':
                 log.warning( 'Bad external URL:', f'[{text}]({href})' )

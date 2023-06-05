@@ -218,3 +218,137 @@ def adjust_image_filenames ( func, markdown ):
         lambda code, alt_text, filename: ( alt_text, func( filename ) ),
         markdown
     )
+
+# Replace each code block in a given markdown string
+# with that code block's image under a given transformation function.
+def transform_code ( markdown, transform ):
+    result = ''
+    block_content = None
+    for line in markdown.split( '\n' ):
+        if block_content is None: # outside a block
+            if line.startswith( '```' ): # new block starts here!
+                block_content = line + '\n'
+            else:
+                result += line + '\n'
+        else: # inside a block
+            block_content += line + '\n'
+            if line.startswith( '```' ): # old block ends here
+                result += transform( block_content )
+                block_content = None
+    if block_content is not None:
+        raise Error( 'Ended markdown inside a code block' )
+    return result
+
+# Several private methods used only in the to_ipynb() function, below.
+#
+# Convert a markdown string into a JSON fragment for use in an ipynb file.
+def _quote_each_line ( text, indent=0 ):
+    return ',\n'.join( [
+        ( ' ' * indent ) + json.dumps( line+'\n' )
+        for line in text.split( '\n' )
+    ] )
+# Convert a markdown string into the JSON for a full Jupyter notebook
+# markdown cell.
+def _md_cell ( markdown ):
+    return f'''  {{
+   "source": [
+{_quote_each_line( markdown )}
+   ],
+   "cell_type": "markdown",
+   "metadata": {{}}
+  }}'''
+# Convert a string containing code (in any language) into a Jupyter notebook
+# code cell.
+def _code_cell ( code ):
+    return f'''  {{
+   "cell_type": "code",
+   "execution_count": 0,
+   "metadata": {{}},
+   "outputs": [],
+   "source": [
+{_quote_each_line( code )}
+   ]
+  }}'''
+# Convert an array of cells (each of which is already in JSON format)
+# into the JSON content representing an entire Jupyter notebook, as a string.
+# This requires creating some temp files, so that pandoc can create a tiny
+# Jupyter notebook for us, into which we can substitute our list of cells.
+def _cells_to_nb ( cells, tmp_folder=config.main_folder ):
+    tmp_file = os.path.join( tmp_folder, '_temp_file' )
+    files.write_text_file( tmp_file+'.md', 'Dummy text' )
+    shell.run_or_halt(
+        f'pandoc "{tmp_file}.md" --output="{tmp_file}.ipynb"',
+        f'rm "{tmp_file}.md"' )
+    template = json.loads( files.read_text_file( tmp_file+'.ipynb' ) )
+    shell.run_or_halt( f'rm "{tmp_file}.ipynb"' )
+    flag = "REPLACE_THIS_WITH_ACTUAL_CELLS"
+    template["cells"] = [ flag ]
+    return json.dumps( template ).replace( '"'+flag+'"', ',\n'.join( cells ) )
+
+# Convert the given markdown content, in string form, into a Jupyter notebook,
+# where code blocks become code cells and all other content becomes markdown
+# cells.
+def to_ipynb ( markdown ):
+    cells = [ ]
+    md = ''
+    code = None
+    for line in markdown.split( '\n' ):
+        if code is None: # outside a block
+            if line.startswith( '```' ): # new block starts here!
+                cells.append( _md_cell( md ) )
+                md = None
+                code = ''
+            else: # extend existing markdown section
+                md += line + '\n'
+                if line.startswith( '-----' ): # start a new cell
+                    cells.append( _md_cell( md ) )
+                    md = ''
+        else: # inside a block
+            if line.startswith( '```' ): # old block ends here
+                cells.append( _code_cell( code ) )
+                md = ''
+                code = None
+            else: # extend existing code section
+                code += line + '\n'
+    if code is not None:
+        raise Error( 'Ended markdown inside a code block' )
+    else:
+        cells.append( _md_cell( md ) )
+    return _cells_to_nb( cells )
+
+# Export some markdown text in a chosen file format, using a temp file and
+# pandoc as needed.  The filename should omit the extension, which will be
+# decided based on the format.  For example, you could call:
+# export('...','/path/to/my_file','Rmd') or
+# export('...','/path/to/my_file','RMarkdown')
+# and get the same result in either case, normalized to an .Rmd file.
+# The filename, however, should be absolute, just without an extension.
+def export ( markdown, filename, format ):
+    out_folder = os.path.dirname( filename )
+    log.info( 'Ensuring folder exists', Folder=out_folder )
+    files.ensure_folder_exists( out_folder )
+    if format not in config.extension_for_type:
+        log.error( 'Markdown export not supported for this format',
+                   Format=format )
+    format = config.extension_for_type[format]
+    out_file = filename + '.' + format
+    match format:
+        case 'md':
+            log.info( 'Exporting file', Filename=out_file )
+            files.write_text_file( out_file, markdown )
+        case 'ipynb':
+            log.info( 'Exporting file', Filename=f"{filename}.ipynb" )
+            files.write_text_file( out_file, to_ipynb( markdown ) )
+        case 'doc' | 'docx':
+            log.info( 'Exporting file', Filename=out_file )
+            files.write_text_file( f'{filename}.md', markdown )
+            log.info( 'Converting file', **{ "New format" : f'{filename}.md' } )
+            shell.run_or_halt(
+                f'pandoc "{filename}.md" --output="{out_file}"',
+                f'rm "{filename}.md"' )
+        case 'Rmd':
+            log.info( 'Exporting file', Filename=f"{out_file}" )
+            files.write_text_file( out_file,
+                markdown.replace( '\n```R', '\n```{r}' ) )
+    log.info( 'Done.' )
+    return filename + '.' + format

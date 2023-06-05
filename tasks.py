@@ -99,13 +99,13 @@ def table_with_links ():
 # Objects of the following class represent an individual row in the tasks df.
 class Task:
 
-    # The row may be an integer index, a task filename, or a row from the df.
+    # The row may be an integer index, a task name, or a row from the df.
     # Consider each option below.
     def __init__ ( self, row ):
         if isinstance( row, pd.Series ):
             self.index = row.name
         elif isinstance( row, str ):
-            self.index = dict( zip( all()['task filename'], all().index ) )[row]
+            self.index = dict( zip( all()['task name'], all().index ) )[row]
         elif isinstance( row, int ):
             self.index = row
         else:
@@ -134,10 +134,23 @@ class Task:
     def row ( self ):
         return self._row
     
+    # And a getter for this task's folder
+    @property
+    def folder ( self ):
+        return os.path.join( config.tasks_folder, self.task_name )
+    # And for its online link in the live website
+    @property
+    def url ( self ):
+        return config.site_link( self.permalink )
+    
     # Get all solutions for this task, as Solution instances
     def solutions ( self ):
         rows = solutions.all()[solutions.all()['task name'] == self.task_name]
         return [ solutions.Solution( row ) for _, row in rows.iterrows() ]
+    
+    # Read this task's description, as markdown content
+    def description ( self ):
+        return markdown.read_doc( self.task_filename )
     
     # Get the markdown content for one section of this task's page.
     # IMPORTANT!!  This assumes you've already built the relevant solution,
