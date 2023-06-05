@@ -19,18 +19,15 @@ rerun_solutions = '-f' in sys.argv or '--force' in sys.argv
 skip_jekyll = '-j' in sys.argv or '--no-jekyll' in sys.argv
 quiet = '-v' not in sys.argv and '--verbose' not in sys.argv
 
-# Create build configuration and running object
-build = how_to_data.Build()
-
 # Build Jekyll input from database
-build.database_to_jekyll( rerun_solutions, quiet )
+how_to_data.database_to_jekyll( rerun_solutions, quiet )
 
 # Run Jekyll on newly copied files
 if skip_jekyll:
     log.heading( 'Skipping Jekyll build process' )
 else:
     log.heading( 'Running Jekyll build process' )
-    build.jekyll_to_site()
+    how_to_data.jekyll_to_site()
 
 # State completion
 log.heading( 'Build completed successfully.' )
