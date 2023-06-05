@@ -259,7 +259,7 @@ class Topic:
         if len( pdf_files ) > 0:
             for pdf_title in pdf_files:
                 link_text = pdf_title.replace( self.topic_name, 'Solutions' ) + ' (download PDF)'
-                pdf_filename = '../assets/downloads/' + pdf_title
+                pdf_filename = '../assets/downloads/' + pdf_title + '.pdf'
                 pdf_downloads += f' * [{link_text}]({pdf_filename})\n'
         else:
             pdf_downloads = 'No PDF downloads available for this topic yet.'
