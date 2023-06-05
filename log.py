@@ -34,7 +34,7 @@ def out ( **kwargs ):
 
 # Print a table of error info and quit the build process
 def error ( message, **kwargs ):
-    out( { **{ 'Build error' : message }, **kwargs } )
+    out( **{ **{ 'Build error' : message }, **kwargs } )
     sys.exit( 1 )
 
 # Print a table of warning info but do not quit the build process
