@@ -7,5 +7,3 @@ scratch/
 .Rhistory
 **/.ipynb_checkpoints/*
 .DS_Store
-assignments/How*/*
-assignments/*.zip
