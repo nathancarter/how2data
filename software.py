@@ -13,6 +13,9 @@ import files
 df = None
 pretty_df = None
 
+# Global constant: Which software packages use code?  E.g., not Excel...
+using_code = [ 'R', 'Python', 'Julia' ]
+
 # Function-building function used in all(), below
 def software_package_icon ( height, is_link ):
     def result ( package_row ):
