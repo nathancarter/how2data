@@ -84,15 +84,15 @@ def table ():
 def table_with_links ():
     global pretty_df_with_links
     if pretty_df_with_links is None:
-        permalink_for_sw = dict( zip( software.all()['name'], software.all()['permalink'] ) )
         pretty_df_with_links = table().copy()
-        pretty_df_with_links['Solutions'] = ''
+        new_col = [ ]
         for index, row in pretty_df_with_links.iterrows():
             to_join = [ ]
-            for col in table().columns:
+            for col in pretty_df_with_links.columns:
                 if col.startswith( 'Solutions in' ) and row[col] != '':
                     to_join.append( f'In {col[13:]}: {row[col]}' )
-            row['Solutions'] = '<br>'.join( to_join )
+            new_col.append( '<br>'.join( to_join ) )
+        pretty_df_with_links['Solutions'] = new_col
         pretty_df_with_links = pretty_df_with_links[['Task','Solutions']]
     return pretty_df_with_links
 
