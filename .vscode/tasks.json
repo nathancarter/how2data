@@ -24,22 +24,12 @@
             "problemMatcher": [],
             "group": "build"
         },
-        {
-            "label": "Create new task from template",
+       {
+            "label": "Open control panel",
             "type": "shell",
-            "command": "bash create_task.sh",
+            "command": "streamlit run control-panel.py --server.port 80 --server.address=localhost",
             "problemMatcher": [],
             "group": "build"
-        },
-        {
-            "label": "Run preview build script",
-            "type": "shell",
-            "command": "python preview.py",
-            "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
        }
     ]
 }
