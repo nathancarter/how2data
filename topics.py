@@ -1,5 +1,4 @@
 
-import how_to_data
 import config
 import pandas as pd
 import numpy as np
