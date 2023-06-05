@@ -9,6 +9,7 @@ class ProgressBar:
         self.num_phases = 1
         self.num_steps = 100
         self.start( show=False )
+        self.callback = None
     
     def start ( self, show=True ):
         self._start_time = datetime.now()
@@ -45,10 +46,13 @@ class ProgressBar:
         elapsed = self._current_time - self._start_time
         if proportion > 0:
             remaining = elapsed * ( 1 - proportion ) / proportion
-            remaining = str( remaining )[2:7]
+            remaining_str = str( remaining )[2:7]
         else:
-            remaining = '...'
-        elapsed = str( elapsed )[2:7]
+            remaining = None
+            remaining_str = '...'
+        elapsed_str = str( elapsed )[2:7]
+        if self.callback is not None:
+            self.callback( proportion, elapsed, remaining, elapsed_str, remaining_str )
         bars = int( self.width * proportion )
         blanks = self.width - bars
-        print( f'{self.prefix} {"#"*bars}{"_"*blanks} {proportion*100:3.0f}% {elapsed} / {remaining}', end='\r' )
+        print( f'{self.prefix} {"#"*bars}{"_"*blanks} {proportion*100:3.0f}% {elapsed_str} / {remaining_str}', end='\r' )
