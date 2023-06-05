@@ -145,7 +145,8 @@ class Task:
     # The solution data is looked up in the given folder,
     # which defaults to the jekyll input folder defined in config.py.
     def section ( self, solution, folder=None ):
-        solution_name = files.without_extension( solution.solution_name ).title()
+        solution_name = files.without_extension( solution.solution_name )
+        solution_name = solution_name[0].upper() + solution_name[1:] # not the same as .title()!
         return static_files.fill_template( 'solution-in-software',
             NAME = solution_name,
             SOFTWARE = solution.software,
