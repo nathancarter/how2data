@@ -29,3 +29,28 @@ def relativize_path ( input_path ):
 # How to blogify a title of any resource into a filename (with lower case and hyphens).
 def blogify ( title ):
     return re.sub( '^-+|-+$', '', re.sub( '[^a-z0-9]+', '-', title.lower() ) )
+
+# Link to a page in the site online; provide the permalink without the absolute URL,
+# and this function prefixes the web site's URL and forms a hyperlink.
+def site_link ( permalink ):
+    return f'{site_url}{permalink}/'
+
+# Mapping from common file type descriptions to their extensions.
+extension_for_type = {
+    'md' : 'md',
+    'markdown' : 'md',
+    'Markdown' : 'md',
+    'ipynb' : 'ipynb',
+    'notebook' : 'ipynb',
+    'Jupyter' : 'ipynb',
+    'Jupyter notebook' : 'ipynb',
+    'doc' : 'doc',
+    'docx' : 'docx',
+    'Word' : 'docx',
+    'Word doc' : 'docx',
+    'document' : 'docx',
+    'Word document' : 'docx',
+    'Rmd' : 'Rmd',
+    'RMarkdown' : 'Rmd',
+    'Rmarkdown' : 'Rmd'
+}
