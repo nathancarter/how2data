@@ -1,8 +1,0 @@
-
-Replace this text with the description of your task.  Obviously the following
-text is just a silly example.  You may use any amount of markdown (and even R
-code cells), but the code cells will not be executed when included in the site.
-
-Sometimes the user wants to see a caterpillar in their code's output.  What kind
-of code could be used to produce a caterpillar?  We assume the caterpillar
-should face to the left, and that the user can specify the caterpillar's length.
