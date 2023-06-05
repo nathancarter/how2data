@@ -5,7 +5,6 @@ jekyll-input/assets/downloads/examples*.zip
 __pycache__/
 scratch/
 .Rhistory
-preview/
 **/.ipynb_checkpoints/*
 .DS_Store
 assignments/How*/*
