@@ -46,6 +46,12 @@ def all ():
             lambda name: f'[{name}](../{config.blogify(name)})' )
     return df
 
+# Clear cache so we're forced to re-examine what's on disk.
+# Useful if you just added a topic.
+def clear_cache ():
+    global df
+    df = None
+
 def _pair_to_title ( package, libraries='solution' ):
     if libraries == 'solution':
         return f'pure {package}'

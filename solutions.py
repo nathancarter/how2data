@@ -54,6 +54,12 @@ def all ():
         software.check_consistency_with_solutions()
     return df
 
+# Clear cache so we're forced to re-examine what's on disk.
+# Useful if you just added a solution.
+def clear_cache ():
+    global df
+    df = None
+
 # Get just those solutions for a specific software package and libraries
 def all_for ( software, libraries='solution' ):
     return all()[( all()['software'] == software ) & ( all()['solution name'] == libraries )]

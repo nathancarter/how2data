@@ -17,6 +17,11 @@ import progress
 files.ensure_folder_exists( os.path.join( config.topics_folder, 'images' ) )
 files.ensure_folder_exists( config.jekyll_imgs_folder )
 
+# Clear all caches
+def clear_caches ():
+    topics.clear_cache()
+    solutions.clear_cache()
+    tasks.clear_cache()
 
 # Summary stats for whole database
 def stats ():

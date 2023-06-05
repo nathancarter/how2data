@@ -35,6 +35,12 @@ def all ():
             lambda name: f'[{name}](../{config.blogify(name)})' )
     return df
 
+# Clear cache so we're forced to re-examine what's on disk.
+# Useful if you just added a task folder.
+def clear_cache ():
+    global df
+    df = None
+
 # Function for copying a task file from a task folder to the Jekyll
 # input folder.  (This is typically images, hence the function name.)
 def copy_image ( full_path_to_source, filename ):
