@@ -339,7 +339,7 @@ difference is equal to 0 (or some other hypothesized value), $H_0: \mu_D = 0$.</
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_relResult(statistic=2.8577380332470415, pvalue=0.03550038112896236)
+</pre></td><td class="rouge-code"><pre>TtestResult(statistic=2.8577380332470415, pvalue=0.03550038112896236, df=5)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Our $p$-value, 0.0355, is smaller than $\alpha$, so we have sufficient evidence to reject the null hypothesis and conclude that the mean difference between the two samples is significantly different from zero.</p>
@@ -357,7 +357,7 @@ The null hypothesis is now $H_0: \mu_D=d$.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_relResult(statistic=0.4082482904638631, pvalue=0.6999865427788738)
+</pre></td><td class="rouge-code"><pre>TtestResult(statistic=0.4082482904638631, pvalue=0.6999865427788738, df=5)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>The above $p$-value is greater than $\alpha=0.05$, so we could not conclude that
@@ -379,7 +379,7 @@ zero, $H_0: \mu_D\le0$, we can use a right-tailed test, as follows.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_relResult(statistic=2.8577380332470415, pvalue=0.01775019056448118)
+</pre></td><td class="rouge-code"><pre>TtestResult(statistic=2.8577380332470415, pvalue=0.01775019056448118, df=5)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Our $p$-value, 0.01775, is smaller than $\alpha$, so we have sufficient evidence
@@ -405,7 +405,7 @@ zero, $H_0: \mu_D\ge 0$, we can use a right-tailed test, as follows.</p>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>Ttest_relResult(statistic=2.8577380332470415, pvalue=0.9822498094355188)
+</pre></td><td class="rouge-code"><pre>TtestResult(statistic=2.8577380332470415, pvalue=0.9822498094355188, df=5)
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Our $p$-value, 0.98225, is larger than $\alpha$, so we do not have sufficient evidence
@@ -415,7 +415,7 @@ two samples is greater than or equal to zero.</p>
 <p>A similar change could be made to the code above to test $H_0:\mu_D\ge d$,
 as in the example code further above that uses $d=6$.</p>
 
-<p>Content last modified on 07 December 2021.</p>
+<p>Content last modified on 17 May 2023.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to do a hypothesis test for a mean difference (matched pairs)/Python, using SciPy.ipynb">edit the source</a>.</p>
 

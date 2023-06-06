@@ -317,12 +317,6 @@ to measure its goodness of fit?</p>
 <span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="p">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">xs</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/statsmodels/tsa/tsatools.py:142: FutureWarning: In a future version of pandas all arguments of concat except for the argument 'objs' will be keyword-only
-  x = pd.concat(x[::order], 1)
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-
 <p>You can get a lot of information about your model from its summary.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -331,7 +325,7 @@ to measure its goodness of fit?</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.9/site-packages/scipy/stats/stats.py:1541: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
+</pre></td><td class="rouge-code"><pre>/opt/conda/lib/python3.11/site-packages/scipy/stats/_stats_py.py:1736: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
   warnings.warn("kurtosistest only valid for n&gt;=20 ... continuing "
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
@@ -347,10 +341,10 @@ to measure its goodness of fit?</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   2.921</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Tue, 07 Dec 2021</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
+  <th>Date:</th>             <td>Mon, 05 Jun 2023</td> <th>  Prob (F-statistic):</th>  <td> 0.122</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>15:06:52</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
+  <th>Time:</th>                 <td>20:55:34</td>     <th>  Log-Likelihood:    </th> <td> -45.689</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    10</td>      <th>  AIC:               </th> <td>   99.38</td>
@@ -412,7 +406,7 @@ to measure its goodness of fit?</p>
 
 <p>In this case, the Adjusted $R^2$ is $0.3904$.</p>
 
-<p>Content last modified on 07 December 2021.</p>
+<p>Content last modified on 17 May 2023.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute adjusted R-squared/Python, using statsmodels.ipynb">edit the source</a>.</p>
       <h2 id="solution-in-r">
@@ -502,7 +496,7 @@ F-statistic: 2.921 on 3 and 6 DF,  p-value: 0.1222
 
 <p>In this case, the Adjusted $R^2$ is $0.3904$.</p>
 
-<p>Content last modified on 09 February 2023.</p>
+<p>Content last modified on 17 May 2023.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute adjusted R-squared/R.md">edit the source</a>.</p>
       <h2 id="topics-that-include-this-task">
