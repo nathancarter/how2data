@@ -159,7 +159,6 @@ def get_task_software_table ():
         matrix = matrix.fillna( 0 )
         for sw in software_names:
             matrix[sw] = matrix[sw].astype( bool )
-        matrix = get_task_software_matrix()
         froms = [ ]
         tos = [ ]
         tasks = [ ]
