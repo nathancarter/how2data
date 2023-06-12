@@ -47,20 +47,8 @@ Here's how:
 
 ## If you've come to this page because you want to create new content...
 
-Excellent!  Download
-[this zipped folder](../assets/downloads/examples-for-contributing-to-how-to-data.zip)
-and read the document inside it to see how to get started.  The download
-contains example content you can edit to create new tasks and/or solutions
-that are then ready to upload, following the instructions in the document.
-
-When writing new content, please follow these guidelines:
-
- * **Write plenty of explanations.**  Comments in code are great.  Comments
-   between code cells are great.  Explain everything you're doing in your
-   code.
- * **Break your work into bite-sized pieces.**  Really large chunks of complex
-   code are not helpful to learners.  If you have many nested function calls,
-   consider breaking them down into small assignment statements instead.
- * **Use helpful names for variables and functions.**  Do not call a variable
-   `t` when you could call it `seconds_elapsed`.  Do not call a function
-   `convert` when you could call it `inches_to_cm`.
+Excellent!  [The wiki on our GitHub page](https://github.com/nathancarter/how2data/wiki)
+will tell you everything you need to know about getting started as a How to Data
+developer, whether you're planning a small contribution (like one new solution)
+or have big plans (like improving the website build process itself).
+We're happy to help you get on board!
