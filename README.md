@@ -31,26 +31,7 @@ submitting new content, then letting the maintainers incorporate it into the
 site.  See [the Contributing page of the
 site](https://how-to-data.org/contributing/) for details.
 
-However, if you have some need to build a local copy of the website, it is easy
-to do so as follows.
-
-1. Ensure that you have already installed
-   [VSCode](https://code.visualstudio.com/),
-   [Docker](https://www.docker.com/) desktop, and VSCode's
-   [Remote - Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
-1. Clone this repository to your local machine and open the folder in VSCode.
-1. It will ask if you want to open the folder in the development container
-   defined in the repository.  Say yes.
-   
-   (This will be very slow but only once.  The container image gets cached.)
-1. To build the site, press `Ctrl+Alt+Shift+B` (on Mac `Cmd+Option+Shift+B`),
-   VSCode's shortcut for "Run Build Task" and choose the option
-   "Rebuild website and serve locally for testing."
-   
-   (Also very slow just once.  Later builds leverage a cache.)
-1. When complete, visit the test site at `http://localhost:4000/`.
-   To stop the local server, press `Ctrl+C`.
-
-If you want to add content to the site, you may not want to rebuild the site
-every time you make changes, despite the speed improvements of caching.  See
-the `preview.py` script in this folder for a shortcut.
+For those who want to check out this repository, edit content, build the site,
+and make pull requests, see
+[the wiki in this repository](https://github.com/nathancarter/how2data/wiki)
+for instructions on how to do so.
