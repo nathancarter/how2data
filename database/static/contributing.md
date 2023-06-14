@@ -45,7 +45,17 @@ Here's how:
     accept your submission.)
  6. Click "Commit changes."
 
-## If you've come to this page because you want to create new content...
+## If you've come to this page because you want to add a new topic...
+
+Excellent!  The [current list of topics](../topics) focuses on courses at
+Bentley University, where this website began.  But we'd love to support your institution
+as well!  Since the first few courses in statistics and data science include much of
+the same material across institutions, the website probably already contains most of the
+[tasks](../tasks) (and their solutions!) that you need.  Feel free to reach out directly
+[to the site maintainer by email](mailto:ncarter@bentley.edu) and he can easily help you
+add a new topic to the site just through an email conversation.
+
+## If you've come to this page because you want to create new tasks or solutions...
 
 Excellent!  [The wiki on our GitHub page](https://github.com/nathancarter/how2data/wiki)
 will tell you everything you need to know about getting started as a How to Data
