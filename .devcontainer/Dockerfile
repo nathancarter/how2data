@@ -1,5 +1,5 @@
 # See here for image contents: https://hub.docker.com/r/jupyter/datascience-notebook/
-FROM jupyter/datascience-notebook
+FROM jupyter/datascience-notebook:2023-05-30
 
 # Package installation steps for the OS need to be done as root
 USER root
