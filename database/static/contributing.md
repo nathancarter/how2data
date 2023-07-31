@@ -70,20 +70,20 @@ using any of the methods described above.
 
  * If you want to translate existing solutions into another language, the site
    automatically generates lists of tasks that need translating.
-    * [Tasks with no Python solution yet](software-package-python#solutions-needed-in-python)
-    * [Tasks with no R solution yet](software-package-r#solutions-needed-in-r)
-    * [Tasks with no Excel solution yet](software-package-excel#solutions-needed-in-excel)<br/>
+    * [Tasks with no Python solution yet](../software-package-python#solutions-needed-in-python)
+    * [Tasks with no R solution yet](../software-package-r#solutions-needed-in-r)
+    * [Tasks with no Excel solution yet](../software-package-excel#solutions-needed-in-excel)<br/>
       (Not every task is feasible in Excel, because some tasks are more advanced statistics than
       can easily be done in Excel, but we are just beginning to have Excel support on the site,
       so there is plenty left to do.)
-    * [Tasks with no Julia solution yet](software-package-julia#solutions-needed-in-julia)<br/>
+    * [Tasks with no Julia solution yet](../software-package-julia#solutions-needed-in-julia)<br/>
       (We are just beginning to support Julia, so there are many such opportunities.)
- * Basic stats content in Python (such as [what's listed here](bentley-university-gr521))
+ * Basic stats content in Python (such as [what's listed here](../bentley-university-gr521))
    typically uses a statistical package like SciPy, but often a smaller library like NumPy
    is sufficient.  Add solutions in Python using just NumPy when possible.
  * For tasks that deal with linear models, some students prefer the Python package
    `statsmodels` and others prefer `sklearn`, because each has different strengths.
-   Browse the [full task list](tasks) for tasks that are solved using just one of these packages,
+   Browse the [full task list](../tasks) for tasks that are solved using just one of these packages,
    and add a solution in the other package as well.
  * Intro data science content
     * Create and solve a task, "How to find the data type of a variable or other expression"
