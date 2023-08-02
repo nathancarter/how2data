@@ -12,7 +12,7 @@ def run_or_halt ( command, cleanup=None, show_output=False ):
         errors = {
             'Received error code' : code,
             'From shell command' : command,
-            'With error message' : result.stderr
+            'With error message' : result.stderr.decode( 'UTF-8' )
         }
     cleanup_code = 0
     if cleanup != None:
@@ -23,7 +23,7 @@ def run_or_halt ( command, cleanup=None, show_output=False ):
                 'Cleanup received error code' : cleanup_code,
                 'From cleanup command' : cleanup_code,
                 'After shell command' : command,
-                'With error message' : result.stderr
+                'With error message' : result.stderr.decode( 'UTF-8' )
             } )
     if code != 0 or cleanup_code != 0:
         log.error( 'Build process exiting with error code 1.', **errors )
@@ -35,5 +35,5 @@ def run_and_continue ( command, show_output=False ):
         log.warning( 'Suppressing shell error', **{
             'Received error code' : result.returncode,
             'From shell command' : command,
-            'With error message' : result.stderr
+            'With error message' : result.stderr.decode( 'UTF-8' )
         } )

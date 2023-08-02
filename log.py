@@ -1,6 +1,7 @@
 
 import sys
 
+# Turn logging on or off
 enabled = True
 def enable ():
     global enabled
@@ -8,6 +9,13 @@ def enable ():
 def disable ():
     global enabled
     enabled = False
+
+# Turn halting on or off (halting turned off means it will raise an exception
+# instead, which you can catch)
+halting = True
+def set_halting ( on = True ):
+    global halting
+    halting = on
 
 # Function for printing section headings in the console output
 def heading ( title ):
@@ -24,18 +32,27 @@ def right_justify ( text, width ):
     return ( ' ' * ( width - len( text ) ) ) + text
 
 # Print a table of key-value pairs in helpful output format
+def out_str ( **kwargs ):
+    result = ''
+    width = max( len( key ) for key in kwargs )
+    for key, value in kwargs.items():
+        result += right_justify( key, width ) + ': ' + str( value ) + '\n'
+    return result
 def out ( **kwargs ):
     if not enabled:
         return
-    width = max( len( key ) for key in kwargs )
-    for key, value in kwargs.items():
-        print( right_justify( key, width ) + ': ' + str( value ) )
-    print()
+    print( out_str( **kwargs ) )
 
 # Print a table of error info and quit the build process
 def error ( message, **kwargs ):
-    out( **{ **{ 'Build error' : message }, **kwargs } )
-    sys.exit( 1 )
+    global halting
+    out_arg = { **{ 'Build error' : message }, **kwargs }
+    if halting:
+        enable() # To ensure the problem that kills the process gets reported
+        out( **out_arg )
+        sys.exit( 1 )
+    else:
+        raise Exception( out_str( **out_arg ) )
 
 # Print a table of warning info but do not quit the build process
 def warning ( message, **kwargs ):

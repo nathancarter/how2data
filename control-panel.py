@@ -16,6 +16,7 @@ import config
 import files
 import yaml
 import markdown
+import log
 import os
 import re
 
@@ -538,8 +539,17 @@ with build_tab:
             pbar.progress( proportion,
                 f'Running solution code... {proportion*100:0.1f}% ' \
               + f'{elapsed_str} elapsed / ~{remaining_str} left' )
-        how_to_data.database_to_jekyll( False, True, update_progress_bar )
-        st.experimental_rerun() # ensure refresh of view/edit tab contents
+        succeeded = False
+        log.set_halting( False )
+        try:
+            solutions.clear_cache() # To ensure reloading of any recent changes
+            how_to_data.database_to_jekyll( False, True, update_progress_bar )
+            succeeded = True
+        except Exception as e:
+            col1.error( 'BUILD FAILED.  See detailed error message below.' )
+            st.text( str( e ) )
+        if succeeded:
+            st.experimental_rerun() # ensure refresh of view/edit tab contents
     col2.write( '## Step 2. Build website' )
     col2.markdown( '''
         Jekyll is a tool for converting Markdown documents into a website.
@@ -557,7 +567,15 @@ with build_tab:
         don't publish to GitHub any errors you could have caught by checking.
     ''' )
     if col2.button( '🔨 Build website' ):
+        succeeded = False
         with col2:
             with st.spinner( 'Building website using Jekyll (~1 minute)' ):
-                how_to_data.jekyll_to_site()
-        col2.success( 'Website has been rebuilt.' )
+                log.set_halting( False )
+                try:
+                    how_to_data.jekyll_to_site()
+                    succeeded = True
+                except Exception as e:
+                    col2.error( 'BUILD FAILED.  See detailed error message below.' )
+                    st.text( str( e ) )
+        if succeeded:
+            col2.success( 'Website has been rebuilt.' )
