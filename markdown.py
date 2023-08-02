@@ -172,7 +172,6 @@ def run ( markdown, folder, software ):
         f'--set-kernel {kernel} --output="{ipynb_out}" "{tmp_md_doc}"',
         f'rm "{tmp_md_doc}"' )
     # convert that to markdown again
-    config_param = ''
     jupyter_config_file = os.path.join( config.main_folder,
         f'jupyter_nbconvert_config_{software}.py' )
     command_to_run = 'jupyter nbconvert --to=markdown --execute ' + \

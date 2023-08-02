@@ -280,7 +280,6 @@ def show_task_preview ( task ):
 # and based on an existing solution with the given filename (or None to start from scratch).
 # Throw an error if any part of the process fails (e.g., file already exists).
 def create_solution ( task, filename, based_on=None ):
-    file_to_create = os.path.join( task.folder, filename )
     software, file_type = filename.split( '.' )
     if based_on is not None:
         based_on = solutions.Solution( f'{task.task_name} (in {based_on})' )
