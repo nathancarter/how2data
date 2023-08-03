@@ -291,6 +291,7 @@ class Topic:
             if not self.must_build_pdf( sw_name, libraries ):
                 log.not_built( self.pdf_outfile( sw_name, out_folder ),
                     Reason="Already up to date" )
+                result.append( self.pdf_title( sw_name ) )
                 continue
             # okay we can actually build this PDF!  Do so...
             self.build_pdf_file( sw_name, libraries, temp_folder, out_folder, main_folder )
