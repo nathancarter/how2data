@@ -61,8 +61,19 @@ def clear_cache ():
     df = None
 
 # Get just those solutions for a specific software package and libraries
-def all_for ( software, libraries='solution' ):
-    return all()[( all()['software'] == software ) & ( all()['solution name'] == libraries )]
+# (of for any subset of the given set of libraries, if the second param is True)
+def all_for ( software_name, libraries='solution', allow_subsets=False ):
+    selection = [ ]
+    for index, row in all().iterrows():
+        if row['software'] != software_name:
+            selection.append( False )
+        elif row['solution name'] == libraries:
+            selection.append( True )
+        elif allow_subsets and software.library_subset( row['solution name'], libraries ):
+            selection.append( True )
+        else:
+            selection.append( False )
+    return all()[selection]
 
 # Private data and function used in class defined below
 github_url = 'https://github.com/nathancarter/how2data'

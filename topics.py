@@ -14,6 +14,7 @@ import static_files
 from datetime import datetime
 import re
 import shell
+import itertools
 
 df = None
 
@@ -127,68 +128,81 @@ class Topic:
     # Values in that column are true iff the corresponding row has a solution in the given software and libraries.
     # TO BE CLEAR: This function returns THE SAME number of rows as tasks(), but just marks them as included or
     # not.  This gives you the opportunity to filter or loop over the collection with greater flexibility.
+    # Only one solution per task will be marked as included for any given task and software pair,
+    # the last one whose required libraries are a subset of the ones specified in the final parameter.
     def tasks_for ( self, software, libraries='software' ):
-        relevant = solutions.all_for( software, libraries )
         result = self.tasks().copy()
-        result['included'] = result['task name'].isin( relevant['task name'] )
+        result['included'] = [
+            tasks.Task( row ).first_solution_using( software, libraries ) is not None
+            for _, row in result.iterrows()
+        ]
         return result
 
-    # Title of a PDF for this topic, given the software and libraries the PDF will focus on.
+    # Title of a PDF for this topic, given the software the PDF will focus on.
     # This doubles as the filename for the PDF as well.
-    def pdf_title ( self, package, libraries='solution' ):
-        return f'{self.topic_name} in {_pair_to_title(package,libraries)}'
+    def pdf_title ( self, package ):
+        return f'{self.topic_name} in {package}'
 
-    # Full path to the output PDF for this topic, given the software and libraries the PDF will focus on
+    # Full path to the output PDF for this topic, given the software the PDF will focus on
     # The final parameter can be used to specify a different "main folder" than the default from config.
-    def pdf_outfile ( self, package, libraries='solution', folder=config.jekyll_input_folder ):
+    def pdf_outfile ( self, package, folder=config.jekyll_input_folder ):
         return os.path.join( folder, 'assets', 'downloads',
-            self.pdf_title(package,libraries) + '.pdf' )
+            self.pdf_title( package ) + '.pdf' )
 
     # Whether we must rebuild the PDF for this topic-software-library triple,
     # based on the timestamps of all relevant files on disk.
     # The final parameter can be used to specify a different "main folder" than the default from config.
     def must_build_pdf ( self, package, libraries='solution', folder=config.main_folder ):
-        outfile = self.pdf_outfile( package, libraries )
+        outfile = self.pdf_outfile( package )
         if not os.path.exists( outfile ):
             log.info( f'Rebuilding because DNE {outfile}' )
             return True
         pdf_last_modified = os.path.getmtime( outfile )
-        for index, row in self.tasks().iterrows():
-            task_last_modified = os.path.getmtime( os.path.join( folder, tasks.Task( row ).task_filename ) )
+        solutions_involved = [
+            tasks.Task( row ).first_solution_using( package, libraries )
+            for _, row in self.tasks().iterrows()
+        ]
+        solutions_involved = [ sol for sol in solutions_involved if sol is not None ]
+        for solution in solutions_involved:
+            task = solution.task()
+            task_last_modified = os.path.getmtime( task.task_filename )
             if task_last_modified > pdf_last_modified:
-                log.info( f'Rebuilding because newer {tasks.Task( row ).task_filename}' )
+                log.info( f'Rebuilding because newer {task.task_filename}' )
+                return True
+            sol_last_modified = os.path.getmtime( solution.output_file() )
+            if sol_last_modified > pdf_last_modified:
+                log.info( f'Rebuilding because newer {solution.output_file()}' )
                 return True
         return False
 
     # The TOC and description for a PDF built from this topic, in the given software and libraries,
     # as a Markdown string
-    def pdf_header ( self, package, libraries='solution' ):
+    def pdf_header ( self, package ):
         return static_files.fill_template( 'topic-pdf',
-            TITLE = self.pdf_title( package, libraries ),
+            TITLE = self.pdf_title( package ),
             SITE_URL = config.site_url,
             DATE = datetime.now().strftime("%d %B %Y"),
             DESCRIPTION = self.content_with_links() )
     
     # The portion of the PDF body that goes with the given task.
     def pdf_one_solution ( self, task, package, libraries='solution', temp_folder=config.topics_folder ):
-        relevant = solutions.all_for( package, libraries )
-        for_this_portion = relevant[relevant['task name'] == task.task_name]
-        if len( for_this_portion ) > 0:
+        solution = task.first_solution_using( package, libraries )
+        if solution is not None:
             solution_text = markdown.html_sections_to_latex( markdown.unescape_for_jekyll(
-                solutions.Solution( for_this_portion.iloc[0,:] ).generated_body() ),
-                temp_folder )
+                solution.generated_body() ), temp_folder )
+            solution_name = _pair_to_title( solution.software, solution.solution_name )
         else:
-            solution_text = 'How to Data does not yet contain a solution for this task in ' \
-                          + self.pdf_title( package, libraries ) + '.'
+            solution_text = f'How to Data does not yet contain a solution for this task in {package}.'
+            solution_name = package
         return static_files.fill_template( 'topic-pdf-solution',
             TASK = task.task_name,
-            DESCRIPTION = self.content_with_links(),
-            SOFTWARE = self.pdf_title( package, libraries ),
+            DESCRIPTION = tasks.make_links( task.content ),
+            SOFTWARE = solution_name,
             SOLUTION = solution_text )
 
     # All the markdown content for generating the PDF for this task in the given software and libraries
     def build_pdf_text ( self, package, libraries='solution', temp_folder=config.topics_folder ):
-        result = self.pdf_header( package, libraries )
+        result = self.pdf_header( package )
         df = self.tasks()
         for index, task_row in df.iterrows():
             task = tasks.Task( task_row )
@@ -217,7 +231,7 @@ class Topic:
         temp_folder=config.topics_folder, out_folder=config.jekyll_input_folder,
         main_folder=config.main_folder
     ):
-        outfile = self.pdf_outfile( package, libraries, out_folder )
+        outfile = self.pdf_outfile( package, out_folder )
         tmp_md_doc = os.path.join( temp_folder, 'pandoc-temp-file.md' )
         markdown.write( tmp_md_doc,
             self.build_pdf_text( package, libraries, temp_folder ), add_escapes=False )
@@ -228,29 +242,55 @@ class Topic:
                     + f' --output="{outfile}" "{tmp_md_doc}"'
         shell.run_or_halt( command_to_run, f'rm "{tmp_md_doc}"' )
         log.built( "PDF", outfile )
-        return self.pdf_title( package, libraries ) + '.pdf'
+        return self.pdf_title( package ) + '.pdf'
 
     # Build all PDFs that make sense for this topic and return the list of their filenames.
     # This function need not be called by clients; it is called as part of the build_file() routine.
+    # Note that this will create one PDF per software package, and it will choose a set of libraries
+    # for that software package that (1) maximizes the number of tasks from this topic that will
+    # be solved and within that (2) minimizes the number of libraries included.
     def build_all_pdf_files (
         self, min_proportion=0.5, temp_folder=config.topics_folder, out_folder=config.jekyll_input_folder,
         main_folder=config.main_folder
     ):
         result = [ ]
-        for package, libraries in software.names_with_libraries():
-            tasks = self.tasks_for( package, libraries )
-            proportion = sum( tasks['included'] ) / len( tasks )
-            if proportion > min_proportion:
-                title = self.pdf_title( package, libraries )
-                result.append( title )
-                if self.must_build_pdf( package, libraries ):
-                    self.build_pdf_file( package, libraries, temp_folder, out_folder, main_folder )
-                else:
-                    log.not_built( title, Reason="Already up to date" )
-            else:
-                log.not_built( self.pdf_outfile( package, libraries, out_folder ),
+        # loop through all software packages
+        for sw_name in software.all()['name']:
+            sw = software.Software( sw_name )
+            best_lib_set = None
+            best_num_sols = 0
+            max_num_sols = 0
+            # consider every possible subset of the libraries for it in our database
+            # counting from the smallest sets upwards in size
+            libraries = sw.all_libraries()
+            for size in range(len(libraries)+1):
+                for lib_subset in itertools.combinations( libraries, size ):
+                    # record which of them has the best coverage (most # solutions it can handle)
+                    # and because we are counting upwards in size, we will retain the smallest
+                    # subset (or one tied for smallest) that achieves that maximum
+                    tasks_for_subset = self.tasks_for( sw_name, software.libs_set_to_str( lib_subset ) )
+                    max_num_sols = len( tasks_for_subset )
+                    num_sols = sum( tasks_for_subset['included'] )
+                    if num_sols > best_num_sols:
+                        best_num_sols = num_sols
+                        best_lib_set = lib_subset
+            # if the coverage of the best one we found is not sufficient, stop here
+            proportion = best_num_sols / max_num_sols
+            if proportion < min_proportion:
+                log.not_built( self.pdf_outfile( sw_name, out_folder ),
                     Reason="Not enough solutions available",
                     Percentage=f"{proportion*100:0.1f}%" )
+                continue
+            # it is sufficient, so we can build a PDF for this software package (and this topic).
+            # but should we?  depends on file timestamps, so we check that now.
+            libraries = software.libs_set_to_str( best_lib_set )
+            if not self.must_build_pdf( sw_name, libraries ):
+                log.not_built( self.pdf_outfile( sw_name, out_folder ),
+                    Reason="Already up to date" )
+                continue
+            # okay we can actually build this PDF!  Do so...
+            self.build_pdf_file( sw_name, libraries, temp_folder, out_folder, main_folder )
+            result.append( self.pdf_title( sw_name ) )
         return result
 
     # Must this topic be rebuilt?  Right now, we always rebuild these because it's easy.

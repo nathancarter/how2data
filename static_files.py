@@ -51,9 +51,7 @@ def all ():
 
 # Use one of the templates in the files() list, applying the given dictionary to fill it out.
 def fill_template ( name, **kwargs ):
-    if df is None:
-        log.error( 'Cannot fill template before loading static files table' )
-    text = df[df['filename'] == name+'-template.md']['raw content'].iloc[0]
+    text = all()[all()['filename'] == name+'-template.md']['raw content'].iloc[0]
     for key, value in kwargs.items():
         text = text.replace( key, value )
     return text

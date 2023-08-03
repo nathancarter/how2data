@@ -84,6 +84,38 @@ def names_with_libraries ():
     df = solutions.all()[['software','solution name']].drop_duplicates()
     return list( zip( df['software'], df['solution name'] ) )
 
+# A string like "using pandas" or "using gplots and emmeans" represents a set of
+# libraries.  The following function converts the string to the set.
+def libs_str_to_set ( libs_str ):
+    if libs_str == 'solution':
+        return set()
+    libs = libs_str[6:].split( ', ' )
+    if ' and ' in libs[-1]:
+        libs[-1:] = libs[-1].split( ' and ' )
+    if libs[-1].startswith( 'and ' ):
+        libs[-1] = libs[-1][4:]
+    return set( libs )
+
+# Inverse of the previous function.  We use alphabetical ordering and we do use
+# the word "and" between the last two entries if there are two or more.
+def libs_set_to_str ( libs_set ):
+    if len( libs_set ) == 0:
+        return 'solution'
+    libs_list = list( libs_set )
+    if len( libs_list ) == 1:
+        return 'using ' + libs_list[0]
+    libs_list.sort()
+    if len( libs_list ) == 2:
+        return 'using ' + libs_list[0] + ' and ' + libs_list[1]
+    libs_list[-1] = 'and ' + libs_list[-1]
+    return 'using ' + ', '.join( libs_list )
+
+# Given two lists of libraries, each phrased as they appear in the solutions df
+# (e.g., "using SymPy" or "using gplots and emmeans") return true iff the first
+# list is a subset of the second.
+def library_subset ( lib_str_1, lib_str_2 ):
+    return libs_str_to_set( lib_str_1 ).issubset( libs_str_to_set( lib_str_2 ) )
+
 # Objects of the following class represent an individual row in the software packages df.
 class Software:
 
@@ -186,6 +218,21 @@ class Software:
             result = result.to_markdown( index=False )
         else:
             result = f'*None---all tasks have solutions in {self.name}!*'
+        return result
+    
+    # Get a list of all libraries mentioned for this software in our database
+    def all_libraries ( self ):
+        result = [ ]
+        for sw, libs in names_with_libraries():
+            if sw == self.name:
+                if libs == 'solution':
+                    continue
+                libs = libs[6:].split( ', ' )
+                if ' and ' in libs[-1]:
+                    libs[-1:] = libs[-1].split( ' and ' )
+                for library in libs:
+                    if library not in result:
+                        result.append( library )
         return result
 
     # What file does this software generate?  The result is an absolute path.

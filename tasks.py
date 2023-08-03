@@ -148,6 +148,14 @@ class Task:
         rows = solutions.all()[solutions.all()['task name'] == self.task_name]
         return [ solutions.Solution( row ) for _, row in rows.iterrows() ]
     
+    # Does this task have a solution using at most the given software and libraries?
+    def first_solution_using ( self, sw_name, libraries ):
+        all_possibilities = [
+            sol for sol in self.solutions()
+            if sol.software == sw_name and software.library_subset( sol.solution_name, libraries )
+        ]
+        return all_possibilities[0] if len( all_possibilities ) > 0 else None
+    
     # Read this task's description, as markdown content
     def description ( self ):
         return markdown.read_doc( self.task_filename )
