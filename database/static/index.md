@@ -10,6 +10,13 @@ nav_order: 1
 
 ### A reference for data science students
 
+## Intro video
+
+<iframe width="560" height="315" src="https://www.youtube.com/v/qBxBgCiMVrQ"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+
 ## What's on the site?
 
  * [***Tasks:***](tasks)
