@@ -158,6 +158,10 @@ class Topic:
             log.info( f'Rebuilding because DNE {outfile}' )
             return True
         pdf_last_modified = os.path.getmtime( outfile )
+        topic_last_modified = os.path.getmtime( self.topic_filename )
+        if topic_last_modified > pdf_last_modified:
+            log.info( f'Rebuilding because newer {self.topic_filename}' )
+            return True
         solutions_involved = [
             tasks.Task( row ).first_solution_using( package, libraries )
             for _, row in self.tasks().iterrows()

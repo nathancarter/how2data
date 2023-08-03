@@ -325,43 +325,43 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.995258</td>
-      <td>0.365754</td>
-      <td>0.126162</td>
-      <td>0.622453</td>
-      <td>0.095133</td>
+      <td>0.488293</td>
+      <td>0.151749</td>
+      <td>0.485939</td>
+      <td>0.278562</td>
+      <td>0.998647</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.438153</td>
-      <td>0.941225</td>
-      <td>0.084154</td>
-      <td>0.529164</td>
-      <td>0.598458</td>
+      <td>0.405459</td>
+      <td>0.766983</td>
+      <td>0.915349</td>
+      <td>0.099784</td>
+      <td>0.518523</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.216689</td>
-      <td>0.340683</td>
-      <td>0.270152</td>
-      <td>0.672552</td>
-      <td>0.426302</td>
+      <td>0.312085</td>
+      <td>0.498104</td>
+      <td>0.526030</td>
+      <td>0.745883</td>
+      <td>0.292882</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.226291</td>
-      <td>0.329723</td>
-      <td>0.088520</td>
-      <td>0.479413</td>
-      <td>0.630221</td>
+      <td>0.313217</td>
+      <td>0.826840</td>
+      <td>0.254793</td>
+      <td>0.942009</td>
+      <td>0.456271</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.900061</td>
-      <td>0.220330</td>
-      <td>0.599290</td>
-      <td>0.244266</td>
-      <td>0.769525</td>
+      <td>0.657147</td>
+      <td>0.024847</td>
+      <td>0.769884</td>
+      <td>0.140779</td>
+      <td>0.427270</td>
     </tr>
   </tbody>
 </table></div>
@@ -375,8 +375,8 @@
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[0.11353184, 0.03177642],
-       [0.03177642, 0.0934424 ]])
+</pre></td><td class="rouge-code"><pre>array([[ 0.04524431, -0.02545402],
+       [-0.02545402,  0.12901528]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>You can also compare all of a DataFrame’s columns among one another, each as a separate variable.</p>
@@ -413,43 +413,43 @@
   <tbody>
     <tr>
       <th>col1</th>
-      <td>0.113532</td>
-      <td>0.031776</td>
-      <td>0.028381</td>
-      <td>-0.031518</td>
-      <td>0.018822</td>
+      <td>0.045244</td>
+      <td>-0.025454</td>
+      <td>0.005095</td>
+      <td>-0.015552</td>
+      <td>-0.006827</td>
     </tr>
     <tr>
       <th>col2</th>
-      <td>0.031776</td>
-      <td>0.093442</td>
-      <td>-0.006934</td>
-      <td>0.010045</td>
-      <td>0.042011</td>
+      <td>-0.025454</td>
+      <td>0.129015</td>
+      <td>0.009857</td>
+      <td>0.062661</td>
+      <td>-0.013753</td>
     </tr>
     <tr>
       <th>col3</th>
-      <td>0.028381</td>
-      <td>-0.006934</td>
-      <td>0.096327</td>
-      <td>-0.034001</td>
-      <td>0.043858</td>
+      <td>0.005095</td>
+      <td>0.009857</td>
+      <td>0.084701</td>
+      <td>-0.048114</td>
+      <td>0.014510</td>
     </tr>
     <tr>
       <th>col4</th>
-      <td>-0.031518</td>
-      <td>0.010045</td>
-      <td>-0.034001</td>
-      <td>0.050627</td>
-      <td>-0.018164</td>
+      <td>-0.015552</td>
+      <td>0.062661</td>
+      <td>-0.048114</td>
+      <td>0.087198</td>
+      <td>-0.023934</td>
     </tr>
     <tr>
       <th>col5</th>
-      <td>0.018822</td>
-      <td>0.042011</td>
-      <td>0.043858</td>
-      <td>-0.018164</td>
-      <td>0.079758</td>
+      <td>-0.006827</td>
+      <td>-0.013753</td>
+      <td>0.014510</td>
+      <td>-0.023934</td>
+      <td>0.057866</td>
     </tr>
   </tbody>
 </table></div>
@@ -463,8 +463,8 @@
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>array([[1.        , 0.30851347],
-       [0.30851347, 1.        ]])
+</pre></td><td class="rouge-code"><pre>array([[ 1.        , -0.33316075],
+       [-0.33316075,  1.        ]])
 </pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>And pandas DataFrames have a built in method to do this for all numeric columns.</p>
@@ -502,48 +502,48 @@
     <tr>
       <th>col1</th>
       <td>1.000000</td>
-      <td>0.308513</td>
-      <td>0.271391</td>
-      <td>-0.415728</td>
-      <td>0.197792</td>
+      <td>-0.333161</td>
+      <td>0.082300</td>
+      <td>-0.247604</td>
+      <td>-0.133423</td>
     </tr>
     <tr>
       <th>col2</th>
-      <td>0.308513</td>
+      <td>-0.333161</td>
       <td>1.000000</td>
-      <td>-0.073082</td>
-      <td>0.146046</td>
-      <td>0.486632</td>
+      <td>0.094296</td>
+      <td>0.590780</td>
+      <td>-0.159177</td>
     </tr>
     <tr>
       <th>col3</th>
-      <td>0.271391</td>
-      <td>-0.073082</td>
+      <td>0.082300</td>
+      <td>0.094296</td>
       <td>1.000000</td>
-      <td>-0.486894</td>
-      <td>0.500361</td>
+      <td>-0.559850</td>
+      <td>0.207259</td>
     </tr>
     <tr>
       <th>col4</th>
-      <td>-0.415728</td>
-      <td>0.146046</td>
-      <td>-0.486894</td>
+      <td>-0.247604</td>
+      <td>0.590780</td>
+      <td>-0.559850</td>
       <td>1.000000</td>
-      <td>-0.285855</td>
+      <td>-0.336937</td>
     </tr>
     <tr>
       <th>col5</th>
-      <td>0.197792</td>
-      <td>0.486632</td>
-      <td>0.500361</td>
-      <td>-0.285855</td>
+      <td>-0.133423</td>
+      <td>-0.159177</td>
+      <td>0.207259</td>
+      <td>-0.336937</td>
       <td>1.000000</td>
     </tr>
   </tbody>
 </table></div>
 </div>
 
-<p>Content last modified on 17 May 2023.</p>
+<p>Content last modified on 24 July 2023.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute covariance and correlation coefficients/Python, using pandas and NumPy.md">edit the source</a>.</p>
 

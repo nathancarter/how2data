@@ -368,6 +368,10 @@ Let’s use $\alpha=0.05$ again so that we get 95% confidence intervals.</p>
 23
 24
 25
+26
+27
+28
+29
 </pre></td><td class="rouge-code"><pre>$statistics
    MSerror Df     Mean       CV
   226.0333 14 109.3529 13.74851
@@ -377,10 +381,14 @@ $parameters
   Fisher-LSD      none   days   3  0.05
 
 $means
-    num.transactions      std r       LCL      UCL Min Max    Q25 Q50    Q75
-Fri         95.16667 12.67149 6  82.00246 108.3309  84 120  89.50  92  93.75
-Sat        113.80000 18.36301 5  99.37933 128.2207  99 145 105.00 105 115.00
-Sun        119.83333 14.23259 6 106.66913 132.9975  98 134 111.25 123 131.00
+    num.transactions      std r      se       LCL      UCL Min Max    Q25 Q50
+Fri         95.16667 12.67149 6 6.13777  82.00246 108.3309  84 120  89.50  92
+Sat        113.80000 18.36301 5 6.72359  99.37933 128.2207  99 145 105.00 105
+Sun        119.83333 14.23259 6 6.13777 106.66913 132.9975  98 134 111.25 123
+       Q75
+Fri  93.75
+Sat 115.00
+Sun 131.00
 
 $comparison
 NULL
@@ -408,7 +416,7 @@ other.</li>
 on these two days is significantly different.</li>
 </ul>
 
-<p>Content last modified on 17 May 2023.</p>
+<p>Content last modified on 24 July 2023.</p>
 
 <p>See a problem?  <a href="https://github.com/nathancarter/how2data/issues/new/choose">Tell us</a> or <a href="https://github.com/nathancarter/how2data/tree/main/database/tasks/How to compute Fisher's confidence intervals/R.md">edit the source</a>.</p>
 
