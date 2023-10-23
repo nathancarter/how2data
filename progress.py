@@ -7,7 +7,9 @@ class ProgressBar:
         self.prefix = prefix
         self.width = width
         self.num_phases = 1
+        self._current_phase = 0
         self.num_steps = 100
+        self._current_step = 0
         self.start( show=False )
         self.callback = None
     
