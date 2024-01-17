@@ -1,7 +1,7 @@
 
 Plotting is a huge topic with many options and variations, but the most foundational types of plots are a line plot and a scatterplot.  How can we create those?
 
-Related topics:
+Related tasks:
 
 * How to add details to a plot
 * How to create a histogram

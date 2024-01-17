@@ -1,7 +1,7 @@
 
 After making a plot, we might want to add axis labels, a title, gridlines, or text.  Plotting packages provide tons of tools for this sort of thing.  What are some of the essentials?
 
-Related topics:
+Related tasks:
 
 * How to create basic plots
 * How to create a histogram
