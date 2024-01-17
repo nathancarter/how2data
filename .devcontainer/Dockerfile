@@ -25,6 +25,7 @@ RUN gem install jekyll bundler
 # datascience-notebook image
 RUN pip3 --disable-pip-version-check --no-cache-dir install \
     rdatasets pingouin scikit_posthocs tabulate jupytext streamlit \
+    openai python-dotenv \
  && rm -rf /tmp/pip-tmp
 
 # Install the following Julia packages that aren't part of the Jupyter

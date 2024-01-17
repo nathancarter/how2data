@@ -7,3 +7,7 @@ scratch/
 .Rhistory
 **/.ipynb_checkpoints/*
 .DS_Store
+research/.env
+research/pdfs/*
+research/texs/*
+research/originals/*
